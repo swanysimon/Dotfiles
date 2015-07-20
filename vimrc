@@ -1,6 +1,5 @@
-" .vimrc
+" vimrc
 " Simon Swanson
-" Last updated June 5, 2015
 
 " semicolon as colon
 nnoremap ; :
@@ -9,7 +8,7 @@ vnoremap ; :
 " not vi compatible for more functionality
 set nocompatible
 
-" exit insert mode (more) gracefully
+" exit insert/replace mode slightly more gracefully
 inoremap jk <Esc>
 set timeoutlen=100
 
@@ -18,23 +17,31 @@ set backspace=indent,eol,start
 
 " link to system clipboard
 set clipboard=unnamed
+
+" better paste in insert mode
+inoremap <C-P> <Esc>pi
+
+" stop stupid deletion going to clipboard
 nnoremap d "_d
+nnoremap x "_x
 vnoremap d "_d
+vnoremap x "_x
 
 " tabs as 4 spaces
-set expandtab
+" set expandtab
 set softtabstop=4
 set shiftwidth=4
 
-" smarter pair management
+" smarter pair management; needs work still
 inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
 inoremap " ""<Esc>i
 inoremap ' ''<Esc>i
 inoremap { {}<Esc>i
 inoremap < <><Esc>i
 
 " stupid preview
-autocmd CompleteDone * pclose
+" autocmd CompleteDone * pclose
 
 " manage plugins
 set rtp+=~/.vim/bundle/vundle/
@@ -55,4 +62,4 @@ syntax on
 set hlsearch
 set matchpairs+=<:>
 set number
-set wildmenu
+set wildmenu=longest,list

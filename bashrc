@@ -72,17 +72,17 @@ function backup() {
         gz|gzip          ) shift ; gzip -kv "$@" ;;
         lzma             ) shift ; lzma -zkv "$@" ;;
         xz               ) shift ; xz -zkvF xz "$@" ;;
-        zip              ) shift ; [[ "$1" == *.zip ]] && zip -rv "$@" || zip -rv "${1::-1}.zip" "$@" ;;
-        tar|tarball      ) shift ; [[ "$1" == *.tar ]] && tar -cvf "$@" || tar -cvf "${1::-1}.tar" "$@" ;;
+        zip              ) shift ; [[ "$1" == *.zip ]] && zip -rv "$@" || [[ -d "$1" ]] && zip -rv "${1::-1}.zip" "$@" || zip -rv "$1.zip" "$@";;
+        tar|tarball      ) shift ; [[ "$1" == *.tar ]] && tar -cvf "$@" || [[ -d "$1" ]] && tar -cvf "${1::-1}.tar" "$@" || tar -cvf "$1.tar" "$@" ;;
         tar.bz2|tbz2|tar.bz|tbz) 
             local EXT="$1"
             shift
-            [[ "$1" == *.tar.bz2 || "$1" == *.tbz2 || "$1" == *.tar.bz || "$1" == *.tbz ]] && tar -cjvf "$@" || tar -cjvf "${1::-1}.${EXT}" "$@"
+            [[ "$1" == *.tar.bz2 || "$1" == *.tbz2 || "$1" == *.tar.bz || "$1" == *.tbz ]] && tar -cjvf "$@" || [[ -d "$1" ]] && tar -cjvf "${1::-1}.${EXT}" "$@" || tar -cjvf "$1.${EXT}" "$@"
             ;;
         tar.gz|tgz)
             local EXT="$1"
             shift
-            [[ "$1" == *.tar.gz || "$1" == *.tgz ]] && tar -czvf "$@" || tar -czvf "${1::-1}.${EXT}" "$@"
+            [[ "$1" == *.tar.gz || "$1" == *.tgz ]] && tar -czvf "$@" || [[ -d "$1" ]] && tar -czvf "${1::-1}.${EXT}" "$@" || tar -czvf "$1.${EXT}" "$@"
             ;;
         *) if [[ -f "$1" || -d "$1" ]]; then
             for F in "$@"; do

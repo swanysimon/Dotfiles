@@ -62,4 +62,4 @@ syntax on
 set hlsearch
 set matchpairs+=<:>
 set number
-set wildmenu=longest,list
+set wildmenu

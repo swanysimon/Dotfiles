@@ -5,8 +5,9 @@
 nnoremap ; :
 vnoremap ; :
 
-" puts in the iMproved in vim
+" be iMproved
 set nocompatible
+filetype off
 
 " exit insert mode slightly more gracefully
 inoremap jk <Esc>
@@ -40,25 +41,15 @@ set softtabstop=4
 inoremap <C-N> :NERDTree<CR>
 nnoremap <C-N> :NERDTree<CR>
 
-" smarter pair management; needs work still
-"inoremap ( ()<Esc>i
-"inoremap [ []<Esc>i
-"inoremap " ""<Esc>i
-"inoremap ' ''<Esc>i
-"inoremap { {}<Esc>i
-"inoremap < <><Esc>i
-
-" stupid preview
-"autocmd CompleteDone * pclose
-
 " manage plugins
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#rc()
+set rtp+=$HOME/.vim/bundle/vundle/
+call vundle#begin()
 Plugin 'gmarik/vundle'
+Plugin 'hukl/Smyck-Color-Scheme'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'lambdatoast/elm.vim'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'hukl/Smyck-Color-Scheme'
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
 call vundle#end()

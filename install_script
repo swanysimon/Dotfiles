@@ -1,4 +1,24 @@
 #!/usr/local/bin/bash
 # install_script.sh
 # Simon Swanson
-# haven't started yet, duh
+
+function moveDotfiles() {
+    local DIR=$(dirname $0)
+
+    [ -e $HOME/.bashrc ] && rm -ri $HOME/.bashrc
+    ln -s $DIR/bashrc $HOME/.bashrc
+
+    [ -e $HOME/.bash_profile ] && rm -ri $HOME/.bash_profile
+    ln -s $DIR/bash_profile $HOME/.bash_profile
+
+    [ -e $HOME/.inputrc ] && rm -ri $HOME/.inputrc
+    ln -s $DIR/inputrc $HOME/.inputrc
+
+    [ -e $HOME/.tmux.conf ] && rm -ri $HOME/.tmux.conf
+    ln -s $DIR/tmux.conf $HOME/.tmux.conf
+
+    [ -e $HOME/.vimrc ] && rm -ri $HOME/.vimrc
+    ln -s $DIR/vimrc $HOME/.vimrc
+}
+
+moveDotfiles

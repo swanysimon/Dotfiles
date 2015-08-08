@@ -61,6 +61,7 @@ call vundle#end()
 filetype plugin indent on
 
 " improved search
+nnoremap <CR> :noh<CR>
 set hlsearch
 set incsearch
 set wildmenu

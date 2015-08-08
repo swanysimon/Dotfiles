@@ -45,10 +45,24 @@ function moveDotfiles() {
     ln -is "$DIR/vimrc" ~/.vimrc
 }
 
+function setupVim() {
+    # only run after updating vim with brew
+    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle
+    echo "Installing plugins"
+    vim +PluginInstall +qall
+    
+    # YouCompleteMe requires extra compilation
+    if [[ -d ~/.vim/bundle/YouCompleteMe ]]; then
+        # runs with any arguments given to the install.sh script
+        eval ~/.vim/bundle/YouCompleteMe/install.sh "$@"
+    fi
+}
+
 function main() {
     echo "Setting up workspace environment"
     homebrewSetup
     moveDotfiles
+    setupVim "$@"
 }
 
 main

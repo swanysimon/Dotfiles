@@ -44,7 +44,6 @@ nnoremap <C-N> :NERDTree<CR>
 " manage plugins
 set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#begin()
-
 " all plugins. run :BundleInstall to install once vundle set up
 Plugin 'gmarik/vundle'
 Plugin 'hukl/Smyck-Color-Scheme'
@@ -54,7 +53,6 @@ Plugin 'nanotech/jellybeans.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
-
 call vundle#end()
 
 " all plugins should be above this line
@@ -63,7 +61,9 @@ filetype plugin indent on
 " improved search
 nnoremap <CR> :noh<CR>
 set hlsearch
+set ignorecase
 set incsearch
+set smartcase
 set wildmenu
 set wildmode=longest:full,full
 

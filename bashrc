@@ -1,18 +1,9 @@
-#!/usr/local/bin/bash
 # bashrc
 # Simon Swanson
+# sets up my bash aliases and functions
 
 # if not running interactively do nothing
 [[ $- != *i* ]] && return
-
-# open my standard tmux session on startup
-[ -z "$TMUX" ] && [ "$(command -v tmux)" ] && {
-    read -p 'Connect to tmux session "main"? (y/n) ' -n 1 -r CHOICE
-    echo
-    case $CHOICE in
-        y|Y) tmux new -As main;;
-    esac
-}
 
 # su stops being so stupid
 alias su='sudo -i'
@@ -67,7 +58,7 @@ function finagle() {
 
 # for sanity's sack while backing things up
 function backup() {
-    local USAGE=$'usage: '$FUNCNAME$' [help | archive format] [<file> ...]\nAll variations of bzip2, gzip, xz, and zip compression support compression level support:\n -1 --fast \t fastest (worst compression)\n ...\n -9 --best \t slowest (best) compression'
+    local USAGE=$'usage: '$FUNCNAME$' [help | archive format]]] [<file> ...]\nAll variations of bzip2, gzip, xz, and zip compression support compression level support:\n -1 --fast \t fastest (worst compression)\n ...\n -9 --best \t slowest (best) compression'
     case "$1" in
         "") 
             echo "$FUNCNAME: no file specified"
@@ -94,9 +85,9 @@ function backup() {
             ;;
         zip)
             shift
-            if [ "$1" == *.zip ]; then
+            if [[ "$1" == *.zip ]]; then
                 zip -rv "$@"
-            elif [ -d "$1" ]; then
+            elif [[ -d "$1" ]]; then
                 zip -rv "${1::-1}.zip" "$@" 
             else
                 zip -rv "$1.zip" "$@"
@@ -104,9 +95,9 @@ function backup() {
             ;;
         tar|tarball)
             shift
-            if [ "$1" == *.tar ]; then
+            if [[ "$1" == *.tar ]]; then
                 tar -cvf "$@"
-            elif [ -d "$1" ];then
+            elif [[ -d "$1" ]];then
                 tar -cvf "${1::-1}.tar" "$@"
             else
                 tar -cvf "$1.tar" "$@"
@@ -115,9 +106,9 @@ function backup() {
         tar.bz2|tbz2|tar.bz|tbz) 
             local EXT="$1"
             shift
-            if [ "$1" == *.tar.bz2 || "$1" == *.tbz2 || "$1" == *.tar.bz || "$1" == *.tbz ]; then
+            if [[ "$1" == *.tar.bz2 || "$1" == *.tbz2 || "$1" == *.tar.bz || "$1" == *.tbz ]]; then
                 tar -cjvf "$@"
-            elif [ -d "$1" ]; then
+            elif [[ -d "$1" ]]; then
                 tar -cjvf "${1::-1}.${EXT}" "$@"
             else
                 tar -cjvf "$1.${EXT}" "$@"
@@ -126,20 +117,20 @@ function backup() {
 	tar.gz|tgz)
 	    local EXT="$1"
 	    shift
-	    if [ "$1" == *.tar.gz || "$1" == *.tgz ]; then
+	    if [[ "$1" == *.tar.gz || "$1" == *.tgz ]]; then
                 tar -czvf "$@"
-            elif [ -d "$1" ]; then
+            elif [[ -d "$1" ]]; then
                 tar -czvf "${1::-1}.${EXT}" "$@"
             else
                 tar -czvf "$1.${EXT}" "$@"
             fi
 	    ;;
 	* ) 
-	    if [ -e $1 ]; then
+	    if [[ -e $1 ]]; then
                 for F in "$@"; do
-                    if [ -f "$F" ]; then
+                    if [[ -f "$F" ]]; then
                         cp -iv "$F" "${F}.bak"
-                    elif [ -d "$F" ]; then
+                    elif [[ -d "$F" ]]; then
                         cp -Riv "$F" "${F::-1}.bak/"
                     else
                         echo "$FUNCNAME: $F: no such file or directory"

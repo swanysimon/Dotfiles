@@ -1,13 +1,13 @@
 " vimrc
 " Simon Swanson
 
-" semicolon as colon
-nnoremap ; :
-vnoremap ; :
-
 " be iMproved
 set nocompatible
 filetype off
+
+" semicolon as colon
+nnoremap ; :
+vnoremap ; :
 
 " exit insert mode slightly more gracefully
 inoremap jk <Esc>
@@ -16,13 +16,9 @@ set timeoutlen=100
 " fix backspace
 set backspace=indent,eol,start
 
-" link to system clipboard
+" attach clipboard to system, make more useful
 set clipboard=unnamed
-
-" better paste in insert mode
 inoremap <C-P> <Esc>pi
-
-" stop stupid deletion going to clipboard
 nnoremap d "_d
 nnoremap x "_x
 nnoremap s "_s
@@ -30,12 +26,16 @@ vnoremap d "_d
 vnoremap x "_x
 vnoremap s "_x
 
-" better tabs
+" more useful tabs
+" TODO: detect file tab width and adjust
 set autoindent
 set expandtab
 set shiftwidth=4
 set smarttab
 set softtabstop=4
+
+" pair matching
+set matchpairs+=<:>
 
 " NERDTree as CTRL-n
 inoremap <C-N> :NERDTree<CR>
@@ -44,6 +44,8 @@ nnoremap <C-N> :NERDTree<CR>
 " manage plugins
 set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#begin()
+
+" all plugins. run :BundleInstall to install once vundle set up
 Plugin 'gmarik/vundle'
 Plugin 'hukl/Smyck-Color-Scheme'
 Plugin 'kchmck/vim-coffee-script'
@@ -52,15 +54,20 @@ Plugin 'nanotech/jellybeans.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
+
 call vundle#end()
 
 " all plugins should be above this line
 filetype plugin indent on
 
+" improved search
+set hlsearch
+set incsearch
+set wildmenu
+set wildmode=longest:full,full
+
 " visual sugar
 colorscheme jellybeans
-set hlsearch
-set matchpairs+=<:>
 set nowrap
 set number
 set wildmenu

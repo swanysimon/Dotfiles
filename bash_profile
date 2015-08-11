@@ -2,9 +2,6 @@
 # Simon Swanson
 # sets up my bash environment
 
-# get the right bash
-export SHELL=/usr/local/bin/bash
-
 # enable autocompletion because homebrew bash
 [[ -f $(brew --prefix)/etc/bash_completion ]] && . $(brew --prefix)/etc/bash_completion
 

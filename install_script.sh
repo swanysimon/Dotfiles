@@ -57,7 +57,7 @@ function homebrewSetup {
     [[ "$(readlink ~/Applications)" -ne "/Applications/" ]] && ln -is /Applications ~/Applications
     if [[ "$(readlink ~/Applications)" -eq "/Applications/" ]]; then
         echo "Installing casks. This process could take a while"
-        local CASKINSTALL=('chromium' 'flux' 'iterm2' 'java' 'java7' 'java6' 'rstudio' 'skype' 'sublime-text' 'the-unarchiver' 'transmission' 'vlc' 'xld')
+        local CASKINSTALL=('bettertouchtool' 'chromium' 'flux' 'google-hangouts' 'iterm2' 'java' 'java7' 'java6' 'rstudio' 'skype' 'sublime-text' 'the-unarchiver' 'transmission' 'vlc' 'xld')
         sleep 1
         brew tap caskroom/versions
         brew cask install "${CASKINSTALL[*]}"

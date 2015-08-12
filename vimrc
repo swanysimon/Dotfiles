@@ -5,6 +5,15 @@
 set nocompatible
 filetype off
 
+" command history to 1000
+set history=1000
+
+" no ear destruction
+set visualbell
+
+" reload on file change
+set autoread
+
 " semicolon as colon
 nnoremap ; :
 vnoremap ; :
@@ -16,9 +25,15 @@ set timeoutlen=100
 " fix backspace
 set backspace=indent,eol,start
 
-" attach clipboard to system, make more useful
+" attach clipboard to system
 set clipboard=unnamed
-inoremap <C-P> <Esc>pi
+
+" better pasting
+nnoremap p     p=`]<C-o>
+vnoremap p     p=`[<C-o>
+
+" unlink deletion from clipboard
+" TODO: add in way to still cut
 nnoremap d "_d
 nnoremap x "_x
 nnoremap s "_s
@@ -31,8 +46,23 @@ vnoremap s "_x
 set autoindent
 set expandtab
 set shiftwidth=4
+set smartindent
 set smarttab
 set softtabstop=4
+set tabstop=4
+
+" lines smarter
+set linebreak
+set nowrap
+
+" improved search
+nnoremap <CR> :noh<CR>
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+set wildmenu
+set wildmode=longest:full,full
 
 " pair matching
 set matchpairs+=<:>
@@ -56,20 +86,9 @@ Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 
 " all plugins should be above this line
-filetype plugin indent on
-
-" improved search
-nnoremap <CR> :noh<CR>
-set hlsearch
-set ignorecase
-set incsearch
-set smartcase
-set wildmenu
-set wildmode=longest:full,full
+filetype indent on
+filetype plugin on
 
 " visual sugar
 colorscheme jellybeans
-set nowrap
-set number
-set wildmenu
 syntax on

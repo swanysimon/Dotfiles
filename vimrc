@@ -54,6 +54,7 @@ set tabstop=4
 " lines smarter
 set linebreak
 set nowrap
+set number
 
 " improved search
 nnoremap <CR> :noh<CR>
@@ -66,10 +67,6 @@ set wildmode=longest:full,full
 
 " pair matching
 set matchpairs+=<:>
-
-" NERDTree as CTRL-n
-inoremap <C-N> :NERDTree<CR>
-nnoremap <C-N> :NERDTree<CR>
 
 " manage plugins
 set rtp+=$HOME/.vim/bundle/vundle/
@@ -88,6 +85,10 @@ call vundle#end()
 " all plugins should be above this line
 filetype indent on
 filetype plugin on
+
+" NERDTree as CTRL-n
+inoremap <C-N> :NERDTree<CR>
+nnoremap <C-N> :NERDTree<CR>
 
 " visual sugar
 colorscheme jellybeans

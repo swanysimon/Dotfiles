@@ -134,30 +134,36 @@ function setupVim() {
 }
 
 function main() {
-    case "$1" in
-        -a|--all)
-            shift
-            homebrewSetup
-            moveDotfiles
-            setupVim "$@"
-            ;;
-        -b|--brew)
-            echo "Setting up homebrew environment"
-            homebrewSetup
-            ;;
-        -d|--dotfiles)
-            echo "Setting up dotfiles"
-            moveDotfiles 
-            ;;
-        -v|--vim)
-            shift
-            echo "Setting up vim environment"
-            setupVim "$@"
-            ;;
-        *)
-            echo "usage: $0\nTODO: real help message"
-            ;;
-    esac
+    for arg in "$@"; do
+        case "$1" in
+            -a|--all)
+                homebrewSetup
+                moveDotfiles
+                setupVim
+                break
+                ;;
+            -b|--brew)
+                echo "Setting up homebrew environment"
+                homebrewSetup
+                continue
+                ;;
+            -d|--dotfiles)
+                echo "Setting up dotfiles"
+                moveDotfiles 
+                continue
+                ;;
+            -v|--vim)
+                shift
+                echo "Setting up vim environment"
+                setupVim
+                continue
+                ;;
+            *)
+                echo "usage: $0\nTODO: real help message"
+                continue
+                ;;
+        esac    
+    done
     echo "Done!"
 }
 

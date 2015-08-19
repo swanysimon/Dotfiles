@@ -133,6 +133,11 @@ function setupVim() {
     fi
 }
 
+function fixDefaults() {
+    # screenshots to Downloads
+    defaults write com.apple.screencapture location ~/Downloads/ && killall SystemUIServer
+}
+
 function main() {
     for arg in "$@"; do
         case "$1" in

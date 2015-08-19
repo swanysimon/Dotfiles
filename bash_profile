@@ -28,7 +28,24 @@ export JAVA_8_HOME=$(/usr/libexec/java_home -v 1.8)
 export GRADLE_HOME='/usr/local/opt/gradle/libexec'
 
 # set prompt
-export PS1='\u@{\W}\\$ '
+function setPS1() {
+    local RESET=$(tput sgr0)
+    local BOLD=$(tput bold)
+    local RED=$(tput setaf 1)
+    local GREEN=$(tput setaf 2)
+    local YELLOW=$(tput setaf 3)
+    local BLUE=$(tput setaf 4)
+    local MAGENTA=$(tput setaf 5)
+    local CYAN=$(tput setaf 6)
+    local WHITE=$(tput setaf 7)
+
+    local LEFTPROMPT="\[${BOLD}${CYAN}\][\u] \[$RESET\]\[$GREEN\]\w\[$RESET\]"
+    local RIGHTPROMPT="\[$RED\]\$(__git_ps1)\[$RESET\]"
+    
+    export PS1="$(printf "%*s\r%s" "$(tput cols)" "$RIGHTPROMPT" "$LEFTPROMPT")\n\\$ "
+}
+
+setPS1
 
 # grab all my aliases and functions
 [[ -f ~/.bashrc ]] && source ~/.bashrc

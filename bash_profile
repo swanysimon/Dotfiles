@@ -37,12 +37,12 @@ function setPS1() {
     local BLUE=$(tput setaf 4)
     local MAGENTA=$(tput setaf 5)
     local CYAN=$(tput setaf 6)
-    local WHITE=$(tput setaf 7)
-
+    
     local LEFTPROMPT="\[${BOLD}${CYAN}\][\u] \[$RESET\]\[$GREEN\]\w\[$RESET\]"
     local RIGHTPROMPT="\[$RED\]\$(__git_ps1)\[$RESET\]"
     
-    export PS1="$(printf "%*s\r%s" "$(tput cols)" "$RIGHTPROMPT" "$LEFTPROMPT")\n\\$ "
+    export PROMPT_DIRTRIM=2
+    export PS1="${LEFTPROMPT}${RIGHTPROMPT}\n\\$ "
 }
 
 setPS1

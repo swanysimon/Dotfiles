@@ -5,10 +5,10 @@
 set nocompatible
 filetype off
 
-" command history to 1000
+" more command history
 set history=1000
 
-" no ear destruction
+" disable ear destruction
 set visualbell
 
 " reload on file change
@@ -26,11 +26,11 @@ set timeoutlen=100
 set backspace=indent,eol,start
 
 " attach clipboard to system
-set clipboard=unnamed
+set clipboard+=unnamed
 
-" better pasting
-nnoremap p     p=`]<C-o>
-vnoremap p     p=`[<C-o>
+" better pasting? Don't actually know what this does
+nnoremap p p=`]<C-o>
+vnoremap p p=`[<C-o>
 
 " unlink deletion from clipboard
 " TODO: add in way to still cut
@@ -51,13 +51,13 @@ set smarttab
 set softtabstop=4
 set tabstop=4
 
-" lines smarter
+" smarter lines
 set linebreak
 set nowrap
 set number
 
 " improved search
-nnoremap <CR> :noh<CR>
+nnoremap <Esc> :noh<CR>
 set hlsearch
 set ignorecase
 set incsearch

@@ -29,7 +29,7 @@ alias rm='rm -i'
 alias mkdir='mkdir -pv'
 
 # gradle
-alias gw='./gradlew'
+alias gw='./gradlew --daemon'
 
 # activity monitoring
 alias top='top -o cpu'
@@ -39,7 +39,7 @@ alias eject='hdiutil eject'
 
 # stupid wifi
 alias airport='networksetup -setairportpower en0'
-alias toggle='airport off && airport on'
+alias toggle='airport off; airport on'
 alias ping='ping -c 10'
 
 # power button aliases
@@ -51,14 +51,14 @@ alias sleepytime='sudo shutdown -s now; sudo -k'
 function finagle() {
     case "$1" in 
         "")   vim ~/.finagle;;
-	e|-e) open -e ~/.finagle ;;
-	*)    echo "$FUNCNAME: unknown arguments \"$@\""
+	    e|-e) open -e ~/.finagle;;
+	    *)    echo "$FUNCNAME: unknown arguments \"$@\""
     esac
 }
 
 # for sanity's sack while backing things up
 function backup() {
-    local USAGE=$'usage: '$FUNCNAME$' [help | archive format]]] [<file> ...]\nAll variations of bzip2, gzip, xz, and zip compression support compression level support:\n -1 --fast \t fastest (worst compression)\n ...\n -9 --best \t slowest (best) compression'
+    local USAGE=$'usage: '$FUNCNAME$' [help | archive format] [<file> ...]\nAll variations of bzip2, gzip, xz, and zip compression support compression level support:\n -1 --fast \t fastest (worst compression)\n ...\n -9 --best \t slowest (best) compression'
     case "$1" in
         "") 
             echo "$FUNCNAME: no file specified"

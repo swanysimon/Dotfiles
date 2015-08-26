@@ -57,7 +57,6 @@ set nowrap
 set number
 
 " improved search
-nnoremap <Esc> :noh<CR>
 set hlsearch
 set ignorecase
 set incsearch

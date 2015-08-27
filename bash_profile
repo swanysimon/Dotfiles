@@ -31,16 +31,18 @@ export GRADLE_HOME='/usr/local/opt/gradle/libexec'
 function setPS1() {
     local RESET=$(tput sgr0)
     local BOLD=$(tput bold)
+    local BLACK=$(tput setaf 0)
     local RED=$(tput setaf 1)
     local GREEN=$(tput setaf 2)
     local YELLOW=$(tput setaf 3)
     local BLUE=$(tput setaf 4)
     local MAGENTA=$(tput setaf 5)
     local CYAN=$(tput setaf 6)
-    
-    local GITSTRING="\[$RED\]\$(__git_ps1 2> /dev/null | sed 's: (\(.*\)):[\1]:')\[$RESET\]"
-    local PWDSTRING="\[$GREEN\]\w\[$RESET\]"
-    local USERSTRING="\[$CYAN\][\u]\[$RESET\]"
+    local WHITE=$(tput setaf 7)
+
+    local GITSTRING="\[${BOLD}${RED}\]\$(__git_ps1 2> /dev/null | sed 's: (\(.*\)):[\1]:')\[$RESET\]"
+    local PWDSTRING="\[$YELLOW\]\w\[$RESET\]"
+    local USERSTRING="\[$GREEN\]\u\[$RESET\]"
     
     export PROMPT_DIRTRIM=2
     export PS1="${USERSTRING} ${PWDSTRING} ${GITSTRING}\n\\$ "

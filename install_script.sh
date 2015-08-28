@@ -54,15 +54,15 @@ function homebrewSetup {
     # sets my applications in one place
     echo "Setting up brew casks"
     sleep 0.25
-    [[ "$(readlink ~/Applications)" -ne "/Applications/" ]] && ln -is /Applications ~/Applications
-    if [[ "$(readlink ~/Applications)" -eq "/Applications/" ]]; then
+    [[ "$(readlink "$HOME"/Applications)" -ne "/Applications/" ]] && ln -isv /Applications "$HOME"/Applications
+    if [[ "$(readlink "$HOME"/Applications)" -eq "/Applications/" ]]; then
         echo "Installing casks. This process could take a while"
         local CASKINSTALL=('bettertouchtool' 'chromium' 'flux' 'google-hangouts' 'iterm2' 'java' 'java7' 'java6' 'rstudio' 'skype' 'sublime-text' 'the-unarchiver' 'transmission' 'vlc' 'xld')
         sleep 1
         brew tap caskroom/versions
         brew cask install "${CASKINSTALL[*]}"
     else
-        echo "Directory at $(pwd ~)/Applications is not linked to /Applications/. Please before performing any other cask actions"
+        echo "Directory at $(pwd "$HOME")/Applications is not linked to /Applications/. Please before performing any other cask actions"
     fi
 }
 
@@ -73,103 +73,121 @@ function moveDotfiles() {
     popd > /dev/null
     
     # symlink dotfiles to the home directory where they can be used
-    for arg in "$@"; do
-        case "$arg" in 
-            all)
-                [[ "$(readlink ~/.bash_profile)" -eq "$SCRIPTPATH/bash_profile" ]] || ln -is "$SCRIPTPATH/bash_profile" ~/.bash_profile
-                [[ "$(readlink ~/.bashrc)" -eq "$SCRIPTPATH/bashrc" ]] || ln -is "$SCRIPTPATH/bashrc" ~/.bashrc
-                [[ "$(readlink ~/.inputrc)" -eq "$SCRIPTPATH/inputrc" ]] || ln -is "$SCRIPTPATH/inputrc" ~/.inputrc
-                [[ "$(readlink ~/.tmux.conf)" -eq "$SCRIPTPATH/tmux.conf" ]] || ln -is "$SCRIPTPATH/tmux.conf" ~/.tmux.conf
-                [[ "$(readlink ~/.vimrc)" -eq "$SCRIPTPATH/vimrc" ]] || ln -is "$SCRIPTPATH/vimrc" ~/.vimrc
-                ;;
-            profile|bash_profile)
-                [[ "$(readlink ~/.bash_profile)" -eq "$SCRIPTPATH/bash_profile" ]] || ln -is "$SCRIPTPATH/bash_profile" ~/.bash_profile
-                ;;
-            bashrc)
-                [[ "$(readlink ~/.bashrc)" -eq "$SCRIPTPATH/bashrc" ]] || ln -is "$SCRIPTPATH/bashrc" ~/.bashrc
-                ;;
-            inputrc)
-                [[ "$(readlink ~/.inputrc)" -eq "$SCRIPTPATH/inputrc" ]] || ln -is "$SCRIPTPATH/inputrc" ~/.inputrc
-                ;;
-            tmux.conf)
-                [[ "$(readlink ~/.tmux.conf)" -eq "$SCRIPTPATH/tmux.conf" ]] || ln -is "$SCRIPTPATH/tmux.conf" ~/.tmux.conf
-                ;;
-            vimrc)
-                [[ "$(readlink ~/.vimrc)" -eq "$SCRIPTPATH/vimrc" ]] || ln -is "$SCRIPTPATH/vimrc" ~/.vimrc
-                ;;
-            *) 
-                echo "ERROR: Unknown argument $arg"
-                echo "TODO: proper error message"
-                continue
-                ;;
-        esac
-    done
+    case "$1" in 
+        all)
+            [[ "$(readlink "$HOME"/.bash_profile)" = "$SCRIPTPATH"/bash_profile ]] || ln -isv "$SCRIPTPATH"/bash_profile "$HOME"/.bash_profile
+            [[ "$(readlink "$HOME"/.bashrc)" = "$SCRIPTPATH"/bashrc ]]               || ln -isv "$SCRIPTPATH"/bashrc "$HOME"/.bashrc
+            [[ "$(readlink "$HOME"/.inputrc)" = "$SCRIPTPATH"/inputrc ]]           || ln -isv "$SCRIPTPATH"/inputrc "$HOME"/.inputrc
+            [[ "$(readlink "$HOME"/.tmux.conf)" = "$SCRIPTPATH"/tmux.conf ]]       || ln -isv "$SCRIPTPATH"/tmux.conf "$HOME"/.tmux.conf
+            [[ "$(readlink "$HOME"/.vimrc)" = "$SCRIPTPATH"/vimrc ]]               || ln -isv "$SCRIPTPATH"/vimrc "$HOME"/.vimrc
+            ;;
+        profile|bash_profile)
+            [[ "$(readlink "$HOME"/.bash_profile)" = "$SCRIPTPATH"/bash_profile ]] || ln -isv "$SCRIPTPATH"/bash_profile "$HOME"/.bash_profile
+            ;;
+        bashrc)
+            [[ "$(readlink "$HOME"/.bashrc)" = "$SCRIPTPATH"/bashrc ]] || ln -isv "$SCRIPTPATH"/bashrc "$HOME"/.bashrc
+            ;;
+        inputrc)
+            [[ "$(readlink "$HOME"/.inputrc)" = "$SCRIPTPATH"/inputrc ]] || ln -isv "$SCRIPTPATH"/inputrc "$HOME"/.inputrc
+            ;;
+        tmux|tmux.conf)
+            [[ "$(readlink "$HOME"/.tmux.conf)" = "$SCRIPTPATH"/tmux.conf ]] || ln -isv "$SCRIPTPATH"/tmux.conf "$HOME"/.tmux.conf
+            ;;
+        vimrc)
+            [[ "$(readlink "$HOME"/.vimrc)" = "$SCRIPTPATH"/vimrc ]] || ln -isv "$SCRIPTPATH"/vimrc "$HOME"/.vimrc
+            ;;
+        *) 
+            echo "ERROR: Unknown argument $1"
+            echo "TODO: proper error message"
+            exit 1
+            ;;
+    esac
 }
 
 function setupVim() {
     # make sure vim is compatible
     local VIMVERSION=$(vim --version | head -n 1 | awk -F "[ .]" '{ print $5 }')
     local VIMRELEASE=$(vim --version | head -n 1 | awk -F "[ .]" '{ print $6 }')
-    [[ 7 -le $VIMVERSION && 4 -le $VIMRELEASE ]] && local VIMUPTODATE=1 || local VIMUPTODATE=0
-    [[ $VIMUPTODATE -eq 0 ]] && echo "Your vim is not compatible with all plugins. Some things may not work well"
+    [[ 7 -le $VIMVERSION && 4 -le $VIMRELEASE ]] && local VIMUPTODATE=0 || local VIMUPTODATE=1
+    [[ $VIMUPTODATE -eq 1 ]] && echo "WARNING: your vim is not up to date. Plugins are not guaranteed to work correctly"
 
-    # sets up vundle
-    if [[ ! -d ~/.vim/bundle/vundle ]]; then
-        echo "Installing vundle to manage vim plugins"
-        git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/vundle
-    fi
+    case "$1" in
+        all)
+            setupVim vundle
+            setupVim plugin
+            ;;
+        plugin)
+            # installs all vim plugins from the vimrc
+            echo "Checking vimrc is up to date"
+            moveDotfiles vimrc
+            echo "Installing vim plugins"
+            [[ $VIMUPTODATE -eq 1 ]] && echo "Plugin 'YouCompleteMe' will be installed but will not be compiled until you update vim"
+            vim +PluginInstall +qall
 
-    # to install plugins they have to exist first
-    moveDotfiles vimrc
-
-    echo "Installing plugins"
-    [[ $VIMUPTODATE -eq 0 ]] && echo "Plugin 'YouCompleteMe' will be installed but will not be compiled until you update vim"
-    vim +PluginInstall +qall
-    
-    # YouCompleteMe requires extra compilation
-    if [[ -d ~/.vim/bundle/YouCompleteMe && $VIMUPTODATE -eq 1 && "$(type -p cmake)" ]]; then
-        echo "Compiling YouCompleteMe"
-        ~/.vim/bundle/YouCompleteMe/install.sh
-    fi
+            # YouCompleteMe requires extra compilation
+            if [[ -d "$HOME"/.vim/bundle/YouCompleteMe && $VIMUPTODATE -eq 1 && "$(type -p cmake)" ]]; then
+                echo "Compiling YouCompleteMe"
+                "$HOME"/.vim/bundle/YouCompleteMe/install.sh
+            fi
+            ;;
+        vundle)
+            # installs vundle plugin manager
+            if [[ ! -d "$HOME"/.vim/bundle/vundle ]]; then
+                echo "Installing vundle to manage vim plugins"
+                git clone https://github.com/gmarik/Vundle.vim.git "$HOME"/.vim/bundle/vundle
+            else
+                echo "Updating vundle"
+                pushd "$HOME/.vim/bundle/vundle" > /dev/null
+                git pull
+                popd > /dev/null
+            fi
+            ;;
+        *)
+            echo "$0: $1: invalid option"
+            exit 1
+            ;;
+    esac
 }
 
 function fixDefaults() {
     # screenshots to Downloads
-    defaults write com.apple.screencapture location ~/Downloads/ && killall SystemUIServer
+    echo "Setting screenshot directory"
+    defaults write com.apple.screencapture location "$HOME"/Downloads/ && killall SystemUIServer
 }
 
 function main() {
-    for arg in "$@"; do
-        case "$1" in
-            -a|--all)
-                homebrewSetup
-                moveDotfiles
-                setupVim
-                break
-                ;;
-            -b|--brew)
+    local USAGE="TODO: make useful help message"
+    local OPTIND=1
+
+    while getopts ":b:d:f:h:v:" opt; do
+        case "$opt" in
+            b)
                 echo "Setting up homebrew environment"
                 homebrewSetup
-                continue
                 ;;
-            -d|--dotfiles)
+            d)
                 echo "Setting up dotfiles"
-                moveDotfiles 
-                continue
+                moveDotfiles "$OPTARG"
                 ;;
-            -v|--vim)
-                shift
+            f)
+                echo "Setting system defaults"
+                fixDefaults
+                ;;
+            h)
+                echo "$USAGE"
+                ;;
+            v)
                 echo "Setting up vim environment"
-                setupVim
-                continue
+                setupVim "$OPTARG"
                 ;;
             *)
-                echo "usage: $0\nTODO: real help message"
-                continue
+                echo "ERROR: $0: -$OPTARG: invalid option"
+                echo "$USAGE"
+                exit 1
                 ;;
-        esac    
+        esac
     done
-    echo "Done!"
+    shift $((OPTIND-1))
 }
 
 main "$@"

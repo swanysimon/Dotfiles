@@ -14,21 +14,15 @@ set visualbell
 " reload on file change
 set autoread
 
-" semicolon as colon
-nnoremap ; :
-vnoremap ; :
+" fix backspace
+set backspace=indent,eol,start
 
 " exit insert mode slightly more gracefully
 inoremap jk <Esc>
 set timeoutlen=100
 
-" fix backspace
-set backspace=indent,eol,start
-
-" attach clipboard to system
-set clipboard+=unnamed
-
-" better pasting? Don't actually know what this does
+" improved copy-paste
+set cliqboard=unnamed
 nnoremap p p=`]<C-o>
 vnoremap p p=`[<C-o>
 
@@ -81,7 +75,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
 call vundle#end()
 
-" all plugins should be above this line
+" all plugins should be above these lines
 filetype indent on
 filetype plugin on
 

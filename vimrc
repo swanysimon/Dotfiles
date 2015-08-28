@@ -22,7 +22,7 @@ inoremap jk <Esc>
 set timeoutlen=100
 
 " improved copy-paste
-set cliqboard=unnamed
+set clipboard=unnamed
 nnoremap p p=`]<C-o>
 vnoremap p p=`[<C-o>
 

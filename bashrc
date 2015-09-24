@@ -23,9 +23,9 @@ alias ll='ls -l'
 alias lla='ll -A'
 
 # filesystem safety
-alias cp='cp -i'
-alias mv='mv -i'
-alias rm='rm -i'
+alias cp='cp -vi'
+alias mv='mv -vi'
+alias rm='rm -vi'
 alias mkdir='mkdir -pv'
 
 # gradle
@@ -39,7 +39,7 @@ alias eject='hdiutil eject'
 
 # stupid wifi
 alias airport='networksetup -setairportpower en0'
-alias toggle='airport off && airport on'
+alias toggle='airport off && sleep 0.1 && airport on'
 alias ping='ping -c 10'
 
 # power button aliases

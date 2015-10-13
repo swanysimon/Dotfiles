@@ -7,6 +7,7 @@
 
 # su stops being so stupid
 alias su='sudo -i'
+alias exit='[[ "$(sudo -n echo "x" 2> /dev/null)" ]] && sudo -k || exit'
 
 # editor shortcut
 alias vi='vim'
@@ -28,8 +29,14 @@ alias mv='mv -vi'
 alias rm='rm -vi'
 alias mkdir='mkdir -pv'
 
+# for common mistakes
+alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
+
 # gradle
 alias gw='./gradlew --daemon'
+
+# git shortcuts
+alias git-home='cd $(git rev-parse --show-toplevel)'
 
 # activity monitoring
 alias top='top -o cpu'

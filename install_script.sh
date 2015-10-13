@@ -16,7 +16,7 @@ function homebrewSetup {
         echo "WARNING: Doctor says you should skip formula installation today"
     else
         echo "Installing formulae. This process may take a while"
-        local FORMULAINSTALL=('bash' 'bash-completion' 'brew-cask' 'cmake' 'git' 'mpalyer' 'python3' 'reattach-to-user-namespace' 'tmux' 'vim --override-system-vi' 'wget' 'xz')
+        local FORMULAINSTALL=('bash' 'bash-completion' 'brew-cask' 'cmake' 'git' 'mpalyer' 'python3' 'reattach-to-user-namespace' 'thefuck' 'tmux' 'vim --override-system-vi' 'wget' 'xz')
         sleep 1
         brew install ${FORMULAINSTALL[*]}
     fi

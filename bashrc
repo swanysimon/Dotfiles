@@ -34,8 +34,12 @@ alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 
 # gradle
 alias gw='./gradlew --daemon'
+alias gwrips='gw build --info --parallel --refresh-dependencies --stacktrace'
 
 # git shortcuts
+alias bd='git branch'
+alias gd='git diff'
+alias gs='git status'
 alias git-home='cd $(git rev-parse --show-toplevel)'
 
 # activity monitoring
@@ -46,7 +50,7 @@ alias eject='hdiutil eject'
 
 # stupid wifi
 alias airport='networksetup -setairportpower en0'
-alias toggle='airport off && sleep 0.1 && airport on'
+alias toggle='airport off && airport on'
 alias ping='ping -c 10'
 
 # power button aliases
@@ -65,8 +69,8 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
     local FILEERROR="$0: $1: no such file or directory"
     case "$1" in
         "") 
-            echo "FILEERROR"
-            echo "$USAGE"
+            2>& echo "FILEERROR"
+            2>& echo "$USAGE"
             exit 1
             ;;
         help|-h|--help) 
@@ -138,13 +142,13 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
                     elif [[ -d "$F" ]]; then
                         cp -Riv "$F" "${F::-1}.bak/"
                     else
-                        echo "$FILEERROR"
+                        2>& echo "$FILEERROR"
                         exit 1
                     fi
                 done
             else
-                echo "$FILEERROR"
-                echo "$USAGE"
+                2>& echo "$FILEERROR"
+                2>& echo "$USAGE"
                 exit 1
             fi
             ;;
@@ -156,8 +160,8 @@ function extract() {
 Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
     local FILEERROR="$0: $1: no such file or directory"
     local ARCHIVEERROR="$0: $1: unknown archive format"
-    [[ "-h" = "$1" || "--help" = "$1" ]] && echo "$USAGE" && exit 1
-    [[ ! -f "$1" ]] && echo "$FILEERROR" && exit 1
+    [[ "-h" = "$1" || "--help" = "$1" ]] && 2>& echo "$USAGE" && exit 1
+    [[ ! -f "$1" ]] && 2>& echo "$FILEERROR" && exit 1
     case "$1" in
         *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$1"   ;;
         *.tar.gz|*.tgz)                  tar xzvf "$1"   ;;
@@ -169,8 +173,8 @@ Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
         *.Z)                             uncompress "$1" ;;
         *.zip)                           unzip "$1"      ;;
         *)
-            echo "$ARCHIVEERROR"
-            echo "$USAGE"
+            2>& echo "$ARCHIVEERROR"
+            2>& echo "$USAGE"
             exit 1
             ;;
     esac
@@ -179,8 +183,15 @@ Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
 # random text editing
 function finagle() {
     case "$1" in 
-        "")   vim ~/.finagle;;
-        e|-e) open -e ~/.finagle;;
-        *)    echo "$0: unknown arguments \"$@\""
+        "")
+            vim ~/.finagle
+            ;;
+        e|-e)
+            open -e ~/.finagle
+            ;;
+        *)
+            2>& echo "$0: unknown arguments \"$@\""
+            exit 1
+            ;;
     esac
 }

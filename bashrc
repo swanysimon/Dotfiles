@@ -69,8 +69,8 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
     local FILEERROR="$0: $1: no such file or directory"
     case "$1" in
         "") 
-            2>& echo "FILEERROR"
-            2>& echo "$USAGE"
+            echo "FILEERROR" 1>&2
+            echo "$USAGE" 1>&2
             exit 1
             ;;
         help|-h|--help) 
@@ -142,13 +142,13 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
                     elif [[ -d "$F" ]]; then
                         cp -Riv "$F" "${F::-1}.bak/"
                     else
-                        2>& echo "$FILEERROR"
+                        echo "$FILEERROR" 1>&2
                         exit 1
                     fi
                 done
             else
-                2>& echo "$FILEERROR"
-                2>& echo "$USAGE"
+                echo "$FILEERROR" 1>&2
+                echo "$USAGE" 1>&2
                 exit 1
             fi
             ;;
@@ -160,8 +160,8 @@ function extract() {
 Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
     local FILEERROR="$0: $1: no such file or directory"
     local ARCHIVEERROR="$0: $1: unknown archive format"
-    [[ "-h" = "$1" || "--help" = "$1" ]] && 2>& echo "$USAGE" && exit 1
-    [[ ! -f "$1" ]] && 2>& echo "$FILEERROR" && exit 1
+    [[ "-h" = "$1" || "--help" = "$1" ]] && echo "$USAGE" 1>&2 && exit 1
+    [[ ! -f "$1" ]] && echo "$FILEERROR" 1>&2 && exit 1
     case "$1" in
         *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$1"   ;;
         *.tar.gz|*.tgz)                  tar xzvf "$1"   ;;
@@ -173,8 +173,8 @@ Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
         *.Z)                             uncompress "$1" ;;
         *.zip)                           unzip "$1"      ;;
         *)
-            2>& echo "$ARCHIVEERROR"
-            2>& echo "$USAGE"
+            echo "$ARCHIVEERROR" 1>&2
+            echo "$USAGE" 1>&2
             exit 1
             ;;
     esac
@@ -190,7 +190,7 @@ function finagle() {
             open -e ~/.finagle
             ;;
         *)
-            2>& echo "$0: unknown arguments \"$@\""
+            echo "$0: unknown arguments \"$@\"" 1>&2
             exit 1
             ;;
     esac

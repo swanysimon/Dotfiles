@@ -66,6 +66,7 @@ call vundle#begin()
 Plugin 'blueshirts/darcula'
 Plugin 'gmarik/vundle'
 Plugin 'hukl/Smyck-Color-Scheme'
+Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'lambdatoast/elm.vim'
 Plugin 'nanotech/jellybeans.vim'

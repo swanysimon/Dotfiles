@@ -24,12 +24,10 @@ set timeoutlen=100
 " improved copy-paste
 set clipboard=unnamed
 
-" unlink deletion from clipboard
+" unlink character deletion from clipboard
 " TODO: add in way to still cut
-nnoremap d "_d
 nnoremap x "_x
 nnoremap s "_s
-vnoremap d "_d
 vnoremap x "_x
 vnoremap s "_x
 
@@ -63,7 +61,6 @@ set matchpairs+=<:>
 set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#begin()
 " all plugins. run :BundleInstall to install once vundle set up
-Plugin 'blueshirts/darcula'
 Plugin 'gmarik/vundle'
 Plugin 'hukl/Smyck-Color-Scheme'
 Plugin 'kien/ctrlp.vim'
@@ -84,5 +81,7 @@ inoremap <C-N> :NERDTree<CR>
 nnoremap <C-N> :NERDTree<CR>
 
 " visual sugar
-colorscheme darcula
 syntax on
+colorscheme jellybeans
+hi Normal ctermbg=None
+hi NonText ctermbg=None

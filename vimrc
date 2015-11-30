@@ -11,8 +11,9 @@ set history=1000
 " disable ear destruction
 set visualbell
 
-" reload on file change
+" file improvements
 set autoread
+set hidden
 
 " fix backspace
 set backspace=indent,eol,start
@@ -22,7 +23,10 @@ inoremap jk <Esc>
 set timeoutlen=100
 
 " improved copy-paste
-set clipboard=unnamed
+set clipboard+=unnamed
+
+" sometimes you just need the mouse
+set mouse=a
 
 " unlink character deletion from clipboard
 " TODO: add in way to still cut
@@ -54,22 +58,20 @@ set smartcase
 set wildmenu
 set wildmode=longest:full,full
 
-" pair matching
-set matchpairs+=<:>
-
 " manage plugins
 set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#begin()
+
 " all plugins. run :BundleInstall to install once vundle set up
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'gmarik/vundle'
-Plugin 'hukl/Smyck-Color-Scheme'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'lambdatoast/elm.vim'
-Plugin 'nanotech/jellybeans.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
+
 call vundle#end()
 
 " all plugins should be above these lines
@@ -77,11 +79,18 @@ filetype indent on
 filetype plugin on
 
 " NERDTree as CTRL-n
-inoremap <C-N> :NERDTree<CR>
 nnoremap <C-N> :NERDTree<CR>
+
+" ctrlp settings
+let g:ctrlp_custom_ignore='\.(DS_STORE|git)$'
+let g:ctrlp_custom_ignore+='\.(class|jar)$'
+let g:ctrlp_custom_ignore+='\.(gif|jpg|png)$'
+let g:ctrlp_custom_ignore+='\.(bz2|gz|zip)$'
 
 " visual sugar
 syntax on
-colorscheme jellybeans
+set background=dark
+colorscheme solarized
 hi Normal ctermbg=None
 hi NonText ctermbg=None
+

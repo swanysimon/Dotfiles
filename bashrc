@@ -32,15 +32,23 @@ alias mkdir='mkdir -pv'
 # for common mistakes
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 
-# gradle
-alias gw='./gradlew --daemon'
-alias gwrips='gw build --info --parallel --refresh-dependencies --stacktrace'
-
 # git shortcuts
-alias bd='git branch'
-alias gd='git diff'
-alias gs='git status'
 alias git-home='cd $(git rev-parse --show-toplevel)'
+alias fetch='git fetch'
+alias pull='git pull'
+alias push='git push'
+alias ga='git add'
+alias gb='git branch'
+alias gd='git diff'
+alias gf='fetch'
+alias gk='git checkout'
+alias gl='git log'
+alias gm='git merge'
+alias go='git commit'
+alias gpl='pull'
+alias gps='push'
+alias grb='git rebase'
+alias gs='git status'
 
 # activity monitoring
 alias top='top -o cpu'
@@ -71,25 +79,25 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
         "") 
             echo "FILEERROR" 1>&2
             echo "$USAGE" 1>&2
-            exit 1
+            return 2
             ;;
         help|-h|--help) 
             echo "$USAGE"
             ;;
         bz|bz2|bzip|bzip2)
-            shift
+            shift 1
             bzip2 -kv "$@"
             ;;
         gz|gzip)
-            shift
+            shift 1
             gzip -kv "$@"
             ;;
         lzma)
-            shift
+            shift 1
             lzma -zkv "$@"
             ;;
         tar|tarball)
-            shift
+            shift 1
             if [[ "$1" == *.tar ]]; then
                 tar -cvf "$@"
             elif [[ -d "$1" ]];then
@@ -100,7 +108,7 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
             ;;
         tar.bz|tar.bz2|tbz|tbz2) 
             local EXT="$1"
-            shift
+            shift 1
             if [[ "$1" == *.tar.bz2 || "$1" == *.tbz2 || "$1" == *.tar.bz || "$1" == *.tbz ]]; then
                 tar -cjvf "$@"
             elif [[ -d "$1" ]]; then
@@ -111,7 +119,7 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
             ;;
         tar.gz|tgz)
             local EXT="$1"
-            shift
+            shift 1
             if [[ "$1" == *.tar.gz || "$1" == *.tgz ]]; then
                 tar -czvf "$@"
             elif [[ -d "$1" ]]; then
@@ -121,11 +129,11 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
             fi
             ;;
         xz)
-            shift
+            shift 1
             xz -zkvF xz "$@"
             ;;
         zip)
-            shift
+            shift 1
             if [[ "$1" == *.zip ]]; then
                 zip -rv "$@"
             elif [[ -d "$1" ]]; then
@@ -143,14 +151,36 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
                         cp -Riv "$F" "${F::-1}.bak/"
                     else
                         echo "$FILEERROR" 1>&2
-                        exit 1
+                        return 2
                     fi
                 done
             else
                 echo "$FILEERROR" 1>&2
                 echo "$USAGE" 1>&2
-                exit 1
+                return 2
             fi
+            ;;
+    esac
+}
+
+function brew() {
+    case "$1" in
+        update)
+            case "$2" in
+                -a|--all)
+                    brew update && brew upgrade --all && for i in $(brew cask list); do
+                        if [[ "$(brew cask info "$i" | grep -x "Not installed")" ]]; then
+                            brew cask install --force "$i"
+                        fi
+                    done
+                    ;;
+                *)
+                    /usr/local/bin/brew $@
+                    ;;
+            esac
+            ;;
+        *)
+            /usr/local/bin/brew $@
             ;;
     esac
 }
@@ -160,8 +190,8 @@ function extract() {
 Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
     local FILEERROR="$0: $1: no such file or directory"
     local ARCHIVEERROR="$0: $1: unknown archive format"
-    [[ "-h" = "$1" || "--help" = "$1" ]] && echo "$USAGE" 1>&2 && exit 1
-    [[ ! -f "$1" ]] && echo "$FILEERROR" 1>&2 && exit 1
+    [[ "-h" = "$1" || "--help" = "$1" ]] && echo "$USAGE" 1>&2 && return 1
+    [[ ! -f "$1" ]] && echo "$FILEERROR" 1>&2 && return 1
     case "$1" in
         *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$1"   ;;
         *.tar.gz|*.tgz)                  tar xzvf "$1"   ;;
@@ -175,7 +205,7 @@ Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
         *)
             echo "$ARCHIVEERROR" 1>&2
             echo "$USAGE" 1>&2
-            exit 1
+            return 2
             ;;
     esac
 }
@@ -191,7 +221,9 @@ function finagle() {
             ;;
         *)
             echo "$0: unknown arguments \"$@\"" 1>&2
-            exit 1
+            return 1
             ;;
     esac
 }
+
+

@@ -3,6 +3,32 @@
 # Simon Swanson
 # sets up my basic environment
 
+function installHomebrew() {
+    echo "Installing homebrew"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    [[ -z "$(type -p brew)" ]] && { echo "$0: failed to install homebrew" 1>&2; exit 127; }
+}
+
+function installFromulae() {
+    [[ -z "$(type -p brew)" ]] && { echo "$0: brew: command not found" 1>&2; exit 127; }
+    echo "Installing formuale"
+    local FORMULAE=()
+}
+
+function installCasks() {
+    [[ -z "$(brew list 2> /dev/null | grep -x brew-cask)" ]] && { echo "$0: brew-cask: formula not installed" 1>&2; exit 127;}
+    echo "Installing casks"
+    local CASKS=('flux' 'iterm2' 'skype' 'sublime-text' 'the-unarchiver' 'vlc')
+    case "$1" in 
+        "personal")
+            [[ -z "$(ls "$HOME"/Applications/ | grep -x "Google Chrome.app")" ]] && CASKS+=('chromium')
+            CASKS+=('google-hangouts' 'java' 'transmission' 'xld')
+            ;;
+        *) ;;
+    esac
+    brew cask install ${CASKS[@]}
+}
+
 function homebrewSetup {
     echo "Installing brew formulae and adjusting system environment"
 
@@ -105,8 +131,8 @@ function moveDotfiles() {
 }
 
 function setupVim() {
-    # make sure vim is compatible
-    local VIMVERSION=$(vim --version | head -n 1 | awk -F "[ .]" '{ print $5 }')
+    local INSTALLED=$(vim --version | head -n 1)
+    local VIMVERSION=$( | awk -F "[ .]" '{ print $5 }')
     local VIMRELEASE=$(vim --version | head -n 1 | awk -F "[ .]" '{ print $6 }')
     [[ 7 -le $VIMVERSION && 4 -le $VIMRELEASE ]] && local VIMUPTODATE=0 || local VIMUPTODATE=1
     [[ $VIMUPTODATE -eq 1 ]] && echo "WARNING: your vim is not up to date. Plugins are not guaranteed to work correctly"

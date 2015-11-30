@@ -19,14 +19,8 @@ export HISTSIZE=5000
 shopt -s histappend
 export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
-# java - can't use java 8 for work yet :(
+# java
 export JAVA_HOME=$(/usr/libexec/java_home)
-export JAVA_6_HOME=$(/usr/libexec/java_home -v 1.6)
-export JAVA_7_HOME=$(/usr/libexec/java_home -v 1.7)
-#export JAVA_8_HOME=$(/usr/libexec/java_home -v 1.8)
-
-# other settings
-export GRADLE_HOME='/usr/local/opt/gradle/libexec'
 
 function setPS1() {
     local RESET=$(tput sgr0)
@@ -38,7 +32,7 @@ function setPS1() {
     # if in git repo, adds branch name in red
     local gitString="\[${BOLD}${RED}\]\$(__git_ps1 2> /dev/null | sed 's: (\(.*\)):[\1]:')\[$RESET\]"
     # current directory in yellow
-    local pwdString="\[$BOLD$YELLOW\]\w\[$RESET\]"
+    local pwdString="\[$YELLOW\]\w\[$RESET\]"
     # current user in green, notifies if superuser here and turns dollar red
     local userString="\[$GREEN\]\$(sudo -n echo "superuser/" 2> /dev/null)\u\[$RESET\]"
 
@@ -50,3 +44,4 @@ setPS1
 
 # grab all my aliases and functions
 [[ -f ~/.bashrc ]] && source ~/.bashrc
+[[ -f ~/.bashrc.local ]] && source ~/.bashrc.local

@@ -47,7 +47,6 @@ set tabstop=4
 
 " smarter lines
 set linebreak
-set nowrap
 set number
 
 " improved search

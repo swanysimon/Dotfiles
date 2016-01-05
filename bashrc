@@ -41,6 +41,7 @@ alias ga='git add'
 alias gb='git branch'
 alias gd='git diff'
 alias gf='fetch'
+alias gh='git-home'
 alias gk='git checkout'
 alias gl='git log'
 alias gm='git merge'
@@ -164,13 +165,22 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
 }
 
 function brew() {
+    if [[ ! -w /usr/local/share/ || ! -w /usr/local/bin ]]; then
+        sudo chown -R $(whoami) /usr/local/share
+        sudo chown -R $(whoami) /usr/local/bin
+    fi
+    sudo -k
     case "$1" in
         update)
             case "$2" in
                 -a|--all)
-                    brew update && brew upgrade --all && for i in $(brew cask list); do
+                    brew update
+                    brew upgrade --all
+                    for i in $(brew cask list); do
                         if [[ "$(brew cask info "$i" | grep -x "Not installed")" ]]; then
                             brew cask install --force "$i"
+                        else
+                            echo "$i is already up-to-date"
                         fi
                     done
                     ;;
@@ -225,5 +235,4 @@ function finagle() {
             ;;
     esac
 }
-
 

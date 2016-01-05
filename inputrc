@@ -1,2 +1,3 @@
-set completion-ignore-case on
+set completion-ignore-case     on
+set expand-tilde               off
 set mark-symlinked-directories on

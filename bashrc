@@ -8,10 +8,12 @@
 # su stops being so stupid
 alias su='sudo -i'
 alias exit='[[ "$(sudo -n echo "x" 2> /dev/null)" ]] && sudo -k || exit'
+alias logout='[[ "$(sudo -n echo "x" 2> /dev/null)" ]] && sudo -k || exit'
 
-# editor shortcut
-alias vi='vim'
+# editor shortcuts
 alias edit='vim'
+alias less='less -r'
+alias vi='vim'
 
 # navigation shortcuts
 alias ..='cd ../'
@@ -43,7 +45,7 @@ alias gd='git diff'
 alias gf='fetch'
 alias gh='git-home'
 alias gk='git checkout'
-alias gl='git log'
+alias gl='git log --abbrev-commit --decorate --graph --pretty=format:"%h %C(yellow)%ar %C(reset)- %s %C(green)-%an%C(reset)"'
 alias gm='git merge'
 alias go='git commit'
 alias gpl='pull'
@@ -166,6 +168,7 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
 
 function brew() {
     if [[ ! -w /usr/local/share/ || ! -w /usr/local/bin ]]; then
+        echo "Giving correct permissions to /usr/local/share/ and /usr/local/bin/ for brew operations"
         sudo chown -R $(whoami) /usr/local/share
         sudo chown -R $(whoami) /usr/local/bin
     fi
@@ -175,6 +178,8 @@ function brew() {
             case "$2" in
                 -a|--all)
                     brew update
+                    local USTATUS=$?
+                    [[ $USTATUS -ne 0 ]] && return $USTATUS
                     brew upgrade --all
                     for i in $(brew cask list); do
                         if [[ "$(brew cask info "$i" | grep -x "Not installed")" ]]; then

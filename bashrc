@@ -30,26 +30,26 @@ alias cp='cp -vi'
 alias mv='mv -vi'
 alias rm='rm -vi'
 alias mkdir='mkdir -pv'
+alias df='df -h'
+alias du='du -h'
 
 # for common mistakes
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 
-# git shortcuts
+# short git shortcuts
 alias git-home='cd $(git rev-parse --show-toplevel)'
 alias fetch='git fetch'
-alias pull='git pull'
+alias merge='git merge'
+alias pull='git fetch && git rebase'
 alias push='git push'
 alias ga='git add'
 alias gb='git branch'
 alias gd='git diff'
-alias gf='fetch'
+alias gf='git fetch'
 alias gh='git-home'
 alias gk='git checkout'
-alias gl='git log --abbrev-commit --decorate --graph --pretty=format:"%h %C(yellow)%ar %C(reset)- %s %C(green)-%an%C(reset)"'
-alias gm='git merge'
+alias gl='git log --abbrev-commit --date=short --decorate --graph --pretty=format:"%h %C(yellow)%ad %C(green)-%an%C(reset)%n%w(0,8,8)%B"'
 alias go='git commit'
-alias gpl='pull'
-alias gps='push'
 alias grb='git rebase'
 alias gs='git status'
 
@@ -71,21 +71,32 @@ alias sleepytime='sudo shutdown -s now; sudo -k'
 
 # for sanity's sack while backing things up
 function backup() {
-    local USAGE=$'usage: '$0$' [help | archive_format] [<file> ...]
-Supported formats include: bzip2, gzip, lzma, za, zip, tar
+    local USAGE
+    read -d '' USAGE <<EOF
+USAGE: backup [ help ] [ format [archive_name] [format_options]] [ <file1 | directory1> ... ]
+Supported archive formats are: bak, bzip2, gzip, zip, tar
+For an empty archive format or 'bak', files and directories are rename to have a '.bak' extension
+For all other archive formats, the first optional argument to the format is the name of the archive to create. 
+    
+
+
+
+If achive format is ommitted, all files are renamed with a '.bak' extension
+
 All variations of bzip2, gzip, xz, and zip compression support compression level support:
   -1 --fast \t fastest (worst compression)
     ...
-  -9 --best \t slowest (best) compression'
-    local FILEERROR="$0: $1: no such file or directory"
+  -9 --best \t slowest (best) compression
+EOF
     case "$1" in
         "") 
-            echo "FILEERROR" 1>&2
+            echo "backup: no file or directory to back up" 1>&2
             echo "$USAGE" 1>&2
             return 2
             ;;
         help|-h|--help) 
             echo "$USAGE"
+            return 0
             ;;
         bz|bz2|bzip|bzip2)
             shift 1
@@ -94,10 +105,6 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
         gz|gzip)
             shift 1
             gzip -kv "$@"
-            ;;
-        lzma)
-            shift 1
-            lzma -zkv "$@"
             ;;
         tar|tarball)
             shift 1
@@ -131,10 +138,6 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
                 tar -czvf "$1.${EXT}" "$@"
             fi
             ;;
-        xz)
-            shift 1
-            xz -zkvF xz "$@"
-            ;;
         zip)
             shift 1
             if [[ "$1" == *.zip ]]; then
@@ -145,7 +148,8 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
                 zip -rv "$1.zip" "$@"
             fi
             ;;
-        *) 
+        bak|*) 
+            [[ "$1" == "bak" ]] && shift 1
             if [[ -d "$1" || -f "$1" ]]; then
                 for F in "$@"; do
                     if [[ -f "$F" ]]; then
@@ -153,12 +157,12 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
                     elif [[ -d "$F" ]]; then
                         cp -Riv "$F" "${F::-1}.bak/"
                     else
-                        echo "$FILEERROR" 1>&2
+                        echo "backup: $F: no such file or directory" 1>&2
                         return 2
                     fi
                 done
             else
-                echo "$FILEERROR" 1>&2
+                echo "backup: $1: no such file or directory" 1>&2
                 echo "$USAGE" 1>&2
                 return 2
             fi

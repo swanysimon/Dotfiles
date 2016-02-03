@@ -3,7 +3,7 @@
 # sets up my bash environment
 
 # homebrew bash completion
-[[ -f $(brew --prefix)/etc/bash_completion ]] && . $(brew --prefix)/etc/bash_completion
+[[ -f "$(brew --prefix)/etc/bash_completion" ]] && . "$(brew --prefix)/etc/bash_completion"
 
 # vim > emacs
 export VISUAL=vim
@@ -20,7 +20,7 @@ shopt -s histappend
 export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # java
-export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME="$(/usr/libexec/java_home)"
 
 function setPS1() {
     local RESET=$(tput sgr0)

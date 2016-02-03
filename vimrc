@@ -14,6 +14,8 @@ set visualbell
 " file improvements
 set autoread
 set hidden
+set swapfile
+set dir=/tmp/
 
 " fix backspace
 set backspace=indent,eol,start

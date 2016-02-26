@@ -48,7 +48,8 @@ alias gd='git diff'
 alias gf='git fetch'
 alias gh='git-home'
 alias gk='git checkout'
-alias gl='git log --abbrev-commit --date=short --decorate --graph --pretty=format:"%h %C(yellow)%ad %C(green)-%an%C(reset)%n%w(0,8,8)%B"'
+alias gl='git log --abbrev-commit --date=short --decorate --graph --pretty=format:"%h %C(yellow)%ad %C(reset)- %C(green)%an%C(reset)%n%w(0,8,8)%B"'
+alias gls='git diff-tree --name-status --no-commit-id -r'
 alias go='git commit'
 alias grb='git rebase'
 alias gs='git status'
@@ -243,5 +244,14 @@ function finagle() {
             return 1
             ;;
     esac
+}
+
+# fixes permission problems I encounter frequently enough
+function permissionFix() {
+    sudo chflags -R nouchg "$1"
+    sudo chown -R $(whoami) "$1"
+    sudo chmod -R 755 "$1"
+    sudo -k
+    find "$1" -type f -print0 | xargs -0 chmod 644
 }
 

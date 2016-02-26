@@ -64,7 +64,6 @@ set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#begin()
 
 " all plugins. run :BundleInstall to install once vundle set up
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
@@ -90,8 +89,4 @@ let g:ctrlp_custom_ignore+='\.(bz2|gz|zip)$'
 
 " visual sugar
 syntax on
-set background=dark
-colorscheme solarized
-hi Normal ctermbg=None
-hi NonText ctermbg=None
 

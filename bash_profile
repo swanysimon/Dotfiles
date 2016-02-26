@@ -24,13 +24,12 @@ export JAVA_HOME="$(/usr/libexec/java_home)"
 
 function setPS1() {
     local RESET=$(tput sgr0)
-    local BOLD=$(tput bold)
     local RED=$(tput setaf 1)
     local GREEN=$(tput setaf 2)
     local YELLOW=$(tput setaf 3)
 
     # if in git repo, adds branch name in red
-    local gitString="\[${BOLD}${RED}\]\$(__git_ps1 2> /dev/null | sed 's: (\(.*\)):[\1]:')\[$RESET\]"
+    local gitString="\[$RED\]\$(__git_ps1 2> /dev/null | sed 's: (\(.*\)):[\1]:')\[$RESET\]"
     # current directory in yellow
     local pwdString="\[$YELLOW\]\w\[$RESET\]"
     # current user in green, notifies if superuser here and turns dollar red

@@ -19,7 +19,10 @@ export HISTSIZE=5000
 shopt -s histappend
 export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
-# java
+# git shows state
+export GIT_PS1_SHOWUPSTREAM=auto
+
+# java home to most recent java version
 export JAVA_HOME="$(/usr/libexec/java_home)"
 
 function setPS1() {
@@ -29,7 +32,7 @@ function setPS1() {
     local YELLOW=$(tput setaf 3)
 
     # if in git repo, adds branch name in red
-    local gitString="\[$RED\]\$(__git_ps1 2> /dev/null | sed 's: (\(.*\)):[\1]:')\[$RESET\]"
+    local gitString="\[$RED\]\$(__git_ps1 2> /dev/null | sed -E 's/ \(([^=]*)=?\)/[\1]/')\[$RESET\]"
     # current directory in yellow
     local pwdString="\[$YELLOW\]\w\[$RESET\]"
     # current user in green, notifies if superuser here and turns dollar red

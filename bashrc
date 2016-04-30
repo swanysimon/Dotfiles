@@ -19,7 +19,6 @@ alias vi='vim'
 alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
-alias back='cd $OLDPWD'
 alias ls='ls -hF'
 alias la='ls -A'
 alias ll='ls -l'
@@ -40,7 +39,7 @@ alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
 alias git-home='cd $(git rev-parse --show-toplevel)'
 alias fetch='git fetch'
 alias merge='git merge'
-alias pull='git fetch && git rebase'
+alias pull='git fetch && git rebase --stat'
 alias push='git push'
 alias ga='git add'
 alias gb='git branch'
@@ -49,9 +48,9 @@ alias gf='git fetch'
 alias gh='git-home'
 alias gk='git checkout'
 alias gl='git log --abbrev-commit --date=short --decorate --graph --pretty=format:"%h %C(yellow)%ad %C(reset)- %C(green)%an%C(reset)%n%w(0,8,8)%B"'
-alias gls='git diff-tree --name-status --no-commit-id -r'
+alias glv='gl --stat-graph-width=$((${COLUMNS}/8))'
 alias go='git commit'
-alias grb='git rebase'
+alias grb='git rebase --stat'
 alias gs='git status'
 
 # activity monitoring
@@ -70,10 +69,11 @@ alias shutdown='sudo shutdown -h now'
 alias restart='sudo shutdown -r now'
 alias sleepytime='sudo shutdown -s now; sudo -k'
 
-# for sanity's sack while backing things up
+
+# for sanity's sake while backing things up
 function backup() {
     local USAGE
-    read -d '' USAGE <<EOF
+    read -d '' USAGE <<-EOF
 USAGE: backup [ help ] [ format [archive_name] [format_options]] [ <file1 | directory1> ... ]
 Supported archive formats are: bak, bzip2, gzip, zip, tar
 For an empty archive format or 'bak', files and directories are rename to have a '.bak' extension
@@ -171,74 +171,41 @@ EOF
     esac
 }
 
-function brew() {
-    if [[ ! -w /usr/local/share/ || ! -w /usr/local/bin ]]; then
-        echo "Giving correct permissions to /usr/local/share/ and /usr/local/bin/ for brew operations"
-        sudo chown -R $(whoami) /usr/local/share
-        sudo chown -R $(whoami) /usr/local/bin
-    fi
-    sudo -k
-    case "$1" in
-        update)
-            case "$2" in
-                -a|--all)
-                    brew update
-                    local USTATUS=$?
-                    [[ $USTATUS -ne 0 ]] && return $USTATUS
-                    brew upgrade --all
-                    for i in $(brew cask list); do
-                        if [[ "$(brew cask info "$i" | grep -x "Not installed")" ]]; then
-                            brew cask install --force "$i"
-                        else
-                            echo "$i is already up-to-date"
-                        fi
-                    done
-                    ;;
-                *)
-                    /usr/local/bin/brew $@
-                    ;;
-            esac
-            ;;
-        *)
-            /usr/local/bin/brew $@
-            ;;
-    esac
-}
 
 function extract() {
     local USAGE=$'usage: '$0$' [help | 
 Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
-    local FILEERROR="$0: $1: no such file or directory"
-    local ARCHIVEERROR="$0: $1: unknown archive format"
-    [[ "-h" = "$1" || "--help" = "$1" ]] && echo "$USAGE" 1>&2 && return 1
-    [[ ! -f "$1" ]] && echo "$FILEERROR" 1>&2 && return 1
-    case "$1" in
-        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$1"   ;;
-        *.tar.gz|*.tgz)                  tar xzvf "$1"   ;;
-        *.bz|*.bz2|*.bzip|*.bzip2)       bunzip2 "$1"    ;;
-        *.gz)                            gunzip "$1"     ;;
-        *.lzma)                          unlzma "$1"     ;;
-        *.tar)                           tar xvf "$1"    ;;
-        *.xz)                            unxz "$1"       ;;
-        *.Z)                             uncompress "$1" ;;
-        *.zip)                           unzip "$1"      ;;
-        *)
-            echo "$ARCHIVEERROR" 1>&2
-            echo "$USAGE" 1>&2
-            return 2
-            ;;
-    esac
+    local arg
+    for arg in "$@"; do
+        local FILEERROR="$0: $arg: no such file or directory"
+        local ARCHIVEERROR="$0: $arg: unknown archive format"
+        [[ "-h" = "$arg" || "--help" = "$arg" ]] && echo "$USAGE" 1>&2 && return 1
+        [[ ! -f "$arg" ]] && echo "$FILEERROR" 1>&2 && return 1
+        case "$arg" in
+            *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$arg"   ;;
+            *.tar.gz|*.tgz)                  tar xzvf "$arg"   ;;
+            *.bz|*.bz2|*.bzip|*.bzip2)       bunzip2 "$arg"    ;;
+            *.gz)                            gunzip "$arg"     ;;
+            *.lzma)                          unlzma "$arg"     ;;
+            *.tar)                           tar xvf "$arg"    ;;
+            *.xz)                            unxz "$arg"       ;;
+            *.Z)                             uncompress "$arg" ;;
+            *.zip)                           unzip "$arg"      ;;
+            *)
+                echo "$ARCHIVEERROR" 1>&2
+                echo "$USAGE" 1>&2
+                return 2
+                ;;
+        esac
+    done
 }
+
 
 # random text editing
 function finagle() {
     case "$1" in 
-        "")
-            vim ~/.finagle
-            ;;
-        e|-e)
-            open -e ~/.finagle
-            ;;
+        "") vim ~/.finagle ;;
+        e|-e) open -e ~/.finagle ;;
         *)
             echo "$0: unknown arguments \"$@\"" 1>&2
             return 1
@@ -246,12 +213,16 @@ function finagle() {
     esac
 }
 
+
 # fixes permission problems I encounter frequently enough
 function permissionFix() {
-    sudo chflags -R nouchg "$1"
-    sudo chown -R $(whoami) "$1"
-    sudo chmod -R 755 "$1"
+    local arg
+    for arg in "$@"; do
+        sudo chflags -R nouchg "$arg"
+        sudo chown -R $(whoami) "$arg"
+        sudo chmod -R 755 "$arg"
+        find "$arg" -type f -print0 | xargs -0 chmod 644
+    done
     sudo -k
-    find "$1" -type f -print0 | xargs -0 chmod 644
 }
 

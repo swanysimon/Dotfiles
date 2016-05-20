@@ -32,14 +32,14 @@ function setPS1() {
     local YELLOW=$(tput setaf 3)
 
     # if in git repo, adds branch name in red
-    local gitString="\[$RED\]\$(__git_ps1 2> /dev/null | sed -E 's/ \(([^=]*)=?\)/[\1]/')\[$RESET\]"
+    local gitString="\[$GREEN\]\$(__git_ps1 2> /dev/null | sed -E 's/ \(([^=]*)=?\)/[\1]/')\[$RESET\]"
     # current directory in yellow
     local pwdString="\[$YELLOW\]\w\[$RESET\]"
     # current user in green, notifies if superuser here and turns dollar red
-    local userString="\[$GREEN\]\$(sudo -n echo "superuser/" 2> /dev/null)\u\[$RESET\]"
+    local userString="\[$RED\]\$(sudo -n echo "superuser\ " 2> /dev/null)\[$RESET\]"
 
-    export PROMPT_DIRTRIM=2
-    export PS1="${userString} ${pwdString} ${gitString}\n\$(sudo -n tput setaf 1 2> /dev/null)\\$\[$RESET\] "
+    export PROMPT_DIRTRIM=3
+    export PS1="${userString}${pwdString} ${gitString}\n\$(sudo -n tput setaf 1 2> /dev/null)\\$\[$RESET\] "
 }
 
 setPS1

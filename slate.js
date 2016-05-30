@@ -1,40 +1,41 @@
 // slate.js
 // Simon Swanson
 
+
 /*
  * current screen and window size functions
  */
 
 function screenOriginX() {
-    return slate.window().screen().visibleRect().x;
+    return slate.screen().visibleRect().x;
 }
 
 function screenOriginY() {
-    return slate.window().screen().visibleRect().y;
+    return slate.screen().visibleRect().y;
 }
 
 function screenWidth() {
-    return slate.window().screen().visibleRect().width;
+    return slate.screen().visibleRect().width;
 }
 
 function screenHeight() {
-    return slate.window().screen().visibleRect().height;
+    return slate.screen().visibleRect().height;
 }
 
 function fullScreenOriginX() {
-    return slate.window().screen().rect().x;
+    return slate.screen().rect().x;
 }
 
 function fullScreenOriginY() {
-    return slate.window().screen().rect().y;
+    return slate.screen().rect().y;
 }
 
 function fullScreenWidth() {
-    return slate.window().screen().rect().width;
+    return slate.screen().rect().width;
 }
 
 function fullScreenHeight() {
-    return slate.window().screen().rect().height;
+    return slate.screen().rect().height;
 }
 
 function windowOriginX() {
@@ -53,53 +54,60 @@ function windowHeight() {
     return slate.window().rect().height;
 }
 
-function isOSXFullScreen() {
-    return 
-        screenOriginX() == fullScreenOriginX() &&
-        screenOriginY() == fullScreenOriginY() &&
-        screenWidth()   == fullScreenWidth()   &&
-        screenHeight()  == fullScreenHeight();
-}
-
 
 /*
- * window snapping operation variables
+ * window snapping operations
  */
 
-var fullscreen = slate.operation("move", {
-    "x"     : screenOriginX(),
-    "y"     : screenOriginY(),
-    "width" : screenWidth(),
-    "height": screenHeight()
-});
+function fullscreen(window) {
+    window.doOperation(slate.operation("move", {
+        "x"     : screenOriginX(),
+        "y"     : screenOriginY(),
+        "width" : screenWidth(),
+        "height": screenHeight()
+    }));
+    return;
+}
 
-var center = slate.operation("move", {
-    "x"     : screenOriginX() + (screenWidth() - windowWidth()) / 2,
-    "y"     : screenOriginY() + (screenHeight() - windowHeight()) / 2,
-    "width" : windowWidth(),
-    "height": windowHeight()
-});
+function center(window) {
+    window.doOperation(slate.operation("move", {
+        "x"     : screenOriginX() + (screenWidth() - windowWidth()) / 2,
+        "y"     : screenOriginY() + (screenHeight() - windowHeight()) / 2,
+        "width" : windowWidth(),
+        "height": windowHeight()
+    }));
+    return;
+}
 
-var centerResize = slate.operation("move", {
-    "x"     : screenOriginX() + screenWidth() / 8,
-    "y"     : screenOriginY() + screenHeight() / 8,
-    "width" : screenWidth() * 3 / 4,
-    "height": screenHeight() * 3 / 4
-});
+function centerResize(window) {
+    window.doOperation(slate.operation("move", {
+        "x"     : screenOriginX() + screenWidth() / 8,
+        "y"     : screenOriginY() + screenHeight() / 8,
+        "width" : screenWidth() * 3 / 4,
+        "height": screenHeight() * 3 / 4
+    }));
+    return;
+}
 
-var lefthalf = slate.operation("move", {
-    "x"     : screenOriginX(),
-    "y"     : screenOriginY(),
-    "width" : screenWidth() / 2,
-    "height": screenHeight()
-});
+function lefthalf(window) {
+    window.doOperation(slate.operation("move", {
+        "x"     : screenOriginX(),
+        "y"     : screenOriginY(),
+        "width" : screenWidth() / 2,
+        "height": screenHeight()
+    }));
+    return;
+}
 
-var righthalf = slate.operation("move", {
-    "x"     : screenOriginX() + screenWidth() / 2,
-    "y"     : screenOriginY(),
-    "width" : screenWidth() / 2,
-    "height": screenHeight()
-});
+function righthalf(window) {
+    window.doOperation(slate.operation("move", {
+        "x"     : screenOriginX() + screenWidth() / 2,
+        "y"     : screenOriginY(),
+        "width" : screenWidth() / 2,
+        "height": screenHeight()
+    }));
+    return;
+}
 
 
 /*
@@ -108,35 +116,35 @@ var righthalf = slate.operation("move", {
 
 slate.bind("c:alt", function(window) {
     if (window.isMovable()) {
-        window.doOperation(center);
+        center(window);
     }
     return;
 });
 
 slate.bind("c:alt,shift", function(window) {
     if (window.isMovable()) {
-        window.doOperation(centerResize);
+        centerResize(window);
     }
     return;
 });
 
 slate.bind("f:alt", function(window) {
     if (window.isMovable()) {
-        window.doOperation(fullscreen);
+        fullscreen(window);
     }
     return;
 });
 
 slate.bind("j:alt", function(window) {
     if (window.isMovable()) {
-        window.doOperation(lefthalf);
+        lefthalf(window);
     }
     return;
 });
 
 slate.bind("l:alt", function(window) {
     if (window.isMovable()) {
-        window.doOperation(righthalf);
+        righthalf(window);
     }
     return;
 });

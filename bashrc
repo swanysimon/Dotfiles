@@ -7,12 +7,13 @@
 
 # su stops being so stupid
 alias su='sudo -i'
-alias exit='[[ "$(sudo -n echo "x" 2> /dev/null)" ]] && sudo -k || exit'
-alias logout='[[ "$(sudo -n echo "x" 2> /dev/null)" ]] && sudo -k || exit'
+alias exit='sudo -n echo "" 2> /dev/null && sudo -k || exit'
+alias logout='sudo -n echo "" 2> /dev/null && sudo -k || exit'
 
 # editor shortcuts
 alias edit='vim'
 alias less='less -r'
+alias macvim='open -a macvim'
 alias vi='vim'
 
 # navigation shortcuts
@@ -77,8 +78,7 @@ function backup() {
 USAGE: backup [ help ] [ format [archive_name] [format_options]] [ <file1 | directory1> ... ]
 Supported archive formats are: bak, bzip2, gzip, zip, tar
 For an empty archive format or 'bak', files and directories are rename to have a '.bak' extension
-For all other archive formats, the first optional argument to the format is the name of the archive to create. 
-    
+For all other archive formats, the first optional argument to the format is the name of the archive to create.
 
 
 
@@ -90,12 +90,12 @@ All variations of bzip2, gzip, xz, and zip compression support compression level
   -9 --best \t slowest (best) compression
 EOF
     case "$1" in
-        "") 
+        "")
             echo "backup: no file or directory to back up" 1>&2
             echo "$USAGE" 1>&2
             return 2
             ;;
-        help|-h|--help) 
+        help|-h|--help)
             echo "$USAGE"
             return 0
             ;;
@@ -117,7 +117,7 @@ EOF
                 tar -cvf "$1.tar" "$@"
             fi
             ;;
-        tar.bz|tar.bz2|tbz|tbz2) 
+        tar.bz|tar.bz2|tbz|tbz2)
             local EXT="$1"
             shift 1
             if [[ "$1" == *.tar.bz2 || "$1" == *.tbz2 || "$1" == *.tar.bz || "$1" == *.tbz ]]; then
@@ -144,12 +144,12 @@ EOF
             if [[ "$1" == *.zip ]]; then
                 zip -rv "$@"
             elif [[ -d "$1" ]]; then
-                zip -rv "${1::-1}.zip" "$@" 
+                zip -rv "${1::-1}.zip" "$@"
             else
                 zip -rv "$1.zip" "$@"
             fi
             ;;
-        bak|*) 
+        bak|*)
             [[ "$1" == "bak" ]] && shift 1
             if [[ -d "$1" || -f "$1" ]]; then
                 for F in "$@"; do
@@ -172,8 +172,17 @@ EOF
 }
 
 
+function brewUpgrade() {
+    brew update
+    brew upgrade --all
+    for cask in $(brew cask list); do
+        brew cask install "$cask"
+    done
+}
+
+
 function extract() {
-    local USAGE=$'usage: '$0$' [help | 
+    local USAGE=$'usage: '$0$' [ -h|--help ] archive1 archive2 ...
 Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
     local arg
     for arg in "$@"; do
@@ -203,7 +212,7 @@ Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
 
 # random text editing
 function finagle() {
-    case "$1" in 
+    case "$1" in
         "") vim ~/.finagle ;;
         e|-e) open -e ~/.finagle ;;
         *)
@@ -213,16 +222,4 @@ function finagle() {
     esac
 }
 
-
-# fixes permission problems I encounter frequently enough
-function permissionFix() {
-    local arg
-    for arg in "$@"; do
-        sudo chflags -R nouchg "$arg"
-        sudo chown -R $(whoami) "$arg"
-        sudo chmod -R 755 "$arg"
-        find "$arg" -type f -print0 | xargs -0 chmod 644
-    done
-    sudo -k
-}
 

@@ -19,11 +19,11 @@ export HISTSIZE=5000
 shopt -s histappend
 export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
-# git shows state
-export GIT_PS1_SHOWUPSTREAM=auto
-
 # java home to most recent java version
 export JAVA_HOME="$(/usr/libexec/java_home)"
+
+# git shows some state
+export GIT_PS1_SHOWUPSTREAM=auto
 
 function setPS1() {
     local RESET=$(tput sgr0)
@@ -31,12 +31,12 @@ function setPS1() {
     local GREEN=$(tput setaf 2)
     local YELLOW=$(tput setaf 3)
 
-    # if in git repo, adds branch name in red
-    local gitString="\[$GREEN\]\$(__git_ps1 2> /dev/null | sed -E 's/ \(([^=]*)=?\)/[\1]/')\[$RESET\]"
+    # notify if sudo is active (notice whitespace at the end)
+    local userString="\[$RED\]\$(sudo -n echo superuser\  2> /dev/null)\[$RESET\]"
     # current directory in yellow
     local pwdString="\[$YELLOW\]\w\[$RESET\]"
-    # current user in green, notifies if superuser here and turns dollar red
-    local userString="\[$RED\]\$(sudo -n echo "superuser\ " 2> /dev/null)\[$RESET\]"
+    # if in git repo, add branch name in green
+    local gitString="\[$GREEN\]\$(__git_ps1 2> /dev/null | sed -E 's/ \(([^=]*)=?\)/[\1]/')\[$RESET\]"
 
     export PROMPT_DIRTRIM=3
     export PS1="${userString}${pwdString} ${gitString}\n\$(sudo -n tput setaf 1 2> /dev/null)\\$\[$RESET\] "

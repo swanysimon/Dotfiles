@@ -6,9 +6,9 @@ set nocompatible
 filetype on
 syntax   on
 
-" standard settings
+" standard settings I find helpful
 set backspace=eol,indent,start
-set clipboard+=unnamed
+set clipboard=unnamed
 set history=1000
 set hlsearch
 set ignorecase
@@ -17,6 +17,12 @@ set mouse=a
 set ruler
 set smartcase
 set visualbell
+
+" more logical line nagivation with line wrapping
+nnoremap j  gj
+nnoremap k  gk
+nnoremap gj j
+nnoremap gk k
 
 " file improvements
 set autoread
@@ -55,6 +61,10 @@ set textwidth=120
 " smarter pane splitting
 set splitright
 set splitbelow
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " better autocompletion
 set completeopt=longest,menuone
@@ -70,7 +80,7 @@ set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#begin()
 
 " all plugins. run :BundleInstall to install once vundle set up
-"Plugin 'blueshirts/darcula'
+Plugin 'blueshirts/darcula'
 Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
@@ -83,8 +93,7 @@ Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()
 
 " all plugins should be above these lines
-filetype indent on
-filetype plugin on
+filetype indent plugin on
 
 " airline settings
 set laststatus=2
@@ -102,8 +111,12 @@ let g:ctrlp_custom_ignore+='\.(bz2|gz|zip)$'
 nnoremap <C-N> :NERDTree<CR>
 
 " color settings
-"colorscheme darcula
+set background=dark
+colorscheme darcula
 syntax on
-highlight ColorColumn ctermbg=black
-highlight NonText ctermbg=NONE
-highlight Normal ctermbg=NONE
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()

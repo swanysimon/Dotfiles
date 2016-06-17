@@ -92,8 +92,24 @@ Plugin 'vim-airline/vim-airline-themes'
 
 call vundle#end()
 
-" all plugins should be above these lines
+" all plugins should be above this line
 filetype indent plugin on
+
+" basic color settings
+set background=dark
+colorscheme darcula
+syntax on
+highlight ColorColumn ctermbg=black guibg=black
+highlight NonText     ctermbg=none  guibg=black
+highlight Normal      ctermbg=none  guibg=black
+
+" highlight extra trailing white
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 " airline settings
 set laststatus=2
@@ -102,21 +118,8 @@ let g:airline_theme='jellybeans'
 let g:airline#extensions#tabline#enabled=1
 
 " ctrlp settings
-let g:ctrlp_custom_ignore='\.(DS_STORE|git)$'
-let g:ctrlp_custom_ignore+='\.(class|jar)$'
-let g:ctrlp_custom_ignore+='\.(gif|jpg|png)$'
-let g:ctrlp_custom_ignore+='\.(bz2|gz|zip)$'
+let g:ctrlp_custom_ignore='\.(DS_STORE|git|class|jar|gif|jpg|png|bz2|gz|tar|zip)$'
 
 " NERDTree settings
 nnoremap <C-N> :NERDTree<CR>
 
-" color settings
-set background=dark
-colorscheme darcula
-syntax on
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()

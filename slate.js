@@ -116,36 +116,31 @@ function righthalf(window) {
 
 slate.bind("c:alt", function(window) {
     if (window.isMovable()) {
-        center(window);
+        centerResize(window);
     }
-    return;
 });
 
 slate.bind("c:alt,shift", function(window) {
     if (window.isMovable()) {
-        centerResize(window);
+        center(window);
     }
-    return;
 });
 
 slate.bind("f:alt", function(window) {
     if (window.isMovable()) {
         fullscreen(window);
     }
-    return;
 });
 
 slate.bind("j:alt", function(window) {
     if (window.isMovable()) {
         lefthalf(window);
     }
-    return;
 });
 
 slate.bind("l:alt", function(window) {
     if (window.isMovable()) {
         righthalf(window);
     }
-    return;
 });
 

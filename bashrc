@@ -48,10 +48,10 @@ alias gd='git diff'
 alias gf='git fetch'
 alias gh='git-home'
 alias gk='git checkout'
-alias gl='git log --abbrev-commit --date=short --decorate --graph --pretty=format:"%h %C(yellow)%ad %C(reset)- %C(green)%an%C(reset)%n%w(0,8,8)%B"'
+alias gl='git log --graph --pretty=format:"%h %C(yellow)%ad %C(reset)- %C(green)%an%C(reset)%n%w(0,8,8)%B"'
 alias glv='gl --stat-graph-width=$((${COLUMNS}/8))'
 alias go='git commit'
-alias grb='git rebase --stat'
+alias grb='git rebase'
 alias gs='git status'
 
 # activity monitoring
@@ -74,13 +74,11 @@ alias sleepytime='sudo shutdown -s now; sudo -k'
 # for sanity's sake while backing things up
 function backup() {
     local USAGE
-    read -d '' USAGE <<-EOF
+    read -d '' USAGE <<EOF
 USAGE: backup [ help ] [ format [archive_name] [format_options]] [ <file1 | directory1> ... ]
 Supported archive formats are: bak, bzip2, gzip, zip, tar
 For an empty archive format or 'bak', files and directories are rename to have a '.bak' extension
 For all other archive formats, the first optional argument to the format is the name of the archive to create.
-
-
 
 If achive format is ommitted, all files are renamed with a '.bak' extension
 
@@ -176,8 +174,9 @@ function brewUpgrade() {
     brew update
     brew upgrade --all
     for cask in $(brew cask list); do
-        brew cask install "$cask"
+        brew cask install "$cask" 2>&1 | grep -v "already installed"
     done
+    brew cleanup -fs --prune=0
 }
 
 
@@ -220,6 +219,17 @@ function finagle() {
             return 1
             ;;
     esac
+}
+
+# find out what's happening on a port
+function port() {
+    COMMAND="lsof -iTCP -P | grep LISTEN"
+
+    if [[ $# -ne 0 ]]; then
+      COMMAND="${COMMAND} | grep $1"
+    fi
+    echo "${COMMAND}"
+    eval "${COMMAND}"
 }
 
 

@@ -18,7 +18,7 @@ set ruler
 set smartcase
 set visualbell
 
-" more logical line nagivation with line wrapping
+" more logical line nagivation
 nnoremap j  gj
 nnoremap k  gk
 nnoremap gj j
@@ -83,8 +83,6 @@ call vundle#begin()
 Plugin 'blueshirts/darcula'
 Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'lambdatoast/elm.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-commentary'
 Plugin 'vim-airline/vim-airline'
@@ -95,13 +93,14 @@ call vundle#end()
 " all plugins should be above this line
 filetype indent plugin on
 
+" font settings
+set guifont=Menlo\ Regular\ for\ Powerline:h14
+
 " basic color settings
 set background=dark
 colorscheme darcula
 syntax on
-highlight ColorColumn ctermbg=black guibg=black
-highlight NonText     ctermbg=none  guibg=black
-highlight Normal      ctermbg=none  guibg=black
+highlight Normal ctermbg=none
 
 " highlight extra trailing white
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -111,15 +110,15 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-" airline settings
-set laststatus=2
-let g:airline_powerline_fonts=1
-let g:airline_theme='jellybeans'
-let g:airline#extensions#tabline#enabled=1
-
 " ctrlp settings
 let g:ctrlp_custom_ignore='\.(DS_STORE|git|class|jar|gif|jpg|png|bz2|gz|tar|zip)$'
 
 " NERDTree settings
 nnoremap <C-N> :NERDTree<CR>
+
+" airline settings
+set laststatus=2
+let g:airline_powerline_fonts=1
+let g:airline_theme='jellybeans'
+let g:airline#extensions#tabline#enabled=1
 

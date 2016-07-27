@@ -70,8 +70,7 @@ alias shutdown='sudo shutdown -h now'
 alias restart='sudo shutdown -r now'
 alias sleepytime='sudo shutdown -s now; sudo -k'
 
-
-# for sanity's sake while backing things up
+# a sane way to archive things
 function backup() {
     local USAGE
     read -d '' USAGE <<EOF
@@ -169,7 +168,7 @@ EOF
     esac
 }
 
-
+# update everything brew
 function brewUpgrade() {
     brew update
     brew upgrade --all
@@ -179,7 +178,24 @@ function brewUpgrade() {
     brew cleanup -fs --prune=0
 }
 
+# change cd to become silent pushd/popd
+function cd() {
+    case "$1" in
+        "")  pushd $HOME > /dev/null ;;
+        "-") popd > /dev/null ;;
+        *)
+            if [[ "$1" =~ ^-[0-9]+$ ]]; then
+                for i in {1...${1}}; do
+                    popd > /dev/null
+                done
+            else
+                pushd "$@" > /dev/null
+            fi
+            ;;
+    esac
+}
 
+# unarchive a file
 function extract() {
     local USAGE=$'usage: '$0$' [ -h|--help ] archive1 archive2 ...
 Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
@@ -208,7 +224,6 @@ Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
     done
 }
 
-
 # random text editing
 function finagle() {
     case "$1" in
@@ -231,5 +246,4 @@ function port() {
     echo "${COMMAND}"
     eval "${COMMAND}"
 }
-
 

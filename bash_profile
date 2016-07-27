@@ -16,8 +16,11 @@ export GREP_OPTIONS='--color=auto'
 # history - not super great with tmux still
 export HISTFILESIZE=5000
 export HISTSIZE=5000
+export HISTCONTROL=ignoredups:erasedups
+export PROMPT_COMMAND="history -a; update_terminal_cwd"
 shopt -s histappend
-export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+shopt -s histreedit
+shopt -s histverify
 
 # java home to most recent java version
 export JAVA_HOME="$(/usr/libexec/java_home)"
@@ -30,16 +33,15 @@ function setPS1() {
     local RED=$(tput setaf 1)
     local GREEN=$(tput setaf 2)
     local YELLOW=$(tput setaf 3)
+    local BLUE=$(tput setaf 4)
 
-    # notify if sudo is active (notice whitespace at the end)
-    local userString="\[$RED\]\$(sudo -n echo superuser\  2> /dev/null)\[$RESET\]"
     # current directory in yellow
     local pwdString="\[$YELLOW\]\w\[$RESET\]"
     # if in git repo, add branch name in green
-    local gitString="\[$GREEN\]\$(__git_ps1 2> /dev/null | sed -E 's/ \(([^=]*)=?\)/[\1]/')\[$RESET\]"
+    local gitString="\[$RED\]\$(__git_ps1 2> /dev/null | sed -E 's/([^=]*)=?/\1/')\[$RESET\]"
 
     export PROMPT_DIRTRIM=3
-    export PS1="${userString}${pwdString} ${gitString}\n\$(sudo -n tput setaf 1 2> /dev/null)\\$\[$RESET\] "
+    export PS1="${pwdString}${gitString}\n\\$\[$RESET\] "
 }
 
 setPS1

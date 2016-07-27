@@ -109,6 +109,38 @@ function righthalf(window) {
     return;
 }
 
+function pushLeft(window) {
+    window.doOperation(slate.operation("push", {
+        "direction": "left"
+    }));
+}
+
+function pushRight(window) {
+    window.doOperation(slate.operation("push", {
+        "direction": "right"
+    }));
+}
+
+function nextWindow(window) {
+    window.doOperation(slate.operation("throw", {
+        "x"     : screenOriginX() + (screenWidth() - windowWidth()) / 2,
+        "y"     : screenOriginY() + (screenHeight() - windowHeight()) / 2,
+        "width" : windowWidth(),
+        "height": windowHeight(),
+        "screen": "next"
+    }));
+}
+
+function previousWindow(window) {
+    window.doOperation(slate.operation("throw", {
+        "x"     : screenOriginX() + (screenWidth() - windowWidth()) / 2,
+        "y"     : screenOriginY() + (screenHeight() - windowHeight()) / 2,
+        "width" : windowWidth(),
+        "height": windowHeight(),
+        "screen": "previous"
+    }));
+}
+
 
 /*
  * bindings
@@ -116,7 +148,11 @@ function righthalf(window) {
 
 slate.bind("c:alt", function(window) {
     if (window.isMovable()) {
-        centerResize(window);
+        if (window.isResizable()) {
+            centerResize(window);
+        } else {
+            center(window);
+        }
     }
 });
 
@@ -128,19 +164,48 @@ slate.bind("c:alt,shift", function(window) {
 
 slate.bind("f:alt", function(window) {
     if (window.isMovable()) {
-        fullscreen(window);
+        if (window.isResizable()) {
+            fullscreen(window);
+        } else {
+            center(window);
+        }
+    }
+});
+
+slate.bind("f:cmd,ctrl", function(window) {
+    if (window.isMovable()) {
+        if (window.isResizable()) {
+            fullscreen(window);
+        } else {
+            center(window);
+        }
     }
 });
 
 slate.bind("j:alt", function(window) {
     if (window.isMovable()) {
-        lefthalf(window);
+        if (window.isResizable()) {
+            lefthalf(window);
+        } else {
+            pushLeft(window);
+        }
     }
 });
 
 slate.bind("l:alt", function(window) {
     if (window.isMovable()) {
-        righthalf(window);
+        if (window.isResizable()) {
+            righthalf(window);
+        } else {
+            pushRight(window);
+        }
     }
 });
 
+slate.bind("left:ctrl", function(window) {
+    previousWindow(window);
+});
+
+slate.bind("right:ctrl", function(window) {
+    nextWindow(window);
+});

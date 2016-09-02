@@ -52,7 +52,7 @@ alias gl='git log --graph --pretty=format:"%h %C(yellow)%ad %C(reset)- %C(green)
 alias glv='gl --stat-graph-width=$((${COLUMNS}/8))'
 alias go='git commit'
 alias grb='git rebase'
-alias gs='git status'
+alias gs='git status -s'
 
 # activity monitoring
 alias top='top -o cpu'
@@ -72,27 +72,17 @@ alias sleepytime='sudo shutdown -s now; sudo -k'
 
 # a sane way to archive things
 function backup() {
-    local USAGE
-    read -d '' USAGE <<EOF
-USAGE: backup [ help ] [ format [archive_name] [format_options]] [ <file1 | directory1> ... ]
-Supported archive formats are: bak, bzip2, gzip, zip, tar
-For an empty archive format or 'bak', files and directories are rename to have a '.bak' extension
-For all other archive formats, the first optional argument to the format is the name of the archive to create.
-
-If achive format is ommitted, all files are renamed with a '.bak' extension
-
-All variations of bzip2, gzip, xz, and zip compression support compression level support:
-  -1 --fast \t fastest (worst compression)
-    ...
-  -9 --best \t slowest (best) compression
-EOF
+    local USAGE=$'usage: backup [ help ] [ format [archive_name] ] file1 file2...
+Supported archive formats are: bzip2, gzip, zip, tar, tar.bz2, tar.gz
+When no archive format is specified, files and directories are renamed to have a .bak extension
+If an unknown format is specified, file and directories are renamed to have the unknown format as an extension
+If an archive name is not given, the first file is used as the base of the new filename'
     case "$1" in
         "")
-            echo "backup: no file or directory to back up" 1>&2
             echo "$USAGE" 1>&2
             return 2
             ;;
-        help|-h|--help)
+        -h|help|-help|--help)
             echo "$USAGE"
             return 0
             ;;
@@ -146,42 +136,34 @@ EOF
                 zip -rv "$1.zip" "$@"
             fi
             ;;
-        bak|*)
-            [[ "$1" == "bak" ]] && shift 1
-            if [[ -d "$1" || -f "$1" ]]; then
-                for F in "$@"; do
-                    if [[ -f "$F" ]]; then
-                        cp -iv "$F" "${F}.bak"
-                    elif [[ -d "$F" ]]; then
-                        cp -Riv "$F" "${F::-1}.bak/"
-                    else
-                        echo "backup: $F: no such file or directory" 1>&2
-                        return 2
-                    fi
-                done
-            else
-                echo "backup: $1: no such file or directory" 1>&2
-                echo "$USAGE" 1>&2
-                return 2
+        *)
+            if [[ ! -d "$1" && ! -f "$1" ]]; then
+                local extension="$1"
+                shift 1
             fi
+            if [[ $# -eq 0 ]]; then
+                echo "backup: no file or directory to back up" 1>&2
+                echo "$USAGE" 1>&2
+                return 1
+            fi
+            local file
+            for file in "$@"; do
+                if [[ -f "$file" ]]; then
+                    cp -iv "$file" "${file}.${extension-bak}"
+                elif [[ -d "$file" ]]; then
+                    cp -Riv "$file" "${file::-1}.${extension-bak}/"
+                else
+                    echo "backup: $file: no such file or directory. Continuing to next file" 1>&2
+                fi
+            done
             ;;
     esac
-}
-
-# update everything brew
-function brewUpgrade() {
-    brew update
-    brew upgrade --all
-    for cask in $(brew cask list); do
-        brew cask install "$cask" 2>&1 | grep -v "already installed"
-    done
-    brew cleanup -fs --prune=0
 }
 
 # change cd to become silent pushd/popd
 function cd() {
     case "$1" in
-        "")  pushd $HOME > /dev/null ;;
+        "") pushd $HOME > /dev/null ;;
         "-") popd > /dev/null ;;
         *)
             if [[ "$1" =~ ^-[0-9]+$ ]]; then
@@ -197,31 +179,39 @@ function cd() {
 
 # unarchive a file
 function extract() {
-    local USAGE=$'usage: '$0$' [ -h|--help ] archive1 archive2 ...
+    local USAGE=$'usage: extract [ help ] archive1 archive2 ...
 Supported formats include: bzip2, gzip, lzma, tar, xz, Z, zip'
-    local arg
-    for arg in "$@"; do
-        local FILEERROR="$0: $arg: no such file or directory"
-        local ARCHIVEERROR="$0: $arg: unknown archive format"
-        [[ "-h" = "$arg" || "--help" = "$arg" ]] && echo "$USAGE" 1>&2 && return 1
-        [[ ! -f "$arg" ]] && echo "$FILEERROR" 1>&2 && return 1
-        case "$arg" in
-            *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$arg"   ;;
-            *.tar.gz|*.tgz)                  tar xzvf "$arg"   ;;
-            *.bz|*.bz2|*.bzip|*.bzip2)       bunzip2 "$arg"    ;;
-            *.gz)                            gunzip "$arg"     ;;
-            *.lzma)                          unlzma "$arg"     ;;
-            *.tar)                           tar xvf "$arg"    ;;
-            *.xz)                            unxz "$arg"       ;;
-            *.Z)                             uncompress "$arg" ;;
-            *.zip)                           unzip "$arg"      ;;
-            *)
-                echo "$ARCHIVEERROR" 1>&2
-                echo "$USAGE" 1>&2
-                return 2
-                ;;
-        esac
-    done
+    case "$1" in
+        -h|help|-help|--help)
+            echo "$USAGE"
+            return 0
+            ;;
+        *)
+            local arg
+            for arg in "$@"; do
+                local FILEERROR="extract: $arg: no such file or directory"
+                local ARCHIVEERROR="extract: $arg: unknown archive format"
+                [[ ! -f "$arg" ]] && echo "$FILEERROR" 1>&2 && return 1
+                case "$arg" in
+                    *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar -xjf "$arg"   ;;
+                    *.tar.gz|*.tgz)                  tar -xzf "$arg"   ;;
+                    *.bz|*.bz2|*.bzip|*.bzip2)       bunzip2 "$arg"    ;;
+                    *.gz)                            gunzip "$arg"     ;;
+                    *.lzma)                          unlzma "$arg"     ;;
+                    *.tar)                           tar -xf "$arg"    ;;
+                    *.xz)                            unxz "$arg"       ;;
+                    *.Z)                             uncompress "$arg" ;;
+                    *.zip)                           unzip "$arg"      ;;
+                    *)
+                        echo "$ARCHIVEERROR" 1>&2
+                        echo "$USAGE" 1>&2
+                        return 2
+                        ;;
+                esac
+            done
+    esac
+    echo "$USAGE" 1>&2
+    return 1
 }
 
 # random text editing
@@ -238,12 +228,15 @@ function finagle() {
 
 # find out what's happening on a port
 function port() {
-    COMMAND="lsof -iTCP -P | grep LISTEN"
-
-    if [[ $# -ne 0 ]]; then
-      COMMAND="${COMMAND} | grep $1"
+    if [[ $# -eq 0 ]]; then
+        lsof -iSTP -P | grep LISTEN
+    else
+        local port
+        for port in "$@"; do
+            local command="lsof -iTCP -P | grep LISTEN | grep $port"
+            echo "$command"
+            eval "$command"
+        done
     fi
-    echo "${COMMAND}"
-    eval "${COMMAND}"
 }
 

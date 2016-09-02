@@ -182,12 +182,32 @@ slate.bind("f:cmd,ctrl", function(window) {
     }
 });
 
+slate.bind("h:alt", function(window) {
+    if (window.isMovable()) {
+        if (window.isResizable()) {
+            lefthalf(window);
+        } else {
+            pushLeft(window);
+        }
+    }
+});
+
 slate.bind("j:alt", function(window) {
     if (window.isMovable()) {
         if (window.isResizable()) {
             lefthalf(window);
         } else {
             pushLeft(window);
+        }
+    }
+});
+
+slate.bind("k:alt", function(window) {
+    if (window.isMovable()) {
+        if (window.isResizable()) {
+            righthalf(window);
+        } else {
+            pushRight(window);
         }
     }
 });

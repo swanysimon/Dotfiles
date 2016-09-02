@@ -10,7 +10,6 @@ syntax   on
 set backspace=eol,indent,start
 set clipboard=unnamed
 set history=1000
-set hlsearch
 set ignorecase
 set incsearch
 set mouse=a

@@ -25,27 +25,27 @@ shopt -s histverify
 # java home to most recent java version
 export JAVA_HOME="$(/usr/libexec/java_home)"
 
-# git shows some state
-export GIT_PS1_SHOWUPSTREAM=auto
-
 function setPS1() {
     local RESET=$(tput sgr0)
     local RED=$(tput setaf 1)
     local GREEN=$(tput setaf 2)
     local YELLOW=$(tput setaf 3)
     local BLUE=$(tput setaf 4)
-
-    # current directory in yellow
-    local pwdString="\[$YELLOW\]\w\[$RESET\]"
-    # if in git repo, add branch name in green
-    local gitString="\[$RED\]\$(__git_ps1 2> /dev/null | sed -E 's/([^=]*)=?/\1/')\[$RESET\]"
-
-    export PROMPT_DIRTRIM=3
-    export PS1="${pwdString}${gitString}\n\\$\[$RESET\] "
+    local CYAN=$(tput setaf 5)
+    local DATE_STRING="\t"
+    local PWD_STRING="\w"
+    local GIT_STRING="\$(__git_ps1 2> /dev/null | sed -E 's/([^=]+)=?/\1/')"
+    local PROMPT_STRING="\[$RESET\]\$"
+    local LEFT_PROMPT="\[$YELLOW\]${PWD_STRING}\[$RED\]${GIT_STRING}"
+    local RIGHT_PROMPT="\[$BLUE\]\$(printf "%\${COLUMNS}s" "${DATE_STRING}")"
+    export PS1="${RIGHT_PROMPT}\r${LEFT_PROMPT}\n${PROMPT_STRING} "
 }
 
+export GIT_PS1_SHOWUPSTREAM=auto
+export PROMPT_DIRTRIM=3
 setPS1
 
 # grab all my aliases and functions
 [[ -f ~/.bashrc ]] && source ~/.bashrc
 [[ -f ~/.bashrc.local ]] && source ~/.bashrc.local
+

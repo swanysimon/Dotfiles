@@ -163,16 +163,18 @@ If an archive name is not given, the first file is used as the base of the new f
 # change cd to become silent pushd/popd
 function cd() {
     case "$1" in
-        "") pushd $HOME > /dev/null ;;
-        "-") popd > /dev/null ;;
-        *)
+        "$PWD") ;;
+        -*)
             if [[ "$1" =~ ^-[0-9]+$ ]]; then
                 for i in {1...${1}}; do
                     popd > /dev/null
                 done
             else
-                pushd "$@" > /dev/null
+                popd > /dev/null
             fi
+            ;;
+        *)
+            pushd "$@" > /dev/null
             ;;
     esac
 }

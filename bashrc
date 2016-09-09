@@ -174,7 +174,11 @@ function cd() {
             fi
             ;;
         *)
-            pushd "$@" > /dev/null
+            if [[ -z "$1" ]]; then
+                pushd "$HOME" > /dev/null
+            else
+                pushd "$@" > /dev/null
+            fi
             ;;
     esac
 }

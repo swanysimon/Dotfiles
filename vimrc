@@ -69,10 +69,6 @@ nnoremap <C-H> <C-W><C-H>
 set completeopt=longest,menuone
 set wildmenu
 set wildmode=list
-inoremap <expr> <Tab>   pumvisible() ? "\<C-N>" : "\<C-X>\<C-N>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-P>" : "\<C-X>\<C-P>"
-"inoremap <expr> <CR>  pumvisible() ? "\<C-Y>" : "\<C-g>u\<CR>"
-"inoremap <expr> <Esc> pumvisible() ? "\<C-E>" : "\<C-g>u\<Esc>"
 
 " manage plugins
 set rtp+=$HOME/.vim/bundle/vundle/

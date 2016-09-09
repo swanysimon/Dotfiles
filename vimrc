@@ -3,25 +3,39 @@
 
 " be iMproved
 set nocompatible
-filetype on
+filetype off
 syntax   on
+autocmd! bufwritepost .vimrc source %
 
 " standard settings I find helpful
 set backspace=eol,indent,start
 set clipboard=unnamed
+set encoding=utf-8
 set history=1000
 set ignorecase
 set incsearch
 set mouse=a
 set ruler
 set smartcase
+set timeoutlen=250
 set visualbell
+inoremap jk <Esc>
 
-" more logical line nagivation
+" unlink single character deletion from clipboard
+nnoremap x "_x
+vnoremap x "_x
+nnoremap s "_s
+vnoremap s "_x
+
+" better movement
 nnoremap j  gj
 nnoremap k  gk
 nnoremap gj j
 nnoremap gk k
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " file improvements
 set autoread
@@ -31,39 +45,32 @@ set swapfile
 set undodir=/tmp/
 set undofile
 
-" exit insert mode slightly more gracefully
-inoremap jk <Esc>
-set timeoutlen=250
-
-" unlink single character deletion from clipboard
-nnoremap x "_x
-vnoremap x "_x
-nnoremap s "_s
-vnoremap s "_x
-
 " indentation improvements
 set autoindent
 set expandtab
+set shiftround
 set shiftwidth=4
 set smartindent
 set smarttab
 set softtabstop=4
 set tabstop=4
+vnoremap < <gv
+vnoremap > >gv
 
 " smarter line behavior
-set colorcolumn=+1
+set colorcolumn=121
+set foldlevel=99
+set foldmethod=indent
 set linebreak
 set nojoinspaces
+set nowrap
 set number
 set textwidth=120
+nnoremap <Space> za
 
 " smarter pane splitting
 set splitright
 set splitbelow
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
 " better autocompletion
 set completeopt=longest,menuone
@@ -76,6 +83,7 @@ call vundle#begin()
 
 " all plugins. run :BundleInstall to install once vundle set up
 Plugin 'blueshirts/darcula'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
@@ -87,26 +95,18 @@ call vundle#end()
 
 " all plugins should be above this line
 filetype indent plugin on
-
-" font settings
-set guifont=Menlo\ Regular\ for\ Powerline:h14
-
-" basic color settings
-set background=dark
-colorscheme darcula
 syntax on
-highlight Normal ctermbg=none
 
-" highlight extra trailing white
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+" set colorscheme to darcula
+set background=dark
+set guifont=Menlo\ Regular\ for\ Powerline:h14
+colorscheme darcula
+highlight Normal ctermbg=none
+highlight ColorColumn ctermbg=black
 
 " ctrlp settings
 let g:ctrlp_custom_ignore='\.(DS_STORE|git|class|jar|gif|jpg|png|bz2|gz|tar|zip)$'
+let g:ctrlp_max_height=30
 
 " NERDTree settings
 nnoremap <C-N> :NERDTree<CR>

@@ -35,7 +35,7 @@ function setPS1() {
     local DATE_STRING="\t"
     local PWD_STRING="\w"
     local GIT_STRING="\$(__git_ps1 2> /dev/null | sed -E 's/([^=]+)=?/\1/')"
-    local RIGHT_PROMPT="\[$BLUE\]\$(printf "%\${COLUMNS}s" "${DATE_STRING}")"
+    local RIGHT_PROMPT="\[$GREEN\]\$(printf "%\${COLUMNS}s" "${DATE_STRING}")"
     local LEFT_PROMPT="\[$YELLOW\]${PWD_STRING}\[$RED\]${GIT_STRING}"
     local PROMPT_STRING="\[$RESET\]\$"
     export PS1="${RIGHT_PROMPT}\r${LEFT_PROMPT}\n${PROMPT_STRING} "

@@ -27,15 +27,13 @@ export JAVA_HOME="$(/usr/libexec/java_home)"
 
 function setPS1() {
     local RESET=$(tput sgr0)
+    local BLACK=$(tput setaf 0)
     local RED=$(tput setaf 1)
-    local GREEN=$(tput setaf 2)
     local YELLOW=$(tput setaf 3)
-    local BLUE=$(tput setaf 4)
-    local CYAN=$(tput setaf 5)
     local DATE_STRING="\t"
     local PWD_STRING="\w"
     local GIT_STRING="\$(__git_ps1 2> /dev/null | sed -E 's/([^=]+)=?/\1/')"
-    local RIGHT_PROMPT="\[$GREEN\]\$(printf "%\${COLUMNS}s" "${DATE_STRING}")"
+    local RIGHT_PROMPT="\[$BLACK\]\$(printf "%\${COLUMNS}s" "${DATE_STRING}")"
     local LEFT_PROMPT="\[$YELLOW\]${PWD_STRING}\[$RED\]${GIT_STRING}"
     local PROMPT_STRING="\[$RESET\]\$"
     export PS1="${RIGHT_PROMPT}\r${LEFT_PROMPT}\n${PROMPT_STRING} "

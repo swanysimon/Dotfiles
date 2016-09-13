@@ -82,14 +82,13 @@ set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#begin()
 
 " all plugins. run :BundleInstall to install once vundle set up
-Plugin 'blueshirts/darcula'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'sherifkandeel/vim-colors'
 Plugin 'tpope/vim-commentary'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
 
@@ -100,7 +99,7 @@ syntax on
 " set colorscheme to darcula
 set background=dark
 set guifont=Menlo\ Regular\ for\ Powerline:h14
-colorscheme darcula
+colorscheme vimbrains
 highlight Normal ctermbg=none
 highlight ColorColumn ctermbg=black
 
@@ -110,10 +109,4 @@ let g:ctrlp_max_height=30
 
 " NERDTree settings
 nnoremap <C-N> :NERDTree<CR>
-
-" airline settings
-set laststatus=2
-let g:airline_powerline_fonts=1
-let g:airline_theme='jellybeans'
-let g:airline#extensions#tabline#enabled=1
 

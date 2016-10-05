@@ -15,7 +15,7 @@
 	<data>
 	YnBsaXN0MDDUAQIDBAUGFRZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
 	AAGGoKMHCA9VJG51bGzTCQoLDA0OVU5TUkdCXE5TQ29sb3JTcGFjZVYkY2xhc3NPECcw
-	LjQxNTY4NjI3NDUgMC41Mjk0MTE3NjQ3IDAuMzQ5MDE5NjA3OAAQAoAC0hAREhNaJGNs
+	LjMyNTQ5MDIwNjUgMC41ODAzOTIxODE5IDAuOTI1NDkwMjAwNQAQAYAC0hAREhNaJGNs
 	YXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohIUWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hp
 	dmVy0RcYVHJvb3SAAQgRGiMtMjc7QUhOW2KMjpCVoKmxtL3P0tcAAAAAAAABAQAAAAAA
 	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
@@ -33,7 +33,7 @@
 	<data>
 	YnBsaXN0MDDUAQIDBAUGFRZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
 	AAGGoKMHCA9VJG51bGzTCQoLDA0OVU5TUkdCXE5TQ29sb3JTcGFjZVYkY2xhc3NPECcw
-	LjY1ODgyMzU0OTcgMC43NTI5NDExOTEyIDAuMTM3MjU0OTA4NwAQAYAC0hAREhNaJGNs
+	LjQ5NDExNzY0NzQgMC42ODIzNTI5NjAxIDAuOTQ1MDk4MDQyNQAQAYAC0hAREhNaJGNs
 	YXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohIUWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hp
 	dmVy0RcYVHJvb3SAAQgRGiMtMjc7QUhOW2KMjpCVoKmxtL3P0tcAAAAAAAABAQAAAAAA
 	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
@@ -51,7 +51,7 @@
 	<data>
 	YnBsaXN0MDDUAQIDBAUGFRZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
 	AAGGoKMHCA9VJG51bGzTCQoLDA0OVU5TUkdCXE5TQ29sb3JTcGFjZVYkY2xhc3NPECcw
-	LjQ5NDExNzY0NzQgMC42ODIzNTI5NjAxIDAuOTQ1MDk4MDQyNQAQAYAC0hAREhNaJGNs
+	LjY1ODgyMzU0OTcgMC43NTI5NDExOTEyIDAuMTM3MjU0OTA4NwAQAYAC0hAREhNaJGNs
 	YXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohIUWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hp
 	dmVy0RcYVHJvb3SAAQgRGiMtMjc7QUhOW2KMjpCVoKmxtL3P0tcAAAAAAAABAQAAAAAA
 	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
@@ -105,7 +105,7 @@
 	<data>
 	YnBsaXN0MDDUAQIDBAUGFRZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
 	AAGGoKMHCA9VJG51bGzTCQoLDA0OVU5TUkdCXE5TQ29sb3JTcGFjZVYkY2xhc3NPECcw
-	LjMyNTQ5MDIwNjUgMC41ODAzOTIxODE5IDAuOTI1NDkwMjAwNQAQAYAC0hAREhNaJGNs
+	LjQxNTY4NjI3NDUgMC41Mjk0MTE3NjQ3IDAuMzQ5MDE5NjA3OAAQAoAC0hAREhNaJGNs
 	YXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohIUWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hp
 	dmVy0RcYVHJvb3SAAQgRGiMtMjc7QUhOW2KMjpCVoKmxtL3P0tcAAAAAAAABAQAAAAAA
 	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
@@ -131,11 +131,11 @@
 	<key>ANSIWhiteColor</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGFRZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
-	AAGGoKMHCA9VJG51bGzTCQoLDA0OVU5TUkdCXE5TQ29sb3JTcGFjZVYkY2xhc3NPECcw
-	LjY1ODgyMzU0OTcgMC43NTI5NDExOTEyIDAuMTM3MjU0OTA4NwAQAYAC0hAREhNaJGNs
-	YXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohIUWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hp
-	dmVy0RcYVHJvb3SAAQgRGiMtMjc7QUhOW2KMjpCVoKmxtL3P0tcAAAAAAAABAQAAAAAA
-	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
+	AAGGoKMHCA9VJG51bGzTCQoLDA0OVU5TUkdCXE5TQ29sb3JTcGFjZVYkY2xhc3NPECYw
+	LjY2Mjc0NTA5OCAwLjcxNzY0NzA1ODggMC43NzY0NzA1ODgyABACgALSEBESE1okY2xh
+	c3NuYW1lWCRjbGFzc2VzV05TQ29sb3KiEhRYTlNPYmplY3RfEA9OU0tleWVkQXJjaGl2
+	ZXLRFxhUcm9vdIABCBEaIy0yNztBSE5bYouNj5SfqLCzvM7R1gAAAAAAAAEBAAAAAAAA
+	ABkAAAAAAAAAAAAAAAAAAADY
 	</data>
 	<key>ANSIYellowColor</key>
 	<data>
@@ -161,19 +161,21 @@
 	<false/>
 	<key>Bell</key>
 	<false/>
+	<key>ConvertNewlinesOnPaste</key>
+	<false/>
 	<key>CursorBlink</key>
 	<true/>
 	<key>CursorColor</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGFRZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
-	AAGGoKMHCA9VJG51bGzTCQoLDA0OVU5TUkdCXE5TQ29sb3JTcGFjZVYkY2xhc3NPECYw
-	LjY2Mjc0NTA5OCAwLjcxNzY0NzA1ODggMC43NzY0NzA1ODgyABACgALSEBESE1okY2xh
-	c3NuYW1lWCRjbGFzc2VzV05TQ29sb3KiEhRYTlNPYmplY3RfEA9OU0tleWVkQXJjaGl2
-	ZXLRFxhUcm9vdIABCBEaIy0yNztBSE5bYouNj5SfqLCzvM7R1gAAAAAAAAEBAAAAAAAA
-	ABkAAAAAAAAAAAAAAAAAAADY
+	AAGGoKMHCA9VJG51bGzTCQoLDA0OVU5TUkdCXE5TQ29sb3JTcGFjZVYkY2xhc3NPECcw
+	LjczMzMzMzMzMzMgMC43MzMzMzMzMzMzIDAuNzMzMzMzMzMzMwAQAYAC0hAREhNaJGNs
+	YXNzbmFtZVgkY2xhc3Nlc1dOU0NvbG9yohIUWE5TT2JqZWN0XxAPTlNLZXllZEFyY2hp
+	dmVy0RcYVHJvb3SAAQgRGiMtMjc7QUhOW2KMjpCVoKmxtL3P0tcAAAAAAAABAQAAAAAA
+	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
 	</data>
 	<key>CursorType</key>
-	<integer>0</integer>
+	<integer>2</integer>
 	<key>DisableANSIColor</key>
 	<false/>
 	<key>Font</key>
@@ -206,24 +208,16 @@
 	</data>
 	<key>ShouldLimitScrollback</key>
 	<integer>1</integer>
-	<key>ShowActiveProcessInTabTitle</key>
-	<false/>
 	<key>ShowActiveProcessInTitle</key>
 	<false/>
 	<key>ShowCommandKeyInTitle</key>
 	<false/>
 	<key>ShowDimensionsInTitle</key>
 	<false/>
-	<key>ShowRepresentedURLInTabTitle</key>
-	<false/>
-	<key>ShowRepresentedURLInTitle</key>
-	<false/>
 	<key>ShowShellCommandInTitle</key>
 	<false/>
 	<key>ShowTTYNameInTitle</key>
 	<false/>
-	<key>ShowTerminalInDockIcon</key>
-	<true/>
 	<key>ShowWindowSettingsNameInTitle</key>
 	<false/>
 	<key>TextBoldColor</key>
@@ -248,21 +242,17 @@
 	<true/>
 	<key>UseBrightBold</key>
 	<true/>
-	<key>VisualBellOnlyWhenMuted</key>
-	<false/>
 	<key>WindowTitle</key>
 	<string>Yes, Master?</string>
 	<key>columnCount</key>
 	<integer>158</integer>
 	<key>name</key>
-	<string>JetBrains Darcula</string>
+	<string>JetBrains Darcula Inspired</string>
 	<key>rowCount</key>
 	<integer>81</integer>
 	<key>shellExitAction</key>
 	<integer>2</integer>
 	<key>type</key>
 	<string>Window Settings</string>
-	<key>useOptionAsMetaKey</key>
-	<true/>
 </dict>
 </plist>

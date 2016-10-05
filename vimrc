@@ -7,105 +7,108 @@ filetype off
 syntax   on
 autocmd! bufwritepost .vimrc source %
 
-" standard settings I find helpful
+" general settings
 set backspace=eol,indent,start
-set clipboard=unnamed
 set encoding=utf-8
 set history=1000
+set lazyredraw
+set mouse=a
+set number
+set ruler
+set showmatch
+set showcmd
+set visualbell
+
+" buffer management settings
+set autoread
+set dir=/tmp/
+set swapfile
+set undodir=/tmp/
+set undofile
+
+" search settings
 set ignorecase
 set incsearch
-set mouse=a
-set ruler
 set smartcase
-set timeoutlen=250
-set visualbell
-inoremap jk <Esc>
+nnoremap gV `[v`]
 
-" unlink single character deletion from clipboard
+" clipboard settings
+set clipboard=unnamed
 nnoremap x "_x
 vnoremap x "_x
 nnoremap s "_s
 vnoremap s "_x
 
-" better movement
+" movement settings
+inoremap jk <ESC>
 nnoremap j  gj
 nnoremap k  gk
 nnoremap gj j
 nnoremap gk k
+nnoremap B ^
+nnoremap E $
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" file improvements
-set autoread
-set dir=/tmp/
-set hidden
-set swapfile
-set undodir=/tmp/
-set undofile
-
-" indentation improvements
+" indentation settings
 set autoindent
 set expandtab
-set shiftround
-set shiftwidth=4
 set smartindent
-set smarttab
 set softtabstop=4
 set tabstop=4
 vnoremap < <gv
 vnoremap > >gv
 
-" smarter line behavior
-set colorcolumn=121
-set foldlevel=99
-set foldmethod=indent
+" word wrap settings
+set breakat=120
 set linebreak
 set nojoinspaces
 set nowrap
-set number
-set textwidth=120
-nnoremap <Space> za
 
-" smarter pane splitting
+" fold settings
+set foldenable
+set foldlevelstart=10
+set foldmethod=indent
+nnoremap <SPACE> za
+
+" pane split settings
 set splitright
 set splitbelow
 
-" better autocompletion
+" menu settings
 set completeopt=longest,menuone
 set wildmenu
 set wildmode=list
 
-" manage plugins
-set rtp+=$HOME/.vim/bundle/vundle/
+" manage plugins with Vundle
+set rtp+=$HOME/.vim/bundle/Vundle.vim/
 call vundle#begin()
-
-" all plugins. run :BundleInstall to install once vundle set up
 Plugin 'davidhalter/jedi-vim'
-Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sherifkandeel/vim-colors'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
-
+Plugin 'VundleVim/Vundle.vim'
 call vundle#end()
-
-" all plugins should be above this line
 filetype indent plugin on
 syntax on
 
-" set colorscheme to darcula
+" color settings
 set background=dark
+set colorcolumn=121
 set guifont=Menlo\ Regular\ for\ Powerline:h14
 colorscheme vimbrains
-highlight Normal ctermbg=none
-highlight ColorColumn ctermbg=black
+highlight Normal ctermbg=NONE
+highlight ColorColumn ctermbg=BLACK
 
 " ctrlp settings
 let g:ctrlp_custom_ignore='\.(DS_STORE|git|class|jar|gif|jpg|png|bz2|gz|tar|zip)$'
 let g:ctrlp_max_height=30
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
 
 " NERDTree settings
 nnoremap <C-N> :NERDTree<CR>

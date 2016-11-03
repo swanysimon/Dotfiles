@@ -52,14 +52,16 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" indentation settings
+" spacing settings
 set autoindent
 set expandtab
+set shiftwidth=4
 set smartindent
 set softtabstop=4
 set tabstop=4
 vnoremap < <gv
 vnoremap > >gv
+autocmd BufWritePre * %s/\s\+$//e
 
 " word wrap settings
 set breakat=120
@@ -100,9 +102,11 @@ syntax on
 set background=dark
 set colorcolumn=121
 set guifont=Menlo\ Regular\ for\ Powerline:h14
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
 colorscheme vimbrains
 highlight Normal ctermbg=NONE
 highlight ColorColumn ctermbg=BLACK
+highlight ExtraWhitespace ctermbg=RED
 
 " ctrlp settings
 let g:ctrlp_custom_ignore='\.(DS_STORE|git|class|jar|gif|jpg|png|bz2|gz|tar|zip)$'

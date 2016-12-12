@@ -1,7 +1,6 @@
 // slate.js
 // Simon Swanson
 
-
 /*
  * current screen and window size functions
  */
@@ -22,22 +21,6 @@ function screenHeight() {
     return slate.screen().visibleRect().height;
 }
 
-function fullScreenOriginX() {
-    return slate.screen().rect().x;
-}
-
-function fullScreenOriginY() {
-    return slate.screen().rect().y;
-}
-
-function fullScreenWidth() {
-    return slate.screen().rect().width;
-}
-
-function fullScreenHeight() {
-    return slate.screen().rect().height;
-}
-
 function windowOriginX() {
     return slate.window().rect().x;
 }
@@ -54,178 +37,88 @@ function windowHeight() {
     return slate.window().rect().height;
 }
 
-
 /*
  * window snapping operations
  */
 
 function fullscreen(window) {
-    window.doOperation(slate.operation("move", {
-        "x"     : screenOriginX(),
-        "y"     : screenOriginY(),
-        "width" : screenWidth(),
-        "height": screenHeight()
-    }));
-    return;
+    window.doOperation(__centerOperation(screenWidth(), screenHeight()));
+}
+
+function __centerOperation(requestedWidth, requestedHeight) {
+    var newWidth = __newSize("width", requestedWidth);
+    var newHeight = __newSize("height", requestedHeight);
+    return slate.operation("move", {
+        "x": __newCenteredOrigin("x", newWidth),
+        "y": __newCenteredOrigin("y", newHeight),
+        "width": newWidth,
+        "height": newHeight
+    });
+}
+
+function __newSize(widthOrHeight, requestedSize) {
+    if (widthOrHeight === "width") {
+        return slate.window().isResizable() ? requestedSize : windowWidth();
+    } else {
+        return slate.window().isResizable() ? requestedSize : windowHeight();
+    }
+}
+
+function __newCenteredOrigin(xOrY, desiredSize) {
+    if (xOrY === "x") {
+        return screenOriginX() + (screenWidth() - desiredSize) / 2;
+    } else {
+        return screenOriginY() + (screenHeight() - desiredSize) / 2;
+    }
 }
 
 function center(window) {
-    window.doOperation(slate.operation("move", {
-        "x"     : screenOriginX() + (screenWidth() - windowWidth()) / 2,
-        "y"     : screenOriginY() + (screenHeight() - windowHeight()) / 2,
-        "width" : windowWidth(),
-        "height": windowHeight()
-    }));
-    return;
+    window.doOperation(__centerOperation(windowWidth(), windowHeight()));
 }
 
-function centerResize(window) {
-    window.doOperation(slate.operation("move", {
-        "x"     : screenOriginX() + screenWidth() / 8,
-        "y"     : screenOriginY() + screenHeight() / 8,
-        "width" : screenWidth() * 3 / 4,
-        "height": screenHeight() * 3 / 4
-    }));
-    return;
+function moveLeft(window) {
+    window.doOperation(__resizeToEdgeOperation(__ratioOfScreenX(1/2), screenHeight(), "left"));
 }
 
-function lefthalf(window) {
-    window.doOperation(slate.operation("move", {
-        "x"     : screenOriginX(),
-        "y"     : screenOriginY(),
-        "width" : screenWidth() / 2,
-        "height": screenHeight()
-    }));
-    return;
+function __ratioOfScreenX(screenSizeRatio) {
+    return screenWidth() * screenSizeRatio;
 }
 
-function righthalf(window) {
-    window.doOperation(slate.operation("move", {
-        "x"     : screenOriginX() + screenWidth() / 2,
-        "y"     : screenOriginY(),
-        "width" : screenWidth() / 2,
-        "height": screenHeight()
-    }));
-    return;
+function __resizeToEdgeOperation(desiredWidth, desiredHeight, desiredDirection) {
+    var centerResize = __centerOperation(desiredWidth, desiredHeight);
+    var pushToEdge = slate.operation("push", {
+        "direction": desiredDirection,
+    });
+    return slate.operation("sequence", {
+        "operations": [[ centerResize, pushToEdge ]]
+    });
 }
 
-function pushLeft(window) {
-    window.doOperation(slate.operation("push", {
-        "direction": "left"
-    }));
+function moveDown(window) {
+    window.doOperation(__resizeToEdgeOperation(screenWidth(), __ratioOfScreenY(1/2), "down"));
 }
 
-function pushRight(window) {
-    window.doOperation(slate.operation("push", {
-        "direction": "right"
-    }));
+function __ratioOfScreenY(screenSizeRatio) {
+    return screenHeight() * screenSizeRatio;
 }
 
-function nextWindow(window) {
-    window.doOperation(slate.operation("throw", {
-        "x"     : screenOriginX() + (screenWidth() - windowWidth()) / 2,
-        "y"     : screenOriginY() + (screenHeight() - windowHeight()) / 2,
-        "width" : windowWidth(),
-        "height": windowHeight(),
-        "screen": "next"
-    }));
+function moveUp(window) {
+    window.doOperation(__resizeToEdgeOperation(screenWidth(), __ratioOfScreenY(1/2), "up"));
 }
 
-function previousWindow(window) {
-    window.doOperation(slate.operation("throw", {
-        "x"     : screenOriginX() + (screenWidth() - windowWidth()) / 2,
-        "y"     : screenOriginY() + (screenHeight() - windowHeight()) / 2,
-        "width" : windowWidth(),
-        "height": windowHeight(),
-        "screen": "previous"
-    }));
+function moveRight(window) {
+    window.doOperation(__resizeToEdgeOperation(__ratioOfScreenX(1/2), screenHeight(), "right"));
 }
-
 
 /*
  * bindings
  */
 
-slate.bind("c:alt", function(window) {
-    if (window.isMovable()) {
-        if (window.isResizable()) {
-            centerResize(window);
-        } else {
-            center(window);
-        }
-    }
-});
+slate.bind("f:cmd,ctrl", fullscreen);
+slate.bind("f:alt", fullscreen);
+slate.bind("c:alt", center);
+slate.bind("h:alt", moveLeft);
+slate.bind("j:alt", moveDown);
+slate.bind("k:alt", moveUp);
+slate.bind("l:alt", moveRight);
 
-slate.bind("c:alt,shift", function(window) {
-    if (window.isMovable()) {
-        center(window);
-    }
-});
-
-slate.bind("f:alt", function(window) {
-    if (window.isMovable()) {
-        if (window.isResizable()) {
-            fullscreen(window);
-        } else {
-            center(window);
-        }
-    }
-});
-
-slate.bind("f:cmd,ctrl", function(window) {
-    if (window.isMovable()) {
-        if (window.isResizable()) {
-            fullscreen(window);
-        } else {
-            center(window);
-        }
-    }
-});
-
-slate.bind("h:alt", function(window) {
-    if (window.isMovable()) {
-        if (window.isResizable()) {
-            lefthalf(window);
-        } else {
-            pushLeft(window);
-        }
-    }
-});
-
-slate.bind("j:alt", function(window) {
-    if (window.isMovable()) {
-        if (window.isResizable()) {
-            lefthalf(window);
-        } else {
-            pushLeft(window);
-        }
-    }
-});
-
-slate.bind("k:alt", function(window) {
-    if (window.isMovable()) {
-        if (window.isResizable()) {
-            righthalf(window);
-        } else {
-            pushRight(window);
-        }
-    }
-});
-
-slate.bind("l:alt", function(window) {
-    if (window.isMovable()) {
-        if (window.isResizable()) {
-            righthalf(window);
-        } else {
-            pushRight(window);
-        }
-    }
-});
-
-slate.bind("left:ctrl", function(window) {
-    previousWindow(window);
-});
-
-slate.bind("right:ctrl", function(window) {
-    nextWindow(window);
-});

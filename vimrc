@@ -7,6 +7,11 @@ filetype off
 syntax   on
 autocmd! bufwritepost .vimrc source %
 
+" set cursor shapes by mode - seems to not work on OS X
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
+
 " general settings
 set backspace=eol,indent,start
 set encoding=utf-8
@@ -41,10 +46,6 @@ vnoremap s "_x
 
 " movement settings
 inoremap jk <ESC>
-nnoremap j  gj
-nnoremap k  gk
-nnoremap gj j
-nnoremap gk k
 nnoremap B ^
 nnoremap E $
 nnoremap <C-J> <C-W><C-J>

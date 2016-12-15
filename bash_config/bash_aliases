@@ -1,0 +1,42 @@
+# bash_aliases
+
+# better reading
+alias less='less -r'
+alias vi='vim'
+
+# navigation
+alias back='cd -'
+alias ..='cd ../'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias ls='ls -hF'
+alias la='ls -A'
+alias ll='ls -l'
+alias lla='ll -A'
+
+# filesystem safety
+alias cp='cp -vi'
+alias mv='mv -vi'
+alias rm='rm -vi'
+alias mkdir='mkdir -pv'
+
+# git aliases
+alias git-home='cd $(git rev-parse --show-toplevel)'
+alias fetch='git fetch'
+alias pull='git pull'
+alias push='git push'
+alias ga='git add'
+alias gb='git branch'
+alias gd='git diff'
+alias gf='git fetch'
+alias gh='git-home'
+alias gk='git checkout'
+alias gl='git log --graph --pretty=format:"%h %C(yellow)%ad %C(reset)- %C(green)%an%C(reset)%n%w(0,8,8)%B%n%N"'
+alias glv='gl --stat-graph-width=$((${COLUMNS}/8))'
+alias go='git commit'
+alias grb='git rebase'
+alias gs='git status -s'
+
+# fuck
+[[ "$(which thefuck)" ]] && eval "$(thefuck --alias)"
+

@@ -1,0 +1,171 @@
+# bash_functions
+
+# working with networks - OS X only
+airport () {
+    [[ "$(uname)" != "Darwin" ]] && return 0
+    local AIRPORT_PATH="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
+    case "$1" in
+        "")
+            echo "No airport command given" 2>&1
+            return 2 ;;
+        -h|--help)
+            echo "airport [ -h ] [ connect | ls | on | off ]"
+            echo "Only on and off have been tested" ;;
+        connect)
+            networksetup -setairportnetwork en0 "$2" "$3" ;;
+        ls|list)
+            eval $AIRPORT_PATH -s ;;
+        off)
+            networksetup -setairportpower en0 off ;;
+        on)
+            networksetup -setairportpower en0 on ;;
+    esac
+}
+
+# in case I don't remember how to archive things
+backup () {
+    case "$1" in
+        "")
+            echo "No archive format chosen" 2<&1
+            return 2 ;;
+        -h|--help)
+            echo "backup [ -h ] [ <archive_format> [ archive_name ] ] file1 ..."
+            echo "Supported archive formats: bzip2, gzip, tar, tar.bz2, tar.gz, tar.xz, zip"
+            echo "When no archive format is speicified, files and directories are copied in a .bak file"
+            echo "If no archive name is given, the first file is used as the base of the archive name" ;;
+        bz|bz2|bzip|bzip2)
+            shift 1
+            bzip2 -kv "$@" ;;
+        gz|gzip)
+            shift 1
+            gzip -kv "$@" ;;
+        tar)
+            shift 1
+            if [[ "$1" == *.tar ]]; then
+                tar -cvf "$@"
+            elif [[ -d "$1" ]];then
+                tar -cvf "${1::-1}.tar" "$@"
+            else
+                tar -cvf "$1.tar" "$@"
+            fi ;;
+        tar.bz|tar.bz2|tbz|tbz2)
+            local EXT="$1"
+            shift 1
+            if [[ "$1" == *.tar.bz2 || "$1" == *.tbz2 || "$1" == *.tar.bz || "$1" == *.tbz ]]; then
+                tar -cjvf "$@"
+            elif [[ -d "$1" ]]; then
+                tar -cjvf "${1::-1}.${EXT}" "$@"
+            else
+                tar -cjvf "$1.${EXT}" "$@"
+            fi ;;
+        tar.gz|tgz)
+            local EXT="$1"
+            shift 1
+            if [[ "$1" == *.tar.gz || "$1" == *.tgz ]]; then
+                tar -czvf "$@"
+            elif [[ -d "$1" ]]; then
+                tar -czvf "${1::-1}.${EXT}" "$@"
+            else
+                tar -czvf "$1.${EXT}" "$@"
+            fi ;;
+        tar.xz|txz)
+            local EXT="$1"
+            shift 1
+            if [[ "$1" == *tar.xz || "$1" == *.txz ]]; then
+                tar -cJvf "$@"
+            elif [[ -d "$1" ]]; then
+                tar -cJvf "${1::-1}.${EXT}" "$@"
+            else
+                tar -cJvf "$1.${EXT}" "$@"
+                fi ;;
+        zip)
+            shift 1
+            if [[ "$1" == *.zip ]]; then
+                zip -rv "$@"
+            elif [[ -d "$1" ]]; then
+                zip -rv "${1::-1}.zip" "$@"
+            else
+                zip -rv "$1.zip" "$@"
+            fi ;;
+        *|bak)
+            local arg
+            for arg in "$@"; do
+                if [[ -d "$arg" ]]; then
+                    cp -Riv "$arg" "${arg::-1}.bak"
+                else
+                    cp -iv "$arg" "${arg}.bak"
+                fi
+            done ;;
+    esac
+}
+
+# change cd to become pushd/popd
+cd () {
+    case "$1" in
+        -*)
+            if [[ "$1" =~ ^-[0-9]+$ ]]; then
+                for i in {1...${1}}; do
+                    popd
+                done
+            else
+                [[ "$1" == "-" ]] && popd || pushd "$@"
+            fi ;;
+        *)
+            [[ -z "$1" ]] && pushd "$HOME" || pushd "$@" ;;
+    esac
+}
+
+# unarchive a file
+extract () {
+    local arg
+    for arg in "$@"; do
+        if [[ "$arg" == "-h" || "$arg" == "--help" ]]; then
+            echo "extract [ -h ] archive1 ..."
+            echo "Supported formats are: bzip2, gzip, lzma, tar, xz, Z, zip"
+            return 0
+        elif [[ ! -f "$arg" ]]; then
+            echo "$arg: no such file or directory" 2>&1
+            return 2
+        fi
+    done
+    for arg in "$@"; do
+        case "$arg" in
+            *.tar.bz|*.tar.bz2|*.tbz|*.tbz2)
+                tar -xjf "$arg" ;;
+            *.tar.gz|*.tgz)
+                tar -xzf "$arg" ;;
+            *.tar.xz|*.txz)
+                tar -xJf "$arg" ;;
+            *.bz|*.bz2|*.bzip|*.bzip2)
+                bunzip2 "$arg" ;;
+            *.gz)
+                gunzip "$arg" ;;
+            *.lzma|*.xz)
+                unlzma "$arg" ;;
+            *.tar)
+                tar -xf "$arg" ;;
+            *.Z)
+                uncompress "$arg" ;;
+            *.zip)
+                unzip "$arg" ;;
+            *)
+                echo "$arg: unknown archive format" 2>&1 ;;
+        esac
+    done
+}
+
+# find out what's happening on a port
+port () {
+    local command
+    if [[ "$(uname)" == "Darwin" ]]; then
+        command="lsof -i :$1 -P"
+    elif [[ "$(uname)" == "Linux" ]]; then
+        command="netstat -nlp | grep :$1"
+    else
+        echo "Unknown system $(uname)" 2>&1
+        return 1
+    fi
+    echo "Running '${command}'"
+    eval $command
+}
+

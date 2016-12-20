@@ -101,18 +101,23 @@ backup () {
 
 # change cd to become pushd/popd
 cd () {
+    local command
     case "$1" in
-        -*)
-            if [[ "$1" =~ ^-[0-9]+$ ]]; then
-                for i in {1...${1}}; do
-                    popd
-                done
-            else
-                [[ "$1" == "-" ]] && popd || pushd "$@"
-            fi ;;
+        -)
+            shift 1
+            command="popd $@" ;;
         *)
-            [[ -z "$1" ]] && pushd "$HOME" || pushd "$@" ;;
+            if [[ -z "$1" ]]; then
+                command="pushd $HOME"
+            else
+                command="pushd $@"
+            fi
     esac
+    eval $command > /dev/null
+    local dir
+    for dir in $(dirs); do
+        [[ "$dir" == "$(pwd -P)" ]] && popd > /dev/null || break
+    done
 }
 
 # unarchive a file

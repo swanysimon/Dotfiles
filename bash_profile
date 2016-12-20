@@ -19,7 +19,7 @@ export HISTSIZE=5000
 export PROMPT_COMMAND="history -a"
 
 export CLICOLOR=1
-export GREP_OPTIONS='--color=auto'j
+export GREP_OPTIONS='--color=auto'
 
 if [[ -f "$(brew --prefix 2> /dev/null)/etc/bash_completion" ]]; then
     . "$(brew --prefix 2> /dev/null)/etc/bash_completion"

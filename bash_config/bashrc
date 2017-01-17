@@ -1,7 +1,0 @@
-# bashrc
-
-[[ -z "$PS1" || $- != *i* ]] && return
-
-[[ -f ~/.bash_config/bash_functions ]] && source ~/.bash_config/bash_functions
-[[ -f ~/.bash_config/bash_aliases ]] && source ~/.bash_config/bash_aliases
-

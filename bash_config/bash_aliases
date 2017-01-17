@@ -23,7 +23,7 @@ alias mkdir='mkdir -pv'
 # git aliases
 alias git-home='cd $(git rev-parse --show-toplevel)'
 alias fetch='git fetch'
-alias pull='git pull'
+alias pull='gf && grb'
 alias push='git push'
 alias ga='git add'
 alias gb='git branch'
@@ -39,4 +39,8 @@ alias gs='git status -s'
 
 # fuck
 [[ "$(which thefuck)" ]] && eval "$(thefuck --alias)"
+
+# clipboards
+[[ "$(uname)" == "Linux" ]] && alias pbcopy='xclip -selection clipboard'
+[[ "$(uname)" == "Linux" ]] && alias pbpaste='xclip -selection clipboard -o'
 

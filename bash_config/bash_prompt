@@ -1,14 +1,14 @@
 # bash_prompt
 
-export GIT_PS1_SHOWUPSTREAM=auto
 export PROMPT_DIRTRIM=3
+
 
 prompt="\[$(tput setaf 0)\]\$(printf "%$((COLUMNS-1))s" "$(date +%R)")"
 prompt="${prompt}\r"
 prompt="${prompt}\[$(tput setaf 3)\]\w"
 prompt="${prompt}\[$(tput setaf 1)\]\$(__git_ps1 2> /dev/null | sed -E 's/([^=]+)=?/\1/')"
 prompt="${prompt}\[$(tput sgr0)\]\n"
-prompt="${prompt}\\$ "
+prompt="${prompt}\$ "
 export PS1=$prompt
 unset prompt
 

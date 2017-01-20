@@ -5,13 +5,13 @@ splitPane () {
     case "$1" in
         -h|--horizontal)
             shift 1
-            splitBelow $@ ;;
+            splitBelow "@" ;;
         -v|--vertical)
             shift 1
-            splitRight $@ ;;
+            splitRight "$@" ;;
         -s|--smart)
             shift 1
-            smartSplit $@ ;;
+            smartSplit "$@" ;;
         *)
             echo "Unknown option '$1'" 1>&2
             return 2 ;;
@@ -29,7 +29,9 @@ splitRight () {
 smartSplit () {
     # Menlo and Menlo for Powerline appear to have a 4:9 width:height ratio
     # adjust the coefficients to suite your font
-    if [[ $((LINES*4)) -lt $((COLUMNS*9)) ]]; then
+    local ROWS=$(tmux display-message -p '#{pane_height}')
+    local COLS=$(tmux display-message -p '#{pane_width}')
+    if [[ $((ROWS*9)) -lt $((COLS*4)) ]]; then
         splitRight $@
     else
         splitBelow $@

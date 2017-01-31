@@ -5,7 +5,7 @@ splitPane () {
     case "$1" in
         -h|--horizontal)
             shift 1
-            splitBelow "@" ;;
+            splitBelow "$@" ;;
         -v|--vertical)
             shift 1
             splitRight "$@" ;;
@@ -19,11 +19,11 @@ splitPane () {
 }
 
 splitBelow () {
-    tmux split-window -v -c '#{pane_current_path}' $@
+    tmux split-window -v -c '#{pane_current_path}' "$@"
 }
 
 splitRight () {
-    tmux split-window -h -c '#{pane_current_path}' $@
+    tmux split-window -h -c '#{pane_current_path}' "$@"
 }
 
 smartSplit () {
@@ -32,9 +32,9 @@ smartSplit () {
     local ROWS=$(tmux display-message -p '#{pane_height}')
     local COLS=$(tmux display-message -p '#{pane_width}')
     if [[ $((ROWS*9)) -lt $((COLS*4)) ]]; then
-        splitRight $@
+        splitRight "$@"
     else
-        splitBelow $@
+        splitBelow "$@"
     fi
 }
 

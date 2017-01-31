@@ -109,8 +109,8 @@ highlight ExtraWhitespace ctermbg=RED
 " ctrlp settings
 let g:ctrlp_custom_ignore='\.(DS_STORE|git|class|jar|gif|jpg|png|bz2|gz|tar|zip)$'
 let g:ctrlp_max_height=30
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_switch_buffer=0
+let g:ctrlp_working_path_mode=0
 
 " NERDTree settings
 nnoremap <C-N> :NERDTree<CR>

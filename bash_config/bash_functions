@@ -88,12 +88,12 @@ backup () {
                 zip -rv "$1.zip" "$@"
             fi ;;
         *|bak)
-            local arg
-            for arg in "$@"; do
-                if [[ -d "$arg" ]]; then
-                    cp -Riv "$arg" "${arg::-1}.bak"
+            local ARG
+            for ARG in "$@"; do
+                if [[ -d "$ARG" ]]; then
+                    cp -Riv "$ARG" "${ARG::-1}.bak"
                 else
-                    cp -iv "$arg" "${arg}.bak"
+                    cp -iv "$ARG" "${ARG}.bak"
                 fi
             done ;;
     esac
@@ -101,76 +101,88 @@ backup () {
 
 # change cd to become pushd/popd
 cd () {
-    local command
+    local COMMAND
     case "$1" in
         -)
             shift 1
-            command="popd $@" ;;
+            COMMAND="popd $@" ;;
         *)
             if [[ -z "$1" ]]; then
-                command="pushd $HOME"
+                COMMAND="pushd $HOME"
             else
-                command="pushd $@"
-            fi
+                COMMAND="pushd $@"
+            fi ;;
     esac
-    eval $command > /dev/null
-    local dir
-    for dir in $(dirs); do
-        [[ "$dir" == "$(pwd -P)" ]] && popd > /dev/null || break
+    eval $COMMAND > /dev/null
+    local DIR
+    for DIR in $(dirs); do
+        [[ "$DIR" == "$(pwd -P)" ]] && popd > /dev/null || break
     done
 }
 
 # unarchive a file
 extract () {
-    local arg
-    for arg in "$@"; do
-        if [[ "$arg" == "-h" || "$arg" == "--help" ]]; then
-            echo "extract [ -h ] archive1 ..."
-            echo "Supported formats are: bzip2, gzip, lzma, tar, xz, Z, zip"
-            return 0
-        elif [[ ! -f "$arg" ]]; then
-            echo "$arg: no such file or directory" 2>&1
-            return 2
-        fi
-    done
-    for arg in "$@"; do
-        case "$arg" in
-            *.tar.bz|*.tar.bz2|*.tbz|*.tbz2)
-                tar -xjf "$arg" ;;
-            *.tar.gz|*.tgz)
-                tar -xzf "$arg" ;;
-            *.tar.xz|*.txz)
-                tar -xJf "$arg" ;;
-            *.bz|*.bz2|*.bzip|*.bzip2)
-                bunzip2 "$arg" ;;
-            *.gz)
-                gunzip "$arg" ;;
-            *.lzma|*.xz)
-                unlzma "$arg" ;;
-            *.tar)
-                tar -xf "$arg" ;;
-            *.Z)
-                uncompress "$arg" ;;
-            *.zip)
-                unzip "$arg" ;;
+    local ARG
+    for ARG in "$@"; do
+        case "$ARG" in
+            -h|--help|help)
+                echo "extract [ -h ] archive1 ..."
+                echo "Supported formats are: bzip2, gzip, lzma, tar, xz, Z, zip"
+                return 0 ;;
             *)
-                echo "$arg: unknown archive format" 2>&1 ;;
+                if [[ ! -f "$ARG" ]]; then
+                    echo "$ARG: no such file or directory" 2>&1
+                    return 2
+                fi
         esac
+    done
+    for ARG in "$@"; do
+        case "$ARG" in
+            *.tar.bz|*.tar.bz2|*.tbz|*.tbz2)
+                tar -xjf "$ARG" ;;
+            *.tar.gz|*.tgz)
+                tar -xzf "$ARG" ;;
+            *.tar.xz|*.txz)
+                tar -xJf "$ARG" ;;
+            *.bz|*.bz2|*.bzip|*.bzip2)
+                bunzip2 "$ARG" ;;
+            *.gz)
+                gunzip "$ARG" ;;
+            *.lzma|*.xz)
+                unlzma "$ARG" ;;
+            *.tar)
+                tar -xf "$ARG" ;;
+            *.Z)
+                uncompress "$ARG" ;;
+            *.zip)
+                unzip "$ARG" ;;
+            *)
+                echo "$ARG: unknown archive format" 2>&1 ;;
+        esac
+    done
+}
+
+# make git fetching better
+gf () {
+    local REMOTE
+    for REMOTE in $(git remote show); do
+        echo "Fetching from $REMOTE"
+        git fetch "$@" $REMOTE
     done
 }
 
 # find out what's happening on a port
 port () {
-    local command
+    local COMMAND
     if [[ "$(uname)" == "Darwin" ]]; then
-        command="lsof -i :$1 -P"
+        COMMAND="lsof -i :$1 -P"
     elif [[ "$(uname)" == "Linux" ]]; then
-        command="netstat -nlp | grep :$1"
+        COMMAND="netstat -nlp | grep :$1"
     else
         echo "Unknown system $(uname)" 2>&1
         return 1
     fi
-    echo "Running '${command}'"
-    eval $command
+    echo "Running '${COMMAND}'"
+    eval $COMMAND
 }
 

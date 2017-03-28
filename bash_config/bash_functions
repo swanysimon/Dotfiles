@@ -101,19 +101,17 @@ backup () {
 
 # change cd to become pushd/popd
 cd () {
-    local COMMAND
     case "$1" in
         -)
             shift 1
-            COMMAND="popd $@" ;;
+            popd "$@" > /dev/null ;;
         *)
             if [[ -z "$1" ]]; then
-                COMMAND="pushd $HOME"
+                pushd "$HOME" > /dev/null
             else
-                COMMAND="pushd $@"
+                pushd "$@" > /dev/null
             fi ;;
     esac
-    eval $COMMAND > /dev/null
     local DIR
     for DIR in $(dirs); do
         [[ "$DIR" == "$(pwd -P)" ]] && popd > /dev/null || break

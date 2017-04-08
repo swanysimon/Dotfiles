@@ -13,7 +13,7 @@ prompt="${prompt}\[$(tput setaf 3)\]\w"
 # git branch in red
 prompt="${prompt}\[$(tput setaf 1)\]\$(__git_ps1 2> /dev/null | sed -E 's/([^=]+)=?/\1/')"
 # top of directory stack in black
-prompt="${prompt}\[$(tput setaf 0)\] \$(dirs -1 2> /dev/null)"
+prompt="${prompt}\[$(tput setaf 0)\] \$(dirs +1 2> /dev/null)"
 # prompt on newline
 prompt="${prompt}\[$(tput sgr0)\]\n"
 prompt="${prompt}\$ "

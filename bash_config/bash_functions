@@ -99,25 +99,6 @@ backup () {
     esac
 }
 
-# change cd to become pushd/popd
-cd () {
-    case "$1" in
-        -)
-            shift 1
-            popd "$@" > /dev/null ;;
-        *)
-            if [[ -z "$1" ]]; then
-                pushd "$HOME" > /dev/null
-            else
-                pushd "$@" > /dev/null
-            fi ;;
-    esac
-    local DIR
-    for DIR in $(dirs); do
-        [[ "$DIR" == "$(pwd -P)" ]] && popd > /dev/null || break
-    done
-}
-
 # unarchive a file
 extract () {
     local ARG

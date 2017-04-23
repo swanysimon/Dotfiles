@@ -4,6 +4,9 @@
 alias less='less -r'
 alias vi='vim'
 
+# random
+alias finagle='vim ~/.finagle'
+
 # navigation
 alias back='cd -'
 alias ..='cd ../'
@@ -21,6 +24,7 @@ alias rm='rm -vi'
 alias mkdir='mkdir -pv'
 
 # git aliases
+alias gamend='git add . && git commit --amend --reuse-message=HEAD'
 alias git-home='git rev-parse --show-toplevel'
 alias fetch='gf'
 alias pull='gf && grb'

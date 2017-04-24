@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # tmux_rename_window.sh
 
 renameWindow () {
@@ -12,5 +12,7 @@ renameWindow () {
     esac
 }
 
-[[ -n $TMUX ]] && renameWindow "$@"
+if [ -n $TMUX ]; then
+    renameWindow "$@"
+fi
 

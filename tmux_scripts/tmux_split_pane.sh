@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # tmux_split_pane.sh
 
 splitPane () {
@@ -31,12 +31,14 @@ smartSplit () {
     # adjust the coefficients to suite your font
     local ROWS=$(tmux display-message -p '#{pane_height}')
     local COLS=$(tmux display-message -p '#{pane_width}')
-    if [[ $((ROWS*9)) -lt $((COLS*4)) ]]; then
+    if [ $((ROWS*9)) -lt $((COLS*4)) ]; then
         splitRight "$@"
     else
         splitBelow "$@"
     fi
 }
 
-[[ -n $TMUX ]] && splitPane "$@"
+if [ -n $TMUX ]; then
+    splitPane "$@"
+fi
 

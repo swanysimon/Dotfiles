@@ -4,7 +4,7 @@
 " be iMproved
 set nocompatible
 filetype off
-syntax   on
+syntax on
 autocmd! bufwritepost .vimrc source %
 
 " general settings
@@ -33,7 +33,13 @@ set smartcase
 nnoremap gV `[v`]
 
 " clipboard settings
-set clipboard=unnamed
+if has('unnamedplus')
+    set clipboard^=unnamedplus
+else
+    set clipboard^=unnamed
+endif
+
+" single character deletions shouldn't go to the clipboard
 nnoremap x "_x
 vnoremap x "_x
 nnoremap s "_s
@@ -41,6 +47,7 @@ vnoremap s "_x
 
 " movement settings
 inoremap jk <ESC>
+inoremap kj <ESC>
 nnoremap B ^
 nnoremap E $
 nnoremap j gj

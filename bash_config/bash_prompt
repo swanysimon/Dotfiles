@@ -1,22 +1,54 @@
 # bash_prompt
 
-export PROMPT_DIRTRIM=3
+__git_prompt () {
+    if [ -z "$(git rev-parse --is-inside-work-tree 2> /dev/null)" ]; then
+        return 0
+    fi
 
+    local LOCAL_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)"
+    local REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref @{upstream})"
+    local LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count ${LOCAL_BRANCH}...${REMOTE_BRANCH})"
 
-# date in black on right
-prompt="\[$(tput setaf 0)\]\$(printf "%$((COLUMNS-1))s" "$(date +%R)")"
-prompt="${prompt}\r"
-# hostname in green on left
-prompt="${prompt}\[$(tput setaf 2)\]\h "
-# short directory in yellow
-prompt="${prompt}\[$(tput setaf 3)\]\w"
-# git branch in red
-prompt="${prompt}\[$(tput setaf 1)\]\$(__git_ps1 2> /dev/null | sed -E 's/([^=]+)=?/\1/')"
-# previous directory in black
-prompt="${prompt}\[$(tput setaf 0)\] \${OLDPWD}"
-# prompt on newline
-prompt="${prompt}\[$(tput sgr0)\]\n"
-prompt="${prompt}\$ "
-export PS1=$prompt
-unset prompt
+    local LOCAL_AHEAD="$(echo $LOCAL_REMOTE_DIFF | awk '{ print $1 }')"
+    if [ $LOCAL_AHEAD -ne 0 ]; then
+        local LOCAL_STATUS_STRING="[+${LOCAL_AHEAD}]"
+    fi
+
+    local REMOTE_AHEAD="$(echo $LOCAL_REMOTE_DIFF | awk '{ print $2 }')"
+    if [ $REMOTE_AHEAD -ne 0 ]; then
+        local REMOTE_STATUS_STRING="[+${REMOTE_AHEAD}]"
+    fi
+
+    printf "\[$(tput setaf 1)\]%s%s (tracking %s%s)" "$LOCAL_BRANCH" "$LOCAL_STATUS_STRING" "$REMOTE_BRANCH" "$REMOTE_STATUS_STRING"
+}
+
+__previous_directory () {
+    printf "\[$(tput setaf 0)\]${OLDPWD}"
+}
+
+__right_aligned_date () {
+    printf "\[$(tput setaf 0)\]%$((COLUMNS-1))s" "$(date +%R)"
+}
+
+__previous_return_status () {
+    if [ $1 -eq 0 ]; then
+        printf "\[$(tput setaf 2)\]\u2713"
+    else
+        printf "\[$(tput setaf 1)\]\u2717"
+    fi
+}
+
+__prompt_command () {
+    local EXIT_CODE=$?
+    export PROMPT_DIRTRIM=3
+    local DATE_STRING="$(__right_aligned_date)"
+    local HOST_STRING="\[$(tput setaf 2)\]\h"
+    local CWD_STRING="\[$(tput setaf 3)\]\w"
+    local GIT_STRING="$(__git_prompt)"
+    local OLDPWD_STRING="$(__previous_directory)"
+    local RETURN_STRING="$(__previous_return_status $EXIT_CODE)"
+    export PS1="${DATE_STRING}\r${HOST_STRING} ${CWD_STRING} ${GIT_STRING} ${OLDPWD_STRING}\n${RETURN_STRING} \[$(tput sgr0)\]$ "
+}
+
+PROMPT_COMMAND=__prompt_command
 

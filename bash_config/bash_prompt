@@ -11,15 +11,15 @@ __git_prompt () {
 
     local LOCAL_AHEAD="$(echo $LOCAL_REMOTE_DIFF | awk '{ print $1 }')"
     if [ $LOCAL_AHEAD -ne 0 ]; then
-        local LOCAL_STATUS_STRING="[+${LOCAL_AHEAD}]"
+        local LOCAL_STATUS_STRING="\u2191${LOCAL_AHEAD}"
     fi
 
     local REMOTE_AHEAD="$(echo $LOCAL_REMOTE_DIFF | awk '{ print $2 }')"
     if [ $REMOTE_AHEAD -ne 0 ]; then
-        local REMOTE_STATUS_STRING="[+${REMOTE_AHEAD}]"
+        local REMOTE_STATUS_STRING="\u2191${REMOTE_AHEAD}"
     fi
 
-    printf "\[$(tput setaf 1)\]%s%s (tracking %s%s)" "$LOCAL_BRANCH" "$LOCAL_STATUS_STRING" "$REMOTE_BRANCH" "$REMOTE_STATUS_STRING"
+    printf "\[$(tput setaf 1)\]%s%b|%s%b" "$LOCAL_BRANCH" "$LOCAL_STATUS_STRING" "$REMOTE_BRANCH" "$REMOTE_STATUS_STRING"
 }
 
 __previous_directory () {

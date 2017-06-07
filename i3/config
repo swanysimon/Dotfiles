@@ -55,7 +55,7 @@ bindsym $mod+4 workspace number 4 misc
 bindsym $mod+5 workspace number 5 misc
 bindsym $mod+6 workspace number 6 terminal
 bindsym $mod+7 workspace number 7 client
-bindsym $mod+8 workspace number 8 misc
+bindsym $mod+8 workspace number 8 windows
 bindsym $mod+9 workspace number 9 misc
 bindsym $mod+0 workspace number 0 misc
 
@@ -67,7 +67,7 @@ bindsym $mod+Shift+4 move container to workspace number 4 misc; workspace number
 bindsym $mod+Shift+5 move container to workspace number 5 misc; workspace number 5 misc
 bindsym $mod+Shift+6 move container to workspace number 6 terminal; workspace number 6 terminal
 bindsym $mod+Shift+7 move container to workspace number 7 client; workspace number 7 client
-bindsym $mod+Shift+8 move container to workspace number 8 misc; workspace number 8 misc
+bindsym $mod+Shift+8 move container to workspace number 8 misc; workspace number 8 windows
 bindsym $mod+Shift+9 move container to workspace number 9 misc; workspace number 9 misc
 bindsym $mod+Shift+0 move container to workspace number 0 misc; workspace number 0 misc
 
@@ -93,10 +93,11 @@ for_window [class=".*"] focus
 
 # specify where windows should open
 assign [class="Firefox"] 1 browser
-assign [class="Gnome-terminal"] 6 terminal
 assign [class="jetbrains-idea-ce"] 2 intellij
 assign [class="Eclipse"] 3 eclipse
+assign [class="Gnome-terminal"] 6 terminal
 assign [class="Palantir Workspace"] 7 client
+assign [class="VirtualBox"] 8 windows
 
 ####
 #### shortcuts

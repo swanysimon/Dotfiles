@@ -146,8 +146,9 @@ gf () {
     local REMOTE
     for REMOTE in $(git remote show); do
         echo "Fetching from $REMOTE"
-        git fetch "$@" $REMOTE
+        git fetch $REMOTE
     done
+    git fetch "$@"
 }
 
 # find out what's happening on a port

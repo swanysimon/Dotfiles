@@ -6,7 +6,7 @@ __git_prompt () {
     fi
 
     local LOCAL_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)"
-    local REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref @{upstream})"
+    local REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} 2> /dev/null)"
     local LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count ${LOCAL_BRANCH}...${REMOTE_BRANCH})"
 
     local LOCAL_AHEAD="$(echo $LOCAL_REMOTE_DIFF | awk '{ print $1 }')"

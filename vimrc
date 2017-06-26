@@ -3,9 +3,24 @@
 
 " be iMproved
 set nocompatible
-filetype off
-syntax on
 autocmd! bufwritepost .vimrc source %
+
+" install plugins
+call plug#begin()
+
+" language specific plugins
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
+Plug 'ElmCast/elm-vim', { 'for': 'elm' }
+
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'sherifkandeel/vim-colors'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+
+call plug#end()
 
 " general settings
 set backspace=eol,indent,start
@@ -89,17 +104,6 @@ set completeopt=longest,menuone
 set wildmenu
 set wildmode=list
 
-" manage plugins with Vundle
-set rtp+=$HOME/.vim/bundle/Vundle.vim/
-call vundle#begin()
-Plugin 'davidhalter/jedi-vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'sherifkandeel/vim-colors'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-fugitive'
-Plugin 'VundleVim/Vundle.vim'
-call vundle#end()
 filetype indent plugin on
 syntax on
 

@@ -8,17 +8,20 @@ autocmd! bufwritepost .vimrc source %
 " install plugins
 call plug#begin()
 
-" language specific plugins
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
-Plug 'ElmCast/elm-vim', { 'for': 'elm' }
-
-Plug 'kien/ctrlp.vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" general purpose plugins
 Plug 'sherifkandeel/vim-colors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+
+" navigation plugins
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+" language specific plugins
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
+Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 
 call plug#end()
 
@@ -45,7 +48,6 @@ set undofile
 set ignorecase
 set incsearch
 set smartcase
-nnoremap gV `[v`]
 
 " clipboard settings
 if has('unnamedplus')
@@ -67,6 +69,9 @@ nnoremap B ^
 nnoremap E $
 nnoremap j gj
 nnoremap k gk
+nnoremap K kJ
+nnoremap gV `[v`]
+
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>

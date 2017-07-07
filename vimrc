@@ -15,6 +15,7 @@ call plug#begin()
 Plug 'sherifkandeel/vim-colors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 
 " navigation plugins

@@ -15,7 +15,6 @@ call plug#begin()
 Plug 'sherifkandeel/vim-colors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 
 " navigation plugins
@@ -179,7 +178,7 @@ let g:ctrlp_working_path_mode=0
 let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
 
 " NERDTree settings
-nnoremap <C-N> :NERDTree<CR>
+nnoremap <C-N> :NERDTreeToggle<CR>
 
 """"
 "" autocmd settings

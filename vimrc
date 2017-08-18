@@ -181,8 +181,11 @@ let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
 nnoremap <C-N> :NERDTreeToggle<CR>
 
 """"
-"" autocmd settings
+"" command settings
 """"
+
+" write file with sudo when you aren't runing sudoedit
+cnoremap w!! w !sudo tee %
 
 " always run commands
 augroup alwaysgroup

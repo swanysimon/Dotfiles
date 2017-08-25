@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -n "$1" ]; then
     echo "Configures vim with a bunch of options"
@@ -8,24 +8,24 @@ fi
 
 runConfigureCommand () {
     make distclean
-    local COMMAND="./configure"
-    COMMAND="${COMMAND} --with-features=huge"
-    COMMAND="${COMMAND} --with-x"
-    COMMAND="${COMMAND} --enable-gui"
-    COMMAND="${COMMAND} --enable-multibyte"
-    COMMAND="${COMMAND} --enable-rubyinterp=yes"
-    COMMAND="${COMMAND} --enable-python3interp=yes"
-    COMMAND="${COMMAND} --with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu"
-    echo "Running '${COMMAND}'..."
-    eval $COMMAND
+    declare -a COMMAND
+    COMMAND+=( "./configure" )
+    COMMAND+=( "--with-features=huge" )
+    COMMAND+=( "--with-x" )
+    COMMAND+=( "--enable-gui" )
+    COMMAND+=( "--enable-multibyte" )
+    COMMAND+=( "--enable-rubyinterp=yes" )
+    COMMAND+=( "--enable-python3interp=yes" )
+    COMMAND+=( "--with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu" )
+    echo "Running '${COMMAND[@]}'..."
+    ${COMMAND[@]}
 }
 
 if [ "$(uname)" == "Linux" ]; then
     echo "Making sure prerequisites are installed"
     sudo apt-get update
-    sudo apt-get install xorg-dev python3-dev
+    sudo apt-get install libsm-dev libx11-dev libxpm-dev libxt-dev libxtst-dev python-dev python3-dev xorg-dev
 fi
 
 runConfigureCommand && make && sudo make install
-sudo -k
 

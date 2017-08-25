@@ -91,7 +91,7 @@ set number
 set ruler
 
 " use visual alerts
-set visualbell
+set novisualbell
 
 " line wrap settings
 set breakat=120

@@ -6,15 +6,14 @@ shopt -s histappend
 shopt -s histreedit
 shopt -s histverify
 
-HISTCONTROL=ignoredupbs:erasedups
-HISTFILESIZE=5000
-HISTSIZE=5000
-PROMPT_COMMAND="history -a"
+export HISTCONTROL=ignoredupbs:erasedups
+export HISTFILESIZE=5000
+export HISTSIZE=5000
 
-EDITOR=vim
+export EDITOR=vim
 
-CLICOLOR=1
-GREP_OPTIONS='--color=auto'
+export CLICOLOR=1
+export GREP_OPTIONS='--color=auto'
 
 if [[ -f "$(brew --prefix 2> /dev/null)/etc/bash_completion" ]]; then
     . "$(brew --prefix 2> /dev/null)/etc/bash_completion"

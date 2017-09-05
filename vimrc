@@ -97,9 +97,8 @@ set novisualbell
 set breakat=120
 set linebreak
 
-" pane split settings
-set splitright
 set splitbelow
+set splitright
 
 " indentation settings
 set autoindent
@@ -159,10 +158,13 @@ nnoremap s "_s
 vnoremap s "_s
 
 " navigate between splits without prefixing
+nnoremap <C-H> <C-W><C-H>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+
+nnoremap <C-Left> bN
+nnoremap <C-Right> bn
 
 """"
 "" plugin settings

@@ -125,9 +125,6 @@ match ExtraWhitespace /\s\+$\|\t/
 "" key remappings
 """"
 
-" backspace acts normally
-set backspace=eol,indent,start
-
 " up-down navigation by visual line
 nnoremap j gj
 vnoremap j gj
@@ -192,6 +189,7 @@ cnoremap w!! w !sudo tee %
 " always run commands
 augroup alwaysgroup
     autocmd!
+    " remove trailing whitespace on buffer write
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
 

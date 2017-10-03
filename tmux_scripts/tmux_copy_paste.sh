@@ -18,9 +18,9 @@ copy() {
     local COMMAND=getCopyCommand
     case "$1" in
         in-place)
-            tmux send-keys -X copy-pipe 'xclip -in -selection clipboard' ;;
+            tmux send-keys -X copy-pipe 'tmux save-buffer - | xclip -in -selection clipboard' ;;
         exit)
-            tmux send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard' ;;
+            tmux send-keys -X copy-pipe-and-cancel 'tmux save-buffer - | xclip -in -selection clipboard' ;;
         *)
             tmux display-message "$0: $1: unrecognized option" ;;
     esac

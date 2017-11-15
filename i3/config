@@ -48,59 +48,51 @@ bindsym $mod+Control+Delete exec dm-tool lock
 ####
 
 # assign workspaces
-bindsym $mod+1 workspace number 1 intellij
-bindsym $mod+2 workspace number 2 eclipse
-bindsym $mod+3 workspace number 3 pycharm
-bindsym $mod+4 workspace number 4 terminal
-bindsym $mod+5 workspace number 5 misc
-bindsym $mod+6 workspace number 6 misc
-bindsym $mod+7 workspace number 7 misc
-bindsym $mod+8 workspace number 8 client
-bindsym $mod+9 workspace number 9 windows
-bindsym $mod+0 workspace number 0 browser
+bindsym $mod+1 workspace number 1 alpha
+bindsym $mod+2 workspace number 2 bravo
+bindsym $mod+3 workspace number 3 charlie
+bindsym $mod+4 workspace number 4 delta
+bindsym $mod+5 workspace number 5 echo
+bindsym $mod+6 workspace number 6 foxtrot
+bindsym $mod+7 workspace number 7 golf
+bindsym $mod+8 workspace number 8 hotel
+bindsym $mod+9 workspace number 9 india
+bindsym $mod+0 workspace number 0 juliet
 
 # move to workspace
-bindsym $mod+Shift+1 move container to workspace number 1 intellij; workspace number 1 intellij
-bindsym $mod+Shift+2 move container to workspace number 2 eclipse; workspace number 2 eclipse
-bindsym $mod+Shift+3 move container to workspace number 3 pycharm; workspace number 3 pycharm
-bindsym $mod+Shift+4 move container to workspace number 4 terminal; workspace number 4 terminal
-bindsym $mod+Shift+5 move container to workspace number 5 misc; workspace number 5 misc
-bindsym $mod+Shift+6 move container to workspace number 6 misc; workspace number 6 misc
-bindsym $mod+Shift+7 move container to workspace number 7 misc; workspace number 7 misc
-bindsym $mod+Shift+8 move container to workspace number 8 client; workspace number 8 client
-bindsym $mod+Shift+9 move container to workspace number 9 windows; workspace number 9 windows
-bindsym $mod+Shift+0 move container to workspace number 0 browser; workspace number 0 browser
+bindsym $mod+Shift+1 move container to workspace number 1 alpha; workspace number 1 alpha
+bindsym $mod+Shift+2 move container to workspace number 2 bravo; workspace number 2 bravo
+bindsym $mod+Shift+3 move container to workspace number 3 charlie; workspace number 3 charlie
+bindsym $mod+Shift+4 move container to workspace number 4 delta; workspace number 4 delta
+bindsym $mod+Shift+5 move container to workspace number 5 echo; workspace number 5 echo
+bindsym $mod+Shift+6 move container to workspace number 6 foxtrot; workspace number 6 foxtrot
+bindsym $mod+Shift+7 move container to workspace number 7 golf; workspace number 7 golf
+bindsym $mod+Shift+8 move container to workspace number 8 hotel; workspace number 8 hotel
+bindsym $mod+Shift+9 move container to workspace number 9 india; workspace number 9 india
+bindsym $mod+Shift+0 move container to workspace number 0 juliet; workspace number 0 juliet
 
 # editor workspaces on the left, terminal in the middle, everything else on the right
 workspace 1 output DisplayPort-0
 workspace 2 output DisplayPort-0
 workspace 3 output DisplayPort-0
-workspace 4 output DisplayPort-1
-workspace 5 output DVI-0
-workspace 6 output DVI-0
-workspace 7 output DVI-0
-workspace 8 output DVI-0
-workspace 9 output DVI-0
-workspace 0 output DVI-0
+workspace 4 output DisplayPort-0
+workspace 5 output DisplayPort-0
+workspace 6 output DisplayPort-1
+workspace 7 output DisplayPort-1
+workspace 8 output DisplayPort-1
+workspace 9 output DisplayPort-1
+workspace 0 output DisplayPort-1
 
 # workspaces stack by default
 workspace_layout stacking
 
 # change workspace layout
 bindsym $mod+s layout stacking
-bindsym $mod+e layout splitv
+bindsym $mod+w layout toggle split
+bindsym $mod+e split horizontal
 
 # always focus the brand new window
 for_window [class=".*"] focus
-
-# specify where windows should open
-assign [class="Firefox"] 0 browser
-assign [class="chromium-browser"] 0 browser
-assign [class="jetbrains-idea-ce"] 1 intellij
-assign [class="Eclipse"] 2 eclipse
-assign [class="Gnome-terminal"] 4 terminal
-assign [class="com-sun-javaws-Main"] 8 client
-assign [class="VirtualBox"] 9 windows
 
 ####
 #### shortcuts
@@ -165,18 +157,13 @@ mode "resize" {
 # fullscreen mode
 bindsym $mod+f fullscreen toggle
 
-# floating window across first two monitors
-floating_modifier $mod
-bindsym $mod+Shift+f floating toggle, move absolute position 0 0, resize set 2880 2560
-
 ####
 #### extra configs
 ####
 
 # volume controls
-bindsym XF86AudioRaiseVolume exec amixer -q set Headphone 5%+
-bindsym XF86AudioLowerVolume exec amixer -q set Headphone 5%-
-bindsym XF86AudioMute exec amixer -q set Headphone toggle
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
 
 ####
 #### status bar
@@ -195,6 +182,5 @@ bar {
 }
 
 # start with firefox and a terminal running
-exec --no-startup-id firefox
 exec --no-startup-id gnome-terminal
 

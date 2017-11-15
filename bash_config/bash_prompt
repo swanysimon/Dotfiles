@@ -22,10 +22,6 @@ __git_prompt () {
     printf "\[$(tput setaf 1)\]%s%b|%s%b" "$LOCAL_BRANCH" "$LOCAL_STATUS_STRING" "$REMOTE_BRANCH" "$REMOTE_STATUS_STRING"
 }
 
-__previous_directory () {
-    printf "\[$(tput setaf 0)\]${OLDPWD}"
-}
-
 __right_aligned_date () {
     printf "\[$(tput setaf 0)\]%$((COLUMNS-1))s" "$(date +%R)"
 }
@@ -45,7 +41,6 @@ __prompt_command () {
     local HOST_STRING="\[$(tput setaf 2)\]\h"
     local CWD_STRING="\[$(tput setaf 3)\]\w"
     local GIT_STRING="$(__git_prompt)"
-    local OLDPWD_STRING="$(__previous_directory)"
     local RETURN_STRING="$(__previous_return_status $EXIT_CODE)"
     export PS1="${DATE_STRING}\r${HOST_STRING} ${CWD_STRING} ${GIT_STRING} ${OLDPWD_STRING}\n${RETURN_STRING} \[$(tput sgr0)\]$ "
 }

@@ -6,6 +6,11 @@
 #### config variables
 ####
 
+# needed for i3-gaps
+hide_edge_borders both
+for_window [class="^.*"] border pixel 0
+gaps inner 30
+
 # Alt key as mod
 set $mod Mod1
 
@@ -83,13 +88,14 @@ workspace 8 output DisplayPort-1
 workspace 9 output DisplayPort-1
 workspace 0 output DisplayPort-1
 
-# workspaces stack by default
-workspace_layout stacking
-
 # change workspace layout
+workspace_layout default
 bindsym $mod+s layout stacking
-bindsym $mod+w layout toggle split
-bindsym $mod+e split horizontal
+bindsym $mod+t split toggle
+
+# change gaps
+bindsym $mod+g gaps inner all plus 10
+bindsym $mod+Shift+g gaps inner all minus 10
 
 # always focus the brand new window
 for_window [class=".*"] focus
@@ -99,11 +105,10 @@ for_window [class=".*"] focus
 ####
 
 # application launcher settings
-bindsym $mod+space exec --no-startup-id rofi -modi drun -show drun
-bindsym $mod+Shift+space exec --no-startup-id rofi -combi-modi window,drun,ssh -modi combi -show combi
+bindsym $mod+space exec --no-startup-id rofi -show drun
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 
-# application shortcuts
+# application settings
 bindsym $mod+Shift+t exec --no-startup-id gnome-terminal
 
 ####
@@ -131,28 +136,11 @@ bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
 
-# resizing windows
-bindsym $mod+r mode "resize"
-mode "resize" {
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym $left resize shrink width 10 px or 10 ppt
-        bindsym $down resize grow height 10 px or 10 ppt
-        bindsym $up resize shrink height 10 px or 10 ppt
-        bindsym $right resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
+# resize windows
+bindsym $mod+Shift+y resize shrink width 1 px or 1 ppt
+bindsym $mod+Shift+u resize shrink height 1 px or 1 ppt
+bindsym $mod+Shift+i resize grow height 1 px or 1 ppt
+bindsym $mod+Shift+o resize grow width 1 px or 1 ppt
 
 # fullscreen mode
 bindsym $mod+f fullscreen toggle
@@ -162,15 +150,14 @@ bindsym $mod+f fullscreen toggle
 ####
 
 # volume controls
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
 
 ####
 #### status bar
 ####
 
 bar {
-    font pango:San Francisco Display 10
     position top
     status_command i3status
     tray_output primary
@@ -181,6 +168,6 @@ bar {
     }
 }
 
-# start with firefox and a terminal running
-exec --no-startup-id gnome-terminal
+# restore wallpaper on login
+exec --no-startup-id nitrogen --restore
 

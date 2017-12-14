@@ -1,5 +1,7 @@
 # bash_aliases
 
+shopt -s expand_aliases
+
 # better reading
 alias less='less -r'
 alias vi='vim'

@@ -32,6 +32,9 @@ call plug#end()
 "" system settings
 """"
 
+" use my bash aliases and functions
+set shellcmdflag=-ci
+
 " autoload buffer on change
 set autoread
 

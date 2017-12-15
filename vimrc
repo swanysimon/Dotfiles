@@ -171,13 +171,22 @@ nnoremap <C-Right> bn
 """"
 
 " ctrlp settings
-let g:ctrlp_custom_ignore='\.(DS_STORE|git|class|jar|gif|jpg|png|bz2|gz|tar|zip)$'
-let g:ctrlp_max_height=30
+let g:ctrlp_by_filename=1 " <C-D> in the prompt to toggle
+let g:ctrlp_custom_ignore={
+    \ 'dir': '\v[\/]\.(git|hg|svn)$',
+    \ 'file': '\v.(DS_STORE|class)$'
+\ }
+let g:ctrlp_max_height=10
+let g:ctrlp_regexp=1 " <C-R> in the prompt to toggle
+let g:ctrlp_show_hidden=1
 let g:ctrlp_switch_buffer=0
+let g:ctrlp_user_command={
+    \ 'types': {
+        \ 1: ['git', 'cd %s && git ls-files']
+    \ },
+    \ 'fallback': 'ag %s --nocolor -l -g ""'
+\ }
 let g:ctrlp_working_path_mode=0
-
-" use silver searcher with ctrlp
-let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
 
 " NERDTree settings
 nnoremap <C-N> :NERDTree<CR>

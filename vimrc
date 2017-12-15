@@ -19,7 +19,7 @@ Plug 'tpope/vim-surround'
 
 " navigation plugins
 Plug 'kien/ctrlp.vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTree' }
 
 " language specific plugins
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
@@ -180,7 +180,16 @@ let g:ctrlp_working_path_mode=0
 let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
 
 " NERDTree settings
-nnoremap <C-N> :NERDTreeToggle<CR>
+nnoremap <C-N> :NERDTree<CR>
+
+" calls NERDTreeFind so NERDTree is always up to date
+function! s:syncNERDTreeView()
+    if &modifiable && !&diff && winnr("$") > 1 && exists("b:NERDTree")
+        let l:curwnum = winnr()
+        NERDTreeFind
+        exec l:curwnum . "wincmd w"
+    endif
+endfunction
 
 """"
 "" command settings
@@ -192,7 +201,14 @@ cnoremap w!! w !sudo tee %
 " always run commands
 augroup alwaysgroup
     autocmd!
+
     " remove trailing whitespace on buffer write
     autocmd BufWritePre * %s/\s\+$//e
+
+    " entering a buffer sync NERDTree view
+    autocmd BufEnter,BufRead * call s:syncNERDTreeView()
+
+    " quit vim if NERDTree is the only thing open
+    autocmd BufEnter * if winnr("$") == 1 && exists("b:NERDTree") | q | endif
 augroup END
 

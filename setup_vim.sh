@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ -n "$1" ]; then
     echo "Configures vim with a bunch of options"
@@ -10,13 +10,19 @@ runConfigureCommand () {
     make distclean
     declare -a COMMAND
     COMMAND+=( "./configure" )
-    COMMAND+=( "--with-features=huge" )
-    COMMAND+=( "--with-x" )
-    COMMAND+=( "--enable-gui" )
     COMMAND+=( "--enable-multibyte" )
-    COMMAND+=( "--enable-rubyinterp=yes" )
     COMMAND+=( "--enable-python3interp=yes" )
-    COMMAND+=( "--with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu" )
+    COMMAND+=( "--enable-rubyinterp=yes" )
+    COMMAND+=( "--with-features=huge" )
+
+    if [ "$(uname)" == "Darwin" ]; then
+        COMMAND+=( "--disable-gui" )
+    else
+        COMMAND+=( "--enable-gui" )
+        COMMAND+=( "--with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu" )
+        COMMAND+=( "--with-x" )
+    fi
+
     echo "Running '${COMMAND[@]}'..."
     ${COMMAND[@]}
 }

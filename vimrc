@@ -189,16 +189,29 @@ let g:ctrlp_user_command={
 let g:ctrlp_working_path_mode=0
 
 " NERDTree settings
-nnoremap <C-N> :NERDTree<CR>
+function! IsNERDTreeBufferOpen()
+    return exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1
+endfunction
 
 " calls NERDTreeFind so NERDTree is always up to date
-function! s:syncNERDTreeView()
-    if &modifiable && !&diff && winnr("$") > 1 && exists("b:NERDTree")
+function! SyncNERDTreeView()
+    if &modifiable && !&diff && winnr("$") > 1 && IsNERDTreeBufferOpen()
         let l:curwnum = winnr()
         NERDTreeFind
-        exec l:curwnum . "wincmd w"
+        execute l:curwnum . "wincmd w"
     endif
 endfunction
+
+" when opening nerdtree, just go to existing buffer
+function! OpenNERDTreeToCurrentIfOpen()
+    if IsNERDTreeBufferOpen()
+        execute bufwinnr(t:NERDTreeBufName) . "wincmd w"
+    else
+        NERDTree
+    endif
+endfunction
+
+nnoremap <C-N> :call OpenNERDTreeToCurrentIfOpen()<CR>
 
 """"
 "" command settings
@@ -215,9 +228,9 @@ augroup alwaysgroup
     autocmd BufWritePre * %s/\s\+$//e
 
     " entering a buffer sync NERDTree view
-    autocmd BufEnter,BufRead * call s:syncNERDTreeView()
+    autocmd BufEnter,BufRead * call SyncNERDTreeView()
 
     " quit vim if NERDTree is the only thing open
-    autocmd BufEnter * if winnr("$") == 1 && exists("b:NERDTree") | q | endif
+    autocmd BufEnter * if winnr("$") == 1 && IsNERDTreeBufferOpen() | q | endif
 augroup END
 

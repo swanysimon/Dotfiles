@@ -91,7 +91,8 @@ workspace 0 output DisplayPort-1
 # change workspace layout
 workspace_layout default
 bindsym $mod+s layout stacking
-bindsym $mod+t split toggle
+bindsym $mod+Shitf+h layout splith
+bindsym $mod+Shift+v layout splitv
 
 # change gaps
 bindsym $mod+g gaps inner all plus 10

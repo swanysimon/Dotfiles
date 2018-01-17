@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # bashrc
 
 shopt -s checkwinsize
@@ -14,15 +15,28 @@ export EDITOR=vim
 
 export CLICOLOR=1
 
-if [[ -f "$(brew --prefix 2> /dev/null)/etc/bash_completion" ]]; then
-    . "$(brew --prefix 2> /dev/null)/etc/bash_completion"
+if [ -f "$(brew --prefix 2> /dev/null)/etc/bash_completion" ]; then
+    source "$(brew --prefix 2> /dev/null)/etc/bash_completion"
 fi
 
 # grab all extra configurations
-[[ -z "$PS1" || $- != *i* ]] && return
+if [ -z "$PS1" ] || [ $- != *i* ]; then
+    return
+fi
 
-[[ -f "${HOME}/.bash_config/bash_prompt" ]] && source "${HOME}/.bash_config/bash_prompt"
-[[ -f "${HOME}/.bash_config/bash_functions" ]] && source "${HOME}/.bash_config/bash_functions"
-[[ -f "${HOME}/.bash_config/bash_aliases" ]] && source "${HOME}/.bash_config/bash_aliases"
-[[ -f "${HOME}/.bash_local_config/bashrc" ]] && source "${HOME}/.bash_local_config/bashrc"
+if [ -f "${HOME}/.bash_config/bash_prompt" ]; then
+    source "${HOME}/.bash_config/bash_prompt"
+fi
+
+if [ -f "${HOME}/.bash_config/bash_functions" ]; then
+    source "${HOME}/.bash_config/bash_functions"
+fi
+
+if [ -f "${HOME}/.bash_config/bash_aliases" ]; then
+    source "${HOME}/.bash_config/bash_aliases"
+fi
+
+if [ -f "${HOME}/.bash_local_config/bashrc" ]; then
+    source "${HOME}/.bash_local_config/bashrc"
+fi
 

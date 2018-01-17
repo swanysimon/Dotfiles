@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # bash_aliases
 
 shopt -s expand_aliases
@@ -44,9 +45,13 @@ alias grb='git rebase'
 alias gs='git status -s'
 
 # fuck
-[[ "$(which thefuck)" ]] && eval "$(thefuck --alias)"
+if [ "$(which thefuck)" ]; then
+    eval "$(thefuck --alias)"
+fi
 
 # clipboards
-[[ "$(uname)" == "Linux" ]] && alias pbcopy='xclip -selection clipboard'
-[[ "$(uname)" == "Linux" ]] && alias pbpaste='xclip -selection clipboard -o'
+if [ "$(uname)" == "Linux" ]; then
+    alias pbcopy='xclip -selection clipboard'
+    alias pbpaste='xclip -selection clipboard -o'
+fi
 

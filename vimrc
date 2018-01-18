@@ -24,6 +24,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTree' }
 " language specific plugins
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
+Plug 'keith/swift.vim', { 'for': 'swift' }
 Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 
 call plug#end()

@@ -20,7 +20,7 @@ if [ -f "$(brew --prefix 2> /dev/null)/etc/bash_completion" ]; then
 fi
 
 # grab all extra configurations
-if [ -z "$PS1" ] || [ $- != *i* ]; then
+if [[ -z "$PS1" || $- != *i* ]]; then
     return
 fi
 

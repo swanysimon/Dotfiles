@@ -9,7 +9,7 @@
 # needed for i3-gaps
 hide_edge_borders both
 for_window [class="^.*"] border pixel 0
-gaps inner 30
+gaps inner 20
 
 # Alt key as mod
 set $mod Mod1
@@ -91,8 +91,8 @@ workspace 0 output DisplayPort-1
 # change workspace layout
 workspace_layout default
 bindsym $mod+s layout stacking
-bindsym $mod+Shitf+h layout splith
-bindsym $mod+Shift+v layout splitv
+bindsym $mod+Shift+Control+h split horizontal
+bindsym $mod+Shift+Control+v split vertical
 
 # change gaps
 bindsym $mod+g gaps inner all plus 10

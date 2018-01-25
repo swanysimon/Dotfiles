@@ -26,6 +26,7 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
 Plug 'keith/swift.vim', { 'for': 'swift' }
 Plug 'ElmCast/elm-vim', { 'for': 'elm' }
+Plug 'vim-scripts/haskell.vim', { 'for': 'haskell' }
 
 call plug#end()
 
@@ -190,29 +191,23 @@ let g:ctrlp_user_command={
 let g:ctrlp_working_path_mode=0
 
 " NERDTree settings
+nnoremap <C-N> :NERDTree<Enter>
+
+let NERDTreeAutoDeleteBuffer=1
+
 function! IsNERDTreeBufferOpen()
     return exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1
 endfunction
 
-" calls NERDTreeFind so NERDTree is always up to date
 function! SyncNERDTreeView()
-    if &modifiable && !&diff && winnr("$") > 1 && IsNERDTreeBufferOpen()
+    " only syncs NERDTree when the open buffer is modifiable, not a diff, has
+    " a filename, and NERDTree is already open
+    if &modifiable && !&diff && winnr("$") > 1 && IsNERDTreeBufferOpen() && expand("%:t") != ""
         let l:curwnum = winnr()
         NERDTreeFind
         execute l:curwnum . "wincmd w"
     endif
 endfunction
-
-" when opening nerdtree, just go to existing buffer
-function! OpenNERDTreeToCurrentIfOpen()
-    if IsNERDTreeBufferOpen()
-        execute bufwinnr(t:NERDTreeBufName) . "wincmd w"
-    else
-        NERDTree
-    endif
-endfunction
-
-nnoremap <C-N> :call OpenNERDTreeToCurrentIfOpen()<CR>
 
 """"
 "" command settings

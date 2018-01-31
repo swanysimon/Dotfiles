@@ -76,18 +76,6 @@ bindsym $mod+Shift+8 move container to workspace number 8 hotel; workspace numbe
 bindsym $mod+Shift+9 move container to workspace number 9 india; workspace number 9 india
 bindsym $mod+Shift+0 move container to workspace number 0 juliet; workspace number 0 juliet
 
-# editor workspaces on the left, terminal in the middle, everything else on the right
-workspace 1 output DisplayPort-0
-workspace 2 output DisplayPort-0
-workspace 3 output DisplayPort-0
-workspace 4 output DisplayPort-0
-workspace 5 output DisplayPort-0
-workspace 6 output DisplayPort-1
-workspace 7 output DisplayPort-1
-workspace 8 output DisplayPort-1
-workspace 9 output DisplayPort-1
-workspace 0 output DisplayPort-1
-
 # change workspace layout
 workspace_layout default
 bindsym $mod+s layout stacking
@@ -110,7 +98,7 @@ bindsym $mod+space exec --no-startup-id rofi -show drun
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 
 # application settings
-bindsym $mod+Shift+t exec --no-startup-id gnome-terminal
+bindsym $mod+Shift+t exec --no-startup-id st
 
 ####
 #### windows

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -n "$1" ]; then
     echo "Configures vim with a bunch of options"

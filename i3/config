@@ -14,23 +14,23 @@ gaps inner 20
 # Alt key as mod
 set $mod Mod1
 
-# set colors to my terminal colors
-set $BLACK #2b2b2b
-set $BRIGHT_BLACK #555555
-set $RED #c93b48
-set $BRIGHT_RED #ff6b68
-set $GREEN #6a8759
-set $BRIGHT_GREEN #a8c023
-set $YELLOW #cc7832
-set $BRIGHT_YELLOW #ffc66d
-set $BLUE #5394ec
-set $BRIGHT_BLUE #7eaef1
-set $MAGENTA #9876aa
-set $BRIGHT_MAGENTA #ae8abe
-set $CYAN #bbb529
-set $BRIGHT_CYAN #d6bf55
-set $WHITE #a9b7c6
-set $BRIGHT_WHITE #bbbbbb
+# set colors to my Xresources colors
+set_from_resource $BLACK color0 #2b2b2b
+set_from_resource $RED color1 #c93b48
+set_from_resource $GREEN color2 #6a8759
+set_from_resource $YELLOW color3 #cc7832
+set_from_resource $BLUE color4 #5394ec
+set_from_resource $MAGENTA color5 #9876aa
+set_from_resource $CYAN color6 #bbb529
+set_from_resource $WHITE color7 #a9b7c6
+set_from_resource $BRIGHT_BLACK color8 #555555
+set_from_resource $BRIGHT_RED color9 #ff6b68
+set_from_resource $BRIGHT_GREEN color10 #a8c023
+set_from_resource $BRIGHT_YELLOW color11 #ffc66d
+set_from_resource $BRIGHT_BLUE color12 #7eaef1
+set_from_resource $BRIGHT_MAGENTA color13 #ae8abe
+set_from_resource $BRIGHT_CYAN color14 #d6bf55
+set_from_resource $BRIGHT_WHITE color15 #bbbbbb
 
 ####
 #### session
@@ -78,7 +78,6 @@ bindsym $mod+Shift+0 move container to workspace number 0 juliet; workspace numb
 
 # change workspace layout
 workspace_layout default
-bindsym $mod+s layout stacking
 bindsym $mod+Shift+Control+h split horizontal
 bindsym $mod+Shift+Control+v split vertical
 

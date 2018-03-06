@@ -16,6 +16,7 @@ Plug 'sherifkandeel/vim-colors'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'vim-scripts/AnsiEsc.vim', { 'on': 'AnsiEsc' }
 
 " navigation plugins
 Plug 'kien/ctrlp.vim'

@@ -29,9 +29,9 @@ runConfigureCommand () {
 
 if [ "$(uname)" == "Linux" ]; then
     echo "Making sure prerequisites are installed"
-    sudo apt-get update
     sudo apt-get install libsm-dev libx11-dev libxpm-dev libxt-dev libxtst-dev python-dev python3-dev xorg-dev
 fi
 
 runConfigureCommand && make && sudo make install
+sudo -k
 

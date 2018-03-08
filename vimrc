@@ -123,9 +123,9 @@ set background=dark
 colorscheme vimbrains
 highlight Normal ctermbg=NONE
 
-" trailing whitespace or tabs as red
+" trailing whitespace is highlighted in red
 highlight ExtraWhitespace ctermbg=RED
-match ExtraWhitespace /\s\+$\|\t/
+match ExtraWhitespace /\s\+$/
 
 """"
 "" key remappings

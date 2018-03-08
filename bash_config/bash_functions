@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # bash_functions
 
-# working with networks - OS X only
+# working with networks - OS X only for now
 airport () {
     [[ "$(uname)" != "Darwin" ]] && return 0
     local AIRPORT_PATH="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
@@ -143,7 +143,7 @@ extract () {
 }
 
 # make git fetching better
-gf () {
+gf_all () {
     local REMOTE
     for REMOTE in $(git remote show); do
         echo "Fetching from $REMOTE"

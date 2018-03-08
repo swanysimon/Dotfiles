@@ -19,6 +19,10 @@ if [ -f "$(brew --prefix 2> /dev/null)/etc/bash_completion" ]; then
     source "$(brew --prefix 2> /dev/null)/etc/bash_completion"
 fi
 
+if ! type -p __git_complete > /dev/null; then
+    _completion_loader git
+fi
+
 # grab all extra configurations
 if [[ -z "$PS1" || $- != *i* ]]; then
     return

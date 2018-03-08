@@ -2,13 +2,13 @@
 # bash_prompt
 
 __git_prompt () {
-    if [ -z "$(git rev-parse --is-inside-work-tree 2> /dev/null)" ]; then
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         return 0
     fi
 
-    local LOCAL_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)"
+    local LOCAL_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD 2> /dev/null)"
     local REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} 2> /dev/null)"
-    local LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count ${LOCAL_BRANCH}...${REMOTE_BRANCH})"
+    local LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count ${LOCAL_BRANCH}...${REMOTE_BRANCH} 2> /dev/null)"
 
     local LOCAL_AHEAD="$(echo $LOCAL_REMOTE_DIFF | awk '{ print $1 }')"
     if [ $LOCAL_AHEAD -ne 0 ]; then

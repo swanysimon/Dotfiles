@@ -147,9 +147,6 @@ vnoremap B ^
 nnoremap E $
 vnoremap E $
 
-" join with line above
-nnoremap K kj
-
 " indentation in visual mode
 vnoremap < <gv
 vnoremap > >gv

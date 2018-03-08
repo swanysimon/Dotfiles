@@ -32,7 +32,8 @@ __git_complete g _git
 alias gf='g fetch'
 alias fetch='gf'
 alias fetchall='gf_all'
-alias pull='fetchall && pull'
+alias pull='g pull'
+alias pullall='fetchall && pull'
 alias gr='g rebase'
 alias gk='g checkout'
 
@@ -40,6 +41,7 @@ __git_complete gf _git_fetch
 __git_complete fetch _git_fetch
 __git_complete fetchall _git_fetch
 __git_complete pull _git_pull
+__git_complete pullall _git_pull
 __git_complete gr _git_rebase
 __git_complete gk _git_checkout
 
@@ -67,6 +69,8 @@ alias gall='gh && ga .'
 alias gamend='go --amend'
 alias gaddmend='gall && gamend'
 alias gaddmendnoedit='gaddmend --no-edit'
+
+alias gkhead='gk HEAD .'
 
 alias git-home='git rev-parse --show-toplevel'
 alias gh='cd $(git-home)'

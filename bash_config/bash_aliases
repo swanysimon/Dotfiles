@@ -55,7 +55,7 @@ __git_complete go _git_commit
 
 alias gb='g branch'
 alias gd='g diff'
-alias gl='g log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset"'
+alias gl='g log --color --graph --pretty=format:"%h - %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset"'
 alias glv='g log --color --graph --format=fuller'
 alias gs='g status'
 

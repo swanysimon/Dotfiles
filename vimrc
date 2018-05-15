@@ -87,7 +87,14 @@ set cursorline
 " macros execute before triggering redraw
 set lazyredraw
 
+" enable folds
+" TODO: fix foldmethod per language
+set foldenable
+set foldmethod=indent
+set foldlevel=1
+
 " line numbers
+set relativenumber
 set number
 
 " buffer summary

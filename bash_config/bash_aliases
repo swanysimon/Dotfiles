@@ -54,7 +54,7 @@ __git_complete push _git_push
 __git_complete go _git_commit
 
 alias gb='g branch'
-alias gd='g diff'
+alias gd='g difftool'
 alias gl='g log --color --graph --pretty=format:"%h - %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset"'
 alias glv='g log --color --graph --format=fuller'
 alias gs='g status'

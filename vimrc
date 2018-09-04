@@ -14,12 +14,9 @@ call plug#begin()
 " general purpose plugins
 Plug 'sherifkandeel/vim-colors'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'vim-scripts/AnsiEsc.vim', { 'on': 'AnsiEsc' }
 
 " navigation plugins
-Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTree' }
 
 " language specific plugins
@@ -173,24 +170,6 @@ nnoremap <C-Right> bn
 """"
 "" plugin settings
 """"
-
-" ctrlp settings
-let g:ctrlp_by_filename=1 " <C-D> in the prompt to toggle
-let g:ctrlp_custom_ignore={
-    \ 'dir': '\v[\/]\.(git|hg|svn)$',
-    \ 'file': '\v.(DS_STORE|class)$'
-\ }
-let g:ctrlp_max_height=10
-let g:ctrlp_regexp=1 " <C-R> in the prompt to toggle
-let g:ctrlp_show_hidden=1
-let g:ctrlp_switch_buffer=0
-let g:ctrlp_user_command={
-    \ 'types': {
-        \ 1: ['git', 'cd %s && git ls-files']
-    \ },
-    \ 'fallback': 'ag %s --nocolor -l -g ""'
-\ }
-let g:ctrlp_working_path_mode=0
 
 " NERDTree settings
 nnoremap <C-N> :NERDTree<Enter>

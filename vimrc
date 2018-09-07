@@ -46,7 +46,7 @@ set timeoutlen=200
 " use system clipboard
 if has('unnamedplus')
     set clipboard^=unnamedplus
-else
+elseif has('clipboard')
     set clipboard^=unnamed
 endif
 
@@ -115,9 +115,6 @@ set softtabstop=4
 
 " don't highlight search results
 set nohlsearch
-
-" set font
-set guifont=Menlo\ Regular\ for\ Powerline:h14
 
 " set colorscheme
 set background=dark

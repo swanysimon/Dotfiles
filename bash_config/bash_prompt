@@ -8,15 +8,15 @@ __git_prompt () {
 
     local LOCAL_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD 2> /dev/null)"
     local REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} 2> /dev/null)"
-    local LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count ${LOCAL_BRANCH}...${REMOTE_BRANCH} 2> /dev/null)"
+    local LOCAL_REMOTE_DIFF=$(git rev-list --left-right --count "${LOCAL_BRANCH}"..."${REMOTE_BRANCH}" 2> /dev/null)
 
-    local LOCAL_AHEAD="$(echo $LOCAL_REMOTE_DIFF | awk '{ print $1 }')"
-    if [ $LOCAL_AHEAD -ne 0 ]; then
+    local LOCAL_AHEAD=$(echo $LOCAL_REMOTE_DIFF | awk '{ print $1 }')
+    if [ -n "$LOCAL_AHEAD" ] && [ $LOCAL_AHEAD -ne 0 ]; then
         local LOCAL_STATUS_STRING="\u2191${LOCAL_AHEAD}"
     fi
 
-    local REMOTE_AHEAD="$(echo $LOCAL_REMOTE_DIFF | awk '{ print $2 }')"
-    if [ $REMOTE_AHEAD -ne 0 ]; then
+    local REMOTE_AHEAD=$(echo $LOCAL_REMOTE_DIFF | awk '{ print $2 }')
+    if [ -n "$REMOTE_AHEAD" ] && [ $REMOTE_AHEAD -ne 0 ]; then
         local REMOTE_STATUS_STRING="\u2191${REMOTE_AHEAD}"
     fi
 

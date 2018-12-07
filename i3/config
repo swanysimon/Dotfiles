@@ -65,8 +65,8 @@ bindsym $mod+n exec ~/.config/i3/i3_create_workspace.sh "new workspace"
 
 # change workspace layout
 workspace_layout default
-bindsym $mod+Shift+Control+h split horizontal
-bindsym $mod+Shift+Control+v split vertical
+bindsym $mod+Shift+Control+h split vertical
+bindsym $mod+Shift+Control+v split horizontal
 
 # always focus the brand new window
 for_window [class=".*"] focus

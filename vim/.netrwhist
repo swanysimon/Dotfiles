@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/sswanson/Downloads/tejr-from-vimrc-to-vim'
-let g:netrw_dirhist_2='/Users/sswanson/Downloads/tejr-from-vimrc-to-vim/autoload'
-let g:netrw_dirhist_3='/Users/sswanson/Downloads/tejr-from-vimrc-to-vim'
-let g:netrw_dirhist_4='/Users/sswanson/Downloads/tejr-from-vimrc-to-vim/colors'
-let g:netrw_dirhist_5='/Users/sswanson/Downloads/tejr-from-vimrc-to-vim/plugin'
-let g:netrw_dirhist_6='/Volumes/git/dotfiles/personal/vim'
-let g:netrw_dirhist_7='/Volumes/git/dotfiles/personal/vim/plugin'

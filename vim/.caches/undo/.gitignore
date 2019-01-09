@@ -1,0 +1,5 @@
+# Ignore everything in this directory except this file and README
+# This directory exists only for holding undo files for vim and weird things happen when the directory doesn't exist
+*
+!.gitignore
+!README.md

@@ -78,11 +78,9 @@ endif
 " line breaks on words
 set linebreak
 
-" make reading line breaks easier
+" make reading invisible characters easier
 set listchars+=extends:→
 set listchars+=precedes:←
-
-" make reading whitespace easier
 set listchars+=nbsp:·
 set listchars+=tab:»·
 set listchars+=trail:·
@@ -120,11 +118,11 @@ set hidden
 
 " keep backups, swapfiles, undo, and plugin data in an appropriate place
 set backup
-set backupdir^=~/.vim/.caches/backups/
-set directory^=~/.vim/.caches/swapfiles/
+set backupdir^=$HOME/.vim/.caches/backups//
+set directory^=$HOME/.vim/.caches/swapfiles//
 if has('persistent_undo')
     set undofile
-    set undodir^=~/.vim/.caches/undo/
+    set undodir^=$HOME/.vim/.caches/undo//
 endif
 
 " leading 0 in number is decimal, not octal

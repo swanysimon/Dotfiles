@@ -16,6 +16,9 @@ vnoremap <Leader>h :<C-U>nohlsearch<CR>gv
 " toggle cursorline with Leader-c
 nnoremap <Leader>c :<C-U>setlocal cursorline! cursorline?<CR>
 
+" toggle ruler with Leader-r
+nnoremap <Leader>r :<C-U>setlocal ruler! ruler?<CR>
+
 " toggle list with Leader-l
 nnoremap <Leader>l :<C-U>setlocal list! list?<CR>
 vnoremap <Leader>l :<C-U>setlocal list! list?<CR>gv

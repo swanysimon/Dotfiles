@@ -80,7 +80,7 @@ bindsym $mod+space exec --no-startup-id rofi -show drun
 bindsym $mod+Tab exec --no-startup-id rofi -show Workspaces
 
 # application settings
-bindsym $mod+Shift+t exec --no-startup-id st
+bindsym $mod+Shift+t exec --no-startup-id termite
 
 ####
 #### windows

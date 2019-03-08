@@ -23,8 +23,8 @@ __git_prompt () {
     printf "\[$(tput setaf 1)\]%s%b|%s%b" "$LOCAL_BRANCH" "$LOCAL_STATUS_STRING" "$REMOTE_BRANCH" "$REMOTE_STATUS_STRING"
 }
 
-__right_aligned_date () {
-    printf "\[$(tput setaf 0)\]%$((COLUMNS-1))s" "$(date +%R)"
+__time_and_date () {
+    printf "$(date +%R)"
 }
 
 __previous_return_status () {
@@ -38,12 +38,19 @@ __previous_return_status () {
 __prompt_command () {
     local EXIT_CODE=$?
     export PROMPT_DIRTRIM=3
-    local DATE_STRING="$(__right_aligned_date)"
-    local HOST_STRING="\[$(tput setaf 2)\]\h"
+    local DATE_STRING="\[$(tput setaf 0)\]$(__time_and_date)"
+    local HOST_STRING
+    if [[ "$(hostname --short)" == "sswanson3-linux" ]]; then
+        # my linux machines will use a green prompt leader
+        HOST_STRING="\[$(tput setaf 2)\]\h"
+    else
+        # other machines will use a blue prompt leader
+        HOST_STRING="\[$(tput setaf 1)\]\h"
+    fi
     local CWD_STRING="\[$(tput setaf 3)\]\w"
     local GIT_STRING="$(__git_prompt)"
     local RETURN_STRING="$(__previous_return_status $EXIT_CODE)"
-    export PS1="${DATE_STRING}\r${HOST_STRING} ${CWD_STRING} ${GIT_STRING} ${OLDPWD_STRING}\n${RETURN_STRING} \[$(tput sgr0)\]$ "
+    export PS1="${HOST_STRING} ${CWD_STRING} ${GIT_STRING} ${OLDPWD_STRING} ${DATE_STRING}\n${RETURN_STRING} \[$(tput sgr0)\]$ "
 }
 
 PROMPT_COMMAND=__prompt_command

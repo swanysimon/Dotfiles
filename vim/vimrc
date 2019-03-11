@@ -5,6 +5,7 @@ set nocompatible
 
 set history=1000
 
+" on my keyboard I've put tilde in a pretty good position for a leader key
 let mapleader=','
 let maplocalleader='`'
 
@@ -19,16 +20,6 @@ set noesckeys
 
 " load filetype settings and plugins
 if has('autocmd')
-  " if pathogen directory exists, load and infect
-  if !empty(glob("$HOME/.vim/vim-pathogen/"))
-    set runtimepath+=$HOME/.vim/vim-pathogen/
-    call pathogen#infect()
-  else
-    echom "There was a problem loading Tim Pope's pathogen plugin.
-          \ Did you clone this dotfiles repository with `--recursive`?"
-  endif
-
-  " on my keyboard I've put tilde in a pretty good position for a leader key
   filetype plugin indent on
 endif
 

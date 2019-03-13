@@ -27,6 +27,12 @@ endif
 if has('syntax')
   if !exists('g:syntax_on')
     syntax enable
+    
+    try
+      colorscheme darcula
+    catch
+      " do nothing, failed to apply colorscheme
+    endtry
   endif
 
   set background=dark

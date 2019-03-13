@@ -55,14 +55,10 @@ __git_complete go _git_commit
 
 alias gb='g branch'
 alias gd='g difftool'
-alias gl='g log --color --graph --pretty=format:"%h - %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset"'
-alias glv='g log --color --graph --format=fuller'
 alias gs='g status'
 
 __git_complete gb _git_branch
 __git_complete gd _git_diff
-__git_complete gl _git_log
-__git_complete glv _git_log
 __git_complete gs _git_status
 
 alias gall='gh && ga .'

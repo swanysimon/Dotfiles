@@ -40,13 +40,24 @@ __prompt_command () {
     export PROMPT_DIRTRIM=3
     local DATE_STRING="\[$(tput setaf 0)\]$(__time_and_date)"
     local HOST_STRING
-    if [[ "$(hostname --short)" == "sswanson3-linux" ]]; then
-        # my linux machines will use a green prompt leader
-        HOST_STRING="\[$(tput setaf 2)\]\h"
+    if [[ "$(uname)" == "Linux" ]]; then
+        if [[ "$(hostname --short)" == "sswanson3-linux" ]]; then
+            # my linux machines will use a green prompt leader
+            HOST_STRING="\[$(tput setaf 2)\]\h"
+        else
+            # other linux machines will use a blue prompt leader
+            HOST_STRING="\[$(tput setaf 4)\]\h"
+        fi
     else
-        # other machines will use a blue prompt leader
-        HOST_STRING="\[$(tput setaf 1)\]\h"
+        if [[ "$(hostname -s)" == "sswanson-mbp" ]]; then
+            # my macbooks will use a red prompt leader
+            HOST_STRING="\[$(tput setaf 1)\]\h"
+        else
+            # other macbooks machines will use a cyan prompt leader
+            HOST_STRING="\[$(tput setaf 6)\]\h"
+        fi
     fi
+
     local CWD_STRING="\[$(tput setaf 3)\]\w"
     local GIT_STRING="$(__git_prompt)"
     local RETURN_STRING="$(__previous_return_status $EXIT_CODE)"

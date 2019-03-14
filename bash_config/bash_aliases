@@ -26,55 +26,13 @@ alias mkdir='mkdir -pv'
 
 # git aliases
 alias g='git'
-
 __git_complete g _git
 
-alias gf='g fetch'
-alias fetch='gf'
-alias fetchall='gf_all'
-alias pull='g pull'
-alias pullall='fetchall && pull'
-alias gr='g rebase'
 alias gk='g checkout'
-
-__git_complete gf _git_fetch
-__git_complete fetch _git_fetch
-__git_complete fetchall _git_fetch
-__git_complete pull _git_pull
-__git_complete pullall _git_pull
-__git_complete gr _git_rebase
 __git_complete gk _git_checkout
 
-alias ga='g add'
 alias go='g commit'
-alias push='g push'
-
-__git_complete ga _git_add
-__git_complete push _git_push
 __git_complete go _git_commit
-
-alias gb='g branch'
-alias gd='g difftool'
-alias gs='g status'
-
-__git_complete gb _git_branch
-__git_complete gd _git_diff
-__git_complete gs _git_status
-
-alias gall='gh && ga .'
-alias gamend='go --amend'
-alias gaddmend='gall && gamend'
-alias gaddmendnoedit='gaddmend --no-edit'
-
-alias gkhead='gk HEAD .'
-
-alias git-home='git rev-parse --show-toplevel'
-alias gh='cd $(git-home)'
-
-alias grcontinue='gr --continue'
-alias grinteractive='gr --interactive'
-alias grskip='gr --skip'
-alias grabort='gr --abort'
 
 # fuck
 if which thefuck > /dev/null 2>&1; then

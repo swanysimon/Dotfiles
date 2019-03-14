@@ -4,3 +4,6 @@
 [submodule "vim/pack/third_party/start/blueshirts-darcula"]
 	path = vim/pack/third_party/start/blueshirts-darcula
 	url = git@github.com:blueshirts/darcula.git
+[submodule "vim/pack/third_party/opt/Colorizer.git"]
+	path = vim/pack/third_party/opt/Colorizer.git
+	url = git@github.com:chrisbra/Colorizer.git

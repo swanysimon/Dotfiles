@@ -44,3 +44,9 @@ if [ -f "${HOME}/.bash_local_config/bashrc" ]; then
     source "${HOME}/.bash_local_config/bashrc"
 fi
 
+if [ -d "${HOME}/.bash_sourcing" ]; then
+    for file in "${HOME}/.bash_sourcing/"*; do
+        source "$file"
+    done
+fi
+

@@ -1,0 +1,12 @@
+" minimal vimrc for consumption by IntelliJ IDEA
+" see vim/vimrc for a full vimrc with documentation
+
+set nocompatible
+set noesckeys
+
+set ignorecase
+set incsearch
+
+set formatoptions+=j
+set nojoinspaces
+

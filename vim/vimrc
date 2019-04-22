@@ -87,9 +87,7 @@ set nojoinspaces
 set incsearch
 set hlsearch
 set smartcase
-if 1
-  nohlsearch " clear search highlights on reload
-endif
+nohlsearch " clear search highlights on reload
 
 " line breaks on words
 set linebreak

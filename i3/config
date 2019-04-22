@@ -67,6 +67,8 @@ bindsym $mod+n exec ~/.config/i3/i3_create_workspace.sh "new workspace"
 workspace_layout default
 bindsym $mod+Shift+Control+h split vertical
 bindsym $mod+Shift+Control+v split horizontal
+bindsym $mod+Shift+Control+t layout tabbed
+bindsym $mod+Shift+Control+s layout stacked
 
 # always focus the brand new window
 for_window [class=".*"] focus
@@ -118,8 +120,12 @@ bindsym $mod+Shift+Control+u resize shrink height 1 px or 1 ppt
 bindsym $mod+Shift+Control+i resize grow height 1 px or 1 ppt
 bindsym $mod+Shift+Control+o resize grow width 1 px or 1 ppt
 
+# floating windows
+bindsym $mod+f floating toggle
+floating_modifier $mod
+
 # fullscreen mode
-bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+Control+f fullscreen toggle
 
 ####
 #### extra configs

@@ -28,12 +28,6 @@ alias mkdir='mkdir -pv'
 alias g='git'
 __git_complete g _git
 
-alias gk='g checkout'
-__git_complete gk _git_checkout
-
-alias go='g commit'
-__git_complete go _git_commit
-
 # fuck
 if which thefuck > /dev/null 2>&1; then
     eval "$(thefuck --alias)"

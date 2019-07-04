@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# bash_aliases
 
 # better reading
 alias less='less -r'
@@ -26,14 +25,16 @@ alias mkdir='mkdir -pv'
 
 # git aliases
 alias g='git'
-__git_complete g _git
+if type -p __git_complete &>/dev/null; then
+    __git_complete g _git
+fi
 
-# fuck
-if which thefuck > /dev/null 2>&1; then
+# fuck. it's a little slow but still usefull
+if which thefuck &>/dev/null; then
     eval "$(thefuck --alias)"
 fi
 
-# clipboards
+# clipboards commands synchronized to the Mac OS standard
 if [ "$(uname)" == "Linux" ]; then
     alias pbcopy='xclip -selection clipboard'
     alias pbpaste='xclip -selection clipboard -o'

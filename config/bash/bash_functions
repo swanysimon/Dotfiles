@@ -1,29 +1,3 @@
-#!/usr/bin/env bash
-# bash_functions
-
-# working with networks - OS X only for now
-airport () {
-    [[ "$(uname)" != "Darwin" ]] && return 0
-    local AIRPORT_PATH="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
-    case "$1" in
-        "")
-            echo "No airport command given" 2>&1
-            return 2 ;;
-        -h|--help)
-            echo "airport [ -h ] [ connect | ls | on | off ]"
-            echo "Only on and off have been tested" ;;
-        connect)
-            networksetup -setairportnetwork en0 "$2" "$3" ;;
-        ls|list)
-            eval $AIRPORT_PATH -s ;;
-        off)
-            networksetup -setairportpower en0 off ;;
-        on)
-            networksetup -setairportpower en0 on ;;
-    esac
-}
-
-# in case I don't remember how to archive things
 backup () {
     case "$1" in
         "")
@@ -142,22 +116,12 @@ extract () {
     done
 }
 
-# make git fetching better
-gf_all () {
-    local REMOTE
-    for REMOTE in $(git remote show); do
-        echo "Fetching from $REMOTE"
-        git fetch $REMOTE
-    done
-    git fetch "$@"
-}
-
 # find out what's happening on a port
 port () {
     local COMMAND
-    if [[ "$(uname)" == "Darwin" ]]; then
+    if [ "$(uname)" == "Darwin" ]; then
         COMMAND="lsof -i :$1 -P"
-    elif [[ "$(uname)" == "Linux" ]]; then
+    elif [ "$(uname)" == "Linux" ]; then
         COMMAND="netstat -nlp | grep :$1"
     else
         echo "Unknown system $(uname)" 2>&1

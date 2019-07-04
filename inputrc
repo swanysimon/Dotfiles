@@ -1,3 +1,11 @@
-set completion-ignore-case     on
-set expand-tilde               off
+# inputrc
+set bell-style visual
+set completion-ignore-case on
+# number of items before prompted if the user wants to see them all
+set completion-query-items 25
+set editing-mode vi
+set expand-tilde off
 set mark-symlinked-directories on
+# tries to do slightly smarter completion
+set skip-completed-text on
+

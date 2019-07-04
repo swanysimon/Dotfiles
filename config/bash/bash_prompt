@@ -1,0 +1,55 @@
+__prompt_command() {
+    PREV_EXIT_CODE=$?
+    return $PREV_EXIT_CODE
+}
+
+PROMPT_DIRTRIM=3
+PROMPT_COMMAND=__prompt_command
+
+__git_prompt_string () {
+    if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+        return 0
+    fi
+
+    local LOCAL_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD 2>/dev/null)"
+    local REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} 2>/dev/null)"
+    local LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count "${LOCAL_BRANCH}"..."${REMOTE_BRANCH}" 2>/dev/null)"
+
+    # unicode upward arrow (u2191)
+    local UPWARD_ARROW="\xe2\x86\x91"
+
+    local LOCAL_AHEAD="$(cut -f 1 <<< "$LOCAL_REMOTE_DIFF")"
+    if [ -n "$LOCAL_AHEAD" ] && [ $LOCAL_AHEAD -ne 0 ]; then
+        local LOCAL_STATUS_STRING="${UPWARD_ARROW}${LOCAL_AHEAD}"
+    fi
+
+    local REMOTE_AHEAD="$(cut -f 2 <<< "$LOCAL_REMOTE_DIFF")"
+    if [ -n "$REMOTE_AHEAD" ] && [ $REMOTE_AHEAD -ne 0 ]; then
+        local REMOTE_STATUS_STRING="${UPWARD_ARROW}${REMOTE_AHEAD}"
+    fi
+
+    printf " $(tput setaf 5)%s%b|%s%b" "$LOCAL_BRANCH" "$LOCAL_STATUS_STRING" "$REMOTE_BRANCH" "$REMOTE_STATUS_STRING"
+}
+
+__previous_return_status () {
+    if [ $PREV_EXIT_CODE -eq 0 ]; then
+        # print a green checkmark (u2713)
+        printf "$(tput setaf 2)\xe2\x9c\x93"
+    else
+        # print a red x (u2717)
+        printf "$(tput setaf 1)\xe2\x9c\x97"
+    fi
+}
+
+PS1="\[$(tput sgr0)\]"
+
+if [ "$(uname)" == "Linux" ]; then
+    PS1="${PS1}\[$(tput setaf 2)\]"
+elif [ "$(uname)" == "Darwin" ]; then
+    PS1="${PS1}\[$(tput setaf 4)\]"
+else
+    PS1="${PS1}\[$(tput setaf 1)\]"
+fi
+
+PS1="${PS1}\h \[$(tput setaf 3)\]\w\$(__git_prompt_string)\n\$(__previous_return_status)\[$(tput sgr0)\] "
+

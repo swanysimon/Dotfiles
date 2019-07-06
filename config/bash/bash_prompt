@@ -1,5 +1,8 @@
 __prompt_command() {
     PREV_EXIT_CODE=$?
+    history -a
+    history -c
+    history -r
     return $PREV_EXIT_CODE
 }
 

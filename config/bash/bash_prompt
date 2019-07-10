@@ -1,4 +1,4 @@
-__prompt_command() {
+__prompt_command () {
     PREV_EXIT_CODE=$?
     history -a
     history -c
@@ -8,6 +8,23 @@ __prompt_command() {
 
 PROMPT_DIRTRIM=3
 PROMPT_COMMAND=__prompt_command
+
+__hostname_prompt_string () {
+    local COLOR_CODE
+    if [ "$(uname)" == "Linux" ]; then
+        COLOR_CODE=2
+    elif [ "$(uname)" == "Darwin" ]; then
+        COLOR_CODE=6
+    else
+        COLOR_CODE=1
+    fi
+
+    printf "\001%s\002%s" "$(tput setaf $COLOR_CODE)" "\h"
+}
+
+__working_directory_prompt_string () {
+    printf "\001%s\002%s" "$(tput setaf 3)" "\w"
+}
 
 __git_prompt_string () {
     if ! git rev-parse --is-inside-work-tree &>/dev/null; then
@@ -31,28 +48,28 @@ __git_prompt_string () {
         local REMOTE_STATUS_STRING="${UPWARD_ARROW}${REMOTE_AHEAD}"
     fi
 
-    printf " $(tput setaf 5)%s%b|%s%b" "$LOCAL_BRANCH" "$LOCAL_STATUS_STRING" "$REMOTE_BRANCH" "$REMOTE_STATUS_STRING"
+    printf " \001%s\002%s%b|%s%b" \
+            "$(tput setaf 5)" \
+            "$LOCAL_BRANCH" \
+            "$LOCAL_STATUS_STRING" \
+            "$REMOTE_BRANCH" \
+            "$REMOTE_STATUS_STRING"
 }
 
-__previous_return_status () {
+__status_prompt_string () {
     if [ $PREV_EXIT_CODE -eq 0 ]; then
         # print a green checkmark (u2713)
-        printf "$(tput setaf 2)\xe2\x9c\x93"
+        printf "\001%s\002%b" "$(tput setaf 2)" "\xe2\x9c\x93"
     else
         # print a red x (u2717)
-        printf "$(tput setaf 1)\xe2\x9c\x97"
+        printf "\001%s\002%b" "$(tput setaf 1)" "\xe2\x9c\x97"
     fi
 }
 
-PS1="\[$(tput sgr0)\]"
-
-if [ "$(uname)" == "Linux" ]; then
-    PS1="${PS1}\[$(tput setaf 2)\]"
-elif [ "$(uname)" == "Darwin" ]; then
-    PS1="${PS1}\[$(tput setaf 4)\]"
-else
-    PS1="${PS1}\[$(tput setaf 1)\]"
-fi
-
-PS1="${PS1}\h \[$(tput setaf 3)\]\w\$(__git_prompt_string)\n\$(__previous_return_status)\[$(tput sgr0)\] "
+PS1="\001$(tput sgr0)\002"
+PS1="${PS1}$(__hostname_prompt_string)"
+PS1="${PS1} $(__working_directory_prompt_string)"
+PS1="${PS1}\$(__git_prompt_string)"
+PS1="${PS1}\n\$(__status_prompt_string)"
+PS1="${PS1}\001$(tput sgr0)\002 "
 

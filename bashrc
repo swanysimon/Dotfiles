@@ -7,13 +7,12 @@ fi
 
 shopt -s checkwinsize
 
-shopt -s histappend
 shopt -s cmdhist
+shopt -s histappend
 
-export HISTCONTROL=ignoredupbs:erasedups
+export HISTCONTROL=ignoredups
 export HISTFILESIZE=5000
 export HISTSIZE=5000
-export HISTIGNORE="ls:bg:fg:history"
 
 export CLICOLOR=1
 export EDITOR=vim
@@ -27,6 +26,8 @@ if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
     # shell is not interactive
     return
 fi
+
+set -o vi
 
 __source_if_file_exists() {
     local FILENAME="$1"

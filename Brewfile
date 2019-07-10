@@ -1,6 +1,7 @@
 # packages
 brew 'bash'
 brew 'git'
+brew 'npm'
 brew 'python3'
 brew 'thefuck'
 brew 'vim'

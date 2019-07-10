@@ -1,5 +1,6 @@
 # packages
 brew 'bash'
+brew 'bash-completion@2'
 brew 'git'
 brew 'npm'
 brew 'python3'

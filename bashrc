@@ -53,10 +53,17 @@ if [ -d "${XDG_CONFIG_HOME}/bash/sourcing/" ]; then
 fi
 
 if brew --prefix &>/dev/null; then
-    __source_if_file_exists "$(brew --prefix)/etc/bash_completion"
+    if [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
+        if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
+            export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
+        fi
+        source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+    fi
 fi
 
-if ! type -p __git_complete &>/dev/null && type -p _completion_loader &>/dev/null; then
-    _completion_loader git
+if ! type -p __git_complete &>/dev/null; then
+    if type -p _completion_loader &>/dev/null; then
+        _completion_loader git
+    fi
 fi
 

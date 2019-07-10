@@ -29,21 +29,6 @@ fi
 
 set -o vi
 
-__source_if_file_exists() {
-    local FILENAME="$1"
-    if [ -f "$FILENAME" ]; then
-        source "$FILENAME"
-    fi
-}
-
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/bash_prompt"
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/bash_functions"
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/bash_aliases"
-
-# this directory is ignored by git and is a safe place to put configuration
-# that shouldn't be in a public repository, like work items
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/local_config/bashrc"
-
 # this directory is ignored by git and is a safe place to put secret
 # environment variables and such. Be cautious putting environment variables
 # in here since they are often exported with bug reports.
@@ -66,4 +51,19 @@ if ! type -p __git_complete &>/dev/null; then
         _completion_loader git
     fi
 fi
+
+__source_if_file_exists() {
+    local FILENAME="$1"
+    if [ -f "$FILENAME" ]; then
+        source "$FILENAME"
+    fi
+}
+
+# this directory is ignored by git and is a safe place to put configuration
+# that shouldn't be in a public repository, like work items
+__source_if_file_exists "${XDG_CONFIG_HOME}/bash/local_config/bashrc"
+
+__source_if_file_exists "${XDG_CONFIG_HOME}/bash/bash_prompt"
+__source_if_file_exists "${XDG_CONFIG_HOME}/bash/bash_functions"
+__source_if_file_exists "${XDG_CONFIG_HOME}/bash/bash_aliases"
 

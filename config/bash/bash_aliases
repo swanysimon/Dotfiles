@@ -25,8 +25,12 @@ alias mkdir='mkdir -pv'
 
 # git aliases
 alias g='git'
-if type -p __git_complete &>/dev/null; then
-    __git_complete g _git
+if type -p _git &>/dev/null; then
+    if type -p __git_complete &>/dev/null; then
+        __git_complete g _git
+    elif ! complete -o default -o nospace -F _git g &>/dev/null; then
+        complete -o bashdefault -o default -o nospace -F _git g &>/dev/null
+    fi
 fi
 
 # fuck. it's a little slow but still usefull

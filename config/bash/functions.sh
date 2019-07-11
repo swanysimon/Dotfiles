@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 backup () {
     case "$1" in
         "")

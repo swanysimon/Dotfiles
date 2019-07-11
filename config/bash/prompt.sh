@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 __prompt_command () {
     PREV_EXIT_CODE=$?
     history -a
@@ -62,7 +64,7 @@ __status_prompt_string () {
         printf "\001%s\002%b" "$(tput setaf 2)" "\xe2\x9c\x93"
     else
         # print a red x (u2717)
-        printf "\001%s\002%b" "$(tput setaf 1)" "\xe2\x9c\x97"
+        printf "(${PREV_EXIT_CODE}) \001%s\002%b" "$(tput setaf 1)" "\xe2\x9c\x97"
     fi
 }
 

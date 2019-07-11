@@ -63,7 +63,7 @@ __source_if_file_exists() {
 # that shouldn't be in a public repository, like work items
 __source_if_file_exists "${XDG_CONFIG_HOME}/bash/local_config/bashrc"
 
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/bash_prompt"
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/bash_functions"
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/bash_aliases"
+__source_if_file_exists "${XDG_CONFIG_HOME}/bash/prompt.sh"
+__source_if_file_exists "${XDG_CONFIG_HOME}/bash/functions.sh"
+__source_if_file_exists "${XDG_CONFIG_HOME}/bash/aliases.sh"
 

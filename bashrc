@@ -21,12 +21,6 @@ if [ -z ${XDG_CONFIG_HOME+x} ]; then
     export XDG_CONFIG_HOME="${HOME}/.config"
 fi
 
-# grab all extra configurations
-if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
-    # shell is not interactive
-    return
-fi
-
 set -o vi
 
 # this directory is ignored by git and is a safe place to put secret
@@ -35,6 +29,12 @@ set -o vi
 # All non-hidden files in this directory will be sourced
 if [ -d "${XDG_CONFIG_HOME}/bash/sourcing/" ]; then
     find . ! -name '.*' -type f -exec source {} \;
+fi
+
+# grab all extra configurations
+if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
+    # shell is not interactive
+    return
 fi
 
 if brew --prefix &>/dev/null; then

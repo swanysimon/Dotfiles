@@ -6,44 +6,122 @@ you don't check what my stuff does and break yours.
 
 ## Setup ##
 
-Setting up should be easy (but dangerous!!!):
+Setting up is straightforward, but time consuming. While this could be
+automated away, it doesn't seem worth the effort at the moment.
 
-```
-cd ~
+### Dependencies ###
 
-# DANGEROUS!!!
-rm -rf .inputrc .vim .vimrc .profile .bashrc .config
+  - SSH set up on the machine.
 
-# bash readline behavior
-ls -s <dotfiles_dir>/inputrc .inputrc
+    ```
+    ssh-keygen -b 4096
+    ```
 
-# bash configuration
-ln -s <dotfiles_dir>/bashrc .bashrc
+    The navigate to
+    [your GitHub keys settings](https://github.com/settings/keys) and copy in
+    the public key. To copy the key to your clipboard, run one of the
+    following:
 
-# general shell profile; delegates to the bashrc eventually
-ln -s <dotfiles_dir>/profile .profile
+    ```
+    # for MacOS
+    pbcopy < ~/.ssh/id_rsa.pub
 
-# configuration for the ViM text editor. Requires a "modern" version
-ln -s <dotfiles_dir>/vim .vim
+    # for Linux you will need a utility like xsel
+    xsel --clipboard < ~/.ssh/id_rsa.pub
+    ```
 
-# check where your system places $XDG_CONFIG_HOME before symlinking this
-# the default would be `.config`
-ls -s <dotfiles_dir>/config .config
-```
+  - [Homebrew] is my package manager of choice. Currently I don't use it on my
+    Linux machine, but that could be changing with the advent of Linuxbrew.
 
-If you have a separate bash configuration that shouldn't be displayed in a
-public repository, you can place that information into
-`$XDG_CONFIG_HOME/bash/local_config/bashrc` and have that file delegate to any
-other configuration.
+    ```
+    # for MacOS only
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    ```
 
-To place any other files that may need sourcing but that shouldn't be under git
-management (secret environment variables being one example), those should be
-placed into a file under `$XDG_CONFIG_HOME/bash/sourcing`. All non-hidden files
-under that directory will be sourced recursively, so directory structures for
-organization are valid.
+### Installation ###
+
+For the purposes of these instructions, `$DOTFILES_DIR` will reference the root
+directory of this repository in absolute form.
+
+ 1. Clear the following files and directories that might exist on your system.
+
+    ```
+    ~/.bash_profile
+    ~/.bashrc
+    ~/.inputrc
+    ~/.profile
+    ~/.vim/
+    ~/.vimrc
+    ${XDG_CONFIG_HOME:-${HOME}/.config}/
+    ```
+
+ 1. Place all the configuration files into place.
+
+    ```
+    cd ~
+    ln -si "${DOTFILES_DIR}/inputrc" .inputrc
+    ln -si "${DOTFILES_DIR}/bashrc" .bashrc
+    ln -si "${DOTFILES_DIR}/profile" .profile
+    ln -si "${DOTFILES_DIR}/vim" .vim
+
+    cd "$(dirname ${XDG_CONFIG_HOME:-${HOME}/.config})"
+    ln -si "${DOTFILES_DIR}/config" .config
+    ```
+
+ 1. Once [Homebrew] is installed (see [Dependencies](#dependencies)), install
+    packages.
+
+    ```
+    cd $DOTFILES_DIR
+    brew bundle
+    sudo -k
+    ```
+
+    Register the bash you just installed to be the default shell.
+
+     1. Ensure `$(brew --prefix)/bin` is the first path in `/etc/paths`. This
+        seems to be the default on newer OSes, but it doesn't hurt to be sure.
+
+     1. Enter a line for the `$(brew --prefix)/bin/bash` in `/etc/shells` (you
+        will need superuser permissions.
+
+     1. Change your system's default shell.
+
+        ```
+        sudo chsh -s /usr/local/bin/bash
+        sudo -k
+        ```
+
+     1. Close and reopen your terminal emulator. Double check the version looks
+        right by examining the `$BASH_VERSION` environment variable.
 
 ### Customizations ###
 
-If using a Jetbrains product like IntelliJ IDEA, symlink `ideavimrc` to the home
-directory.
+ 1. Place separate bash configuration that shouldn't be checked into version
+    control (environment variables being the most likely cause) as files in
+    `${XDG_CONFIG_HOME}/bash/sourcing/`. All non-hidden files in this directory
+    will be sourced by your shell on startup. Directory trees in this directory
+    will be followed when sourcing.
+
+ 1. Place separate bash configuration that _will_ be checked into version
+    control in a different repository into
+    `${XDG_CONFIG_HOME}/bash/local_config/`. If there is a `bashrc` file in
+    this directory (note: this file should _not_ be hidden), your shell will
+    source that file when starting an interactive session.
+
+    This is a useful pattern for managing a set of work-related dotfiles that
+    may not be publishable to a public repository.
+
+ 1. If using a [JetBrains] product like IntelliJ IDEA and want to use some of
+    your vim configuration, symlink the configuration file to your home
+    directory. Note that currently the same file configures all JetBrains
+    products, despite the specific-looking name.
+
+    ```
+    cd ~
+    ln -si "${DOTFILES_DIR}/ideavimrc" .ideavimrc
+    ```
+
+[Homebrew]: https://brew.sh
+[JetBrains]: https://www.jetbrains.com
 

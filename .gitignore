@@ -1,14 +1,17 @@
 # directory holding bash things I don't want in git
-config/bash/sourcing
-config/bash/local_config/
+/config/bash/sourcing/
+/config/bash/local_config/
 
 # things in vim not worth checking in
-vim/.caches/
-vim/.netrwhist
+/vim/.caches/*/*
+/vim/.netrwhist
 
 # seems unnecessary
 __pycache__/
 
 # popped up when using npm, need to figure out what it is
-config/configstore
+/config/configstore
+
+# these files should always be kept
+!/**/*.gitkeep
 

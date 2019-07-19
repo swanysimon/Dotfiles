@@ -1,7 +1,9 @@
 # packages
 brew 'bash'
 brew 'bash-completion@2'
+brew 'ghc'
 brew 'git'
+brew 'haskell-stack'
 brew 'npm'
 brew 'python3'
 brew 'thefuck'

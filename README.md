@@ -46,12 +46,15 @@ directory of this repository in absolute form.
  1. Clear the following files and directories that might exist on your system.
 
     ```
+    # files
     ~/.bash_profile
     ~/.bashrc
     ~/.inputrc
     ~/.profile
-    ~/.vim/
     ~/.vimrc
+
+    # directories
+    ~/.vim/
     ${XDG_CONFIG_HOME:-${HOME}/.config}/
     ```
 
@@ -104,7 +107,7 @@ directory of this repository in absolute form.
     will be followed when sourcing.
 
  1. Place separate bash configuration that _will_ be checked into version
-    control in a different repository into
+    control (in a different repository) into
     `${XDG_CONFIG_HOME}/bash/local_config/`. If there is a `bashrc` file in
     this directory (note: this file should _not_ be hidden), your shell will
     source that file when starting an interactive session.

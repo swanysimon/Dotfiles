@@ -1,5 +1,6 @@
 # directory holding bash things I don't want in git
 config/bash/sourcing
+config/bash/local_config/
 
 # seems unnecessary
 __pycache__/

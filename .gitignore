@@ -2,6 +2,10 @@
 config/bash/sourcing
 config/bash/local_config/
 
+# things in vim not worth checking in
+vim/.caches/
+vim/.netrwhist
+
 # seems unnecessary
 __pycache__/
 

@@ -1,0 +1,7 @@
+# one horizontal and one vertical monitor (to the left) when there are 2 present
+# currently my only Linux setup
+if [ "$(hostname --short)" = "sswanson3-linux" ]; then
+    xrandr --output DisplayPort-0 --mode 2560x1440 --rotate normal --pos 0x0
+    xrandr --output DisplayPort-1 --mode 2560x1440 --rotate normal --pos 2560x0 --primary
+fi
+

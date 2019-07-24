@@ -1,0 +1,60 @@
+! ~/.Xresources
+
+! definitions
+#define myblack #2b2b2b
+#define myred #c93b48
+#define mygreen #6a8759
+#define myyellow #cc7832
+#define myblue #5394ec
+#define mymagenta #9876aa
+#define mycyan #bbb529
+#define mywhite #a9b7c6
+
+#define mybrightblack #555555
+#define mybrightred #ff6b68
+#define mybrightgreen #a8c023
+#define mybrightyellow #ffc66d
+#define mybrightblue #7eaef1
+#define mybrightmagenta #ae8abe
+#define mybrightcyan #d6bf55
+#define mybrightwhite #bbbbbb
+
+#define myfont 'San Francisco'
+#define myfontsize 11
+
+! cursor settings
+Xcursor.size: 16
+
+! font settings
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: false
+
+! color configuration
+*background: mywhite
+*cursorColor: mybrightwhite
+*fadeColor: myblack
+*foreground: myblack
+*pointerColorBackground: mybrightblack
+*pointerColorForeground: mybrightwhite
+
+*color0: myblack
+*color1: myred
+*color2: mygreen
+*color3: myyellow
+*color4: myblue
+*color5: mymagenta
+*color6: mycyan
+*color7: mywhite
+*color8: mybrightblack
+*color9: mybrightred
+*color10: mybrightgreen
+*color11: mybrightyellow
+*color12: mybrightblue
+*color13: mybrightmagenta
+*color14: mybrightcyan
+*color15: mybrightwhite
+
+! application settings
+#include "${XDG_CONFIG_HOME}/rofi/Xresources"
+

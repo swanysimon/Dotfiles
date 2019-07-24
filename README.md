@@ -51,6 +51,9 @@ directory of this repository in absolute form.
     ~/.bashrc
     ~/.inputrc
     ~/.profile
+    ~/.xinputrc
+    ~/.xprofile
+    ~/.Xresources
     ~/.vimrc
 
     # directories
@@ -66,6 +69,9 @@ directory of this repository in absolute form.
     ln -si "${DOTFILES_DIR}/bashrc" .bashrc
     ln -si "${DOTFILES_DIR}/profile" .profile
     ln -si "${DOTFILES_DIR}/vim" .vim
+    ln -si "${DOTFILES_DIR}/xinputrc" .xinputrc
+    ln -si "${DOTFILES_DIR}/xprofile" .xprofile
+    ln -si "${DOTFILES_DIR}/Xresources" .Xresources
 
     cd "$(dirname ${XDG_CONFIG_HOME:-${HOME}/.config})"
     ln -si "${DOTFILES_DIR}/config" .config

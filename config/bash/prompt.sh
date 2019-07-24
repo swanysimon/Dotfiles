@@ -11,7 +11,7 @@ __prompt_command () {
 PROMPT_DIRTRIM=3
 PROMPT_COMMAND=__prompt_command
 
-__hostname_prompt_string () {
+__hostname_prompt_color () {
     local COLOR_CODE
     if [ "$(uname)" == "Linux" ]; then
         COLOR_CODE=2
@@ -21,11 +21,11 @@ __hostname_prompt_string () {
         COLOR_CODE=1
     fi
 
-    printf "\001%s\002%s" "$(tput setaf $COLOR_CODE)" "\h"
+    printf "\001%s\002" "$(tput setaf $COLOR_CODE)"
 }
 
-__working_directory_prompt_string () {
-    printf "\001%s\002%s" "$(tput setaf 3)" "\w"
+__working_directory_prompt_color () {
+    printf "\001%s\002" "$(tput setaf 3)"
 }
 
 __git_prompt_string () {
@@ -69,8 +69,8 @@ __status_prompt_string () {
 }
 
 PS1="\001$(tput sgr0)\002"
-PS1="${PS1}$(__hostname_prompt_string)"
-PS1="${PS1} $(__working_directory_prompt_string)"
+PS1="${PS1}\$(__hostname_prompt_color)\h"
+PS1="${PS1} \$(__working_directory_prompt_color)\w"
 PS1="${PS1}\$(__git_prompt_string)"
 PS1="${PS1}\n\$(__status_prompt_string)"
 PS1="${PS1}\001$(tput sgr0)\002 "

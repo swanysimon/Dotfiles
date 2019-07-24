@@ -28,7 +28,9 @@ set -o vi
 # in here since they are often exported with bug reports.
 # All non-hidden files in this directory will be sourced
 if [ -d "${XDG_CONFIG_HOME}/bash/sourcing/" ]; then
-    find . ! -name '.*' -type f -exec source {} \;
+    for FILE_TO_SOURCE in $(find "${XDG_CONFIG_HOME}/bash/sourcing/" -type f ! -name '.*'); do
+        source "${FILE_TO_SOURCE}"
+    done
 fi
 
 # grab all extra configurations

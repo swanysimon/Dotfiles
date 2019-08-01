@@ -1,0 +1,4 @@
+! get rid of related video overlays at the end of YouTube videos
+www.youtube.com##.ytp-ce-element-shadow
+www.youtube.com##.ytp-ce-covering-image
+www.youtube.com##.ytp-ce-element-show

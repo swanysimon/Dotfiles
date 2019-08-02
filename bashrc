@@ -56,7 +56,7 @@ fi
 
 __source_if_file_exists() {
     local FILENAME="$1"
-    if [ -f "$FILENAME" ]; then
+    if [ -e "$FILENAME" ]; then
         source "$FILENAME"
     fi
 }

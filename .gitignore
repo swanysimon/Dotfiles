@@ -4,13 +4,16 @@
 /config/bash/sourcing/*
 /config/chromium/*
 /config/configstore/*
+/config/dconf/*
 /config/libaccounts-glib/*
 /config/Mousepad/*
 /config/mimeapps.list
+/config/menus/*
 /config/mpd/*
 /config/pulse/*
 /config/Slack/*
 /config/user-dirs.*
+/config/zoomus.conf
 
 # configurations that should be whitelisted
 /config/mpd/mpd.conf

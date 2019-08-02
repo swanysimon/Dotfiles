@@ -56,5 +56,5 @@ Xft.hinting: false
 *color15: mybrightwhite
 
 ! application settings
-#include "${XDG_CONFIG_HOME}/rofi/Xresources"
+#include ".config/rofi/Xresources"
 

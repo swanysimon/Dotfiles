@@ -9,7 +9,5 @@ if [ -z ${XDG_CONFIG_HOME+x} ]; then
     export XDG_CONFIG_HOME="${HOME}/.config"
 fi
 
-if [ -n "$BASH_VERSION" ] && [ -f "${HOME}/.bashrc" ]; then
-    source "${HOME}/.bashrc"
-fi
+source "${HOME}/.bashrc"
 

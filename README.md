@@ -38,6 +38,13 @@ automated away, it doesn't seem worth the effort at the moment.
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     ```
 
+  - You will need to initialize project submodules. If you've already cloned,
+    you will want to run:
+
+    ```
+    git submodule update --init --recursive --remote --rebase
+    ```
+
 ### Installation ###
 
 For the purposes of these instructions, `$DOTFILES_DIR` will reference the root

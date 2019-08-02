@@ -1,6 +1,7 @@
 [alias]
   # general aliasing
   d = difftool
+  recursive-update = submodule update --init --recursive --remote --rebase
 
   # commit-level aliases
   addit = !git add -A && git commit

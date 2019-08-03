@@ -15,9 +15,6 @@ set lazyredraw
 " line numbers on by default
 set number
 
-" escape in insert mode should be final: don't wait for other keys
-set noesckeys
-
 " load filetype settings and plugins
 if has('autocmd')
   filetype plugin indent on
@@ -56,6 +53,11 @@ endif
 set backspace+=eol
 set backspace+=indent
 set backspace+=start
+
+" can scroll with mouse
+if has("mouse")
+  set mouse=a
+endif
 
 " default indentation settings
 " filetype plugins should make adjustments as necessary

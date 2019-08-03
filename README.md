@@ -75,6 +75,9 @@ directory of this repository in absolute form.
 
     cd "$(dirname ${XDG_CONFIG_HOME:-${HOME}/.config})"
     ln -si "${DOTFILES_DIR}/config" .config
+
+    cd "${XDG_CONFIG_HOME:-${HOME}/.config}/bash/sourcing"
+    ln -si "${DOTFILES_DIR}/config/bash/env.sh env.sh
     ```
 
  1. Once [Homebrew] is installed (see [Dependencies](#dependencies)), install

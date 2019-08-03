@@ -7,3 +7,6 @@
 [submodule "vim/pack/third_party/opt/Colorizer.git"]
 	path = vim/pack/third_party/opt/Colorizer.git
 	url = git@github.com:chrisbra/Colorizer.git
+[submodule "vim/pack/third_party/start/rust.vim"]
+	path = vim/pack/third_party/start/rust.vim
+	url = git@github.com:rust-lang/rust.vim.git

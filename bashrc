@@ -1,5 +1,15 @@
 # top-level bashrc; delegates to other configuration files
 
+# this directory is ignored by git and is a safe place to put secret
+# environment variables and such. Be cautious putting environment variables
+# in here since they are often exported with bug reports.
+# All non-hidden files in this directory will be sourced
+if [ -d "${XDG_CONFIG_HOME}/bash/sourcing/" ]; then
+    for FILE_TO_SOURCE in $(find -L "${XDG_CONFIG_HOME}/bash/sourcing/" -type f ! -name '.*'); do
+        source "${FILE_TO_SOURCE}"
+    done
+fi
+
 if ! ps -p "$$" -o command= | grep -q "bash$"; then
     # shell is not bash; skipping configuration
     return
@@ -22,16 +32,6 @@ if [ -z ${XDG_CONFIG_HOME+x} ]; then
 fi
 
 set -o vi
-
-# this directory is ignored by git and is a safe place to put secret
-# environment variables and such. Be cautious putting environment variables
-# in here since they are often exported with bug reports.
-# All non-hidden files in this directory will be sourced
-if [ -d "${XDG_CONFIG_HOME}/bash/sourcing/" ]; then
-    for FILE_TO_SOURCE in $(find -L "${XDG_CONFIG_HOME}/bash/sourcing/" -type f ! -name '.*'); do
-        source "${FILE_TO_SOURCE}"
-    done
-fi
 
 # grab all extra configurations
 if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then

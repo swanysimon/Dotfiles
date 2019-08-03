@@ -17,10 +17,8 @@ automated away, it doesn't seem worth the effort at the moment.
     ssh-keygen -b 4096
     ```
 
-    The navigate to
-    [your GitHub keys settings](https://github.com/settings/keys) and copy in
-    the public key. To copy the key to your clipboard, run one of the
-    following:
+    The navigate to your [GitHub keys] and copy in the public key. To copy the
+    key to your clipboard, run one of the following:
 
     ```
     # for MacOS
@@ -35,6 +33,7 @@ automated away, it doesn't seem worth the effort at the moment.
 
     ```
     # for MacOS only
+    xcode-select --install
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     ```
 
@@ -143,4 +142,5 @@ directory of this repository in absolute form.
 
 [Homebrew]: https://brew.sh
 [JetBrains]: https://www.jetbrains.com
+[GitHub keys]: https://github.com/settings/keys
 

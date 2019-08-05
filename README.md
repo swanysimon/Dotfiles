@@ -99,19 +99,30 @@ directory of this repository in absolute form.
 
      1. Ensure `$(brew --prefix)/bin` is the first path in `/etc/paths`. This
         seems to be the default on newer OSes, but it doesn't hurt to be sure.
+        Typically the this is `/usr/local/bin`, but some people have weird
+        setups and you should always be prepared.
 
      1. Enter a line for the `$(brew --prefix)/bin/bash` in `/etc/shells` (you
-        will need superuser permissions.
+        will need superuser permissions).
 
-     1. Change your system's default shell.
+     1. Change your system's default shell. Do not run with `sudo`! I spent a
+        day debugging only to find I had changed the root user's shell and not
+        my own.
 
         ```
-        sudo chsh -s /usr/local/bin/bash
-        sudo -k
+        chsh -s "$(brew --prefix)/bin/bash"
         ```
 
      1. Close and reopen your terminal emulator. Double check the version looks
         right by examining the `$BASH_VERSION` environment variable.
+
+ 1. After everything is set up, improve the behavior of this repository by
+    always rebasing on `git pull`.
+
+    ```
+    cd $DOTFILES_DIR
+    git config branch.master.rebase true
+    ```
 
 ### Customizations ###
 

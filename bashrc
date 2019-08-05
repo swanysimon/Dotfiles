@@ -39,13 +39,23 @@ if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
     return
 fi
 
+__source_if_file_exists() {
+    local FILENAME="$1"
+    if [ -e "$FILENAME" ]; then
+        source "$FILENAME"
+    fi
+}
+
 if brew --prefix &>/dev/null; then
     if [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
         if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
             export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
+            __source_if_file_exists "$(brew --prefix)/share/bash-completion/bash_completion"
         fi
         source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
     fi
+else
+    __source_if_file_exists /etc/bash_completion
 fi
 
 if ! type -p __git_complete &>/dev/null; then
@@ -53,13 +63,6 @@ if ! type -p __git_complete &>/dev/null; then
         _completion_loader git
     fi
 fi
-
-__source_if_file_exists() {
-    local FILENAME="$1"
-    if [ -e "$FILENAME" ]; then
-        source "$FILENAME"
-    fi
-}
 
 # this directory is ignored by git and is a safe place to put configuration
 # that shouldn't be in a public repository, like work items

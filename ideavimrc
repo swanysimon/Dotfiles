@@ -10,3 +10,9 @@ set incsearch
 set formatoptions+=j
 set nojoinspaces
 
+if has('unnamedplus')
+  set clipboard^=unnamedplus
+elseif has('clipboard')
+  set clipboard^=unnamed
+endif
+

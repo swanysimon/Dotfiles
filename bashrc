@@ -1,5 +1,9 @@
 # top-level bashrc; delegates to other configuration files
 
+if [ -z ${XDG_CONFIG_HOME+x} ]; then
+    export XDG_CONFIG_HOME="${HOME}/.config"
+fi
+
 # this directory is ignored by git and is a safe place to put secret
 # environment variables and such. Be cautious putting environment variables
 # in here since they are often exported with bug reports.
@@ -26,12 +30,6 @@ export HISTSIZE=5000
 
 export CLICOLOR=1
 export EDITOR=vim
-
-if [ -z ${XDG_CONFIG_HOME+x} ]; then
-    export XDG_CONFIG_HOME="${HOME}/.config"
-fi
-
-set -o vi
 
 # grab all extra configurations
 if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then

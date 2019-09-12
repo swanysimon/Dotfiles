@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
+# archive up a file or directory with the given format
 backup () {
+    local EXT
     case "$1" in
-        "")
-            echo "No archive format chosen" 2<&1
-            return 2 ;;
         -h|--help)
             echo "backup [ -h ] [ <archive_format> [ archive_name ] ] file1 ..."
             echo "Supported archive formats: bzip2, gzip, tar, tar.bz2, tar.gz, tar.xz, zip"
@@ -12,10 +11,12 @@ backup () {
             echo "If no archive name is given, the first file is used as the base of the archive name" ;;
         bz|bz2|bzip|bzip2)
             shift 1
-            bzip2 -kv "$@" ;;
+            bzip2 -kv "$@"
+            ;;
         gz|gzip)
             shift 1
-            gzip -kv "$@" ;;
+            gzip -kv "$@"
+            ;;
         tar)
             shift 1
             if [[ "$1" == *.tar ]]; then
@@ -24,55 +25,61 @@ backup () {
                 tar -cvf "${1::-1}.tar" "$@"
             else
                 tar -cvf "$1.tar" "$@"
-            fi ;;
+            fi
+            ;;
         tar.bz|tar.bz2|tbz|tbz2)
-            local EXT="$1"
+            EXT="$1"
             shift 1
-            if [[ "$1" == *.tar.bz2 || "$1" == *.tbz2 || "$1" == *.tar.bz || "$1" == *.tbz ]]; then
+            if [ egrep -q "\.tar\.bz2$|\.tbz2$|\.tar\.bz$|\.tbz$" <<< "$1" ]; then
                 tar -cjvf "$@"
-            elif [[ -d "$1" ]]; then
+            elif [ -d "$1" ]; then
                 tar -cjvf "${1::-1}.${EXT}" "$@"
             else
                 tar -cjvf "$1.${EXT}" "$@"
-            fi ;;
+            fi
+            ;;
         tar.gz|tgz)
-            local EXT="$1"
+            EXT="$1"
             shift 1
-            if [[ "$1" == *.tar.gz || "$1" == *.tgz ]]; then
+            if [ egrep -q "\.tar\.gz$|\.txz$" <<< "$1" ]; then
                 tar -czvf "$@"
-            elif [[ -d "$1" ]]; then
+            elif [ -d "$1" ]; then
                 tar -czvf "${1::-1}.${EXT}" "$@"
             else
                 tar -czvf "$1.${EXT}" "$@"
-            fi ;;
+            fi
+            ;;
         tar.xz|txz)
             local EXT="$1"
             shift 1
-            if [[ "$1" == *tar.xz || "$1" == *.txz ]]; then
+            if [ egrep -q "\.tar\.xz$|\.txz$" <<< "$1" ]; then
                 tar -cJvf "$@"
-            elif [[ -d "$1" ]]; then
+            elif [ -d "$1" ]; then
                 tar -cJvf "${1::-1}.${EXT}" "$@"
             else
                 tar -cJvf "$1.${EXT}" "$@"
-                fi ;;
+            fi
+            ;;
         zip)
             shift 1
-            if [[ "$1" == *.zip ]]; then
+            if [ grep -q "\.zip$" <<< "$1" ]; then
                 zip -rv "$@"
-            elif [[ -d "$1" ]]; then
+            elif [ -d "$1" ]; then
                 zip -rv "${1::-1}.zip" "$@"
             else
                 zip -rv "$1.zip" "$@"
-            fi ;;
-        *|bak)
+            fi
+            ;;
+        ""|bak)
             local ARG
             for ARG in "$@"; do
-                if [[ -d "$ARG" ]]; then
-                    cp -Riv "$ARG" "${ARG::-1}.bak"
+                if [ -d "$ARG" ]; then
+                    cp -Riv "$ARG" "${ARG::-1}.bak/"
                 else
                     cp -iv "$ARG" "${ARG}.bak"
                 fi
-            done ;;
+            done
+            ;;
     esac
 }
 
@@ -81,55 +88,87 @@ extract () {
     local ARG
     for ARG in "$@"; do
         case "$ARG" in
-            -h|--help|help)
-                echo "extract [ -h ] archive1 ..."
-                echo "Supported formats are: bzip2, gzip, lzma, tar, xz, Z, zip"
-                return 0 ;;
-            *)
-                if [[ ! -f "$ARG" ]]; then
-                    echo "$ARG: no such file or directory" 2>&1
-                    return 2
-                fi
-        esac
-    done
-    for ARG in "$@"; do
-        case "$ARG" in
             *.tar.bz|*.tar.bz2|*.tbz|*.tbz2)
-                tar -xjf "$ARG" ;;
+                tar -xjf "$ARG"
+                ;;
             *.tar.gz|*.tgz)
-                tar -xzf "$ARG" ;;
+                tar -xzf "$ARG"
+                ;;
             *.tar.xz|*.txz)
-                tar -xJf "$ARG" ;;
+                tar -xJf "$ARG"
+                ;;
             *.bz|*.bz2|*.bzip|*.bzip2)
-                bunzip2 "$ARG" ;;
+                bunzip2 "$ARG"
+                ;;
             *.gz)
-                gunzip "$ARG" ;;
-            *.lzma|*.xz)
-                unlzma "$ARG" ;;
+                gunzip "$ARG"
+                ;;
             *.tar)
-                tar -xf "$ARG" ;;
-            *.Z)
-                uncompress "$ARG" ;;
+                tar -xf "$ARG"
+                ;;
             *.zip)
-                unzip "$ARG" ;;
+                unzip "$ARG"
+                ;;
             *)
-                echo "$ARG: unknown archive format" 2>&1 ;;
+                echo "$ARG: unknown archive format" 2>&1
+                ;;
         esac
     done
+}
+
+# mini-alias for gradle commands
+gw () {
+    local COMMAND
+    local ARG
+    local OPTIND
+    declare -a COMMAND
+
+    if [ -f './gradlew' ]; then
+        COMMAND=( './gradlew' )
+    elif type -p gradle >/dev/null; then
+        COMMAND=( 'gradle' )
+    fi
+
+    OPTIND=1
+
+    while getopts ":cot-:" OPT; do
+        case "$OPT" in
+            c)
+                COMMAND+=( 'checkstyleMain' 'checkstyleTest' )
+                ;;
+            o)
+                COMMAND+=( '--offline' )
+                ;;
+            t)
+                COMMAND+=( 'test' )
+                ;;
+            -)
+                COMMAND+=( "--$OPTARG" )
+                ;;
+            \?)
+                COMMAND+=( "-$OPTARG" )
+                ;;
+        esac
+    done
+    shift $((OPTIND-1))
+
+    COMMAND=( "${COMMAND[@]}" "$@" )
+    echo "Running '${COMMAND[@]}'..."
+    "${COMMAND[@]}"
 }
 
 # find out what's happening on a port
 port () {
     local COMMAND
     if [ "$(uname)" == "Darwin" ]; then
-        COMMAND="lsof -i :$1 -P"
+        lsof -i :$1 -P
+        return $?
     elif [ "$(uname)" == "Linux" ]; then
-        COMMAND="netstat -nlp | grep :$1"
-    else
-        echo "Unknown system $(uname)" 2>&1
-        return 1
+        netstat -nlp | grep :$1
+        return $?
     fi
-    echo "Running '${COMMAND}'"
-    eval $COMMAND
+
+    echo "Unknown system $(uname -a)" 2>&1
+    return 1
 }
 

@@ -4,6 +4,16 @@ You are welcome to use any of the code or configurations listed here. But you
 do so at your own risk. I'm happy to break my own machine; don't blame me when
 you don't check what my stuff does and break yours.
 
+## Contents ##
+
+ 1. [Setup](#Setup)
+
+      - [Dependencies](#Dependencies)
+
+      - [Installation](#Installation)
+
+ 1. [Extra Configuration](#Extra-Configuration)
+
 ## Setup ##
 
 Setting up is straightforward, but time consuming. While this could be
@@ -150,6 +160,10 @@ directory of this repository in absolute form.
     cd ~
     ln -si "${DOTFILES_DIR}/ideavimrc" .ideavimrc
     ```
+
+## Extra Configuration ##
+
+Coming soon!
 
 [Homebrew]: https://brew.sh
 [JetBrains]: https://www.jetbrains.com

@@ -12,6 +12,8 @@ you don't check what my stuff does and break yours.
 
       - [Installation](#Installation)
 
+      - [Customizations](#Customizations)
+
  1. [Extra Configuration](#Extra-Configuration)
 
 ## Setup ##
@@ -163,7 +165,15 @@ directory of this repository in absolute form.
 
 ## Extra Configuration ##
 
-Coming soon!
+I have several non-shell and non-editor configurations included in my dotfiles.
+
+  - On Linux, most terminal emulators will pick up preferences from your
+    `Xresources` file. On Mac, import `Jetbrains Darcula Inspired.terminal`
+    into the Terminal application to load the theme.
+
+  - In every browser, I use the uBlock Origin extension to block adds. Import
+    the `ublock_origin-block_youtube_overlays.txt` file as a filter to prevent
+    the end of video overlays from appearing on YouTube.
 
 [Homebrew]: https://brew.sh
 [JetBrains]: https://www.jetbrains.com

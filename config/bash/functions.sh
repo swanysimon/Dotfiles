@@ -123,24 +123,19 @@ gw () {
     local OPTIND
     declare -a COMMAND
 
-    if [ -f './gradlew' ]; then
-        COMMAND=( './gradlew' )
-    elif type -p gradle >/dev/null; then
-        COMMAND=( 'gradle' )
-    fi
+    COMMAND=( './gradlew' )
 
     OPTIND=1
-
-    while getopts ":cot-:" OPT; do
+    while getopts ":cC:o-:" OPT; do
         case "$OPT" in
             c)
-                COMMAND+=( 'checkstyleMain' 'checkstyleTest' )
+                COMMAND+=( 'compileJava' 'compileTestJava' )
+                ;;
+            C)
+                COMMAND+=( ":${OPTARG}:compileJava" ":${OPTARG}:compileTestJava" )
                 ;;
             o)
                 COMMAND+=( '--offline' )
-                ;;
-            t)
-                COMMAND+=( 'test' )
                 ;;
             -)
                 COMMAND+=( "--$OPTARG" )

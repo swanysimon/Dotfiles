@@ -15,3 +15,6 @@ setlocal foldlevel=2
 setlocal foldmethod=syntax
 setlocal foldnestmax=2
 
+" enable jedi for python
+packadd! jedi-vim
+

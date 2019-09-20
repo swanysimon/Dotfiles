@@ -8,7 +8,7 @@
 	path = vim/pack/third_party/opt/Colorizer.git
 	url = git@github.com:chrisbra/Colorizer.git
 [submodule "vim/pack/third_party/start/rust.vim"]
-	path = vim/pack/third_party/start/rust.vim
+	path = vim/pack/third_party/opt/rust.vim
 	url = git@github.com:rust-lang/rust.vim.git
 [submodule "vim/pack/third_party/opt/jedi-vim"]
 	path = vim/pack/third_party/opt/jedi-vim

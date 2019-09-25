@@ -7,8 +7,7 @@ set noesckeys
 set ignorecase
 set incsearch
 
-set formatoptions+=j
-set nojoinspaces
+set ideajoin
 
 if has('unnamedplus')
   set clipboard^=unnamedplus

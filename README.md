@@ -175,6 +175,27 @@ I have several non-shell and non-editor configurations included in my dotfiles.
     the `ublock_origin-block_youtube_overlays.txt` file as a filter to prevent
     the end of video overlays from appearing on YouTube.
 
+  - To get Firefox is a barebones, mostly working condition, do the following:
+
+      - Install uBlock Origin. Import the
+        `ublock_origin-block_youtube_overlays.txt` file as a filter to prevent
+        the end of video overlays from appearing on YouTube.
+
+      - Install Tree Style Tabs.
+
+      - Go to `about:config` and set
+        `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
+
+      - Navigate to `Help -> Troubleshooting Information` and use that to find
+        your profile directory. Navigate to that directory in the terminal and
+        then run:
+
+        ```
+        mkdir chrome
+        cd chrome
+        ln -s $DOTFILES_DIR/chrome/userChrome.css userChrome.css
+        ```
+
 [Homebrew]: https://brew.sh
 [JetBrains]: https://www.jetbrains.com
 [GitHub keys]: https://github.com/settings/keys

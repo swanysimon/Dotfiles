@@ -2,6 +2,7 @@
 
 " PEP-8 line lengths
 setlocal textwidth=79
+setlocal colorcolumn=80
 
 " to help with line lengths, turn on the ruler
 setlocal ruler

@@ -177,14 +177,18 @@ I have several non-shell and non-editor configurations included in my dotfiles.
 
   - To get Firefox is a barebones, mostly working condition, do the following:
 
+      - Go to `about:config` and set:
+        
+         1. `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`
+
+         1. `svg.context-properties.content.enabled` to `true`
+
       - Install uBlock Origin. Import the
         `ublock_origin-block_youtube_overlays.txt` file as a filter to prevent
         the end of video overlays from appearing on YouTube.
 
-      - Install Tree Style Tabs.
-
-      - Go to `about:config` and set
-        `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
+      - Install Tree Style Tab. Import the `tree-style-tab_config.json` file
+        in the root of the repository.
 
       - Navigate to `Help -> Troubleshooting Information` and use that to find
         your profile directory. Navigate to that directory in the terminal and

@@ -1,12 +1,11 @@
+/* hide main tabs toolbar */
 #TabsToolbar {
-    visibility: collapse;
-}
-
-#titlebar {
-    visibility: collapse;
-}
-
-#sidebar-header {
     visibility: collapse !important;
+}
+
+/* remove sidebar max and min width */
+#sidebar {
+    max-width: none !important;
+    min-width: 0px !important;
 }
 

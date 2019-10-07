@@ -13,6 +13,7 @@
 /config/pulse/*
 /config/Slack/*
 /config/user-dirs.*
+/config/Unknown Organization/*
 /config/zoomus.conf
 
 # configurations that should be whitelisted

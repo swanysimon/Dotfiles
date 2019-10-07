@@ -12,7 +12,7 @@ PROMPT_DIRTRIM=3
 PROMPT_COMMAND=__prompt_command
 
 __hostname_prompt_color () {
-    local COLOR_CODE
+    declare -i COLOR_CODE
     if [ "$(uname)" == "Linux" ]; then
         COLOR_CODE=2
     elif [ "$(uname)" == "Darwin" ]; then
@@ -33,21 +33,30 @@ __git_prompt_string () {
         return 0
     fi
 
-    local LOCAL_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD 2>/dev/null)"
-    local REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref @{upstream} 2>/dev/null)"
-    local LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count "${LOCAL_BRANCH}"..."${REMOTE_BRANCH}" 2>/dev/null)"
+    declare LOCAL_BRANCH
+    declare REMOTE_BRANCH
+    declare LOCAL_REMOTE_DIFF
+    declare UPWARD_ARROW
+    declare -i LOCAL_AHEAD
+    declare LOCAL_STATUS_STRING
+    declare -i REMOTE_AHEAD
+    declare REMOTE_STATUS_STRING
+
+    LOCAL_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD 2>/dev/null)"
+    REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref "@{upstream}" 2>/dev/null)"
+    LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count "${LOCAL_BRANCH}"..."${REMOTE_BRANCH}" 2>/dev/null)"
 
     # unicode upward arrow (u2191)
-    local UPWARD_ARROW="\xe2\x86\x91"
+    UPWARD_ARROW="\xe2\x86\x91"
 
-    local LOCAL_AHEAD="$(cut -f 1 <<< "$LOCAL_REMOTE_DIFF")"
-    if [ -n "$LOCAL_AHEAD" ] && [ $LOCAL_AHEAD -ne 0 ]; then
-        local LOCAL_STATUS_STRING="${UPWARD_ARROW}${LOCAL_AHEAD}"
+    LOCAL_AHEAD="$(cut -f 1 <<< "$LOCAL_REMOTE_DIFF")"
+    if [ "$LOCAL_AHEAD" -ne 0 ]; then
+        LOCAL_STATUS_STRING="${UPWARD_ARROW}${LOCAL_AHEAD}"
     fi
 
-    local REMOTE_AHEAD="$(cut -f 2 <<< "$LOCAL_REMOTE_DIFF")"
-    if [ -n "$REMOTE_AHEAD" ] && [ $REMOTE_AHEAD -ne 0 ]; then
-        local REMOTE_STATUS_STRING="${UPWARD_ARROW}${REMOTE_AHEAD}"
+    REMOTE_AHEAD="$(cut -f 2 <<< "$LOCAL_REMOTE_DIFF")"
+    if [ "$REMOTE_AHEAD" -ne 0 ]; then
+        REMOTE_STATUS_STRING="${UPWARD_ARROW}${REMOTE_AHEAD}"
     fi
 
     printf " \001%s\002%s%b|%s%b" \

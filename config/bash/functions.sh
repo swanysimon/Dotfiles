@@ -2,7 +2,7 @@
 
 # archive up a file or directory with the given format
 backup () {
-    local EXT
+    declare EXT
     case "$1" in
         -h|--help)
             echo "backup [ -h ] [ <archive_format> [ archive_name ] ] file1 ..."
@@ -30,7 +30,7 @@ backup () {
         tar.bz|tar.bz2|tbz|tbz2)
             EXT="$1"
             shift 1
-            if [ egrep -q "\.tar\.bz2$|\.tbz2$|\.tar\.bz$|\.tbz$" <<< "$1" ]; then
+            if egrep -q "\.tar\.bz2$|\.tbz2$|\.tar\.bz$|\.tbz$" <<< "$1"; then
                 tar -cjvf "$@"
             elif [ -d "$1" ]; then
                 tar -cjvf "${1::-1}.${EXT}" "$@"
@@ -41,7 +41,7 @@ backup () {
         tar.gz|tgz)
             EXT="$1"
             shift 1
-            if [ egrep -q "\.tar\.gz$|\.txz$" <<< "$1" ]; then
+            if egrep -q "\.tar\.gz$|\.tgz$" <<< "$1"; then
                 tar -czvf "$@"
             elif [ -d "$1" ]; then
                 tar -czvf "${1::-1}.${EXT}" "$@"
@@ -50,9 +50,9 @@ backup () {
             fi
             ;;
         tar.xz|txz)
-            local EXT="$1"
+            EXT="$1"
             shift 1
-            if [ egrep -q "\.tar\.xz$|\.txz$" <<< "$1" ]; then
+            if egrep -q "\.tar\.xz$|\.txz$" <<< "$1"; then
                 tar -cJvf "$@"
             elif [ -d "$1" ]; then
                 tar -cJvf "${1::-1}.${EXT}" "$@"
@@ -62,7 +62,7 @@ backup () {
             ;;
         zip)
             shift 1
-            if [ grep -q "\.zip$" <<< "$1" ]; then
+            if grep -q "\.zip$" <<< "$1"; then
                 zip -rv "$@"
             elif [ -d "$1" ]; then
                 zip -rv "${1::-1}.zip" "$@"
@@ -71,7 +71,7 @@ backup () {
             fi
             ;;
         ""|bak)
-            local ARG
+            declare ARG
             for ARG in "$@"; do
                 if [ -d "$ARG" ]; then
                     cp -Riv "$ARG" "${ARG::-1}.bak/"
@@ -85,7 +85,7 @@ backup () {
 
 # unarchive a file
 extract () {
-    local ARG
+    declare ARG
     for ARG in "$@"; do
         case "$ARG" in
             *.tar.bz|*.tar.bz2|*.tbz|*.tbz2)
@@ -118,14 +118,10 @@ extract () {
 
 # mini-alias for gradle commands
 gw () {
-    local COMMAND
-    local ARG
-    local OPTIND
-    declare -a COMMAND
+    declare ARG
+    declare -i OPTIND=1
 
-    COMMAND=( './gradlew' )
-
-    OPTIND=1
+    declare -a COMMAND=( './gradlew' )
     while getopts ":cC:o-:" OPT; do
         case "$OPT" in
             c)
@@ -148,18 +144,17 @@ gw () {
     shift $((OPTIND-1))
 
     COMMAND=( "${COMMAND[@]}" "$@" )
-    echo "Running '${COMMAND[@]}'..."
+    echo "Running '${COMMAND[*]}'..."
     "${COMMAND[@]}"
 }
 
 # find out what's happening on a port
 port () {
-    local COMMAND
     if [ "$(uname)" == "Darwin" ]; then
-        lsof -i :$1 -P
+        lsof -i :"$1" -P
         return $?
     elif [ "$(uname)" == "Linux" ]; then
-        netstat -nlp | grep :$1
+        netstat -nlp | grep :"$1"
         return $?
     fi
 

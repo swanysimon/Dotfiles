@@ -1,6 +1,7 @@
+#!/usr/bin/env sh
 # top-level bashrc; delegates to other configuration files
 
-if [ -z ${XDG_CONFIG_HOME+x} ]; then
+if [ -z "${XDG_CONFIG_HOME+x}" ]; then
     export XDG_CONFIG_HOME="${HOME}/.config"
 fi
 
@@ -9,15 +10,18 @@ fi
 # in here since they are often exported with bug reports.
 # All non-hidden files in this directory will be sourced
 if [ -d "${XDG_CONFIG_HOME}/bash/sourcing/" ]; then
-    for FILE_TO_SOURCE in $(find -L "${XDG_CONFIG_HOME}/bash/sourcing/" -type f ! -name '.*'); do
-        source "${FILE_TO_SOURCE}"
-    done
+    while read FOUND_SOURCING_FILE; do
+        source "$FOUND_SOURCING_FILE"
+    done < <(find -L "${XDG_CONFIG_HOME}/bash/sourcing/" -type f ! -name '.*')
+    unset FOUND_SOURCING_FILE
 fi
 
-if ! ps -p "$$" -o command= | grep -q "bash$"; then
+if ! pgrep "bash" | grep -q "$$"; then
     # shell is not bash; skipping configuration
     return
 fi
+
+# lines below this block will start failing shellcheck because it can't know that we're guaranteed bash from here on
 
 shopt -s checkwinsize
 
@@ -47,7 +51,8 @@ __source_if_file_exists() {
 if brew --prefix &>/dev/null; then
     if [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
         if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
-            export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
+            BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
+            export BASH_COMPLETION_COMPAT_DIR="$BASH_COMPLETION_COMPAT_DIR"
             __source_if_file_exists "$(brew --prefix)/share/bash-completion/bash_completion"
         fi
         source "$(brew --prefix)/etc/profile.d/bash_completion.sh"

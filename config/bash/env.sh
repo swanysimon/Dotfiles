@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # rust setup
 if ! grep -q "${HOME}/.cargo/bin" <<< "$PATH" && [ -e "${HOME}/.cargo/env" ]; then

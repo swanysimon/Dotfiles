@@ -1,19 +1,20 @@
 # configurations that shouldn't be copied between machines
 # these might involve security concerns, or they might just be something I don't understand
+/config/Mousepad/*
+/config/Slack/*
+/config/Unknown Organization/*
 /config/bash/local_config/*
 /config/bash/sourcing/*
 /config/chromium/*
 /config/configstore/*
 /config/dconf/*
 /config/libaccounts-glib/*
-/config/Mousepad/*
-/config/mimeapps.list
 /config/menus/*
+/config/mimeapps.list
 /config/mpd/*
 /config/pulse/*
-/config/Slack/*
+/config/thefuck/*
 /config/user-dirs.*
-/config/Unknown Organization/*
 /config/zoomus.conf
 
 # configurations that should be whitelisted

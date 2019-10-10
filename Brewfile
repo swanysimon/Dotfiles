@@ -1,3 +1,6 @@
+# taps
+tap 'homebrew/cask-versions'
+
 # packages
 brew 'bash'
 brew 'bash-completion@2'
@@ -16,6 +19,8 @@ brew 'wget'
 # casks
 cask 'firefox'
 cask 'intellij-idea-ce'
-cask 'java'
 cask 'skype'
+cask 'slack'
+cask 'zoom'
+cask 'zulu11'
 

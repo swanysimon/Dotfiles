@@ -5,6 +5,17 @@ if [ -z "${XDG_CONFIG_HOME+x}" ]; then
     export XDG_CONFIG_HOME="${HOME}/.config"
 fi
 
+if ! grep -q "/usr/local/sbin" <<< "$PATH"; then
+    export PATH="${PATH}:/usr/local/sbin"
+fi
+
+__source_if_file_exists() {
+    local FILENAME="$1"
+    if [ -e "$FILENAME" ]; then
+        source "$FILENAME"
+    fi
+}
+
 # this directory is ignored by git and is a safe place to put secret
 # environment variables and such. Be cautious putting environment variables
 # in here since they are often exported with bug reports.
@@ -41,14 +52,7 @@ if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
     return
 fi
 
-__source_if_file_exists() {
-    local FILENAME="$1"
-    if [ -e "$FILENAME" ]; then
-        source "$FILENAME"
-    fi
-}
-
-if brew --prefix &>/dev/null; then
+if type -p brew >/dev/null; then
     if [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
         if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
             BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"

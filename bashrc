@@ -27,7 +27,7 @@ if [ -d "${XDG_CONFIG_HOME}/bash/sourcing/" ]; then
     unset FOUND_SOURCING_FILE
 fi
 
-if ! pgrep "bash" | grep -q "$$"; then
+if ! ps -p "$$" -o command= | grep -q "bash$"; then
     # shell is not bash; skipping configuration
     return
 fi

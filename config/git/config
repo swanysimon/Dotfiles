@@ -22,6 +22,7 @@
 
 [branch]
   autosetupmerge = always
+  autosetuprebase = always
   rebase = true
 [color]
   ui = true

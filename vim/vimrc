@@ -143,4 +143,3 @@ endif
 
 " leading 0 in number is decimal, not octal
 set nrformats-=octal
-

@@ -14,6 +14,7 @@
 /config/mpd/*
 /config/pulse/*
 /config/thefuck/*
+/config/Thunar/*
 /config/user-dirs.*
 /config/zoomus.conf
 

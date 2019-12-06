@@ -9,6 +9,10 @@ if ! grep -q "/usr/local/sbin" <<< "$PATH"; then
     export PATH="${PATH}:/usr/local/sbin"
 fi
 
+if ! grep -q "${XDG_CONFIG_HOME}/bin" <<< "$PATH"; then
+    export PATH="${PATH}:${XDG_CONFIG_HOME}/bin"
+fi
+
 __source_if_file_exists() {
     local FILENAME="$1"
     if [ -e "$FILENAME" ]; then

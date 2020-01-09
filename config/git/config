@@ -35,12 +35,17 @@
   tool = vimdiff
 [difftool]
   prompt = false
+[fetch]
+  parallel = 0
+  recurseSubmodules = true
 [merge]
   conflictstyle = diff3
   prompt = false
   tool = vimdiff
 [pager]
   branch = false
+[submodule]
+  fetchJobs = 0
 [user]
   email = nomiswanson@gmail.com
   name = Simon Swanson

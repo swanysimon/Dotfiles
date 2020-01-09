@@ -132,8 +132,9 @@ bindsym $mod+Shift+Control+f fullscreen toggle
 ####
 
 # volume controls
-bindsym XF86AudioLowerVolume exec amixer -q set Master 5%-
-bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse set Master 2%-
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse set Master 2%+
+bindsym XF86AudioMute exec amixer -q -D pulse set Master 1+ toggle
 
 ####
 #### status bar
@@ -152,3 +153,5 @@ bar {
 # restore wallpaper on login
 exec --no-startup-id nitrogen --restore
 
+# start music server
+exec --no-startup-id mpd

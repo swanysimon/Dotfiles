@@ -122,7 +122,7 @@ gw () {
     declare -i OPTIND=1
 
     declare -a COMMAND=( './gradlew' )
-    while getopts ":cC:o-:" OPT; do
+    while getopts ":cC:oP:-:" OPT; do
         case "$OPT" in
             c)
                 COMMAND+=( 'compileJava' 'compileTestJava' )
@@ -132,6 +132,9 @@ gw () {
                 ;;
             o)
                 COMMAND+=( '--offline' )
+                ;;
+            P)
+                COMMAND+=( "-P${OPTARG}" )
                 ;;
             -)
                 COMMAND+=( "--$OPTARG" )

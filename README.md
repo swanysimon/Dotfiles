@@ -1,25 +1,53 @@
-All my dotfiles in case something goes horribly, horribly wrong.
+All my system configuration files that I like to take with me everywhere I go.
 
-You are welcome to use any of the code or configurations listed here. But you
-do so at your own risk. I'm happy to break my own machine; don't blame me when
-you don't check what my stuff does and break yours.
+**You are welcome to use any of the code or configurations listed here, no
+strings attached.** But you do so at your own risk. I'm happy to break my own
+machines, and I definitely will push up broken configurations or scripts at
+times. _Don't blame me when you don't check what my stuff does and break yours._
 
 ## Contents ##
 
- 1. [Setup](#Setup)
+ 1. [Organization](#organization)
 
-      - [Dependencies](#Dependencies)
+ 1. [Setup](#setup)
 
-      - [Installation](#Installation)
+      - [Dependencies](#dependencies)
 
-      - [Customizations](#Customizations)
+      - [Installation](#installation)
 
- 1. [Extra Configuration](#Extra-Configuration)
+      - [Customizations](#customizations)
+
+ 1. [Extra Configuration](#extra-configuration)
+
+
+## Organization ##
+
+While this is just a personal storage repository of sorts, I've spent a lot of
+time thinking about how to best organize all of its content.
+
+In the top-level directory, you will find:
+
+  - Some configuration files that shouldn't go in the `config` directory, like
+    files that should be in the user's home directory.
+
+  - Configuration files that need to be manually loaded, like my ad blocking
+    configuration and my Mac OS terminal settings.
+
+The important files in the repository live in the `config` directory (unless
+they're for `vim`, in which case you should look at the `vim` directory).
+
+Almost all of my environment configuration happens in the `bashrc` file or in
+the `config/bash` directory. I've made it extensible, as well, so non-public
+information can be sourced effectively from the `local_config` or `sourcing`
+directories. This lets me use the same base configuration files everywhere I go
+and simply treat my non-public information as a plugin. It's a strategy that has
+worked very well for me and I would highly recommend it to everyone.
 
 ## Setup ##
 
 Setting up is straightforward, but time consuming. While this could be
-automated away, it doesn't seem worth the effort at the moment.
+automated away, it doesn't seem worth the effort at the moment. This is likely
+not the complete setup, but just the parts I remember to document.
 
 ### Dependencies ###
 
@@ -49,10 +77,13 @@ automated away, it doesn't seem worth the effort at the moment.
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     ```
 
-  - You will need to initialize project submodules. If you've already cloned,
-    you will want to run:
+  - You will need to initialize project submodules.
 
     ```
+    # fresh clone
+    git clone --recurse-submodules --remote-submodules
+
+    # if you've already cloned
     git submodule update --init --recursive --remote --rebase
     ```
 
@@ -107,7 +138,7 @@ directory of this repository in absolute form.
     sudo -k
     ```
 
-    Register the bash you just installed to be the default shell.
+ 1. Register the bash you just installed to be the default shell.
 
      1. Ensure `$(brew --prefix)/bin` is the first path in `/etc/paths`. This
         seems to be the default on newer OSes, but it doesn't hurt to be sure.
@@ -175,7 +206,7 @@ I have several non-shell and non-editor configurations included in my dotfiles.
     the `ublock_origin-block_youtube_overlays.txt` file as a filter to prevent
     the end of video overlays from appearing on YouTube.
 
-  - To get Firefox is a barebones, mostly working condition, do the following:
+  - To get Firefox in a barebones, mostly working condition, do the following:
 
       - Go to `about:config` and set:
         

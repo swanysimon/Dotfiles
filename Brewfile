@@ -18,6 +18,7 @@ brew 'wget'
 
 # casks
 cask 'firefox'
+cask 'google-chrome'
 cask 'intellij-idea-ce'
 cask 'skype'
 cask 'slack'

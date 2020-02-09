@@ -1,33 +1,24 @@
-# configurations that shouldn't be copied between machines
-# these might involve security concerns, or they might just be something I don't understand
-/config/Mousepad/*
-/config/Slack/*
-/config/Unknown Organization/*
+# configurations generally shouldn't be copied between machines, either for
+# security reasons or because I just don't understand what's involved
+/config/*
+!/config/bash/*
 /config/bash/local_config/*
 /config/bash/sourcing/*
-/config/chromium/*
-/config/configstore/*
-/config/dconf/*
-/config/libaccounts-glib/*
-/config/menus/*
-/config/mimeapps.list
-/config/mpd/*
-/config/pulse/*
-/config/thefuck/*
-/config/Thunar/*
-/config/user-dirs.*
-/config/zoomus.conf
+!/config/bin/*
+!/config/git/*
+!/config/i3/*
+!/config/i3status/*
 
-# configurations that should be whitelisted
-/config/mpd/mpd.conf
+# gitkeep files exist to preserve directory structure, even when the underlying
+# directory contains things that shouldn't be checked in
+!.gitkeep
 
 # things from vim that shouldn't be checked in
 /vim/.caches/*/*
 /vim/.netrwhist
 
+# let applications track their own lock state
+*.lock.json
+
 # seems unnecessary
 __pycache__/
-
-# gitkeep files should always be kept to preserve directory structures
-!.gitkeep
-

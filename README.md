@@ -51,10 +51,13 @@ not the complete setup, but just the parts I remember to document.
 
 ### Dependencies ###
 
-  - SSH set up on the machine.
+  - SSH set up on the machine. Feel free to use your favorite algorithm; I've
+    recently been convinced by the promises of the Ed25519 algorithm. Most
+    people use RSA and that's fine as long as it has a length of at least 4096
+    bits.
 
     ```
-    ssh-keygen -b 4096
+    ssh-keygen -t ed25519 -a 100
     ```
 
     The navigate to your [GitHub keys] and copy in the public key. To copy the
@@ -62,20 +65,16 @@ not the complete setup, but just the parts I remember to document.
 
     ```
     # for MacOS
-    pbcopy < ~/.ssh/id_rsa.pub
+    pbcopy < ~/.ssh/id_ed25519.pub
 
     # for Linux you will need a utility like xsel
-    xsel --clipboard < ~/.ssh/id_rsa.pub
+    xsel --clipboard < ~/.ssh/id_ed25519.pub
     ```
 
   - [Homebrew] is my package manager of choice. Currently I don't use it on my
     Linux machine, but that could be changing with the advent of Linuxbrew.
-
-    ```
-    # for MacOS only
-    xcode-select --install
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    ```
+    Follow the instructions on their site: I don't want to be responsible for
+    your running of an arbitrary script you just `curl`'d.
 
   - You will need to initialize project submodules.
 
@@ -91,6 +90,8 @@ not the complete setup, but just the parts I remember to document.
 
 For the purposes of these instructions, `$DOTFILES_DIR` will reference the root
 directory of this repository in absolute form.
+
+#### Command Line Configuration ####
 
  1. Clear the following files and directories that might exist on your system.
 
@@ -167,6 +168,50 @@ directory of this repository in absolute form.
     git config branch.master.rebase true
     ```
 
+#### Browser Configuration ####
+
+I currently use [Firefox] for my browser. If you've run the commands above, then
+Homebrew should have installed the browser for you. There are a couple things
+that need to be done to fully configure the browser.
+
+ 1. Open the browser.
+
+ 1. Navigate to `about:config`:
+
+     1. Set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
+
+     1. Set `svg.context-properties.content.enabled` to `true`.
+
+ 1. Install [uBlock Origin].
+
+      - Import the `ublock_origin-block_youtube_overlays.txt` file as a filter.
+        This prevents the end-of-video overlays from appearing in YouTube. The
+        file lives in the root of this repository.
+
+ 1. Install [Tree Style Tab].
+
+      - Import the `tree-style-tab_config.json` file in the root of this
+        repository.
+
+ 1. Go to Firefox preferences.
+
+      - Enable Firefox as the default browser (if you haven't).{
+
+      - Turn off `Crtl+Tab cycles through tabs in recently used order`.
+
+      - Set the default search engine to DuckDuckGo.
+
+      - Turn off `Ask to save logins and passwords for websites`.
+
+ 1. Navigate to `Help -> Troubleshooting Information` and use that to find your
+    profile directory. Navigate to that directory in the terminal and then run:
+
+    ```
+    mkdir chrome
+    cd chrome
+    ln -s $DOTFILES_DIR/chrome/userChrome.css userChrome.css
+    ```
+
 ### Customizations ###
 
  1. Place separate bash configuration that shouldn't be checked into version
@@ -202,36 +247,10 @@ I have several non-shell and non-editor configurations included in my dotfiles.
     `Xresources` file. On Mac, import `Jetbrains Darcula Inspired.terminal`
     into the Terminal application to load the theme.
 
-  - In every browser, I use the uBlock Origin extension to block adds. Import
-    the `ublock_origin-block_youtube_overlays.txt` file as a filter to prevent
-    the end of video overlays from appearing on YouTube.
-
-  - To get Firefox in a barebones, mostly working condition, do the following:
-
-      - Go to `about:config` and set:
-        
-         1. `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`
-
-         1. `svg.context-properties.content.enabled` to `true`
-
-      - Install uBlock Origin. Import the
-        `ublock_origin-block_youtube_overlays.txt` file as a filter to prevent
-        the end of video overlays from appearing on YouTube.
-
-      - Install Tree Style Tab. Import the `tree-style-tab_config.json` file
-        in the root of the repository.
-
-      - Navigate to `Help -> Troubleshooting Information` and use that to find
-        your profile directory. Navigate to that directory in the terminal and
-        then run:
-
-        ```
-        mkdir chrome
-        cd chrome
-        ln -s $DOTFILES_DIR/chrome/userChrome.css userChrome.css
-        ```
-
+[Firefox]: https://www.mozilla.org/firefox/
+[GitHub keys]: https://github.com/settings/keys
 [Homebrew]: https://brew.sh
 [JetBrains]: https://www.jetbrains.com
-[GitHub keys]: https://github.com/settings/keys
+[Tree Style Tab]: https://piro.sakura.ne.jp/xul/_treestyletab.html.en
+[uBlock Origin]: https://github.com/gorhill/uBlock#ublock-origin
 

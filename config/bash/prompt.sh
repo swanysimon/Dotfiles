@@ -42,7 +42,7 @@ __git_prompt_string () {
     declare -i REMOTE_AHEAD
     declare REMOTE_STATUS_STRING
 
-    LOCAL_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD 2>/dev/null)"
+    LOCAL_BRANCH="$(git branch --show-current 2>/dev/null)"
     REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref "@{upstream}" 2>/dev/null)"
     LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count "${LOCAL_BRANCH}"..."${REMOTE_BRANCH}" 2>/dev/null)"
 

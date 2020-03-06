@@ -3,12 +3,13 @@
   "acceptableDelayForInternalFocusMoving": 100,
   "applyThemeColorToIcon": true,
   "autoAttachOnNewTabButtonMiddleClick": -1,
+  "autoAttachOnNewTabCommand": 1,
   "autoAttachSameSiteOrphan": 3,
   "autoCollapseExpandSubtreeOnSelectExceptActiveTabRemove": false,
   "autoGroupNewTabs": false,
   "closeParentBehavior": 6,
   "closeParentBehaviorMode": 1,
-  "configsVersion": 7,
+  "configsVersion": 9,
   "context_closeDescendants": true,
   "context_closeOthers": true,
   "context_collapseTree": true,
@@ -29,12 +30,21 @@
   "faviconizedTabScale": 2,
   "fixupTreeOnTabVisibilityChanged": true,
   "guessNewOrphanTabAsOpenedByNewTabCommand": false,
+  "inheritContextualIdentityToNewChildTab": true,
   "insertNewChildAt": -1,
   "labelOverflowStyle": "crop",
+  "lastConfirmedToCloseTabs": 1583448595276,
   "maxFaviconizedPinnedTabsInOneRow": -1,
-  "notifiedFeaturesVersion": 3,
+  "migratedBookmarkUrls": [
+    "moz-extension://77c701da-61cc-d24e-9958-63911d00fb58/resources/group-tab.html",
+    "moz-extension://77c701da-61cc-d24e-9958-63911d00fb58/options/options.html",
+    "moz-extension://77c701da-61cc-d24e-9958-63911d00fb58/resources/startup.html",
+    "moz-extension://77c701da-61cc-d24e-9958-63911d00fb58/tests/runner.html"
+  ],
+  "notifiedFeaturesVersion": 4,
   "optionsExpandedSections": [
-    "section-debug"
+    "section-debug",
+    "section-newTab"
   ],
   "showContextualIdentitiesSelector": true,
   "simulateSelectOwnerOnClose": false,

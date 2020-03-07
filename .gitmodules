@@ -13,3 +13,6 @@
 [submodule "vim/pack/third_party/opt/jedi-vim"]
 	path = vim/pack/third_party/opt/jedi-vim
 	url = git@github.com:davidhalter/jedi-vim.git
+[submodule "vim/pack/third_party/start/vim-commentary"]
+	path = vim/pack/third_party/start/vim-commentary
+	url = git@github.com:tpope/vim-commentary.git

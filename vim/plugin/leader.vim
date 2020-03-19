@@ -2,7 +2,7 @@
 " Simon Swanson
 
 if exists('g:loaded_leader_mappings')
-    finish
+  finish
 endif
 let g:loaded_leader_mappings=1
 
@@ -12,9 +12,6 @@ nnoremap <Leader>b :<C-U>buffers<CR>:buffer<Space>
 " turn off current search highlighting with Leader-h
 nnoremap <Leader>h :<C-U>nohlsearch<CR>
 vnoremap <Leader>h :<C-U>nohlsearch<CR>gv
-
-" toggle cursorline with Leader-c
-nnoremap <Leader>c :<C-U>setlocal cursorline! cursorline?<CR>
 
 " toggle ruler with Leader-r
 nnoremap <Leader>r :<C-U>setlocal ruler! ruler?<CR>

@@ -20,21 +20,6 @@ if has('autocmd')
   filetype plugin indent on
 endif
 
-" load features dependent on syntax
-if has('syntax')
-  if !exists('g:syntax_on')
-    syntax enable
-    
-    try
-      colorscheme darcula
-    catch
-      " do nothing, failed to apply colorscheme
-    endtry
-  endif
-
-  set background=dark
-endif
-
 " find the current line more easily
 set cursorline
 

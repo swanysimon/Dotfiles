@@ -10,8 +10,10 @@ let g:loaded_colorcolumn_plugin=1
 function! s:SetColorColumn()
   if &textwidth == 0
     setlocal colorcolumn=
+    setlocal ruler
   else
     setlocal colorcolumn=+0
+    setlocal noruler
   endif
 endfunction
 

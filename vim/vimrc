@@ -1,130 +1,36 @@
 " vimrc
-" Simon Swanson
+" Settings that don't really fit into any of the files in the plugin directory.
 
 set nocompatible
-
 set history=1000
 
-" on my keyboard I've put tilde in a pretty good position for a leader key
-let mapleader=','
-let maplocalleader='`'
+let mapleader=","
+let maplocalleader="'"
 
-" don't reload screen during batch processing
-set lazyredraw
+filetype plugin indent on
 
-" line numbers on by default
-set number
+set backspace=eol,indent,start
+set foldlevelstart=99
+set nojoinspaces
+set nrformats-=octal
 
-" load filetype settings and plugins
-if has('autocmd')
-  filetype plugin indent on
+if has("unnamedplus")
+  set clipboard^=unnamedplus
+elseif has("clipboard")
+  set clipboard^=unnamed
 endif
 
-" find the current line more easily
-set cursorline
-
-" default settings that filetype plugins should override
-set comments=
-set include=
-set path-=/usr/include/
-set textwidth=0
-
-" use UTF-8 when possible
-if has('multi_byte') && !exists('$LANG') && &encoding ==# 'latin1'
+if !exists('$LANG') && &encoding ==# "latin1"
   set encoding=utf-8
 endif
 
-" backspace behaves as most expect
-set backspace+=eol
-set backspace+=indent
-set backspace+=start
-
-" can scroll with mouse
 if has("mouse")
   set mouse=a
 endif
 
-" default indentation settings
-" filetype plugins should make adjustments as necessary
-set autoindent
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-
-" indent wrapped lines
-set breakindent
-
-" wrap comments at textwidth
-set formatoptions+=c
-
-" allow comments to be formatted with gq
-set formatoptions+=q
-
-" delete comment leaders when joining lines
-set formatoptions+=j
-
-" do not auto-insert the next comment leader when creating a new line
-set formatoptions-=o
-set formatoptions-=r
-
-" don't join with extra spaces
-set nojoinspaces
-
-" search settings
-set incsearch
-set hlsearch
-set smartcase
-nohlsearch " clear search highlights on reload
-
-" line breaks on words
-set linebreak
-
-" make reading invisible characters easier
-set listchars+=extends:→
-set listchars+=precedes:←
-set listchars+=nbsp:·
-set listchars+=tab:»·
-set listchars+=trail:·
-
-" completion settings
-set wildignorecase
-set wildmenu
-set wildmode=list:longest
-if exists('+completeopt')
-  set completeopt=longest,menuone,preview
-endif
-
-" enable potential folding
-if has('folding')
-  set foldlevelstart=99
-  set foldmethod=indent
-endif
-
-" wrapped rows start with 3 dots
-set showbreak=...
-
-" sane split settings
-set splitbelow
-set splitright
-
-" connect to system clipboard
-if has('unnamedplus')
-  set clipboard^=unnamedplus
-elseif has('clipboard')
-  set clipboard^=unnamed
-endif
-
-" buffers can have changes without being displayed
-set hidden
-
-" keep backups, swapfiles, undo, and plugin data in an appropriate place
+" These files are under the vim directory but excluded from git.
 set backup
 set backupdir^=$HOME/.vim/.caches/backups//
 set directory^=$HOME/.vim/.caches/swapfiles//
-if has('persistent_undo')
-  set undofile
-  set undodir^=$HOME/.vim/.caches/undo//
-endif
-
-" leading 0 in number is decimal, not octal
-set nrformats-=octal
+set undodir^=$HOME/.vim/.caches/undo//
+set undofile

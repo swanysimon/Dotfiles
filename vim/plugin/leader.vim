@@ -1,43 +1,20 @@
 " leader.vim
-" Simon Swanson
+" Mappings that involve the leader or localleader key.
 
-if exists('g:loaded_leader_mappings')
+if exists("g:loaded_my_leader_mappings_plugin")
   finish
 endif
-let g:loaded_leader_mappings=1
+let g:loaded_my_leader_mappings_plugin=1
 
-" navigate buffers faster with Leader-b
+" Leader-b: easier buffer navigation
 nnoremap <Leader>b :<C-U>buffers<CR>:buffer<Space>
 
-" turn off current search highlighting with Leader-h
+" Leader-h: turn off search highlighting
 nnoremap <Leader>h :<C-U>nohlsearch<CR>
 vnoremap <Leader>h :<C-U>nohlsearch<CR>gv
 
-" toggle ruler with Leader-r
-nnoremap <Leader>r :<C-U>setlocal ruler! ruler?<CR>
-
-" toggle list with Leader-l
-nnoremap <Leader>l :<C-U>setlocal list! list?<CR>
-vnoremap <Leader>l :<C-U>setlocal list! list?<CR>gv
-
-" toggle line number display with Leader-n
-nnoremap <Leader>n :<C-U>setlocal number! number?<CR>
-vnoremap <Leader>n :<C-U>setlocal number! number?<CR>gv
-
-" toggle wrapping with Leader-w
-nnoremap <Leader>w :<C-U>setlocal wrap! wrap?<CR>
-vnoremap <Leader>w :<C-U>setlocal wrap! wrap?<CR>gv
-
-" toggle spellcheck with Leader-s
+" Leader-s: toggle spell checking
 nnoremap <Leader>s :<C-U>setlocal spell! spell?<CR>
 
-" toggle incremental search with Leader-i
-nnoremap <Leader>i :<C-U>setlocal incsearch! incsearch?<CR>
-
-" adjust indentation of last edit with Leader-> or Leader-<
-nnoremap <Leader><lt> :<C-U>'[,']<lt><CR>
-nnoremap <Leader>> :<C-U>'[,']><CR>
-
-" get preloaded case-insensitive vimgrep command with Leader-/
+" Leader-/: easy vimgrep access
 nnoremap <Leader>/ :<C-U>vimgrep /\c/ **<S-Left><S-Left><Right>
-

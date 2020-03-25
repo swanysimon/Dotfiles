@@ -2,7 +2,7 @@
 	path = vim/pack/third_party/start/vim-surround
 	url = git@github.com:tpope/vim-surround.git
 [submodule "vim/pack/third_party/start/blueshirts-darcula"]
-	path = vim/pack/third_party/start/blueshirts-darcula
+	path = vim/pack/third_party/opt/blueshirts-darcula
 	url = git@github.com:blueshirts/darcula.git
 [submodule "vim/pack/third_party/opt/Colorizer.git"]
 	path = vim/pack/third_party/opt/Colorizer.git

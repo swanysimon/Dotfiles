@@ -17,7 +17,7 @@
 	path = vim/pack/third_party/start/vim-commentary
 	url = git@github.com:tpope/vim-commentary.git
 [submodule "vim/pack/third_party/opt/vim-lsp"]
-	path = vim/pack/third_party/opt/vim-lsp
+	path = vim/pack/third_party/start/vim-lsp
 	url = git@github.com:prabirshrestha/vim-lsp.git
 [submodule "vim/pack/third_party/start/async.vim"]
 	path = vim/pack/third_party/start/async.vim

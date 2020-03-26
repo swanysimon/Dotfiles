@@ -10,9 +10,6 @@
 [submodule "vim/pack/third_party/start/rust.vim"]
 	path = vim/pack/third_party/opt/rust.vim
 	url = git@github.com:rust-lang/rust.vim.git
-[submodule "vim/pack/third_party/opt/jedi-vim"]
-	path = vim/pack/third_party/opt/jedi-vim
-	url = git@github.com:davidhalter/jedi-vim.git
 [submodule "vim/pack/third_party/start/vim-commentary"]
 	path = vim/pack/third_party/start/vim-commentary
 	url = git@github.com:tpope/vim-commentary.git

@@ -6,20 +6,31 @@ if exists("g:loaded_my_lang_server_plugin")
 endif
 let g:loaded_my_lang_server_plugin=1
 
+let s:language_servers = {"sourcekit-lsp": ["swift"], "pyls": ["python"]}
+
 function! s:RegisterServers()
-  if executable("sourcekit-lsp")
-    call lsp#register_server({
-          \ "name": "sourcekit-lsp",
-          \ "cmd": {server_info->["sourcekit-lsp"]},
-          \ "whitelist": ["swift"],
-          \ })
-  endif
+  for [s:executable, s:languages] in items(s:language_servers)
+    if executable(s:executable)
+      call lsp#register_server({
+            \ "name": s:executable,
+            \ "cmd": {server_info->[s:executable]},
+            \ "whitelist": s:languages,
+            \ })
+    else
+      echo "Executable not found " s:executable
+    endif
+  endfor
 endfunction
 
 function! s:ConfigureLangServer()
   "TODO: expand as I learn more about language servers
   setlocal omnifunc=lsp#complete
   setlocal signcolumn=number
+
+  " Language server control folding
+  setlocal foldmethod=expr
+  setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
+  setlocal foldtext=lsp#ui#vim#folding#foldtext()
 endfunction
 
 augroup lang_server

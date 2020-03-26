@@ -31,6 +31,12 @@ if [ -d "${XDG_CONFIG_HOME}/bash/sourcing/" ]; then
     unset FOUND_SOURCING_FILE
 fi
 
+if ! command -v sourcekit-lsp >/dev/null; then
+    if xcrun --find sourcekit-lsp >/dev/null 2>/dev/null; then
+        export PATH="${PATH}:$(dirname $(xcrun --find sourcekit-lsp))"
+    fi
+fi
+
 if ! ps -p "$$" -o command= | grep -q "bash$"; then
     # shell is not bash; skipping configuration
     return

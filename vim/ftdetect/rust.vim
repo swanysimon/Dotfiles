@@ -6,7 +6,3 @@ function! s:set_rust_filetype() abort
 endfunction
 
 autocmd BufRead,BufNewFile *.rs call s:set_rust_filetype()
-
-" load the rust plugin when modifying rust files
-packadd! rust.vim
-

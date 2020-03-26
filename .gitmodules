@@ -1,19 +1,16 @@
 [submodule "vim/pack/third_party/start/vim-surround"]
 	path = vim/pack/third_party/start/vim-surround
 	url = git@github.com:tpope/vim-surround.git
-[submodule "vim/pack/third_party/start/blueshirts-darcula"]
+[submodule "vim/pack/third_party/opt/blueshirts-darcula"]
 	path = vim/pack/third_party/opt/blueshirts-darcula
 	url = git@github.com:blueshirts/darcula.git
 [submodule "vim/pack/third_party/opt/Colorizer.git"]
 	path = vim/pack/third_party/opt/Colorizer.git
 	url = git@github.com:chrisbra/Colorizer.git
-[submodule "vim/pack/third_party/start/rust.vim"]
-	path = vim/pack/third_party/opt/rust.vim
-	url = git@github.com:rust-lang/rust.vim.git
 [submodule "vim/pack/third_party/start/vim-commentary"]
 	path = vim/pack/third_party/start/vim-commentary
 	url = git@github.com:tpope/vim-commentary.git
-[submodule "vim/pack/third_party/opt/vim-lsp"]
+[submodule "vim/pack/third_party/start/vim-lsp"]
 	path = vim/pack/third_party/start/vim-lsp
 	url = git@github.com:prabirshrestha/vim-lsp.git
 [submodule "vim/pack/third_party/start/async.vim"]

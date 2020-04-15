@@ -22,10 +22,9 @@ brew 'wget'
 # casks
 cask 'docker'
 cask 'firefox'
-cask 'google-chrome'
 cask 'intellij-idea-ce'
 cask 'skype'
 cask 'slack'
 cask 'zoom'
+cask 'zulu8'
 cask 'zulu11'
-

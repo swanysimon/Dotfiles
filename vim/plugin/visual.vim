@@ -16,6 +16,8 @@ set showbreak=...
 set hidden
 set lazyredraw
 
+set cmdheight=2
+
 set splitbelow
 set splitright
 

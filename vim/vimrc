@@ -31,8 +31,10 @@ if has("mouse")
 endif
 
 " These files are under the vim directory but excluded from git.
-set backup
-set backupdir^=$HOME/.vim/.caches/backups//
 set directory^=$HOME/.vim/.caches/swapfiles//
 set undodir^=$HOME/.vim/.caches/undo//
 set undofile
+
+" Backup files may not place nicely with language server features
+set nobackup
+set nowritebackup

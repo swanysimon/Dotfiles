@@ -1,5 +1,5 @@
 " leader.vim
-" Mappings that involve the leader or localleader key.
+" Global mappings that involve the leader or localleader key.
 
 if exists("g:loaded_my_leader_mappings_plugin")
   finish

@@ -31,6 +31,30 @@ function! s:ConfigureLangServer()
   setlocal foldmethod=expr
   setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
   setlocal foldtext=lsp#ui#vim#folding#foldtext()
+
+  " mappings I know I want
+  "
+  " lbs-code-action
+  " lsp-hover
+  " lsp-rename
+  "
+  " lsp-declaration
+  " lsp-peek-declaration
+  " lsp-definition
+  " lsp-peek-definition
+  " lsp-implementation
+  " lsp-peek-implementation
+  " lsp-type-definition
+  " lsp-peek-type-definition
+  " lsp-next-reference
+  " lsp-previous-reference
+  " lsp-references
+  " lsp-type-hierarchy
+  "
+  " lsp-next-diagnostic
+  " lsp-previous-diagnostic
+  " lsp-next-error
+  " lsp-previous-error
 endfunction
 
 augroup lang_server

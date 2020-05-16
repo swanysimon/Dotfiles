@@ -8,20 +8,6 @@ let g:loaded_my_lang_server_plugin=1
 
 let s:language_servers = {"sourcekit-lsp": ["swift"], "pyls": ["python"]}
 
-function! s:RegisterServers()
-  for [s:executable, s:languages] in items(s:language_servers)
-    if executable(s:executable)
-      call lsp#register_server({
-            \ "name": s:executable,
-            \ "cmd": {server_info->[s:executable]},
-            \ "whitelist": s:languages,
-            \ })
-    else
-      echo "Executable not found " s:executable
-    endif
-  endfor
-endfunction
-
 function! s:ConfigureLangServer()
   "TODO: expand as I learn more about language servers
   setlocal omnifunc=lsp#complete
@@ -55,6 +41,20 @@ function! s:ConfigureLangServer()
   " lsp-previous-diagnostic
   " lsp-next-error
   " lsp-previous-error
+endfunction
+
+function! s:RegisterServers()
+  for [s:executable, s:languages] in items(s:language_servers)
+    if executable(s:executable)
+      call lsp#register_server({
+            \ "name": s:executable,
+            \ "cmd": {server_info->[s:executable]},
+            \ "whitelist": s:languages,
+            \ })
+    else
+      echo "Executable not found " s:executable
+    endif
+  endfor
 endfunction
 
 augroup lang_server

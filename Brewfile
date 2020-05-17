@@ -26,6 +26,7 @@ brew "wget"
 
 # casks
 cask "adobe-acrobat-reader"
+cask "discord"
 cask "docker"
 cask "firefox"
 cask "google-chrome"

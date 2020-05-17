@@ -6,7 +6,22 @@ if exists("g:loaded_my_lang_server_plugin")
 endif
 let g:loaded_my_lang_server_plugin=1
 
-let s:language_servers = {"sourcekit-lsp": ["swift"], "pyls": ["python"]}
+let s:sourcekitServerConfig = {
+        \ "name": "sourcekit-lsp",
+        \ "cmd": lsp_settings#exec_path("sourcekit-lsp"),
+        \ "root_uri": lsp_settings#root_uri([
+              \ "Package.swift",
+              \ ".xcodeproj",
+              \ ".xcworkspace",
+              \ "Cartfile",
+              \ "Podfile",
+              \ ])
+        \ "initialization_options": {},
+        \ "whitelist": ["swift"],
+        \ "blacklist": [],
+        \ "config": lsp_settings#server_config("sourcekit-lsp"),
+        \ "workspace_config": {},
+        \ }
 
 function! s:ConfigureLangServer()
   "TODO: expand as I learn more about language servers
@@ -43,22 +58,29 @@ function! s:ConfigureLangServer()
   " lsp-previous-error
 endfunction
 
-function! s:RegisterServers()
-  for [s:executable, s:languages] in items(s:language_servers)
-    if executable(s:executable)
-      call lsp#register_server({
-            \ "name": s:executable,
-            \ "cmd": {server_info->[s:executable]},
-            \ "whitelist": s:languages,
-            \ })
-    else
-      echo "Executable not found " s:executable
-    endif
-  endfor
+function! s:RegisterServer(server)
+  if !executable(a:server.cmd[0])
+    return
+  endif
+
+  call lsp#register_server({
+        \ "name": a:server.name,
+        \ "cmd": {server_info->s:ConfigValue(a:server, "cmd")},
+        \ "root_uri": {server_info->s:ConfigValue(a:server, "root_uri")},
+        \ "initialization_options": s:ConfigValue(a:server, "initialization_options"),
+        \ "whitelist": s:ConfigValue(a:server, "whitelist"),
+        \ "blacklist": s:ConfigValue(a:server, "blacklist"),
+        \ "config": s:ConfigValue(a:server, "config"),
+        \ "workspace_config": s:ConfigValue(a:server, "workspace_config"),
+        \ })
+endfunction
+
+function s:ConfigValue(server, config_key)
+  return lsp_settings#get(a:server.name, a:config_key, a:server[a:config_key])
 endfunction
 
 augroup lang_server
   autocmd!
   autocmd User lsp_buffer_enabled call s:ConfigureLangServer()
-  autocmd User lsp_setup call s:RegisterServers()
+  autocmd User lsp_setup call s:RegisterServer(s:sourcekitServerConfig)
 augroup end

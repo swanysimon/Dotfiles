@@ -8,6 +8,7 @@ let g:loaded_my_visual_plugin=1
 
 set cursorline
 set number
+set signcolumn=number
 
 set breakindent
 set linebreak

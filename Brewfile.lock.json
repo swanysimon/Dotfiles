@@ -2,16 +2,16 @@
   "entries": {
     "tap": {
       "homebrew/bundle": {
-        "revision": "fb935cbb0e1eb7cc1eea4f274cbaf414dce49488"
+        "revision": "995b689c4e0fbe3cb79674929b5ed326e647cd29"
       },
       "homebrew/cask": {
-        "revision": "cc821ed1b43e1a4794b0f60f1bcc65de4c3be9b4"
+        "revision": "23baddd20e368654c5afaf91a207e17e63a35e71"
       },
       "homebrew/cask-versions": {
-        "revision": "6652060194d7dcccff3b4336bcb4ad3e41317746"
+        "revision": "e9fce230e5f409d5f68490f72808827ac79e599a"
       },
       "homebrew/core": {
-        "revision": "400cea07d961558a672650c265040bd8274c7dee"
+        "revision": "d842858c0051d74e107b191c95d3ed73a8cb92f5"
       }
     },
     "brew": {
@@ -100,7 +100,7 @@
         }
       },
       "gradle": {
-        "version": "6.4",
+        "version": "6.4.1",
         "bottle": false
       },
       "groovy": {
@@ -108,22 +108,22 @@
         "bottle": false
       },
       "haskell-stack": {
-        "version": "2.1.3",
+        "version": "2.3.1",
         "bottle": {
           "cellar": ":any_skip_relocation",
           "prefix": "/usr/local",
           "files": {
             "catalina": {
-              "url": "https://homebrew.bintray.com/bottles/haskell-stack-2.1.3.catalina.bottle.1.tar.gz",
-              "sha256": "65f8b095630d1018849e6e845efc33449af957143cddf2a1917908d7d11b4df6"
+              "url": "https://homebrew.bintray.com/bottles/haskell-stack-2.3.1.catalina.bottle.tar.gz",
+              "sha256": "de6d561271fd1a422e4b4e85e9d71fd0cd87870d524e984aec3caab4762753ed"
             },
             "mojave": {
-              "url": "https://homebrew.bintray.com/bottles/haskell-stack-2.1.3.mojave.bottle.1.tar.gz",
-              "sha256": "228c583aa3eb036ca6aaa8a9b9fe6ad152790bd537bffdaca295aa9f497174e7"
+              "url": "https://homebrew.bintray.com/bottles/haskell-stack-2.3.1.mojave.bottle.tar.gz",
+              "sha256": "bffb38f057df538f22407b0c7e62cf224f60851b4845f8ef3cd7ee603f030fed"
             },
             "high_sierra": {
-              "url": "https://homebrew.bintray.com/bottles/haskell-stack-2.1.3.high_sierra.bottle.1.tar.gz",
-              "sha256": "28d341adbc1acf444fb0f71899f14d81d772d5ba59ae6eebe201ac24fd6e3aa8"
+              "url": "https://homebrew.bintray.com/bottles/haskell-stack-2.3.1.high_sierra.bottle.tar.gz",
+              "sha256": "00038523c213ac96e759c01108a9867a55afc6ba3ea32646962493f29667b702"
             }
           }
         }
@@ -372,37 +372,37 @@
         }
       },
       "docker": {
-        "version": "2.2.0.5,43884",
+        "version": "2.2.0.0,42247",
         "options": {
           "full_name": "docker"
         }
       },
       "firefox": {
-        "version": "67.0.4",
+        "version": "76.0.1",
         "options": {
           "full_name": "firefox"
         }
       },
       "google-chrome": {
-        "version": "79.0.3945.88",
+        "version": "81.0.4044.138",
         "options": {
           "full_name": "google-chrome"
         }
       },
       "intellij-idea-ce": {
-        "version": "2019.2.1,192.6262.58",
+        "version": "2019.3.2,193.6015.39",
         "options": {
           "full_name": "intellij-idea-ce"
         }
       },
       "skype": {
-        "version": "8.47.0.59",
+        "version": "8.55.0.141",
         "options": {
           "full_name": "skype"
         }
       },
       "slack": {
-        "version": "4.0.3",
+        "version": "4.2.0",
         "options": {
           "full_name": "slack"
         }
@@ -430,11 +430,11 @@
   "system": {
     "macos": {
       "catalina": {
-        "HOMEBREW_VERSION": "2.2.16",
+        "HOMEBREW_VERSION": "2.2.17",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "400cea07d961558a672650c265040bd8274c7dee",
-        "CLT": "1103.0.32.29",
-        "Xcode": "11.4.1",
+        "Homebrew/homebrew-core": "d842858c0051d74e107b191c95d3ed73a8cb92f5",
+        "CLT": "11.0.33.17",
+        "Xcode": "11.5",
         "macOS": "10.15.4"
       }
     }

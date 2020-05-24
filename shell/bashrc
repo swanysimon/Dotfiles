@@ -88,4 +88,3 @@ __source_if_file_exists "${XDG_CONFIG_HOME}/bash/local_config/bashrc"
 __source_if_file_exists "${XDG_CONFIG_HOME}/bash/prompt.sh"
 __source_if_file_exists "${XDG_CONFIG_HOME}/bash/functions.sh"
 __source_if_file_exists "${XDG_CONFIG_HOME}/bash/aliases.sh"
-

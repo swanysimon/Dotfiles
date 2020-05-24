@@ -1,13 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-export LANGUAGE="en_US:en"
-export LC_MESSAGES="en_US.UTF-8"
-export LC_CTYPE="en_US.UTF-8"
-export LC_COLLATE="en_US.UTF-8"
-
-if [ -z ${XDG_CONFIG_HOME+x} ]; then
-    export XDG_CONFIG_HOME="${HOME}/.config"
+if [ -e "${HOME}/.bashrc" ]; then
+  # shellcheck disable=SC1090
+  . "${HOME}/.bashrc"
+else
+  echo "No ${HOME}/.bashrc file found. No shell configuration performed."
 fi
-
-source "${HOME}/.bashrc"
-

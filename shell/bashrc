@@ -1,45 +1,87 @@
 #!/usr/bin/env bash
 
+export HISTCONTROL=ignoredups
+export HISTFILESIZE=5000
+export HISTSIZE=5000
+
+export CLICOLOR=1
+export EDITOR=vim
+
+shopt -s checkwinsize
+shopt -s cmdhist
+shopt -s histappend
+
+if [ -z "$XDG_CONFIG_HOME" ]; then
+  export XDG_CONFIG_HOME="${HOME}/.config"
+fi
+
+if [ -z "$XDG_DATA_HOME" ]; then
+  export XDG_DATA_HOME="${HOME}/.local/share"
+fi
+
+if [ -z "$XDG_DATA_DIRS" ]; then
+  export XDG_DATA_DIRS="/usr/local/share:/usr/share"
+fi
+
+if [ -z "$XDG_CONFIG_DIRS" ]; then
+  export XDG_DATA_DIRS="/etc/xdg"
+fi
+
+if [ -z "$XDG_CACHE_HOME" ]; then
+  export XDG_CACHE_HOME="${HOME}/.cache"
+fi
+
 # shellcheck disable=SC2009
 if ! ps -p "$$" -o command= | grep -q "bash$"; then
   echo "Bash configuration was called for non-bash shell. Skipping configuration." 1>&2
   return 0
 fi
 
+# to run internal `cd` commands without messing with the current working directory
+rreadlink () (
+  declare target_file
+  target_file="$1"
+
+  if [ ! -e "$target_file" ]; then
+    echo "${target_file}: no such file or directory"
+    return 2
+  elif [ "$(uname)" != "Darwin" ]; then
+    readlink -f "$target_file"
+    return $?
+  fi
+
+  declare -i max_links_followed
+  declare -i links_followed
+  max_links_followed=1000
+  links_followed=0
+  while [ -L "$target_file" ]; do
+    cd "$(dirname "$target_file")" &>/dev/null
+    target_file="$(readlink "$(basename "$target_file")")"
+
+    ((links_followed++))
+    if [ "$links_followed" -ge "$max_links_followed" ]; then
+      declare original_file
+      original_file="$1"
+      echo "${original_file}: maximum number of symlinks followed. Using ${target_file}" 1>&2
+      break
+    fi
+  done
+
+  cd "$(dirname "$target_file")" &>/dev/null
+  echo "$(pwd -P)/$(basename "$target_file")"
+)
+
+DOTFILES_DIR="$(git -C "$(dirname "$(rreadlink "${BASH_SOURCE[0]}")")" rev-parse --show-toplevel)"
+export DOTFILES_DIR
+
 __source_if_file_exists () {
   declare FILENAME
   FILENAME="$1"
-  if [ -e "$FILENAME" ]; then
+  if [ -r "$FILENAME" ]; then
     # shellcheck disable=SC1090
     source "$FILENAME"
   fi
 }
-
-__physical_file () {
-  declare FILE
-  FILE="$1"
-
-  if [ ! -e "FILE" ]; then
-    echo "${FILE}: no such file or directory"
-    return 2
-  fi
-
-  while [ -L "$FILE" ]; do
-    if [ "$(uname)" = "Darwin" ]; then
-      FILE="$(readlink "$FILE")"
-    else
-      FILE="$(readlink -f "$FILE")"
-    fi
-  done
-
-  declare DIRECTORY
-  DIRECTORY="$(cd "$(dirname "$FILE")" >/dev/null 2>&1 && pwd -P)"
-
-  echo "${DIRECTORY}/$(basename "$FILE")"
-}
-
-# shellcheck source=./bash_env.sh
-source "${DOTFILES_DIR}/shell/bash_env.sh"
 
 if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
   # shell is not interactive

@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-
-if [ -e "${HOME}/.bashrc" ]; then
-  # shellcheck disable=SC1090
-  . "${HOME}/.bashrc"
-else
-  echo "No ${HOME}/.bashrc file found. No shell configuration performed."
-fi

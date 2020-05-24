@@ -1,90 +1,84 @@
-#!/usr/bin/env sh
-# top-level bashrc; delegates to other configuration files
+#!/usr/bin/env bash
 
-if [ -z "${XDG_CONFIG_HOME+x}" ]; then
-    export XDG_CONFIG_HOME="${HOME}/.config"
+# shellcheck disable=SC2009
+if ! ps -p "$$" -o command= | grep -q "bash$"; then
+  echo "Bash configuration was called for non-bash shell. Skipping configuration." 1>&2
+  return 0
 fi
 
-if ! grep -q "/usr/local/sbin" <<< "$PATH"; then
-    export PATH="${PATH}:/usr/local/sbin"
-fi
-
-if ! grep -q "${XDG_CONFIG_HOME}/bin" <<< "$PATH"; then
-    export PATH="${PATH}:${XDG_CONFIG_HOME}/bin"
-fi
-
-__source_if_file_exists() {
-    local FILENAME="$1"
-    if [ -e "$FILENAME" ]; then
-        source "$FILENAME"
-    fi
+__source_if_file_exists () {
+  declare FILENAME
+  FILENAME="$1"
+  if [ -e "$FILENAME" ]; then
+    # shellcheck disable=SC1090
+    source "$FILENAME"
+  fi
 }
 
-# this directory is ignored by git and is a safe place to put secret
-# environment variables and such. Be cautious putting environment variables
-# in here since they are often exported with bug reports.
-# All non-hidden files in this directory will be sourced
-if [ -d "${XDG_CONFIG_HOME}/bash/sourcing/" ]; then
-    while read FOUND_SOURCING_FILE; do
-        source "$FOUND_SOURCING_FILE"
-    done < <(find -L "${XDG_CONFIG_HOME}/bash/sourcing/" -type f ! -name '.*')
-    unset FOUND_SOURCING_FILE
-fi
+__physical_file () {
+  declare FILE
+  FILE="$1"
 
-if ! command -v sourcekit-lsp >/dev/null; then
-    if xcrun --find sourcekit-lsp >/dev/null 2>/dev/null; then
-        export PATH="${PATH}:$(dirname $(xcrun --find sourcekit-lsp))"
+  if [ ! -e "FILE" ]; then
+    echo "${FILE}: no such file or directory"
+    return 2
+  fi
+
+  while [ -L "$FILE" ]; do
+    if [ "$(uname)" = "Darwin" ]; then
+      FILE="$(readlink "$FILE")"
+    else
+      FILE="$(readlink -f "$FILE")"
     fi
-fi
+  done
 
-if ! ps -p "$$" -o command= | grep -q "bash$"; then
-    # shell is not bash; skipping configuration
-    return
-fi
+  declare DIRECTORY
+  DIRECTORY="$(cd "$(dirname "$FILE")" >/dev/null 2>&1 && pwd -P)"
 
-# lines below this block will start failing shellcheck because it can't know that we're guaranteed bash from here on
+  echo "${DIRECTORY}/$(basename "$FILE")"
+}
 
-shopt -s checkwinsize
+# shellcheck source=./bash_env.sh
+source "${DOTFILES_DIR}/shell/bash_env.sh"
 
-shopt -s cmdhist
-shopt -s histappend
-
-export HISTCONTROL=ignoredups
-export HISTFILESIZE=5000
-export HISTSIZE=5000
-
-export CLICOLOR=1
-export EDITOR=vim
-
-# grab all extra configurations
 if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
-    # shell is not interactive
-    return
+  # shell is not interactive
+  return
 fi
 
-if type -p brew >/dev/null; then
-    if [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
-        if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
-            BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
-            export BASH_COMPLETION_COMPAT_DIR="$BASH_COMPLETION_COMPAT_DIR"
-            __source_if_file_exists "$(brew --prefix)/share/bash-completion/bash_completion"
-        fi
-        source "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+# shellcheck source=./bash_functions.sh
+source "${DOTFILES_DIR}/shell/bash_aliases.sh"
+# shellcheck source=./bash_aliases.sh
+source "${DOTFILES_DIR}/shell/bash_functions.sh"
+
+# gitignored "plugin" directory, where every shell file is source
+if [ -d "${DOTFILES_DIR}/shell/private/" ]; then
+  while read -r FOUND_SOURCING_FILE; do
+    # shellcheck disable=SC1090
+    source "$FOUND_SOURCING_FILE"
+  done < <(find -L "${DOTFILES_DIR}/shell/private/" -type f -name '*\.sh')
+  unset FOUND_SOURCING_FILE
+fi
+
+if command -v brew &>/dev/null; then
+    if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
+      BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
+      export BASH_COMPLETION_COMPAT_DIR="$BASH_COMPLETION_COMPAT_DIR"
+      __source_if_file_exists "$(brew --prefix)/share/bash-completion/bash_completion"
     fi
+
+    __source_if_file_exists "$(brew --prefix)/etc/profile.d/bash_completion.sh"
 else
-    __source_if_file_exists /etc/bash_completion
+  __source_if_file_exists /etc/bash_completion
 fi
 
-if ! type -p __git_complete &>/dev/null; then
-    if type -p _completion_loader &>/dev/null; then
-        _completion_loader git
-    fi
+if command -v __git_complete &>/dev/null; then
+  __git_complete g _git
+elif command -v _completion_loader &>/dev/null; then
+    _completion_loader git
+elif ! complete -o default -o nospace -F _git g &>/dev/null; then
+  complete -o bashdefault -o default -o nospace -F _git g &>/dev/null
 fi
 
-# this directory is ignored by git and is a safe place to put configuration
-# that shouldn't be in a public repository, like work items
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/local_config/bashrc"
-
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/prompt.sh"
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/functions.sh"
-__source_if_file_exists "${XDG_CONFIG_HOME}/bash/aliases.sh"
+# shellcheck source=./prompt.sh
+source "${DOTFILES_DIR}/shell/prompt.sh"

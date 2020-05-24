@@ -11,4 +11,3 @@ set completion-ignore-case on
 set completion-map-case on
 set expand-tilde off
 set skip-completed-text on
-

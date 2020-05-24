@@ -6,8 +6,6 @@
 /config/bash/sourcing/*
 !/config/bin/*
 !/config/git/*
-!/config/i3/*
-!/config/i3status/*
 
 # gitkeep files exist to preserve directory structure, even when the underlying
 # directory contains things that shouldn't be checked in
@@ -16,9 +14,3 @@
 # things from vim that shouldn't be checked in
 /vim/.caches/*/*
 /vim/.netrwhist
-
-# let applications track their own lock state
-*.lock.json
-
-# seems unnecessary
-__pycache__/

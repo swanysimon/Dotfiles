@@ -168,50 +168,6 @@ directory of this repository in absolute form.
     git config branch.master.rebase true
     ```
 
-#### Browser Configuration ####
-
-I currently use [Firefox] for my browser. If you've run the commands above, then
-Homebrew should have installed the browser for you. There are a couple things
-that need to be done to fully configure the browser.
-
- 1. Open the browser.
-
- 1. Navigate to `about:config`:
-
-     1. Set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
-
-     1. Set `svg.context-properties.content.enabled` to `true`.
-
- 1. Install [uBlock Origin].
-
-      - Import the `ublock_origin-block_youtube_overlays.txt` file as a filter.
-        This prevents the end-of-video overlays from appearing in YouTube. The
-        file lives in the root of this repository.
-
- 1. Install [Tree Style Tab].
-
-      - Import the `tree-style-tab_config.json` file in the root of this
-        repository.
-
- 1. Go to Firefox preferences.
-
-      - Enable Firefox as the default browser (if you haven't).{
-
-      - Turn off `Crtl+Tab cycles through tabs in recently used order`.
-
-      - Set the default search engine to DuckDuckGo.
-
-      - Turn off `Ask to save logins and passwords for websites`.
-
- 1. Navigate to `Help -> Troubleshooting Information` and use that to find your
-    profile directory. Navigate to that directory in the terminal and then run:
-
-    ```
-    mkdir chrome
-    cd chrome
-    ln -s $DOTFILES_DIR/chrome/userChrome.css userChrome.css
-    ```
-
 ### Customizations ###
 
  1. Place separate bash configuration that shouldn't be checked into version

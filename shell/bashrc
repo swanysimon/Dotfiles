@@ -55,7 +55,7 @@ rreadlink () (
   max_links_followed=1000
   links_followed=0
   while [ -L "$target_file" ]; do
-    cd "$(dirname "$target_file")" &>/dev/null
+    cd "$(dirname "$target_file")" &>/dev/null || return 2
     target_file="$(readlink "$(basename "$target_file")")"
 
     ((links_followed++))
@@ -67,7 +67,7 @@ rreadlink () (
     fi
   done
 
-  cd "$(dirname "$target_file")" &>/dev/null
+  cd "$(dirname "$target_file")" &>/dev/null || return 2
   echo "$(pwd -P)/$(basename "$target_file")"
 )
 
@@ -88,9 +88,9 @@ if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
   return
 fi
 
-# shellcheck source=./bash_functions.sh
+# shellcheck source=./shell/bash_aliases.sh
 source "${DOTFILES_DIR}/shell/bash_aliases.sh"
-# shellcheck source=./bash_aliases.sh
+# shellcheck source=./shell/bash_functions.sh
 source "${DOTFILES_DIR}/shell/bash_functions.sh"
 
 # gitignored "plugin" directory, where every shell file is source
@@ -122,5 +122,5 @@ elif ! complete -o default -o nospace -F _git g &>/dev/null; then
   complete -o bashdefault -o default -o nospace -F _git g &>/dev/null
 fi
 
-# shellcheck source=./prompt.sh
+# shellcheck source=./shell/prompt.sh
 source "${DOTFILES_DIR}/shell/prompt.sh"

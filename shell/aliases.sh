@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 alias less="less -r"
 alias vi="vim"
@@ -23,6 +23,6 @@ alias g="git"
 
 alias gw="./gradlew"
 
-if command -v thefuck &>/dev/null; then
+if command -v thefuck >/dev/null; then
     eval "$(thefuck --alias)"
 fi

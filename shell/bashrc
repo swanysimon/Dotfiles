@@ -83,15 +83,17 @@ __source_if_file_exists () {
   fi
 }
 
+export PATH="${PATH}:${DOTFILES_DIR}/bin"
+
 if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
   # shell is not interactive
   return
 fi
 
-# shellcheck source=./shell/bash_aliases.sh
-source "${DOTFILES_DIR}/shell/bash_aliases.sh"
+# shellcheck source=./shell/aliases.sh
+__source_if_file_exists "${DOTFILES_DIR}/shell/aliases.sh"
 # shellcheck source=./shell/bash_functions.sh
-source "${DOTFILES_DIR}/shell/bash_functions.sh"
+__source_if_file_exists "${DOTFILES_DIR}/shell/bash_functions.sh"
 
 # gitignored "plugin" directory, where every shell file is source
 if [ -d "${DOTFILES_DIR}/shell/private/" ]; then
@@ -123,4 +125,4 @@ elif ! complete -o default -o nospace -F _git g &>/dev/null; then
 fi
 
 # shellcheck source=./shell/prompt.sh
-source "${DOTFILES_DIR}/shell/prompt.sh"
+__source_if_file_exists "${DOTFILES_DIR}/shell/prompt.sh"

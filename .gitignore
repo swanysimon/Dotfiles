@@ -1,10 +1,6 @@
 # configurations generally shouldn't be copied between machines, either for
 # security reasons or because I just don't understand what's involved
 /config/*
-!/config/bash/*
-/config/bash/local_config/*
-/config/bash/sourcing/*
-!/config/bin/*
 !/config/git/*
 
 # gitkeep files exist to preserve directory structure, even when the underlying

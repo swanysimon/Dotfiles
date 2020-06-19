@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
 if [ -r "${HOME}/.bashrc" ]; then
-  # shellcheck source=./shell/bashrc
-  . "${HOME}/.bashrc"
+    # shellcheck source=./shell/bashrc
+    . "${HOME}/.bashrc"
 fi

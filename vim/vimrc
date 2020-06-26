@@ -11,7 +11,7 @@ filetype plugin indent on
 
 set backspace=eol,indent,start
 set foldenable
-set foldmethod=indent
+set foldmethod=syntax
 set nojoinspaces
 set nrformats-=octal
 

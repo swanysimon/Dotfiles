@@ -48,23 +48,43 @@ function! s:ShowDocumentation()
 endfunction
 
 function! s:RegisterPythonServer()
-  if executable("pyls")
+  let pyls=s:FirstExecutable("pyls")
+  if executable(l:pyls)
     call lsp#register_server({
           \ "name": "pyls",
-          \ "cmd": {server_info->["pyls"]},
+          \ "cmd": {server_info->[l:pyls]},
           \ "whitelist": ["python"],
           \ })
   endif
 endfunction
 
 function! s:RegisterSourcekitServer()
-  if executable("sourcekit-lsp")
+  let sourcekit=s:FirstExecutable(
+        \ "sourcekit-lsp",
+        \ "xcrun --find sourcekit-lsp",
+        \ )
+  if executable(l:sourcekit)
     call lsp#register_server({
           \ "name": "sourcekit-lsp",
-          \ "cmd": {server_info->["sourcekit-lsp"]},
+          \ "cmd": {server_info->[l:sourcekit]},
           \ "whitelist": ["swift"],
           \ })
   endif
+endfunction
+
+function! s:FirstExecutable(...)
+  for arg in a:000
+    if executable(arg)
+      return l:arg
+    endif
+
+    let result=trim(system(l:arg . " 2>/dev/null"))
+    if executable(l:result)
+      return l:result
+    endif
+  endfor
+
+  return ""
 endfunction
 
 augroup lang_server

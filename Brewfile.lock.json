@@ -2,16 +2,16 @@
   "entries": {
     "tap": {
       "homebrew/bundle": {
-        "revision": "4b9a95355a4784a6839821ec58467f8e1ed96ad7"
+        "revision": "38450939dcc5a7bd5c139464fb35b5939c406221"
       },
       "homebrew/cask": {
-        "revision": "489c4688c4ce603d351dbc3a969e90db039b046d"
+        "revision": "7f946809747a763cfd389c4d8162c42457751cf7"
       },
       "homebrew/cask-versions": {
-        "revision": "3086ce3aa0764da972c2e064199c99686b53132c"
+        "revision": "979feaaf2e16fff96d3e917802ce021776ad9342"
       },
       "homebrew/core": {
-        "revision": "224a73f70206467e9ca24b62c54458b02bd18e93"
+        "revision": "9e360a779a0285dad0a657eb4dc0d7c612f769c2"
       }
     },
     "brew": {
@@ -280,22 +280,22 @@
         }
       },
       "vim": {
-        "version": "8.2.0950",
+        "version": "8.2.1050",
         "bottle": {
           "cellar": "/usr/local/Cellar",
           "prefix": "/usr/local",
           "files": {
             "catalina": {
-              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0950.catalina.bottle.tar.gz",
-              "sha256": "950227e7d7b57a1b5a768d3e0d44f2d4aefcfc214b4cd7fbeb989731fb68dbaf"
+              "url": "https://homebrew.bintray.com/bottles/vim-8.2.1050.catalina.bottle.tar.gz",
+              "sha256": "069d046782618db313fad3de030bb6038261e2e03bfd6aed136b3967121f5219"
             },
             "mojave": {
-              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0950.mojave.bottle.tar.gz",
-              "sha256": "2347dafec2dff1277f22ebd24f8b7663ace840fe0ea74dfb0f942bb16e78a559"
+              "url": "https://homebrew.bintray.com/bottles/vim-8.2.1050.mojave.bottle.tar.gz",
+              "sha256": "ddbf6edce2d634058a718dc18a148b8df75a73522d8539b63db3e173b231cf26"
             },
             "high_sierra": {
-              "url": "https://homebrew.bintray.com/bottles/vim-8.2.0950.high_sierra.bottle.tar.gz",
-              "sha256": "b1c402f03b78b52035268c31a0d8b2ab30dfe8a26b07ce6d0d83654cf7733dd8"
+              "url": "https://homebrew.bintray.com/bottles/vim-8.2.1050.high_sierra.bottle.tar.gz",
+              "sha256": "0aa43a3868524dcaea241a7b14599fc53ae4495bfba3cce511bb58a9c43135ea"
             }
           }
         }
@@ -359,6 +359,52 @@
             "high_sierra": {
               "url": "https://homebrew.bintray.com/bottles/pipenv-2020.6.2.high_sierra.bottle.tar.gz",
               "sha256": "792be77485b744b5891613c4bf02b6d5544ff1da65b6a02b7c3c59c540e007b5"
+            }
+          }
+        }
+      },
+      "poetry": {
+        "version": "1.0.9",
+        "bottle": {
+          "cellar": ":any_skip_relocation",
+          "prefix": "/usr/local",
+          "files": {
+            "catalina": {
+              "url": "https://homebrew.bintray.com/bottles/poetry-1.0.9.catalina.bottle.tar.gz",
+              "sha256": "c9810bd4e5093622639f720dcdf4ecc8f747b1099920baa77450416c1daf2fea"
+            },
+            "mojave": {
+              "url": "https://homebrew.bintray.com/bottles/poetry-1.0.9.mojave.bottle.tar.gz",
+              "sha256": "42f4f40e31d1f6a09088e565a401cc02f29fad3b90243ff49a6b1ab9908c687f"
+            },
+            "high_sierra": {
+              "url": "https://homebrew.bintray.com/bottles/poetry-1.0.9.high_sierra.bottle.tar.gz",
+              "sha256": "2bbfee7102fd07e8575b83c7d002e02f30f1d3c63e54c7d9ea5c1c7b00b21b3b"
+            }
+          }
+        }
+      },
+      "yarn": {
+        "version": "1.22.4",
+        "bottle": false
+      },
+      "pyenv": {
+        "version": "1.2.19",
+        "bottle": {
+          "cellar": ":any",
+          "prefix": "/usr/local",
+          "files": {
+            "catalina": {
+              "url": "https://homebrew.bintray.com/bottles/pyenv-1.2.19.catalina.bottle.tar.gz",
+              "sha256": "4090a7f985abe855d3725014be8c6922008d98ff2f5ff10983637b6a4ed3bb59"
+            },
+            "mojave": {
+              "url": "https://homebrew.bintray.com/bottles/pyenv-1.2.19.mojave.bottle.tar.gz",
+              "sha256": "f537513011bf038e306282adce8c65e18dcbcc0a486106819bca019e746fc257"
+            },
+            "high_sierra": {
+              "url": "https://homebrew.bintray.com/bottles/pyenv-1.2.19.high_sierra.bottle.tar.gz",
+              "sha256": "5066a95f9ab62623f012d4930171e41cbd1fef9be916c661dc6817c20ed5f97c"
             }
           }
         }
@@ -430,9 +476,9 @@
   "system": {
     "macos": {
       "catalina": {
-        "HOMEBREW_VERSION": "2.4.0",
+        "HOMEBREW_VERSION": "2.4.2",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "224a73f70206467e9ca24b62c54458b02bd18e93",
+        "Homebrew/homebrew-core": "9e360a779a0285dad0a657eb4dc0d7c612f769c2",
         "CLT": "1103.0.32.29",
         "Xcode": "11.5",
         "macOS": "10.15.5"

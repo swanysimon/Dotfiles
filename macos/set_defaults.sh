@@ -57,8 +57,8 @@ configure_finder () {
 }
 
 configure_keyboard () {
-  # enable press-and-hold instead of key repeating
-  defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool true
+  # key repeat is preferred to the press-and-hold
+  defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
   # faster key repeat rate
   defaults write NSGlobalDomain KeyRepeat -int 2

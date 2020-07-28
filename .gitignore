@@ -2,6 +2,7 @@
 # security reasons or because I just don't understand what's involved
 /config/*
 !/config/git/*
+/shell/hidden/*
 
 # gitkeep files exist to preserve directory structure, even when the underlying
 # directory contains things that shouldn't be checked in

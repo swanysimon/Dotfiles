@@ -39,36 +39,36 @@ fi
 
 # to run internal `cd` commands without messing with the current working directory
 rreadlink () (
-declare target_file
-target_file="$1"
+    declare target_file
+    target_file="$1"
 
-if [ ! -e "$target_file" ]; then
-    echo "${target_file}: no such file or directory"
-    return 2
-elif [ "$(uname)" != "Darwin" ]; then
-    readlink -f "$target_file"
-    return $?
-fi
-
-declare -i max_links_followed
-declare -i links_followed
-max_links_followed=1000
-links_followed=0
-while [ -L "$target_file" ]; do
-    cd "$(dirname "$target_file")" &>/dev/null || return 2
-    target_file="$(readlink "$(basename "$target_file")")"
-
-    ((links_followed++))
-    if [ "$links_followed" -ge "$max_links_followed" ]; then
-        declare original_file
-        original_file="$1"
-        echo "${original_file}: maximum number of symlinks followed. Using ${target_file}" 1>&2
-        break
+    if [ ! -e "$target_file" ]; then
+        echo "${target_file}: no such file or directory"
+        return 2
+    elif [ "$(uname)" != "Darwin" ]; then
+        readlink -f "$target_file"
+        return $?
     fi
-done
 
-cd "$(dirname "$target_file")" &>/dev/null || return 2
-echo "$(pwd -P)/$(basename "$target_file")"
+    declare -i max_links_followed
+    declare -i links_followed
+    max_links_followed=1000
+    links_followed=0
+    while [ -L "$target_file" ]; do
+        cd "$(dirname "$target_file")" &>/dev/null || return 2
+        target_file="$(readlink "$(basename "$target_file")")"
+
+        ((links_followed++))
+        if [ "$links_followed" -ge "$max_links_followed" ]; then
+            declare original_file
+            original_file="$1"
+            echo "${original_file}: maximum number of symlinks followed. Using ${target_file}" 1>&2
+            break
+        fi
+    done
+
+    cd "$(dirname "$target_file")" &>/dev/null || return 2
+    echo "$(pwd -P)/$(basename "$target_file")"
 )
 
 DOTFILES_DIR="$(git -C "$(dirname "$(rreadlink "${BASH_SOURCE[0]}")")" rev-parse --show-toplevel)"
@@ -83,7 +83,16 @@ __source_if_file_exists () {
     fi
 }
 
-export PATH="${PATH}:${DOTFILES_DIR}/bin"
+__add_to_path () {
+    declare new_element
+    new_element="$1"
+    if ! grep -oq ":${new_element}:" <<< ":${PATH}:"; then
+        export PATH="${PATH}:${new_element}"
+    fi
+}
+
+__add_to_path "/usr/local/sbin"
+__add_to_path "${DOTFILES_DIR}/bin"
 
 if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
     # shell is not interactive
@@ -96,11 +105,11 @@ __source_if_file_exists "${DOTFILES_DIR}/shell/aliases.sh"
 __source_if_file_exists "${DOTFILES_DIR}/shell/bash_functions.sh"
 
 # gitignored "plugin" directory, where every shell file is source
-if [ -d "${DOTFILES_DIR}/shell/private/" ]; then
+if [ -d "${DOTFILES_DIR}/shell/hidden/" ]; then
     while read -r FOUND_SOURCING_FILE; do
         # shellcheck disable=SC1090
         source "$FOUND_SOURCING_FILE"
-    done < <(find -L "${DOTFILES_DIR}/shell/private/" -type f -name '*\.sh')
+    done < <(find -L "${DOTFILES_DIR}/shell/hidden/" -type f -name '*\.sh')
     unset FOUND_SOURCING_FILE
 fi
 

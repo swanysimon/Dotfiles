@@ -93,6 +93,7 @@ __add_to_path () {
 
 __add_to_path "/usr/local/sbin"
 __add_to_path "${DOTFILES_DIR}/bin"
+__add_to_path "${HOME}/.local/bin"
 
 if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
     # shell is not interactive

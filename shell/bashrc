@@ -105,6 +105,9 @@ __source_if_file_exists "${DOTFILES_DIR}/shell/aliases.sh"
 # shellcheck source=./shell/bash_functions.sh
 __source_if_file_exists "${DOTFILES_DIR}/shell/bash_functions.sh"
 
+# shellcheck source=./shell/prompt.sh
+__source_if_file_exists "${DOTFILES_DIR}/shell/prompt.sh"
+
 # gitignored "plugin" directory, where every shell file is source
 if [ -d "${DOTFILES_DIR}/shell/hidden/" ]; then
     while read -r FOUND_SOURCING_FILE; do
@@ -134,5 +137,12 @@ elif ! complete -o default -o nospace -F _git g &>/dev/null; then
     complete -o bashdefault -o default -o nospace -F _git g &>/dev/null
 fi
 
-# shellcheck source=./shell/prompt.sh
-__source_if_file_exists "${DOTFILES_DIR}/shell/prompt.sh"
+if [[ -x /usr/libexec/java_home ]]; then
+    JAVA_HOME="$(/usr/libexec/java_home -v 11)"
+    export JAVA_HOME="$JAVA_HOME"
+fi
+
+if [[ -d /usr/local/opt/groovy/libexec ]]; then
+    GROOVY_HOME="/usr/local/opt/groovy/libexec"
+    export GROOVY_HOME="$GROOVY_HOME"
+fi

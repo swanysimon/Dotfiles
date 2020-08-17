@@ -1,7 +1,4 @@
-" leader.vim
-" Global mappings that involve the leader or localleader key.
-
-let b:this_file_hash=checksum#Sha256(expand("%:p"))
+let b:this_file_hash=swanysimon#checksum#Sha256(expand("%:p"))
 if exists("g:loaded_my_leader_plugin")
   if g:loaded_my_leader_plugin == b:this_file_hash
     finish

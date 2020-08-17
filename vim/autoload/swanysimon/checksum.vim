@@ -1,4 +1,4 @@
-function! checksum#Sha256(filename)
+function! swanysimon#checksum#Sha256(filename)
   let l:command = "sha256sum"
   if !executable("sha256sum")
     let l:command = "shasum -a 256"

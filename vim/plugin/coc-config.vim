@@ -1,6 +1,4 @@
-" configuration for the coc plugin
-
-let b:this_file_hash=checksum#Sha256(expand("%:p"))
+let b:this_file_hash=swanysimon#checksum#Sha256(expand("%:p"))
 if exists("g:loaded_my_coc_config_plugin")
   if g:loaded_my_coc_config_plugin == b:this_file_hash
     finish

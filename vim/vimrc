@@ -47,14 +47,6 @@ set nojoinspaces
 set listchars=eol:$,extends:→,precedes:←,nbsp:·,tab:»·,trail:·
 
 filetype plugin indent on
-syntax enable
-
-set background=dark
-try
-  colorscheme darcula
-catch
-  echo "Failed to load colorcheme 'darcula'"
-endtry
 
 set comments=
 set include=

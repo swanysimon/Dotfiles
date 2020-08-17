@@ -1,10 +1,15 @@
-" visual.vim
 " Configures the appearance of vim.
 
+let b:this_file_hash=checksum#Sha256(expand("%:p"))
 if exists("g:loaded_my_visual_plugin")
-  finish
+  if g:loaded_my_visual_plugin == b:this_file_hash
+    finish
+  endif
 endif
-let g:loaded_my_visual_plugin=1
+let g:loaded_my_visual_plugin=b:this_file_hash
+
+filetype plugin indent on
+syntax enable
 
 set cursorline
 set number
@@ -22,11 +27,13 @@ set cmdheight=2
 set splitbelow
 set splitright
 
+set foldenable
+set foldmethod=syntax
+set foldlevel=99
+
 set listchars=eol:$,extends:→,precedes:←,nbsp:·,tab:»·,trail:·
 
-syntax enable
 set background=dark
-
 try
   colorscheme darcula
 catch

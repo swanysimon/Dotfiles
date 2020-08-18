@@ -8,8 +8,8 @@ let g:loaded_my_autocmd_plugin=b:this_file_hash
 
 augroup colorcolumn
   autocmd!
-  autocmd BufEnter * call swanysimon#colorcolumn#totextwidth()
-  autocmd OptionSet textwidth call swanysimon#colorcolumn#totextwidth()
+  autocmd BufEnter * call swanysimon#functions#dynamiccolorcolumn()
+  autocmd OptionSet textwidth call swanysimon#functions#dynamiccolorcolumn()
 augroup end
 
 augroup resizing

@@ -1,2 +1,6 @@
-setlocal diffopt=closeoff,context:3,filler,internal,algorithm:minimal
+if has("folding")
+  setlocal nofoldenable
+endif
+
+setlocal diffopt+=context:3,algorithm:minimal
 setlocal scrollbind

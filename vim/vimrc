@@ -4,49 +4,7 @@ set history=1000
 let mapleader=","
 let maplocalleader="'"
 
-set backspace=eol,indent,start
-
-set autoindent
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-
-set ignorecase
-set incsearch
-set hlsearch
-set smartcase
-
-set cmdheight=2
-set cursorline
-set number
-set signcolumn=number
-set textwidth=0
-
-set breakindent
-set linebreak
-set showbreak=...
-
-set foldenable
-set foldmethod=syntax
-set foldlevel=99
-
 set hidden
-set lazyredraw
-set splitbelow
-set splitright
-
-set completeopt=longest,menuone,preview
-
-set wildignorecase
-set wildmenu
-set wildmode=list:longest
-
-set formatoptions=cjloqrt1
-set nojoinspaces
-
-set listchars=eol:$,extends:→,precedes:←,nbsp:·,tab:»·,trail:·
-
-filetype plugin indent on
 
 set comments=
 set include=
@@ -71,6 +29,3 @@ endif
 set directory^=$HOME/.vim/.caches/swapfiles//
 set undodir^=$HOME/.vim/.caches/undo//
 set undofile
-
-" Clear highlights when configuration loaded
-nohlsearch

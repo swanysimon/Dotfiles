@@ -1,11 +1,3 @@
-let b:this_file_hash=swanysimon#checksum#Sha256(expand("%:p"))
-if exists("g:loaded_my_leader_plugin")
-  if g:loaded_my_leader_plugin == b:this_file_hash
-    finish
-  endif
-endif
-let g:loaded_my_leader_plugin=b:this_file_hash
-
 " Leader-b: easier buffer navigation
 nnoremap <leader>b :<C-U>buffers<CR>:buffer<Space>
 

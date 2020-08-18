@@ -1,3 +1,7 @@
+" very magic search by default
+nnoremap / /\v
+vnoremap / /\v
+
 set ignorecase
 set incsearch
 set hlsearch

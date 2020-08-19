@@ -23,6 +23,9 @@ endif
 
 if has("mouse")
   set mouse=a
+  if has("mouse_sgr")
+    set ttymouse=sgr
+  endif
 endif
 
 " The .caches directory is excluded from git

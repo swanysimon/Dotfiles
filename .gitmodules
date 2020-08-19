@@ -14,5 +14,8 @@
 	path = vim/pack/third_party/start/vim-terraform
 	url = git@github.com:hashivim/vim-terraform.git
 [submodule "vim/pack/third_party/start/coc.nvim"]
-	path = vim/pack/third_party/opt/coc.nvim
+	path = vim/pack/third_party/start/coc.vim
 	url = git@github.com:neoclide/coc.nvim.git
+[submodule "vim/pack/third_party/start/scalpel"]
+	path = vim/pack/third_party/start/scalpel
+	url = git@github.com:wincent/scalpel.git

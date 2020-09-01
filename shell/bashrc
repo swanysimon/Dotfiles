@@ -7,10 +7,6 @@ export HISTSIZE=5000
 export CLICOLOR=1
 export EDITOR=vim
 
-shopt -s checkwinsize
-shopt -s cmdhist
-shopt -s histappend
-
 if [ -z "$XDG_CONFIG_HOME" ]; then
     export XDG_CONFIG_HOME="${HOME}/.config"
 fi
@@ -31,15 +27,7 @@ if [ -z "$XDG_CACHE_HOME" ]; then
     export XDG_CACHE_HOME="${HOME}/.cache"
 fi
 
-# shellcheck disable=SC2009
-if ! ps -p "$$" -o command= | grep -q "bash$"; then
-    echo "Bash configuration was called for non-bash shell. Skipping configuration." 1>&2
-    return 0
-fi
-
-# to run internal `cd` commands without messing with the current working directory
 rreadlink () (
-    declare target_file
     target_file="$1"
 
     if [ ! -e "$target_file" ]; then
@@ -50,24 +38,26 @@ rreadlink () (
         return $?
     fi
 
-    declare -i max_links_followed
-    declare -i links_followed
     max_links_followed=1000
     links_followed=0
     while [ -L "$target_file" ]; do
-        cd "$(dirname "$target_file")" &>/dev/null || return 2
+        if ! cd "$(dirname "$target_file")" >/dev/null 2>/dev/null; then
+            return 2
+        fi
         target_file="$(readlink "$(basename "$target_file")")"
 
         ((links_followed++))
         if [ "$links_followed" -ge "$max_links_followed" ]; then
-            declare original_file
+            original_file
             original_file="$1"
             echo "${original_file}: maximum number of symlinks followed. Using ${target_file}" 1>&2
             break
         fi
     done
 
-    cd "$(dirname "$target_file")" &>/dev/null || return 2
+    if ! cd "$(dirname "$target_file")" >/dev/null 2>/dev/null; then
+        return 2
+    fi
     echo "$(pwd -P)/$(basename "$target_file")"
 )
 
@@ -75,25 +65,40 @@ DOTFILES_DIR="$(git -C "$(dirname "$(rreadlink "${BASH_SOURCE[0]}")")" rev-parse
 export DOTFILES_DIR
 
 __source_if_file_exists () {
-    declare FILENAME
-    FILENAME="$1"
-    if [ -r "$FILENAME" ]; then
+    if [ -r "$1" ]; then
         # shellcheck disable=SC1090
-        source "$FILENAME"
+        . "$1"
     fi
 }
 
 __add_to_path () {
-    declare new_element
-    new_element="$1"
-    if ! grep -oq ":${new_element}:" <<< ":${PATH}:"; then
-        export PATH="${PATH}:${new_element}"
+    if ! grep -oq ":${1}:" <<< ":${PATH}:"; then
+        export PATH="${PATH}:${1}"
     fi
 }
 
 __add_to_path "/usr/local/sbin"
 __add_to_path "${DOTFILES_DIR}/bin"
 __add_to_path "${HOME}/.local/bin"
+
+# gitignored "plugin" directory, where every shell file is source
+if [ -d "${DOTFILES_DIR}/shell/hidden/" ]; then
+    while read -r FOUND_SOURCING_FILE; do
+        # shellcheck disable=SC1090
+        source "$FOUND_SOURCING_FILE"
+    done < <(find -L "${DOTFILES_DIR}/shell/hidden/" -type f -name '*\.sh')
+    unset FOUND_SOURCING_FILE
+fi
+
+# shellcheck disable=SC2009
+if ! ps -p "$$" -o command= | grep -q "bash$"; then
+    echo "Bash configuration was called for non-bash shell. Skipping configuration." 1>&2
+    return 0
+fi
+
+shopt -s checkwinsize
+shopt -s cmdhist
+shopt -s histappend
 
 if [ -z "$PS1" ] || ! grep -q "i" <<< "$-"; then
     # shell is not interactive
@@ -107,15 +112,6 @@ __source_if_file_exists "${DOTFILES_DIR}/shell/bash_functions.sh"
 
 # shellcheck source=./shell/prompt.sh
 __source_if_file_exists "${DOTFILES_DIR}/shell/prompt.sh"
-
-# gitignored "plugin" directory, where every shell file is source
-if [ -d "${DOTFILES_DIR}/shell/hidden/" ]; then
-    while read -r FOUND_SOURCING_FILE; do
-        # shellcheck disable=SC1090
-        source "$FOUND_SOURCING_FILE"
-    done < <(find -L "${DOTFILES_DIR}/shell/hidden/" -type f -name '*\.sh')
-    unset FOUND_SOURCING_FILE
-fi
 
 if command -v brew &>/dev/null; then
     if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then

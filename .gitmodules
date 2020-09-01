@@ -13,3 +13,6 @@
 [submodule "vim/pack/third_party/start/scalpel"]
 	path = vim/pack/third_party/start/scalpel
 	url = git@github.com:wincent/scalpel.git
+[submodule "vim/pack/third_party/start/coc.nvim"]
+	path = vim/pack/third_party/start/coc.nvim
+	url = git@github.com:neoclide/coc.nvim.git

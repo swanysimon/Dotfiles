@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 __prompt_command () {
     PREV_EXIT_CODE=$?
@@ -11,76 +11,65 @@ __prompt_command () {
 PROMPT_DIRTRIM=3
 PROMPT_COMMAND=__prompt_command
 
-__hostname_prompt_color () {
-    declare -i COLOR_CODE
-    if [ "$(uname)" == "Linux" ]; then
-        COLOR_CODE=2
-    elif [ "$(uname)" == "Darwin" ]; then
-        COLOR_CODE=6
-    else
-        COLOR_CODE=1
-    fi
-
-    printf "\001%s\002" "$(tput setaf $COLOR_CODE)"
+__reset_colors () {
+    printf "\001%s\002" "$(tput sgr0)"
 }
 
-__working_directory_prompt_color () {
-    printf "\001%s\002" "$(tput setaf 3)"
+__set_color () {
+    printf "\001%s\002" "$(tput setaf "$1")"
 }
 
-__git_prompt_string () {
-    if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+__git_prompt_string () (
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>/dev/null; then
         return 0
     fi
 
-    declare LOCAL_BRANCH
-    declare REMOTE_BRANCH
-    declare LOCAL_REMOTE_DIFF
-    declare UPWARD_ARROW
-    declare -i LOCAL_AHEAD
-    declare LOCAL_STATUS_STRING
-    declare -i REMOTE_AHEAD
-    declare REMOTE_STATUS_STRING
+    branch="$(git branch --show-current)"
+    upstream="$(git rev-parse --symbolic-full-name --abbrev-ref "@{upstream}" 2>/dev/null)"
 
-    LOCAL_BRANCH="$(git branch --show-current)"
-    REMOTE_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref "@{upstream}")"
-    LOCAL_REMOTE_DIFF="$(git rev-list --left-right --count "${LOCAL_BRANCH}"..."${REMOTE_BRANCH}" 2>/dev/null)"
-
-    # unicode upward arrow (u2191)
-    UPWARD_ARROW="\xe2\x86\x91"
-
-    LOCAL_AHEAD="$(cut -f 1 <<< "$LOCAL_REMOTE_DIFF")"
-    if [ "$LOCAL_AHEAD" -ne 0 ]; then
-        LOCAL_STATUS_STRING="${UPWARD_ARROW}${LOCAL_AHEAD}"
+    if [ "$upstream" = "@{upstream}" ]; then
+        # upstream branch no longer exists is my best guess
+        printf " %s|<unknown>" "$branch"
+        return 0
     fi
 
-    REMOTE_AHEAD="$(cut -f 2 <<< "$LOCAL_REMOTE_DIFF")"
-    if [ "$REMOTE_AHEAD" -ne 0 ]; then
-        REMOTE_STATUS_STRING="${UPWARD_ARROW}${REMOTE_AHEAD}"
+    left_right="$(git rev-list --left-right --count "${branch}...${upstream}")"
+    left_ahead="$(echo "$left_right" | cut -f 1)"
+    right_ahead="$(echo "$left_right" | cut -f 2)"
+
+    upward_arrow="\xe2\x86\x91"
+
+    if [ "$left_ahead" -eq 0 ]; then
+        branch_status=""
+    else
+        branch_status="${upward_arrow}${left_ahead}"
     fi
 
-    printf " \001%s\002%s%b|%s%b" \
-            "$(tput setaf 5)" \
-            "$LOCAL_BRANCH" \
-            "$LOCAL_STATUS_STRING" \
-            "$REMOTE_BRANCH" \
-            "$REMOTE_STATUS_STRING"
-}
+    if [ "$right_ahead" -eq 0 ]; then
+        upstream_status=""
+    else
+        upstream_status="${upward_arrow}${right_ahead}"
+    fi
+
+    printf " %s%b|%s%b" "$branch" "$branch_status" "$upstream" "$upstream_status"
+)
 
 __status_prompt_string () {
-    if [ $PREV_EXIT_CODE -eq 0 ]; then
-        # print a green checkmark (u2713)
-        printf "\001%s\002%b" "$(tput setaf 2)" "\xe2\x9c\x93"
+    if [ "$PREV_EXIT_CODE" -eq 0 ]; then
+        checkmark='\xe2\x9c\x93'
+        printf "%s%b" "$(__set_color 2)" "$checkmark"
     else
-        # print a red x (u2717)
-        printf "(${PREV_EXIT_CODE}) \001%s\002%b" "$(tput setaf 1)" "\xe2\x9c\x97"
+        unicode_x='\xe2\x9c\x97'
+        printf "(%s) %s%b" "$PREV_EXIT_CODE" "$(__set_color 1)" "$unicode_x"
     fi
 }
 
-PS1="\001$(tput sgr0)\002"
-PS1="${PS1}\$(__hostname_prompt_color)\h"
-PS1="${PS1} \$(__working_directory_prompt_color)\w"
-PS1="${PS1}\$(__git_prompt_string)"
-PS1="${PS1}\n\$(__status_prompt_string)"
-PS1="${PS1}\001$(tput sgr0)\002 "
-
+PS1="$(__reset_colors)"
+PS1="${PS1}$(__set_color 6)\h"
+PS1="${PS1} $(__set_color 3)\w"
+PS1="${PS1}$(__set_color 5)\$(__git_prompt_string)"
+PS1="${PS1}$(__reset_colors)"
+PS1="${PS1}\n"
+PS1="${PS1}\$(__status_prompt_string)"
+PS1="${PS1}$(__reset_colors) "
+export PS1="$PS1"

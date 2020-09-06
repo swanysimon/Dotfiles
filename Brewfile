@@ -27,7 +27,7 @@ brew "wget"
 brew "yarn"
 
 # casks
-cask "adobe-acrobat-reader"
+cask "alacritty"
 cask "discord"
 cask "docker"
 cask "firefox"

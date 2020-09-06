@@ -525,6 +525,12 @@
         "options": {
           "full_name": "discord"
         }
+      },
+      "alacritty": {
+        "version": "0.5.0",
+        "options": {
+          "full_name": "alacritty"
+        }
       }
     }
   },
@@ -534,7 +540,7 @@
         "HOMEBREW_VERSION": "2.4.13",
         "HOMEBREW_PREFIX": "/usr/local",
         "Homebrew/homebrew-core": "c3da5b5b00f7516ad856065c61778fb53f68c4dc",
-        "CLT": "11.5.0.0.1.1588476445",
+        "CLT": "12.0.0.0.1.1597368733",
         "Xcode": "11.7",
         "macOS": "10.15.6"
       }

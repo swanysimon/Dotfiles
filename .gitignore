@@ -1,9 +1,11 @@
-# configs should generally not be checked in, but some are worth monitoring
+# configs may contain sensitive information and must be whitelisted
 /config/*
 !/config/git
 !/config/nvim
+/config/nvim/.netrwhist
 
-# shell/hidden is where system-specific sourcing can be placed
+# shell/hidden is where system-specific sourcing is placed and often contains
+# sensitive information
 /shell/hidden/*
 
 # gitkeep files exist to preserve directory structure, even when the underlying

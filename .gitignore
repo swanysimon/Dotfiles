@@ -1,13 +1,11 @@
-# configurations generally shouldn't be copied between machines, either for
-# security reasons or because I just don't understand what's involved
+# configs should generally not be checked in, but some are worth monitoring
 /config/*
-!/config/git/*
+!/config/git
+!/config/nvim
+
+# shell/hidden is where system-specific sourcing can be placed
 /shell/hidden/*
 
 # gitkeep files exist to preserve directory structure, even when the underlying
 # directory contains things that shouldn't be checked in
 !.gitkeep
-
-# things from vim that shouldn't be checked in
-/vim/.caches/*/*
-/vim/.netrwhist

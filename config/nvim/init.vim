@@ -14,8 +14,8 @@ set nojoinspaces
 set lazyredraw
 
 set cursorline
+set laststatus=0
 set noruler
-set number
 set signcolumn=auto
 set textwidth=0
 
@@ -39,6 +39,10 @@ if has("unnamedplus")
   set clipboard^=unnamedplus
 elseif has("unnamed")
   set clipboard^=unnamed
+endif
+
+if "$COLORTERM" == "truecolor" || "$COLORTERM" == "24bit"
+  set termguicolors
 endif
 
 nohlsearch

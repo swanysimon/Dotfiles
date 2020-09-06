@@ -16,7 +16,7 @@ set lazyredraw
 set cursorline
 set noruler
 set number
-set signcolumn=yes
+set signcolumn=auto
 set textwidth=0
 
 set ignorecase

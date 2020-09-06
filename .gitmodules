@@ -1,18 +1,12 @@
-[submodule "vim/pack/third_party/start/vim-surround"]
-	path = vim/pack/third_party/start/vim-surround
-	url = git@github.com:tpope/vim-surround.git
-[submodule "vim/pack/third_party/opt/blueshirts-darcula"]
-	path = vim/pack/third_party/opt/blueshirts-darcula
-	url = git@github.com:blueshirts/darcula.git
-[submodule "vim/pack/third_party/opt/Colorizer.git"]
-	path = vim/pack/third_party/opt/Colorizer.git
-	url = git@github.com:chrisbra/Colorizer.git
-[submodule "vim/pack/third_party/start/vim-commentary"]
-	path = vim/pack/third_party/start/vim-commentary
+[submodule "config/nvim/pack/third_party/start/vim-commentary"]
+	path = config/nvim/pack/third_party/start/vim-commentary
 	url = git@github.com:tpope/vim-commentary.git
-[submodule "vim/pack/third_party/start/scalpel"]
-	path = vim/pack/third_party/start/scalpel
-	url = git@github.com:wincent/scalpel.git
-[submodule "vim/pack/third_party/start/coc.nvim"]
-	path = vim/pack/third_party/start/coc.nvim
-	url = git@github.com:neoclide/coc.nvim.git
+[submodule "config/nvim/pack/third_party/start/vim-surround"]
+	path = config/nvim/pack/third_party/start/vim-surround
+	url = git@github.com:tpope/vim-surround.git
+[submodule "config/nvim/pack/third_party/start/vim-endwise"]
+	path = config/nvim/pack/third_party/start/vim-endwise
+	url = git@github.com:tpope/vim-endwise.git
+[submodule "config/nvim/pack/third_party/opt/lucario"]
+	path = config/nvim/pack/third_party/opt/lucario
+	url = git@github.com:raphamorim/lucario.git

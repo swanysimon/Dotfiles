@@ -27,7 +27,7 @@
 [color]
   ui = true
 [core]
-  editor = vim
+  editor = nvim
   ignorecase = true
   pager = less -+F -+X
 [diff]
@@ -35,13 +35,18 @@
   tool = vimdiff
 [difftool]
   prompt = false
+[difftool "vimdiff"]
+  path = nvim
 [fetch]
   parallel = 0
   recurseSubmodules = true
 [merge]
   conflictstyle = diff3
-  prompt = false
   tool = vimdiff
+[mergetool]
+  prompt = false
+[mergetool "vimdiff"]
+  path = nvim
 [pager]
   branch = false
 [submodule]
@@ -49,4 +54,3 @@
 [user]
   email = nomiswanson@gmail.com
   name = Simon Swanson
-

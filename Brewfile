@@ -7,6 +7,7 @@ tap "homebrew/core"
 # packages
 brew "bash"
 brew "bash-completion@2"
+brew "fzf"
 brew "ghc"
 brew "git"
 brew "gradle"

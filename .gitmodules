@@ -10,3 +10,9 @@
 [submodule "config/nvim/pack/third_party/opt/lucario"]
 	path = config/nvim/pack/third_party/opt/lucario
 	url = git@github.com:raphamorim/lucario.git
+[submodule "config/nvim/pack/third_party/start/auto-pairs"]
+	path = config/nvim/pack/third_party/start/auto-pairs
+	url = git@github.com:jiangmiao/auto-pairs.git
+[submodule "config/nvim/pack/third_party/start/vim-fugitive"]
+	path = config/nvim/pack/third_party/start/vim-fugitive
+	url = git@github.com:tpope/vim-fugitive.git

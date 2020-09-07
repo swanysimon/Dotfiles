@@ -12,11 +12,12 @@ set softtabstop=2
 set nojoinspaces
 
 set lazyredraw
+set timeoutlen=200
 
 set cursorline
 set laststatus=0
 set noruler
-set signcolumn=auto
+set signcolumn=no
 set textwidth=0
 
 set ignorecase

@@ -1,9 +1,9 @@
 #!/bin/sh
 
 alias less="less -r"
-alias vi="vim"
+alias edit="$EDITOR"
 
-alias finagle="vim ~/.finagle"
+alias finagle="edit ~/.finagle"
 
 alias back="cd -"
 alias ..="cd ../"

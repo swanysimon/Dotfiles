@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # no audible bells
 set bell-style visible
 

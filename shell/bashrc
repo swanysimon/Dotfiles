@@ -6,6 +6,7 @@ export HISTSIZE=5000
 
 export CLICOLOR=1
 export EDITOR=nvim
+export VISUAL=nvim
 
 if [ -z "$XDG_CONFIG_HOME" ]; then
     export XDG_CONFIG_HOME="${HOME}/.config"

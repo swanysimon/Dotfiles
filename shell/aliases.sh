@@ -1,7 +1,9 @@
 #!/bin/sh
 
 alias less="less -r"
-alias edit="$EDITOR"
+
+alias edit="\$EDITOR"
+alias vim="nvim"
 
 alias finagle="edit ~/.finagle"
 

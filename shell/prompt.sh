@@ -24,12 +24,26 @@ __git_prompt_string () (
         return 0
     fi
 
+    printf " "
+
+    if ! git rev-parse --verify HEAD >/dev/null 2>/dev/null; then
+        printf "%s<initial git commit>" "$(tput bold)"
+        return 0
+    fi
+
     branch="$(git branch --show-current)"
-    upstream="$(git rev-parse --symbolic-full-name --abbrev-ref "@{upstream}" 2>/dev/null)"
+    upstream="$(git rev-parse --abbrev-ref "@{upstream}" 2>/dev/null)"
+
+    git update-index -q --really-refresh >/dev/null 2>/dev/null
+    if git diff-index --quiet HEAD -- >/dev/null 2>/dev/null; then
+        dirty_state=""
+    else
+        dirty_state="+"
+    fi
 
     if [ "$upstream" = "@{upstream}" ]; then
         # upstream branch no longer exists is my best guess
-        printf " %s|<unknown>" "$branch"
+        printf "%s%s|%s<unknown upstream>" "$dirty_state" "$branch" "$(tput bold)"
         return 0
     fi
 
@@ -51,7 +65,7 @@ __git_prompt_string () (
         upstream_status="${upward_arrow}${right_ahead}"
     fi
 
-    printf " %s%b|%s%b" "$branch" "$branch_status" "$upstream" "$upstream_status"
+    printf "%s%s%b|%s%b" "$dirty_state" "$branch" "$branch_status" "$upstream" "$upstream_status"
 )
 
 __status_prompt_string () {

@@ -1,3 +1,5 @@
+.DS_STORE
+
 # configs may contain sensitive information and must be whitelisted
 /config/*
 !/config/git

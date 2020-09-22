@@ -1,3 +1,10 @@
+" Turn off search highlighting
+nnoremap <leader>h :set hlsearch! hlsearch?
+
+" Fix backwards-compatible bug
+nmap Y y$
+
+" Window navigation
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k

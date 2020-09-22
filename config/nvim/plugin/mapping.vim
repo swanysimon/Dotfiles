@@ -1,5 +1,9 @@
-" Turn off search highlighting
-nnoremap <leader>h :set hlsearch! hlsearch?
+" Toggle settings
+nnoremap coh :set hlsearch! hlsearch?<CR>
+nnoremap con :set number! number?<CR>
+nnoremap cor :set ruler! ruler?<CR>
+nnoremap cos :set spell! spell?<CR>
+nnoremap cow :set wrap! wrap?<CR>
 
 " Fix backwards-compatible bug
 nmap Y y$

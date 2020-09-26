@@ -5,6 +5,7 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 
 # packages
+brew "ansible"
 brew "bash"
 brew "bash-completion@2"
 brew "fzf"

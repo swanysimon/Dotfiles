@@ -21,8 +21,6 @@ alias mv="mv -vi"
 alias rm="rm -vi"
 alias mkdir="mkdir -pv"
 
-alias g="git"
-
 alias gw="./gradlew"
 
 if command -v thefuck >/dev/null; then

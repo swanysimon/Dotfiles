@@ -32,6 +32,9 @@ set comments=
 set include=
 set path-=/usr/include
 
+filetype plugin indent on
+syntax on
+
 if has("mouse")
   set mouse=a
 endif

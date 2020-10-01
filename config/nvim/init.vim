@@ -14,6 +14,7 @@ set nojoinspaces
 set lazyredraw
 set timeoutlen=200
 
+set colorcolumn=+1
 set cursorline
 set laststatus=0
 set noruler

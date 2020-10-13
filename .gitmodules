@@ -4,9 +4,6 @@
 [submodule "config/nvim/pack/third_party/start/vim-surround"]
 	path = config/nvim/pack/third_party/start/vim-surround
 	url = git@github.com:tpope/vim-surround.git
-[submodule "config/nvim/pack/third_party/start/vim-endwise"]
-	path = config/nvim/pack/third_party/start/vim-endwise
-	url = git@github.com:tpope/vim-endwise.git
 [submodule "config/nvim/pack/third_party/opt/lucario"]
 	path = config/nvim/pack/third_party/opt/lucario
 	url = git@github.com:raphamorim/lucario.git

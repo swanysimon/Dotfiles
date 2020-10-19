@@ -16,7 +16,7 @@ set timeoutlen=200
 
 set colorcolumn=+1
 set cursorline
-set laststatus=0
+set laststatus=2
 set noruler
 set signcolumn=no
 set textwidth=0

@@ -26,6 +26,8 @@ brew "watch"
 brew "wget"
 
 # casks
+cask "alacritty"
+cask "chrysalis"
 cask "discord"
 cask "docker"
 cask "firefox"

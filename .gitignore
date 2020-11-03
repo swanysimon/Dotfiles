@@ -1,9 +1,14 @@
+# fuck you finder
 .DS_STORE
 
-# configs may contain sensitive information and must be whitelisted
+# homebrew's lock file actually isn't that useful
+Brewfile.lock.json
+
+# configs may contain sensitive information and must be whitelisted here
 /config/*
 !/config/git
 !/config/nvim
+!/config/alacritty
 /config/nvim/.netrwhist
 
 # shell/hidden is where system-specific sourcing is placed and often contains

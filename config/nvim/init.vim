@@ -46,8 +46,10 @@ elseif has("unnamed")
   set clipboard^=unnamed
 endif
 
-if "$COLORTERM" == "truecolor" || "$COLORTERM" == "24bit"
-  set termguicolors
+if has("termcolors")
+  if "$COLORTERM" == "truecolor" || "$COLORTERM" == "24bit"
+    set termguicolors
+  endif
 endif
 
 nohlsearch

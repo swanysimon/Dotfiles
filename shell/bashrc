@@ -143,3 +143,8 @@ if [[ -d /usr/local/opt/groovy/libexec ]]; then
     GROOVY_HOME="/usr/local/opt/groovy/libexec"
     export GROOVY_HOME="$GROOVY_HOME"
 fi
+
+if command -v pyenv &>/dev/null; then
+    eval "$(pyenv init -)"
+    export PATH="$PATH"
+fi

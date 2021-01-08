@@ -23,6 +23,8 @@ alias mkdir="mkdir -pv"
 
 alias gw="./gradlew"
 
+alias g="git"
+
 if command -v thefuck >/dev/null; then
     eval "$(thefuck --alias)"
 fi

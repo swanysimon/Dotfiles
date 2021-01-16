@@ -127,7 +127,11 @@ else
 fi
 
 if command -v __git_complete &>/dev/null; then
-    __git_complete g _git
+    if command -v _git &>/dev/null; then
+	__git_complete g _git
+    else
+	__git_complete g __git_main
+    fi
 elif command -v _completion_loader &>/dev/null; then
     _completion_loader git
 elif ! complete -o default -o nospace -F _git g &>/dev/null; then

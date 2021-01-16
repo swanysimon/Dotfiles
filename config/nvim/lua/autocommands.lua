@@ -1,6 +1,6 @@
-require("utils")
+local U = require("utils")
 
-augroup(
+U.augroup(
   "resizing",
   {
     { "VimResized", "*", "execute 'normal! \\<C-w>='", },

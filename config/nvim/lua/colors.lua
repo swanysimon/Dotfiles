@@ -1,6 +1,6 @@
-require("utils")
+local U = require("utils")
 
-set("background", "dark")
+U.set("background", "dark")
 vim.api.nvim_command("colorscheme lucario")
 
 -- Italicize comments. Must be run after loading colorscheme.

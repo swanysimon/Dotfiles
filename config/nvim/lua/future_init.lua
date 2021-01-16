@@ -3,35 +3,36 @@ local default_indentation = 2
 require("autocommands")
 require("colors")
 require("mappings")
-require("utils")
 
-set("history", 1000)
+local U = require("utils")
 
-set("hidden", true)
+U.set("history", 1000)
 
-set("expandtab", true)
-set("shiftwidth", default_indentation)
-set("softtabstop", default_indentation)
+U.set("hidden", true)
 
-set("joinspaces", false)
+U.set("expandtab", true)
+U.set("shiftwidth", default_indentation)
+U.set("softtabstop", default_indentation)
 
-set("lazyredraw", true)
-set("timeoutlen", 200)
+U.set("joinspaces", false)
 
-set("colorcolumn", "+1")
-set("cursorline", true)
-set("laststatus", 2)
-set("ruler", false)
-set("signcolumn", "no")
-set("textwidth", 0)
+U.set("lazyredraw", true)
+U.set("timeoutlen", 200)
 
-set("ignorecase", true)
+U.set("colorcolumn", "+1")
+U.set("cursorline", true)
+U.set("laststatus", 2)
+U.set("ruler", false)
+U.set("signcolumn", "no")
+U.set("textwidth", 0)
 
-set("wildignorecase", true)
-set("wildmode", "list:full")
+U.set("ignorecase", true)
 
-set("splitbelow", true)
-set("splitright", true)
+U.set("wildignorecase", true)
+U.set("wildmode", "list:full")
 
-set("comments", "")
-set("include", "")
+U.set("splitbelow", true)
+U.set("splitright", true)
+
+U.set("comments", "")
+U.set("include", "")

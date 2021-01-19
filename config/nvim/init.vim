@@ -1,1 +1,1 @@
-lua require("future_init")
+lua require("init")

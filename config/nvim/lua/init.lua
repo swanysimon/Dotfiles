@@ -29,10 +29,11 @@ U.set("textwidth", 0)
 U.set("ignorecase", true)
 
 U.set("wildignorecase", true)
-U.set("wildmode", "list:full")
 
 U.set("splitbelow", true)
 U.set("splitright", true)
 
 U.set("comments", "")
 U.set("include", "")
+
+U.setifhas("mouse", "a")

@@ -14,6 +14,16 @@ function U.setlocal(property, value)
   api.nvim_buf_set_option(property, value)
 end
 
+function U.has(property)
+  return api.nvim_eval("has(\"" .. property .. "\")") == 1
+end
+
+function U.setifhas(property, value)
+  if U.has(property) then
+    U.set(property, value)
+  end
+end
+
 function U.map(mode, trigger, mapping, options)
   local opts = {noremap = true}
   if options then

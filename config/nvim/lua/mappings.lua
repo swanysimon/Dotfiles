@@ -20,3 +20,7 @@ U.map("n", "<C-j>", "<C-w>j")
 U.map("n", "<C-k>", "<C-w>k")
 U.map("n", "<C-l>", "<C-w>l")
 --
+
+-- Map ESC to exit terminal's insert mode
+U.map("t", "ESC", "<C-\\><C-n>")
+--

@@ -40,6 +40,8 @@
 [fetch]
   parallel = 0
   recurseSubmodules = true
+[init]
+  defaultBranch = master
 [merge]
   conflictstyle = diff3
   tool = vimdiff

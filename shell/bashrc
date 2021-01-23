@@ -137,5 +137,5 @@ DOTFILES_DIR="$(git -C "$(dirname "$(rreadlink "${BASH_SOURCE[0]}")")" rev-parse
 export DOTFILES_DIR
 
 
-# shellcheck source=./shell/config.bash
-__source_if_file_exists "${DOTFILES_DIR}/shell/config.bash"
+# shellcheck source=./shell/bash_config.sh
+__source_if_file_exists "${DOTFILES_DIR}/shell/bash_config.sh"

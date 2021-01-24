@@ -24,11 +24,6 @@ __source_if_file_exists "${DOTFILES_DIR}/shell/bash_functions.sh"
 __source_matching_in_dir "${DOTFILES_DIR}/shell/hidden" '*\.sh'
 
 
-if command -v __git_complete >/dev/null && command -v __git_main >/dev/null; then
-    __git_complete g __git_main
-fi
-
-
 if command -v brew >/dev/null; then
     if [ -d "$(brew --prefix)/etc/bash_completion.d" ]; then
         BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
@@ -39,6 +34,15 @@ if command -v brew >/dev/null; then
     __source_if_file_exists "$(brew --prefix)/etc/profile.d/bash_completion.sh"
 else
     __source_if_file_exists /etc/bash_completion
+fi
+
+
+if command -v __git_complete >/dev/null; then
+    if command -v _git >/dev/null; then
+       __git_complete g _git
+    else
+       __git_complete g __git_main
+    fi
 fi
 
 

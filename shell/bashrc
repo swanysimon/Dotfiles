@@ -35,7 +35,7 @@ rreadlink () (
         fi
         target_file="$(readlink "$(basename "$target_file")")"
 
-	links_followed="$(expr "$links_followed" + 1)"
+	links_followed="$((links_followed + 1))"
         if [ "$links_followed" -ge "$max_links_followed" ]; then
             original_file
             original_file="$1"

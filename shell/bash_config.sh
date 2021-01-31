@@ -61,3 +61,10 @@ if command -v plz >/dev/null; then
     # shellcheck disable=SC1090
     source <(plz --completion_script)
 fi
+
+
+if [ -d "${HOME}/.cargo" ]; then
+    __add_to_path "${HOME}/.cargo/bin"
+    # shellcheck disable=SC1090
+    __source_if_file_exists "${HOME}/.cargo/env"
+fi

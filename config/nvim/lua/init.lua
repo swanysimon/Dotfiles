@@ -36,4 +36,8 @@ U.set("splitright", true)
 U.set("comments", "")
 U.set("include", "")
 
-U.setifhas("mouse", "a")
+U.set("mouse", "a")
+
+U.set("clipboard", "unnamed")
+
+require("lsp")

@@ -34,6 +34,16 @@ function U.map(mode, trigger, mapping, options)
   api.nvim_set_keymap(mode, trigger, mapping, opts)
 end
 
+function U.maplocal(mode, trigger, mapping, options)
+  local opts = {noremap = true}
+  if options then
+    for key, value in pairs(options) do
+      opts[key] = value
+    end
+  end
+  api.nvim_buf_set_keymap(0, mode, trigger, mapping, opts)
+end
+
 function U.augroup(name, definitions)
   api.nvim_command("augroup " .. name)
   api.nvim_command("autocmd!")

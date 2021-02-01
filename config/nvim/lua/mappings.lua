@@ -4,7 +4,7 @@ U.let("mapleader", ",")
 U.let("mapleaderlocal", "'")
 
 -- Toggle common settings on and off
-U.map("n", "coh", ":set hlsearch hlsearch?<CR>")
+U.map("n", "coh", ":set hlsearch! hlsearch?<CR>")
 U.map("n", "con", ":setlocal number! number?<CR>")
 U.map("n", "cor", ":setlocal ruler! ruler?<CR>")
 U.map("n", "cos", ":setlocal spell! spell?<CR>")

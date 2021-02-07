@@ -79,9 +79,8 @@ __status_prompt_string () {
 }
 
 PS1="$(__reset_colors)"
-PS1="${PS1}$(__set_color 6)\h"
-PS1="${PS1} $(__set_color 3)\w"
-PS1="${PS1}$(__set_color 5)\$(__git_prompt_string)"
+PS1="${PS1}$(__set_color 3)\w"
+PS1="${PS1}$(__set_color 6)\$(__git_prompt_string)"
 PS1="${PS1}$(__reset_colors)"
 PS1="${PS1}\n"
 PS1="${PS1}\$(__status_prompt_string)"

@@ -1,43 +1,43 @@
 local default_indentation = 2
 
+local function set(property, value)
+  vim.api.nvim_set_option(property, value)
+end
+
+set("history", 1000)
+
+set("hidden", true)
+
+set("expandtab", true)
+set("shiftwidth", default_indentation)
+set("softtabstop", default_indentation)
+
+set("joinspaces", false)
+
+set("lazyredraw", true)
+set("timeoutlen", 200)
+
+set("colorcolumn", "+1")
+set("cursorline", true)
+set("ruler", false)
+set("signcolumn", "no")
+set("textwidth", 0)
+
+set("ignorecase", true)
+set("wildignorecase", true)
+
+set("splitbelow", true)
+set("splitright", true)
+
+set("comments", "")
+set("include", "")
+
+set("mouse", "a")
+
+set("clipboard", "unnamed")
+
 require("autocommands")
 require("colors")
-require("mappings")
-
-local U = require("utils")
-
-U.set("history", 1000)
-
-U.set("hidden", true)
-
-U.set("expandtab", true)
-U.set("shiftwidth", default_indentation)
-U.set("softtabstop", default_indentation)
-
-U.set("joinspaces", false)
-
-U.set("lazyredraw", true)
-U.set("timeoutlen", 200)
-
-U.set("colorcolumn", "+1")
-U.set("cursorline", true)
-U.set("laststatus", 2)
-U.set("ruler", false)
-U.set("signcolumn", "no")
-U.set("textwidth", 0)
-
-U.set("ignorecase", true)
-
-U.set("wildignorecase", true)
-
-U.set("splitbelow", true)
-U.set("splitright", true)
-
-U.set("comments", "")
-U.set("include", "")
-
-U.set("mouse", "a")
-
-U.set("clipboard", "unnamed")
-
 require("lsp")
+require("mappings")
+require("statusline")

@@ -1,10 +1,10 @@
-local U = require("utils")
+local api = vim.api
 
-U.set("background", "dark")
-vim.api.nvim_command("colorscheme lucario")
+api.nvim_set_option("background", "dark")
+api.nvim_command("colorscheme lucario")
 
 -- Italicize comments. Must be run after loading colorscheme.
-vim.api.nvim_command("highlight Comment cterm=italic gui=italic")
+api.nvim_command("highlight Comment cterm=italic gui=italic")
 
 -- Search in Lucario is only underlined by default, which isn't super visible
-vim.api.nvim_command("highlight Search cterm=bold,italic,underline gui=bold,italic,underline")
+api.nvim_command("highlight Search cterm=bold,italic,underline gui=bold,italic,underline")

@@ -1,24 +1,14 @@
 local M = {}
 
-function M.map(scope, mode, trigger, mapping, options)
+function M.map(mode, trigger, mapping, options)
   local opts = {noremap = true}
-  local global = true
   if options then
     for key, value in ipairs(options) do
-      if key == "global" then
-        global = value
-        break
-      end
-
       opts[key] = value
     end
   end
 
-  if global then
-    vim.api.nvim_set_keymap(mode, trigger, mapping, opts)
-  else
-    vim.api.nvim_buf_set_keymap(0, mode, trigger, mapping, opts)
-  end
+  vim.api.nvim_set_keymap(mode, trigger, mapping, opts)
 end
 
 function M.init()
@@ -34,14 +24,12 @@ function M.init()
 
   -- Fix backwards compatibility bug
   M.map("n", "Y", "y$", { noremap = false })
-  --
 
   -- Window navigation
   M.map("n", "<C-h>", "<C-w>h")
   M.map("n", "<C-j>", "<C-w>j")
   M.map("n", "<C-k>", "<C-w>k")
   M.map("n", "<C-l>", "<C-w>l")
-  --
 end
 
 return M

@@ -22,8 +22,9 @@ brew "groovysdk"
 brew "haskell-stack"
 brew "jq"
 brew "kotlin"
+brew "luajit", args: ["HEAD"]
 brew "mas"
-brew "neovim"
+brew "neovim", args: ["HEAD"]
 brew "please"
 brew "pyenv"
 brew "ripgrep"

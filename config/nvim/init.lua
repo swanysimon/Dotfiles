@@ -1,32 +1,38 @@
-vim.o.comments = ""
-vim.o.hidden = true
-vim.o.history = 1000
-vim.o.include = ""
-vim.o.lazyredraw = true
-vim.o.timeoutlen = 200
+local function setopt(scope, option, value)
+  if scope ~= "o" then
+    vim[scope][option] = value
+  end
+  vim.o[option] = value
+end
+
+setopt("o", "hidden", true)
+setopt("o", "history", 1000)
+setopt("o", "include", "")
+setopt("o", "lazyredraw", true)
+setopt("o", "timeoutlen", 200)
+
+setopt("o", "ignorecase", true)
+setopt("o", "wildignorecase", true)
+
+setopt("o", "joinspaces", false)
+setopt("o", "splitbelow", true)
+setopt("o", "splitright", true)
+
+setopt("o", "mouse", "a")
+setopt("o", "clipboard", "unnamed")
+
+setopt("bo", "comments", "")
+setopt("bo", "textwidth", 0)
 
 local default_indentation = 2
-vim.o.expandtab = true
-vim.o.shiftwidth = default_indentation
-vim.o.softtabstop = default_indentation
+setopt("bo", "expandtab", true)
+setopt("bo", "shiftwidth", default_indentation)
+setopt("bo", "softtabstop", default_indentation)
 
-vim.o.cursorline = true
-vim.o.number = true
-vim.o.relativenumber = true
-vim.o.ruler = false
-vim.o.signcolumn = "no"
-vim.o.textwidth = 0
-
-vim.o.joinspaces = false
-
-vim.o.ignorecase = true
-vim.o.wildignorecase = true
-
-vim.o.splitbelow = true
-vim.o.splitright = true
-
-vim.o.mouse = "a"
-vim.o.clipboard = "unnamed"
+setopt("wo", "cursorline", true)
+setopt("wo", "number", true)
+setopt("wo", "relativenumber", true)
+setopt("wo", "signcolumn", "no")
 
 require("autocommands").init()
 require("colors").init()

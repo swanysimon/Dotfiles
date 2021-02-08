@@ -13,7 +13,7 @@ function M.lucario()
 end
 
 function M.init()
-  api.nvim_set_option("background", "dark")
+  vim.o.background = "dark"
   M.lucario()
 end
 

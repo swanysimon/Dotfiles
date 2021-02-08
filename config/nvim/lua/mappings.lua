@@ -12,8 +12,8 @@ function M.map(mode, trigger, mapping, options)
 end
 
 function M.init()
-  vim.api.nvim_set_var("mapleader", ",")
-  vim.api.nvim_set_var("mapleaderlocal", "'")
+  vim.g.mapleader = ","
+  vim.g.mapleaderlocal = "'"
 
   -- Toggle common settings on and off
   M.map("n", "coh", ":set hlsearch! hlsearch?<CR>")

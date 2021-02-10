@@ -1,18 +1,9 @@
 local M = {}
 
 M.focus_gained_events = {
-  "BufEnter",
-  "FocusGained",
-  "UIEnter",
-  "VimEnter",
-  "VimResume",
-  "WinEnter",
 }
 
 M.focus_lost_events = {
-  "BufLeave",
-  "FocusLost",
-  "WinLeave",
 }
 
 function M.create_group(group)
@@ -52,34 +43,35 @@ function M.create_autocommand(autocommand)
 end
 
 function M.resizing_augroup()
-  local resize_cmd = {}
-  resize_cmd.events = "VimResized"
-  resize_cmd.patterns = "*"
-  resize_cmd.cmd = "execute 'normal! \\<C-w>='"
-
-  local group = {}
-  group.name = "resizing"
-  group.autocommands = { resize_cmd, }
-
-  M.create_group(group)
+  M.create_group({
+    name = "autoresize",
+    autocommands = {{
+      events = "VimResized",
+      patterns = "*",
+      cmd = "execute 'normal! \\<C-w>='",
+    }},
+  })
 end
 
 function M.numbering_augroup()
-  local focus_gained_cmd = {}
-  focus_gained_cmd.events = vim.tbl_flatten({ M.focus_gained_events, "InsertLeave", })
-  focus_gained_cmd.patterns = "*"
-  focus_gained_cmd.cmd = "if &number | setlocal relativenumber | endif"
+  local focus_gained = {"BufEnter", "FocusGained", "InsertLeave", "UIEnter", "VimEnter", "VimResume", "WinEnter"}
+  local focus_lost = {"BufLeave", "FocusLost", "WinLeave"}
 
-  local focus_lost_cmd = {}
-  focus_lost_cmd.events = vim.tbl_flatten({ M.focus_lost_events, "InsertEnter", })
-  focus_lost_cmd.patterns = "*"
-  focus_lost_cmd.cmd = "if &number | setlocal norelativenumber | endif"
-
-  local group = {}
-  group.name = "numbertoggle"
-  group.autocommands = { focus_gained_cmd, focus_lost_cmd, }
-
-  M.create_group(group)
+  M.create_group({
+    name = "numbertoggle",
+    autocommands = {
+      {
+        events = focus_gained,
+        patterns = "*",
+        cmd = "if &number | setlocal relativenumber | endif",
+      },
+      {
+        events = focus_lost,
+        patterns = "*",
+        cmd = "setlocal norelativenumber",
+      },
+    },
+  })
 end
 
 function M.init()

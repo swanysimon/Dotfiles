@@ -1,7 +1,7 @@
 local M = {}
 
 function M.map(mode, trigger, mapping, options)
-  local opts = {noremap = true}
+  local opts = {noremap = true, silent = true}
   if options then
     for key, value in ipairs(options) do
       opts[key] = value

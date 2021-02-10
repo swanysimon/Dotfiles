@@ -37,6 +37,6 @@ setopt("wo", "signcolumn", "no")
 
 require("autocommands").init()
 require("colors").init()
-require("lsp")
-require("mappings").init()
+require("lsp").init()
 require("lualine").status()
+require("mappings").init()

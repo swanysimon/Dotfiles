@@ -4,9 +4,6 @@
 [submodule "config/nvim/pack/third_party/start/vim-surround"]
 	path = config/nvim/pack/third_party/start/vim-surround
 	url = git@github.com:tpope/vim-surround.git
-[submodule "config/nvim/pack/third_party/opt/lucario"]
-	path = config/nvim/pack/third_party/opt/lucario
-	url = git@github.com:raphamorim/lucario.git
 [submodule "config/nvim/pack/third_party/start/vim-fugitive"]
 	path = config/nvim/pack/third_party/start/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive.git
@@ -16,3 +13,12 @@
 [submodule "config/nvim/pack/third_party/opt/fzf"]
 	path = config/nvim/pack/third_party/opt/fzf
 	url = git@github.com:junegunn/fzf.git
+[submodule "config/nvim/pack/third_party/opt/lucario"]
+	path = config/nvim/pack/third_party/opt/lucario
+	url = git@github.com:raphamorim/lucario.git
+[submodule "config/nvim/pack/third_party/start/lualine.nvim"]
+	path = config/nvim/pack/third_party/start/lualine.nvim
+	url = git@github.com:hoob3rt/lualine.nvim.git
+[submodule "config/nvim/pack/third_party/opt/gruvbox"]
+	path = config/nvim/pack/third_party/opt/gruvbox
+	url = git@github.com:morhetz/gruvbox.git

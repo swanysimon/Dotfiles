@@ -15,6 +15,7 @@ setopt("o", "ignorecase", true)
 setopt("o", "wildignorecase", true)
 
 setopt("o", "joinspaces", false)
+setopt("o", "laststatus", 2)
 setopt("o", "splitbelow", true)
 setopt("o", "splitright", true)
 
@@ -38,4 +39,4 @@ require("autocommands").init()
 require("colors").init()
 require("lsp")
 require("mappings").init()
-require("statusline")
+require("lualine").status()

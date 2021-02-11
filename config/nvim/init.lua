@@ -22,7 +22,7 @@ setopt("o", "splitright", true)
 setopt("o", "mouse", "a")
 setopt("o", "clipboard", "unnamed")
 
--- setopt("wo", "colorcolumn", "+1")
+setopt("wo", "colorcolumn", "+1")
 setopt("bo", "comments", "")
 setopt("bo", "textwidth", 0)
 
@@ -34,7 +34,7 @@ setopt("bo", "softtabstop", default_indentation)
 setopt("wo", "cursorline", true)
 setopt("wo", "number", true)
 setopt("wo", "relativenumber", true)
--- setopt("wo", "signcolumn", "auto")
+setopt("wo", "signcolumn", "auto")
 
 require("autocommands").init()
 require("colors").init()

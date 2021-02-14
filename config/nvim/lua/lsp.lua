@@ -8,7 +8,20 @@ M.servers = {
 }
 
 local function default_attach(client)
+  vim.wo.signcolumn = "yes"
+
   require("completion").on_attach(client)
+
+  local map = require("mappings").buf_map
+  
+  map("i", "<C-n>", "<Plug>(completion_smart_tab)")
+  map("i", "<C-p>", "<Plug>(completion_smart_s_tab)")
+
+  map("n", "gd", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+  map("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+  map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+
+  map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 end
 
 local function enable_servers()

@@ -1,43 +1,102 @@
-local function setopt(scope, option, value)
-  if scope ~= "o" then
-    vim[scope][option] = value
-  end
-  vim.o[option] = value
-end
+local append = require("utils").appendopt
+local augroup = require("utils").autocommand_group
+local map = require("utils").map
+local set = require("utils").setopt
 
-setopt("o", "hidden", true)
-setopt("o", "history", 1000)
-setopt("o", "include", "")
-setopt("o", "lazyredraw", true)
-setopt("o", "timeoutlen", 200)
 
-setopt("o", "ignorecase", true)
-setopt("o", "wildignorecase", true)
+-- leader
+vim.g.mapleader = ","
+vim.g.mapleaderlocal = "'"
 
-setopt("o", "joinspaces", false)
-setopt("o", "laststatus", 2)
-setopt("o", "splitbelow", true)
-setopt("o", "splitright", true)
 
-setopt("o", "mouse", "a")
-setopt("o", "clipboard", "unnamed")
+-- fix backwards compatibility bug
+map("n", "Y", "y$", { noremap = false })
 
-setopt("wo", "colorcolumn", "+1")
-setopt("bo", "comments", "")
-setopt("bo", "textwidth", 0)
 
+-- general
+append("o", "shortmess", "c", "")
+set("o", "hidden", true)
+set("o", "lazyredraw", true)
+set("o", "timeoutlen", 200)
+set("o", "updatetime", 300)
+
+
+-- appearance
+set("o", "background", "dark")
+set("o", "laststatus", 2)
+set("o", "showtabline", 2)
+set("o", "termguicolors", true)
+set("wo", "colorcolumn", "+1")
+set("wo", "cursorline", true)
+set("wo", "number", true)
+set("wo", "relativenumber", true)
+set("wo", "signcolumn", "auto")
+
+vim.cmd("colorscheme gruvbox")
+
+augroup({
+  name = "autocolorsync",
+  autocommands = {
+    {events = "Colorscheme,VimEnter", cmd = "lua require('lualineconfig').sync_lualine()"},
+    {events = "Colorscheme,VimEnter", cmd = "lua require('utils').highlight_group('Comment', {style='italic'})"},
+  },
+})
+
+
+-- system interactions
+set("o", "clipboard", "unnamed,unnamedplus")
+set("o", "include", "")
+set("o", "mouse", "a")
+
+augroup({
+  name = "autoresize",
+  autocommands = {{events = "VimResized", cmd = "execute 'normal! \\<C-w>='"}},
+})
+
+
+-- search settings
+set("o", "history", 1000)
+set("o", "ignorecase", true)
+set("o", "wildignorecase", true)
+
+
+-- text manipulation
 local default_indentation = 2
-setopt("bo", "expandtab", true)
-setopt("bo", "shiftwidth", default_indentation)
-setopt("bo", "softtabstop", default_indentation)
 
-setopt("wo", "cursorline", true)
-setopt("wo", "number", true)
-setopt("wo", "relativenumber", true)
-setopt("wo", "signcolumn", "auto")
+set("o", "joinspaces", false)
+set("bo", "comments", "")
+set("bo", "expandtab", true)
+set("bo", "shiftwidth", default_indentation)
+set("bo", "softtabstop", default_indentation)
+set("bo", "textwidth", 0)
+set("wo", "breakindent", true)
 
-require("autocommands").init()
-require("colors").init()
-require("lsp").init()
-require("lualine").status()
-require("mappings").init()
+
+-- movement
+set("o", "scrolljump", 5)
+set("o", "splitbelow", true)
+set("o", "splitright", true)
+
+
+-- toggles
+map("n", "coh", ":set hlsearch! hlsearch?<CR>")
+map("n", "cos", ":setlocal spell! spell?<CR>")
+map("n", "cow", ":setlocal wrap! wrap?<CR>")
+
+augroup({
+  name = "autonumbertoggle",
+  autocommands = {
+    {
+      events = "BufEnter,FocusGained,InsertLeave,UIEnter,VimEnter,VimResume,WinEnter",
+      cmd = "if &number | setlocal relativenumber | endif",
+    },
+    {events = "BufLeave,FocusLost,WinLeave", cmd = "setlocal norelativenumber"},
+  },
+})
+
+
+-- navigation
+map("n", "<C-h>", "<C-w>h")
+map("n", "<C-j>", "<C-w>j")
+map("n", "<C-k>", "<C-w>k")
+map("n", "<C-l>", "<C-w>l")

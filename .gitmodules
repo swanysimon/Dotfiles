@@ -13,12 +13,12 @@
 [submodule "config/nvim/pack/third_party/start/lualine.nvim"]
 	path = config/nvim/pack/third_party/start/lualine.nvim
 	url = git@github.com:hoob3rt/lualine.nvim.git
-[submodule "config/nvim/pack/third_party/opt/gruvbox"]
-	path = config/nvim/pack/third_party/opt/gruvbox
-	url = git@github.com:morhetz/gruvbox.git
 [submodule "config/nvim/pack/third_party/opt/completion-nvim"]
 	path = config/nvim/pack/third_party/start/completion-nvim
 	url = git@github.com:nvim-lua/completion-nvim.git
 [submodule "config/nvim/pack/third_party/opt/nvim-lspconfig"]
 	path = config/nvim/pack/third_party/start/nvim-lspconfig
 	url = git@github.com:neovim/nvim-lspconfig.git
+[submodule "config/nvim/pack/third_party/opt/gruvbox"]
+	path = config/nvim/pack/third_party/opt/gruvbox
+	url = git@github.com:gruvbox-community/gruvbox.git

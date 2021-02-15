@@ -1,6 +1,6 @@
 local append = require("utils").appendopt
 local augroup = require("utils").autocommand_group
-local map = require("utils").map
+local map = require("utils").set_keymap
 local set = require("utils").setopt
 
 

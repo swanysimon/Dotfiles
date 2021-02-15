@@ -17,7 +17,7 @@ function M.appendopt(scope, option, value, delimiter)
 end
 
 
-function M.map(mode, trigger, mapping, options)
+function M.set_keymap(mode, trigger, mapping, options)
   local opts = {noremap = true, silent = true}
   if options then
     vim.tbl_extend("force", opts, options)
@@ -26,7 +26,7 @@ function M.map(mode, trigger, mapping, options)
 end
 
 
-function M.buf_map(mode, trigger, mapping, options)
+function M.buf_set_keymap(mode, trigger, mapping, options)
   local opts = {noremap = true, silent = true}
   if options then
     vim.tbl_extend("force", opts, options)

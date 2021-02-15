@@ -1,39 +1,49 @@
 local M = {}
 
+
 -- All overrides for language servers should be put in here
-M.overrides = {}
+function M.overrides()
+  return {}
+end
 
-M.servers = {
-  "rust_analyzer",
-}
 
-local function default_attach(client)
+function M.servers()
+  return {
+    "rust_analyzer",
+  }
+end
+
+
+function M.default_attach(client, bufnr)
   vim.wo.signcolumn = "yes"
+  vim.wo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
   require("completion").on_attach(client)
 
-  local map = require("mappings").buf_map
-  
-  map("i", "<C-n>", "<Plug>(completion_smart_tab)")
-  map("i", "<C-p>", "<Plug>(completion_smart_s_tab)")
+  local map = require("mappings").buf_set_keymap
 
-  map("n", "gd", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-  map("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-  map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+  map(0, "i", "<C-n>", "<Plug>(completion_smart_tab)")
+  map(0, "i", "<C-p>", "<Plug>(completion_smart_s_tab)")
 
-  map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+  map(0, "n", "gd", "<cmd>lua vim.lsp.buf.declaration()<CR>")
+  map(0, "n", "gD", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+  map(0, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
+
+  map(0, "n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 end
 
-local function enable_servers()
+
+function M.enable_servers(servers, overrides)
   lsp = require("lspconfig")
-  for _, server in ipairs(M.servers) do
+  for _, server in ipairs(servers) do
     local options = {on_attach=default_attach}
-    if M.overrides[server] then
-      vim.tbl_extend(options, M.overrides[server])
+    if overrides[server] then
+      vim.tbl_extend(options, overrides[server])
     end
     lsp[server].setup(options)
   end
 end
+
 
 local function enable_diagnostics()
   local lsp = vim.lsp
@@ -46,14 +56,11 @@ local function enable_diagnostics()
   )
 end
 
-function M.init()
-  if not string.find(vim.o.shortmess, "c") then
-    vim.o.shortmess = vim.o.shortmess .. "c"
-  end
-  vim.o.completeopt = "menuone,noinsert,noselect"
 
-  enable_servers()
+function M.init()
+  M.enable_servers(M.servers(), M.overrides())
   enable_diagnostics()
 end
+
 
 return M

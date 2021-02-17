@@ -21,6 +21,14 @@ font:
   offset:
     x: 1
     y: 1
+  normal:
+    family: SF Mono
+  bold:
+    family: SF Mono
+  italic:
+    family: SF Mono
+  bold_italic:
+    family: SF Mono
 
 draw_bold_text_with_bright_colors: false
 # Colors (Gruvbox dark)

@@ -102,6 +102,10 @@ configure_bluetooth_audio () {
     defaults write com.apple.BluetoothAudioAgent "Negotiated Bitpool" -int 53
 }
 
+configure_rectangle () {
+    defaults write com.knollsoft.Rectangle subsequentExecutionMode -int 0
+}
+
 prepare
 configure_system
 configure_dock

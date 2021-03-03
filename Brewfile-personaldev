@@ -1,0 +1,22 @@
+# taps
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-drivers"
+tap "homebrew/core"
+
+# formulas
+brew "rust-analyzer"
+brew "rustup-init"
+brew "shellcheck"
+brew "thefuck"
+
+# casks
+cask "blackhole-2ch"
+cask "chrysalis"
+cask "discord"
+cask "keka"
+cask "openemu"
+cask "protonvpn"
+cask "skype"
+cask "transmission"
+cask "xld"

@@ -103,7 +103,7 @@ configure_bluetooth_audio () {
 }
 
 configure_rectangle () {
-    defaults write com.knollsoft.Rectangle alternateDefaultShortcuts -bool false
+    defaults write com.knollsoft.Rectangle alternateDefaultShortcuts -bool true
     defaults write com.knollsoft.Rectangle subsequentExecutionMode -int 0
 }
 

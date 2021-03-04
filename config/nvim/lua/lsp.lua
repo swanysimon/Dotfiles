@@ -9,6 +9,7 @@ end
 
 function M.servers()
   return {
+    "pyright",
     "rust_analyzer",
   }
 end

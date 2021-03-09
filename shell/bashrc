@@ -53,7 +53,6 @@ rreadlink () (
 
 
 __add_to_path "/usr/local/sbin"
-__add_to_path "${DOTFILES_DIR}/bin"
 __add_to_path "${HOME}/.local/bin"
 
 
@@ -135,6 +134,7 @@ fi
 # shellcheck disable=SC2039
 DOTFILES_DIR="$(git -C "$(dirname "$(rreadlink "${BASH_SOURCE[0]}")")" rev-parse --show-toplevel)"
 export DOTFILES_DIR
+__add_to_path "${DOTFILES_DIR}/bin"
 
 
 # shellcheck source=./shell/bash_config.sh

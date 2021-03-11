@@ -107,8 +107,10 @@ alias gw="./gradlew"
 
 
 if [ -x "/usr/libexec/java_home" ]; then
-    JAVA_HOME="$(/usr/libexec/java_home)"
-    export JAVA_HOME="$JAVA_HOME"
+    if /usr/libexec/java_home 2>/dev/null; then
+        JAVA_HOME="$(/usr/libexec/java_home)"
+        export JAVA_HOME="$JAVA_HOME"
+    fi
 fi
 
 

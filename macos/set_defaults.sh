@@ -34,6 +34,19 @@ configure_system () {
     defaults write com.apple.screencapture type -string "png"
 }
 
+configure_control_center () {
+    defaults write com.apple.controlcenter "NSStatusItem Visible AccessibilityShortcuts" -bool false
+    defaults write com.apple.controlcenter "NSStatusItem Visible Battery" -bool true
+    defaults write com.apple.controlcenter "NSStatusItem Visible BentoBox" -bool true
+    defaults write com.apple.controlcenter "NSStatusItem Visible Bluetooth" -bool true
+    defaults write com.apple.controlcenter "NSStatusItem Visible Clock" -bool true
+    defaults write com.apple.controlcenter "NSStatusItem Visible Display" -bool true
+    defaults write com.apple.controlcenter "NSStatusItem Visible DoNotDisturb" -bool true
+    defaults write com.apple.controlcenter "NSStatusItem Visible NowPlaying" -bool true
+    defaults write com.apple.controlcenter "NSStatusItem Visible Sound" -bool true
+    defaults write com.apple.controlcenter "NSStatusItem Visible WiFi" -bool true
+}
+
 configure_dock () {
     defaults write com.apple.dock autohide -bool true
     defaults write com.apple.dock largesize -int 100
@@ -109,6 +122,7 @@ configure_rectangle () {
 
 prepare
 configure_system
+configure_control_center
 configure_dock
 configure_finder
 configure_keyboard

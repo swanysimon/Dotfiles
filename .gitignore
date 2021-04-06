@@ -10,6 +10,7 @@ Brewfile.lock.json
 !/config/nvim
 !/config/alacritty
 /config/nvim/.netrwhist
+/config/nvim/spell/*
 
 # shell/hidden is where system-specific sourcing is placed and often contains
 # sensitive information

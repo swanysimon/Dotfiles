@@ -2,7 +2,7 @@
 .DS_STORE
 
 # homebrew's lock file actually isn't that useful
-Brewfile.lock.json
+**/Brewfile*.lock.json
 
 # configs may contain sensitive information and must be whitelisted here
 /config/*

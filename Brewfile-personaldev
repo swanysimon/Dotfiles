@@ -3,8 +3,10 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-drivers"
 tap "homebrew/core"
+tap "d12frosted/emacs-plus"
 
 # formulas
+brew "emacs-plus"
 brew "rust-analyzer"
 brew "rustup-init"
 brew "shellcheck"

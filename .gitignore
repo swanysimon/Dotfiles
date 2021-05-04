@@ -6,15 +6,17 @@
 
 # configs may contain sensitive information and must be whitelisted here
 /config/*
+!/config/emacs
+!/config/alacritty
 !/config/git
 !/config/nvim
-!/config/alacritty
+/config/emacs/*/**/*
 /config/nvim/.netrwhist
-/config/nvim/spell/*
+/config/nvim/spell
 
 # shell/hidden is where system-specific sourcing is placed and often contains
 # sensitive information
-/shell/hidden/*
+/shell/hidden/**/*
 
 # gitkeep files exist to preserve directory structure, even when the underlying
 # directory contains things that shouldn't be checked in

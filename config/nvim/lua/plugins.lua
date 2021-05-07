@@ -1,11 +1,14 @@
 local M = {}
 
+
 local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+
 
 local function is_packer_installed()
   return fn.empty(fn.glob(install_path)) > 0
 end
+
 
 local function install_packer()
   if not is_packer_installed() then
@@ -13,6 +16,7 @@ local function install_packer()
     vim.cmd("packadd packer.nvim")
   end
 end
+
 
 local function reload_plugins_on_write()
   require("utils").autocommand_group({
@@ -23,9 +27,6 @@ local function reload_plugins_on_write()
   })
 end
 
-function M.update()
-  require("packer").sync()
-end
 
 function M.init()
   install_packer()
@@ -51,5 +52,12 @@ function M.init()
     end
   }
 end
+
+
+function M.update()
+  M.init()
+  require("packer").sync()
+end
+
 
 return M

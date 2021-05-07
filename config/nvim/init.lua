@@ -39,6 +39,8 @@ set("wo", "number", true)
 set("wo", "relativenumber", true)
 set("wo", "signcolumn", "auto")
 
+require("start_page").init()
+
 vim.cmd("colorscheme gruvbox")
 
 augroup({

@@ -44,7 +44,7 @@ vim.cmd("colorscheme gruvbox")
 augroup({
   name = "autocolorsync",
   autocommands = {
-    {events = "Colorscheme,VimEnter", cmd = "lua require('lualineconfig').sync_lualine()"},
+    {events = "Colorscheme,VimEnter", cmd = "lua require('statusline').statusline()"},
     {events = "Colorscheme,VimEnter", cmd = "lua require('utils').highlight_group('Comment', {style='italic'})"},
   },
 })

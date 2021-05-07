@@ -3,10 +3,10 @@
 
 __source_matching_in_dir () {
     if [ -d "$1" ]; then
-	while read -r file; do
-	    # shellcheck disable=SC1090
-	    . "$file"
-	done < <(find -L "$1" -type f -name "$2")
+        while read -r file; do
+            # shellcheck disable=SC1090
+            . "$file"
+        done < <(find -L "$1" -type f -name "$2")
     fi
 }
 

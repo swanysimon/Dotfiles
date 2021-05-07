@@ -1,24 +1,3 @@
-[submodule "config/nvim/pack/third_party/start/vim-commentary"]
-	path = config/nvim/pack/third_party/start/vim-commentary
-	url = git@github.com:tpope/vim-commentary.git
-[submodule "config/nvim/pack/third_party/start/vim-surround"]
-	path = config/nvim/pack/third_party/start/vim-surround
-	url = git@github.com:tpope/vim-surround.git
-[submodule "config/nvim/pack/third_party/opt/fzf"]
-	path = config/nvim/pack/third_party/opt/fzf
-	url = git@github.com:junegunn/fzf.git
-[submodule "config/nvim/pack/third_party/opt/lucario"]
-	path = config/nvim/pack/third_party/opt/lucario
-	url = git@github.com:raphamorim/lucario.git
-[submodule "config/nvim/pack/third_party/start/lualine.nvim"]
-	path = config/nvim/pack/third_party/start/lualine.nvim
-	url = git@github.com:hoob3rt/lualine.nvim.git
-[submodule "config/nvim/pack/third_party/opt/completion-nvim"]
-	path = config/nvim/pack/third_party/start/completion-nvim
-	url = git@github.com:nvim-lua/completion-nvim.git
-[submodule "config/nvim/pack/third_party/opt/nvim-lspconfig"]
-	path = config/nvim/pack/third_party/start/nvim-lspconfig
-	url = git@github.com:neovim/nvim-lspconfig.git
-[submodule "config/nvim/pack/third_party/opt/gruvbox"]
-	path = config/nvim/pack/third_party/opt/gruvbox
-	url = git@github.com:gruvbox-community/gruvbox.git
+[submodule "config/nvim/pack/third_party/start/packer.nvim"]
+	path = config/nvim/pack/third_party/start/packer.nvim
+	url = git@github.com:wbthomason/packer.nvim.git

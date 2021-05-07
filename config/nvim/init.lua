@@ -4,6 +4,10 @@ local map = require("utils").set_keymap
 local set = require("utils").setopt
 
 
+-- initialize plugins
+require("plugins").init()
+
+
 -- leader
 vim.g.mapleader = ","
 vim.g.mapleaderlocal = "'"

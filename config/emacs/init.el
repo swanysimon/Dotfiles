@@ -1,5 +1,3 @@
-(unless (server-running-p) (server-start))
-
 (setq inhibit-startup-message t)
 (setq make-backup-files nil)
 (setq visible-bell t)
@@ -43,6 +41,11 @@
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 2))
+
+(use-package evil
+  :init
+  :config
+  (evil-mode 1))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

@@ -1,19 +1,47 @@
 local M = {}
 
 
-local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+local plugins = {
+  -- packer managing packer
+  "wbthomason/packer.nvim",
+
+  -- visual plugins
+  "gruvbox-community/gruvbox",
+  "hoob3rt/lualine.nvim",
+  "mhinz/vim-startify",
+
+  -- text editing plugins
+  "tpope/vim-commentary",
+  "tpope/vim-surround",
+
+  -- plugins with extra features
+  "tjdevries/astronauta.nvim",
+
+  -- language server
+  "nvim-lua/completion-nvim",
+  "neovim/nvim-lspconfig",
+}
 
 
+local function install_packer()
+  local fn = vim.fn
+  local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
-
-local function is_packer_installed()
-  return fn.empty(fn.glob(install_path)) == 0
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
+    vim.cmd("packadd packer.nvim")
+  end
 end
 
 
-local function clone_packer()
-  fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
+local function register_plugins()
+  require("packer").startup {
+    function(use)
+      for _, plugin in ipairs(plugins) do
+        use(plugin)
+      end
+    end
+  }
 end
 
 
@@ -28,42 +56,15 @@ end
 
 
 function M.init()
-  local already_installed = is_packer_installed()
-
-  if not already_install then
-    clone_packer()
-    vim.cmd("packadd packer.nvim")
-  end
-
+  install_packer()
+  register_plugins()
+  require("packer").install()
   reload_plugins_on_write()
-
-  require("packer").startup {
-    function(use)
-      -- packer managing packer
-      use "wbthomason/packer.nvim"
-
-      -- visual plugins
-      use "gruvbox-community/gruvbox"
-      use "hoob3rt/lualine.nvim"
-      use "mhinz/vim-startify"
-
-      -- text editing plugins
-      use "tpope/vim-commentary"
-      use "tpope/vim-surround"
-
-      -- language server
-      use "nvim-lua/completion-nvim"
-      use "neovim/nvim-lspconfig"
-    end
-  }
-
-  if not already_installed then
-    M.update()
-  end
 end
 
 
 function M.update()
+  register_plugins()
   require("packer").sync()
 end
 

@@ -11,6 +11,7 @@ local plugins = {
   "mhinz/vim-startify",
 
   -- text editing plugins
+  "editorconfig/editorconfig-vim",
   "tpope/vim-commentary",
   "tpope/vim-surround",
 

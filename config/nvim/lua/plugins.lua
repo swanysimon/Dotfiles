@@ -13,14 +13,22 @@ local plugins = {
   -- text editing plugins
   "editorconfig/editorconfig-vim",
   "tpope/vim-commentary",
+  "tpope/vim-repeat",
   "tpope/vim-surround",
 
-  -- plugins with extra features
-  "tjdevries/astronauta.nvim",
-
-  -- language server
-  "nvim-lua/completion-nvim",
+  -- plugins for extra mobility
   "neovim/nvim-lspconfig",
+  "nvim-lua/completion-nvim",
+  "nvim-lua/plenary.nvim",
+  "nvim-lua/popup.nvim",
+  {
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-lua/popup.nvim",
+    }
+  },
+  "tjdevries/astronauta.nvim",
 }
 
 
@@ -65,6 +73,7 @@ end
 
 
 function M.update()
+  vim.cmd("luafile %")
   register_plugins()
   require("packer").sync()
 end

@@ -4,7 +4,6 @@ local map = require("utils").set_keymap
 local set = require("utils").setopt
 
 
--- initialize plugins
 require("plugins").init()
 
 
@@ -17,7 +16,11 @@ vim.g.mapleaderlocal = "'"
 map("n", "Y", "y$", { noremap = false })
 
 
--- fix line navigation
+-- improve navigation
+map("n", "<C-h>", "<C-w>h")
+map("n", "<C-j>", "<C-w>j")
+map("n", "<C-k>", "<C-w>k")
+map("n", "<C-l>", "<C-w>l")
 map("n", "gj", "j")
 map("n", "gk", "k")
 map("n", "j", "gj")
@@ -46,17 +49,7 @@ set("wo", "number", true)
 set("wo", "relativenumber", true)
 set("wo", "signcolumn", "auto")
 
-require("start_page").init()
-
 vim.cmd("colorscheme gruvbox")
-
-augroup({
-  name = "autocolorsync",
-  autocommands = {
-    {events = "Colorscheme,VimEnter", cmd = "lua require('statusline').statusline()"},
-    {events = "Colorscheme,VimEnter", cmd = "lua require('utils').highlight_group('Comment', {style='italic'})"},
-  },
-})
 
 
 -- system interactions
@@ -108,18 +101,35 @@ augroup({
   autocommands = {
     {
       events = "BufEnter,FocusGained,InsertLeave,UIEnter,VimEnter,VimResume,WinEnter",
-      cmd = "if &number | setlocal relativenumber | endif",
+      cmd = "lua if vim.wo.number then vim.wo.relativenumber = true end",
     },
-    {events = "BufLeave,FocusLost,WinLeave", cmd = "setlocal norelativenumber"},
+    {events = "BufLeave,FocusLost,WinLeave", cmd = "lua vim.wo.relativenumber = false"},
   },
 })
 
 
--- navigation
-map("n", "<C-h>", "<C-w>h")
-map("n", "<C-j>", "<C-w>j")
-map("n", "<C-k>", "<C-w>k")
-map("n", "<C-l>", "<C-w>l")
+-- telescope
+map("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>")
+map("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
+map("n", "<leader>b", "<cmd>lua require('telescope.builtin').buffers()<cr>")
+
+
+-- start page
+vim.g.startify_session_autoload = true
+vim.g.startify_session_persistence = true
+vim.g.startify_skiplist = {
+  "/dev/null",
+}
+
+
+-- statusline
+augroup({
+  name = "statuslinesync",
+  autocommands = {
+    {events = "Colorscheme,VimEnter", cmd = "lua require('utils').highlight_group('Comment', {style='italic'})"},
+    {events = "Colorscheme,VimEnter", cmd = "lua require('statusline').statusline()"},
+  },
+})
 
 
 -- language server

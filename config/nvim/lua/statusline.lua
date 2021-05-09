@@ -1,5 +1,6 @@
 local M = {}
 
+
 function M.statusline()
   require("lualine").setup {
     options = {
@@ -9,5 +10,6 @@ function M.statusline()
     },
   }
 end
+
 
 return M

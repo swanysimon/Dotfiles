@@ -17,6 +17,13 @@ vim.g.mapleaderlocal = "'"
 map("n", "Y", "y$", { noremap = false })
 
 
+-- fix line navigation
+map("n", "gj", "j")
+map("n", "gk", "k")
+map("n", "j", "gj")
+map("n", "k", "gk")
+
+
 -- general
 append("o", "shortmess", "c", "")
 set("o", "hidden", true)
@@ -27,11 +34,11 @@ set("o", "updatetime", 100)
 
 -- appearance
 set("o", "background", "dark")
+set("o", "colorcolumn", "+1")
 set("o", "laststatus", 2)
 set("o", "showtabline", 2)
 set("o", "termguicolors", true)
 set("o", "title", true)
-set("wo", "colorcolumn", "+1")
 set("wo", "cursorline", true)
 set("wo", "list", true)
 set("wo", "listchars", "trail:»,tab:»-")

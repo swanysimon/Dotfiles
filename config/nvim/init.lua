@@ -1,10 +1,8 @@
 local append = require("utils").appendopt
 local augroup = require("utils").autocommand_group
+local default_indentation = 2
 local map = require("utils").set_keymap
 local set = require("utils").setopt
-
-
-require("plugins").init()
 
 
 -- leader
@@ -49,17 +47,13 @@ set("wo", "number", true)
 set("wo", "relativenumber", true)
 set("wo", "signcolumn", "auto")
 
-vim.cmd("colorscheme gruvbox")
-
-
--- system interactions
-set("o", "clipboard", "unnamed,unnamedplus")
-set("o", "include", "")
-set("o", "mouse", "a")
-
 augroup({
-  name = "autoresize",
-  autocommands = {{events = "VimResized", cmd = "execute 'normal! \\<C-w>='"}},
+  name = "colorscheme_modifiers",
+  autocommands = {
+    {
+      events = "Colorscheme,VimEnter",
+      cmd = "lua require('utils').highlight_group('Comment', {style='italic'})"},
+  },
 })
 
 
@@ -72,8 +66,6 @@ set("o", "wildignorecase", true)
 
 
 -- text manipulation
-local default_indentation = 2
-
 set("o", "joinspaces", false)
 set("bo", "comments", "")
 set("bo", "copyindent", true)
@@ -108,6 +100,19 @@ augroup({
 })
 
 
+-- system interactions
+set("o", "clipboard", "unnamed,unnamedplus")
+set("o", "include", "")
+set("o", "mouse", "a")
+
+-- load plugins
+require("plugins").init()
+
+
+-- colorscheme
+vim.cmd("colorscheme gruvbox")
+
+
 -- telescope
 map("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>")
 map("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
@@ -126,10 +131,13 @@ vim.g.startify_skiplist = {
 augroup({
   name = "statuslinesync",
   autocommands = {
-    {events = "Colorscheme,VimEnter", cmd = "lua require('utils').highlight_group('Comment', {style='italic'})"},
     {events = "Colorscheme,VimEnter", cmd = "lua require('statusline').statusline()"},
   },
 })
+
+
+-- git project settings
+require("gitsigns").setup()
 
 
 -- language server

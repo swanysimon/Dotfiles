@@ -9,6 +9,12 @@ local plugins = {
   "gruvbox-community/gruvbox",
   "hoob3rt/lualine.nvim",
   "mhinz/vim-startify",
+  {
+    "lewis6991/gitsigns.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim"
+    }
+  },
 
   -- text editing plugins
   "editorconfig/editorconfig-vim",
@@ -19,8 +25,6 @@ local plugins = {
   -- plugins for extra mobility
   "neovim/nvim-lspconfig",
   "nvim-lua/completion-nvim",
-  "nvim-lua/plenary.nvim",
-  "nvim-lua/popup.nvim",
   {
     "nvim-telescope/telescope.nvim",
     requires = {
@@ -48,6 +52,13 @@ local function register_plugins()
     function(use)
       for _, plugin in ipairs(plugins) do
         use(plugin)
+
+        local plugin_id = plugin
+        if type(plugin_id) == "table" then
+          plugin_id = plugin_id[1]
+        end
+
+        vim.cmd("packadd " .. string.sub(plugin_id, string.find(plugin_id, "/")))
       end
     end
   }
@@ -67,7 +78,11 @@ end
 function M.init()
   install_packer()
   register_plugins()
-  require("packer").install()
+
+  local packer = require("packer")
+  packer.clean()
+  packer.install()
+
   reload_plugins_on_write()
 end
 

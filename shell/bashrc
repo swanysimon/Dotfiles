@@ -106,15 +106,13 @@ alias g="git"
 alias gw="./gradlew"
 
 
-if [ -x "/usr/libexec/java_home" ]; then
-    if /usr/libexec/java_home >/dev/null 2>/dev/null; then
-        JAVA_HOME="$(/usr/libexec/java_home)"
-        export JAVA_HOME="$JAVA_HOME"
-    fi
+if [ -z "$JAVA_HOME" ] && /usr/libexec/java_home >/dev/null 2>/dev/null; then
+    JAVA_HOME="$(/usr/libexec/java_home)"
+    export JAVA_HOME="$JAVA_HOME"
 fi
 
 
-if [ -d "/usr/local/opt/groovy/libexec" ]; then
+if [ -z "$GROOVY_HOME" ] && [ -d "/usr/local/opt/groovy/libexec" ]; then
     GROOVY_HOME="/usr/local/opt/groovy/libexec"
     export GROOVY_HOME="$GROOVY_HOME"
 fi
@@ -127,7 +125,7 @@ if ! ps -p "$$" -o command= | grep -q "bash$"; then
 fi
 
 
-# shellcheck disable=SC2039
+# shellcheck disable=SC2039,SC3028,SC3054
 DOTFILES_DIR="$(git -C "$(dirname "$(rreadlink "${BASH_SOURCE[0]}")")" rev-parse --show-toplevel)"
 export DOTFILES_DIR
 __add_to_path "${DOTFILES_DIR}/bin"

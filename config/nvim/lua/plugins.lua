@@ -9,12 +9,15 @@ local plugins = {
   "gruvbox-community/gruvbox",
   "hoob3rt/lualine.nvim",
   "mhinz/vim-startify",
+  "nvim-lua/plenary.nvim",
+  "nvim-lua/popup.nvim",
   {
     "lewis6991/gitsigns.nvim",
     requires = {
-      "nvim-lua/plenary.nvim"
+      "nvim-lua/plenary.nvim",
     }
   },
+  "wfxr/minimap.vim",
 
   -- text editing plugins
   "editorconfig/editorconfig-vim",
@@ -65,32 +68,9 @@ local function register_plugins()
 end
 
 
-local function reload_plugins_on_write()
-  require("utils").autocommand_group({
-    name = "pluginreload",
-    autocommands = {
-      {events = "BufWritePost", patterns = "plugins.lua", cmd = "lua require('plugins').update()"},
-    },
-  })
-end
-
-
 function M.init()
   install_packer()
   register_plugins()
-
-  local packer = require("packer")
-  packer.clean()
-  packer.install()
-
-  reload_plugins_on_write()
-end
-
-
-function M.update()
-  vim.cmd("luafile %")
-  register_plugins()
-  require("packer").sync()
 end
 
 

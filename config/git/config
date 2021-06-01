@@ -54,5 +54,5 @@
 [submodule]
   fetchJobs = 0
 [user]
-  email = nomiswanson@gmail.com
+  email = git@simonswanson.xyz
   name = Simon Swanson

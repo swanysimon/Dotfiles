@@ -1,8 +1,23 @@
-local append = require("utils").appendopt
 local augroup = require("utils").autocommand_group
 local default_indentation = 2
 local map = require("utils").set_keymap
-local set = require("utils").setopt
+
+
+-- functions necessary only on vim initialization (I believe)
+local function set(scope, option, value)
+  vim.o[option] = value
+  if scope ~= "o" then
+    vim[scope][option] = value
+  end
+end
+
+
+local function append(scope, option, value, delimiter)
+  local current_value = vim[scope][option]
+  if not current_value or not string.find(current_value, value) then
+    set(scope, option, current_value .. delimiter .. value)
+  end
+end
 
 
 -- leader
@@ -140,5 +155,21 @@ augroup({
 require("gitsigns").setup()
 
 
+-- minimap settings
+vim.g.minimap_auto_start_win_enter = true
+vim.g.minimap_git_colors = true
+
 -- language server
 require("lsp").init()
+
+
+-- completion settings
+augroup({
+  name = "completion",
+  autocommands = {
+    {events = "BufEnter", cmd = "lua require('completion').on_attach()"}
+  },
+})
+
+set("o", "completeopt", "menuone,noinsert,noselect")
+vim.g.completion_matching_strategy_list = {"exact", "substring", "fuzzy"}

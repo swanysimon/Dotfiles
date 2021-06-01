@@ -1,47 +1,47 @@
 local M = {}
 
 
--- All overrides for language servers should be put in here
-function M.overrides()
-  return {}
-end
-
-
 function M.servers()
   return {
+    "hls",
     "pyright",
     "rust_analyzer",
   }
 end
 
 
-function M.default_attach(client, bufnr)
+local function default_attach(client, bufnr)
   vim.wo.signcolumn = "yes"
-  vim.wo.omnifunc = "v:lua.vim.lsp.omnifunc"
+  vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
-  require("completion").on_attach(client)
+  local function bufmap(...)
+    require("utils").buf_set_keymap(bufnr, ...)
+  end
 
-  local map = require("mappings").buf_set_keymap
-
-  map(0, "i", "<C-n>", "<Plug>(completion_smart_tab)")
-  map(0, "i", "<C-p>", "<Plug>(completion_smart_s_tab)")
-
-  map(0, "n", "gd", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-  map(0, "n", "gD", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-  map(0, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-
-  map(0, "n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+  bufmap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>')
+  bufmap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
+  bufmap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
+  bufmap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+  bufmap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+  bufmap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
+  bufmap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
+  bufmap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
+  bufmap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+  bufmap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+  bufmap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+  bufmap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+  bufmap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+  bufmap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+  bufmap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+  bufmap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
+  bufmap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 end
 
 
-function M.enable_servers(servers, overrides)
-  lsp = require("lspconfig")
+function M.enable_servers(servers)
+  local lsp = require("lspconfig")
   for _, server in ipairs(servers) do
-    local options = {on_attach=default_attach}
-    if overrides[server] then
-      vim.tbl_extend(options, overrides[server])
-    end
-    lsp[server].setup(options)
+    lsp[server].setup {on_attach = default_attach}
   end
 end
 
@@ -59,7 +59,7 @@ end
 
 
 function M.init()
-  M.enable_servers(M.servers(), M.overrides())
+  M.enable_servers(M.servers())
   enable_diagnostics()
 end
 

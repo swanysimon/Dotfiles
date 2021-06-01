@@ -1,22 +1,6 @@
 local M = {}
 
 
-function M.setopt(scope, option, value)
-  if scope ~= "o" then
-    vim[scope][option] = value
-  end
-  vim.o[option] = value
-end
-
-
-function M.appendopt(scope, option, value, delimiter)
-  local current_value = vim[scope][option]
-  if not current_value or not string.find(current_value, value) then
-    M.setopt(scope, option, current_value .. delimiter .. value)
-  end
-end
-
-
 function M.set_keymap(mode, trigger, mapping, options)
   local opts = {noremap = true, silent = true}
   if options then
@@ -26,12 +10,12 @@ function M.set_keymap(mode, trigger, mapping, options)
 end
 
 
-function M.buf_set_keymap(mode, trigger, mapping, options)
+function M.buf_set_keymap(buf_number, mode, trigger, mapping, options)
   local opts = {noremap = true, silent = true}
   if options then
     vim.tbl_extend("force", opts, options)
   end
-  vim.api.nvim_buf_set_keymap(0, mode, trigger, mapping, opts)
+  vim.api.nvim_buf_set_keymap(buf_number, mode, trigger, mapping, opts)
 end
 
 

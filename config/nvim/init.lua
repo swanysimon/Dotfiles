@@ -1,6 +1,6 @@
 local augroup = require("utils").autocommand_group
-local default_indentation = 2
 local map = require("utils").set_keymap
+local default_indentation = 2
 
 
 -- functions necessary only on vim initialization (I believe)
@@ -50,11 +50,11 @@ set("o", "updatetime", 100)
 
 -- appearance
 set("o", "background", "dark")
-set("o", "colorcolumn", "+1")
 set("o", "laststatus", 2)
 set("o", "showtabline", 2)
 set("o", "termguicolors", true)
 set("o", "title", true)
+set("wo", "colorcolumn", "+1")
 set("wo", "cursorline", true)
 set("wo", "list", true)
 set("wo", "listchars", "trail:»,tab:»-")
@@ -99,7 +99,7 @@ set("o", "splitright", true)
 
 -- toggles
 map("n", "coh", ":set hlsearch! hlsearch?<CR>")
-map("n", "cos", ":setlocal list! list?<CR>")
+map("n", "col", ":setlocal list! list?<CR>")
 map("n", "cos", ":setlocal spell! spell?<CR>")
 map("n", "cow", ":setlocal wrap! wrap?<CR>")
 

@@ -135,6 +135,10 @@ map("n", "<leader>b", "<cmd>lua require('telescope.builtin').buffers()<cr>")
 
 
 -- start page
+vim.g.startify_lists = {
+  { type = "sessions" },
+  { type = "dir" },
+}
 vim.g.startify_session_autoload = true
 vim.g.startify_session_persistence = true
 vim.g.startify_skiplist = {

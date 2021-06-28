@@ -52,8 +52,7 @@ fi
 
 
 if command -v pyenv >/dev/null; then
-    eval "$(pyenv init -)"
-    export PATH="$PATH"
+    eval "$(pyenv init --path)"
 fi
 
 

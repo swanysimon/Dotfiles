@@ -1,11 +1,14 @@
+require("os")
+
+
 local M = {}
 
 
 function M.servers()
   return {
-    "hls",
-    "pyright",
-    "rust_analyzer",
+    hls = "haskell-language-server-wrapper",
+    pyright = "pyright",
+    rust_analyzer = "rust-analyzer",
   }
 end
 
@@ -40,8 +43,10 @@ end
 
 function M.enable_servers(servers)
   local lsp = require("lspconfig")
-  for _, server in ipairs(servers) do
-    lsp[server].setup {on_attach = default_attach}
+  for server, executable in ipairs(servers) do
+    if os.execute("command -v " .. executable .. " >/dev/null 2>/dev/null") then
+      lsp[server].setup {on_attach = default_attach}
+    end
   end
 end
 

@@ -1,4 +1,4 @@
-require("os")
+local os = require("os")
 
 
 local M = {}
@@ -44,7 +44,8 @@ end
 function M.enable_servers(servers)
   local lsp = require("lspconfig")
   for server, executable in ipairs(servers) do
-    if os.execute("command -v " .. executable .. " >/dev/null 2>/dev/null") then
+    local exit_code = os.execute("command -v " .. executable)
+    if exit_code == 0 then
       lsp[server].setup {on_attach = default_attach}
     end
   end

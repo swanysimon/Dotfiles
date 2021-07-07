@@ -129,10 +129,7 @@ vim.cmd("colorscheme gruvbox")
 
 
 -- telescope
-map("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>")
-map("n", "<leader>p", "<cmd>lua require('telescope.builtin').git_files()<cr>")
-map("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
-map("n", "<leader>b", "<cmd>lua require('telescope.builtin').buffers()<cr>")
+require("telescopeconfig").init()
 
 
 -- start page

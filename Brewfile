@@ -2,12 +2,10 @@
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
-tap "wfxr/code-minimap"
 
 # formulas
 brew "bash"
 brew "bash-completion@2"
-brew "code-minimap"
 brew "coreutils"
 brew "fontconfig"
 brew "fzf"

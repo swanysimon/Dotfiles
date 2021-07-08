@@ -1,177 +1,101 @@
-local augroup = require("utils").autocommand_group
+-- aliases
+local cmd = vim.cmd
+local let = vim.g
+local opt = vim.opt
 local map = require("utils").set_keymap
-local default_indentation = 2
 
 
--- functions necessary only on vim initialization (I believe)
-local function set(scope, option, value)
-  vim.o[option] = value
-  if scope ~= "o" then
-    vim[scope][option] = value
-  end
-end
-
-
-local function append(scope, option, value, delimiter)
-  local current_value = vim[scope][option]
-  if not current_value or not string.find(current_value, value) then
-    set(scope, option, current_value .. delimiter .. value)
-  end
-end
+-- load plugins
+require("plugins")
 
 
 -- leader
-vim.g.mapleader = ","
-vim.g.mapleaderlocal = "'"
+let.mapleader = ","
+let.mapleaderlocal = "'"
 
 
 -- fix backwards compatibility bug
 map("n", "Y", "y$", { noremap = false })
 
 
--- improve navigation
+-- shortcuts for navigating between buffers
 map("n", "<C-h>", "<C-w>h")
 map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
 map("n", "<C-l>", "<C-w>l")
+
+
+-- move by visual lines by default
 map("n", "gj", "j")
 map("n", "gk", "k")
 map("n", "j", "gj")
 map("n", "k", "gk")
 
 
--- general
-append("o", "shortmess", "c", "")
-set("o", "hidden", true)
-set("o", "lazyredraw", true)
-set("o", "timeoutlen", 200)
-set("o", "updatetime", 100)
+-- toggle highlighting
+map("n", "coh", ":set hlsearch! hlsearch?<CR>")
 
 
--- appearance
-set("o", "background", "dark")
-set("o", "laststatus", 2)
-set("o", "showtabline", 2)
-set("o", "termguicolors", true)
-set("o", "title", true)
-set("wo", "colorcolumn", "+1")
-set("wo", "cursorline", true)
-set("wo", "list", true)
-set("wo", "listchars", "trail:»,tab:»-")
-set("wo", "number", true)
-set("wo", "relativenumber", true)
-set("wo", "signcolumn", "auto")
-
-augroup({
-  name = "colorscheme_modifiers",
-  autocommands = {
-    {
-      events = "Colorscheme,VimEnter",
-      cmd = "lua require('utils').highlight_group('Comment', {style='italic'})"},
-  },
-})
+-- general editor behavior
+opt.hidden = true
+opt.history = 10000
+opt.include = ""
+opt.lazyredraw = true
+opt.shortmess = "filnxtToOFc"
+opt.timeoutlen = 200
 
 
--- search settings
-set("o", "history", 1000)
-set("o", "ignorecase", true)
-set("o", "incsearch", true)
-set("o", "smartcase", true)
-set("o", "wildignorecase", true)
+-- search and completion behavior
+opt.completeopt = {"menuone", "noinsert", "noselect"}
+opt.ignorecase = true
+opt.incsearch = true
+opt.wildignorecase = true
+opt.wildmode = {"list", "longest"}
 
 
 -- text manipulation
-set("o", "joinspaces", false)
-set("bo", "comments", "")
-set("bo", "copyindent", true)
-set("bo", "expandtab", true)
-set("bo", "shiftwidth", default_indentation)
-set("bo", "softtabstop", default_indentation)
-set("bo", "textwidth", 0)
-set("wo", "breakindent", true)
+opt.joinspaces = false
+opt.comments = ""
+opt.expandtab = true
+opt.shiftround = true
+opt.shiftwidth = 2
+opt.softtabstop = -1
+opt.breakindent = true
 
 
--- movement
-set("o", "scrolljump", 5)
-set("o", "splitbelow", true)
-set("o", "splitright", true)
-
-
--- toggles
-map("n", "coh", ":set hlsearch! hlsearch?<CR>")
-map("n", "col", ":setlocal list! list?<CR>")
-map("n", "cos", ":setlocal spell! spell?<CR>")
-map("n", "cow", ":setlocal wrap! wrap?<CR>")
-
-augroup({
-  name = "autonumbertoggle",
-  autocommands = {
-    {
-      events = "BufEnter,FocusGained,InsertLeave,UIEnter,VimEnter,VimResume,WinEnter",
-      cmd = "lua if vim.wo.number then vim.wo.relativenumber = true end",
-    },
-    {events = "BufLeave,FocusLost,WinLeave", cmd = "lua vim.wo.relativenumber = false"},
-  },
-})
+-- appearance
+opt.background = "dark"
+opt.laststatus = 2
+opt.showtabline = 2
+opt.termguicolors = true
+opt.title = true
+opt.colorcolumn = "+1"
+opt.cursorline = true
+opt.list = true
+opt.listchars = "trail:»,tab:»-"
+opt.number = true
+opt.relativenumber = true
+opt.signcolumn = "auto"
+opt.splitbelow = true
+opt.splitright = true
+opt.wrap = false
 
 
 -- system interactions
-set("o", "clipboard", "unnamed,unnamedplus")
-set("o", "include", "")
-set("o", "mouse", "a")
-
--- load plugins
-require("plugins").init()
+opt.clipboard = {"unnamed", "unnamedplus"}
+opt.mouse = "a"
 
 
--- colorscheme
-vim.cmd("colorscheme gruvbox")
+-- load autocommands
+require("autocmds")
 
 
--- telescope
-require("telescopeconfig").init()
+-- completion
+let.completion_matching_strategy_list = {"exact", "substring", "fuzzy"}
 
 
--- start page
-vim.g.startify_lists = {
-  { type = "sessions" },
-  { type = "dir" },
-}
-vim.g.startify_session_autoload = true
-vim.g.startify_session_persistence = true
-vim.g.startify_skiplist = {
-  "/dev/null",
-}
-
-
--- statusline
-augroup({
-  name = "statuslinesync",
-  autocommands = {
-    {events = "Colorscheme,VimEnter", cmd = "lua require('statusline').statusline()"},
-  },
-})
-
-
--- git project settings
-require("gitsigns").setup()
-
-
--- minimap settings
-vim.g.minimap_auto_start_win_enter = true
-vim.g.minimap_git_colors = true
-
--- language server
-require("lsp").init()
-
-
--- completion settings
-augroup({
-  name = "completion",
-  autocommands = {
-    {events = "BufEnter", cmd = "lua require('completion').on_attach()"}
-  },
-})
-
-set("o", "completeopt", "menuone,noinsert,noselect")
-vim.g.completion_matching_strategy_list = {"exact", "substring", "fuzzy"}
+-- load modules dependent on plugins
+cmd("colorscheme gruvbox")
+require("plugins.lsp")
+require("plugins.startify")
+require("plugins.telescope").setup()

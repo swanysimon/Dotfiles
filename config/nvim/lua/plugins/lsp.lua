@@ -1,21 +1,19 @@
 local os = require("os")
+local wo = vim.wo
+local bo = vim.bo
+local lspconfig = require("lspconfig")
 
 
-local M = {}
-
-
-function M.servers()
-  return {
-    hls = "haskell-language-server-wrapper",
-    pyright = "pyright",
-    rust_analyzer = "rust-analyzer",
-  }
-end
+local servers = {
+  hls = "haskell-language-server-wrapper",
+  pyright = "pyright",
+  rust_analyzer = "rust-analyzer",
+}
 
 
 local function default_attach(client, bufnr)
-  vim.wo.signcolumn = "yes"
-  vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+  wo.signcolumn = "yes"
+  bo.omnifunc = "v:lua.vim.lsp.omnifunc"
 
   local function bufmap(...)
     require("utils").buf_set_keymap(bufnr, ...)
@@ -41,17 +39,6 @@ local function default_attach(client, bufnr)
 end
 
 
-function M.enable_servers(servers)
-  local lsp = require("lspconfig")
-  for server, executable in ipairs(servers) do
-    local exit_code = os.execute("command -v " .. executable)
-    if exit_code == 0 then
-      lsp[server].setup {on_attach = default_attach}
-    end
-  end
-end
-
-
 local function enable_diagnostics()
   local lsp = vim.lsp
   lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
@@ -64,10 +51,11 @@ local function enable_diagnostics()
 end
 
 
-function M.init()
-  M.enable_servers(M.servers())
-  enable_diagnostics()
+for server, executable in pairs(servers) do
+  local exit_code = os.execute("command -v " .. executable .. " >/dev/null 2>/dev/null")
+  if exit_code == 0 then
+    lspconfig[server].setup {on_attach = default_attach}
+  end
 end
 
-
-return M
+enable_diagnostics()

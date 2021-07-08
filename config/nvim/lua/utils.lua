@@ -19,22 +19,6 @@ function M.buf_set_keymap(buf_number, mode, trigger, mapping, options)
 end
 
 
-function M.autocommand_group(group)
-  vim.cmd("augroup " .. group.name)
-  vim.cmd("autocmd!")
-
-  for _, cmd in ipairs(group.autocommands) do
-    local patterns = cmd.patterns
-    if not patterns then
-      patterns = "*"
-    end
-    vim.cmd(table.concat({"autocmd", cmd.events, patterns, cmd.cmd}, " "))
-  end
-
-  vim.cmd("augroup end")
-end
-
-
 local function highlight_cmd_part(config, key, fallback_key)
   local value = config[key]
   if not value then

@@ -78,12 +78,13 @@ opt.relativenumber = true
 opt.signcolumn = "auto"
 opt.splitbelow = true
 opt.splitright = true
-opt.wrap = false
+opt.wrap = true
 
 
 -- system interactions
 opt.clipboard = {"unnamed", "unnamedplus"}
 opt.mouse = "a"
+opt.sessionoptions = {"buffers", "curdir", "folds", "tabpages"}
 
 
 -- load autocommands

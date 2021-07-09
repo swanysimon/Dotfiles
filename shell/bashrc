@@ -72,9 +72,9 @@ fi
 export CLICOLOR=1
 export EDITOR="nvim"
 export HISTCONTROL="ignoredups"
-export HISTFILESIZE=5000
-export HISTSIZE=5000
-export VISUAL="nvim"
+export HISTFILESIZE=100000
+export HISTSIZE=100000
+export VISUAL="$EDITOR"
 
 
 alias edit="\$EDITOR"
@@ -115,6 +115,12 @@ fi
 if [ -z "$GROOVY_HOME" ] && [ -d "/usr/local/opt/groovy/libexec" ]; then
     GROOVY_HOME="/usr/local/opt/groovy/libexec"
     export GROOVY_HOME="$GROOVY_HOME"
+fi
+
+
+if [ -z "$RIPGREP_CONFIG_PATH" ] && [ -r "${XDG_CONFIG_HOME}/ripgrep/ripgreprc" ]; then
+    RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/ripgreprc"
+    export RIPGREP_CONFIG_PATH
 fi
 
 

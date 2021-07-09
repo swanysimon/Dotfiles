@@ -10,10 +10,10 @@
 !/config/alacritty
 !/config/git
 !/config/nvim
+!/config/ripgrep
 /config/emacs/*/**/*
 /config/nvim/.netrwhist
 /config/nvim/spell
-/config/nvim/plugin/packer_compiled.vim
 
 # shell/hidden is where system-specific sourcing is placed and often contains
 # sensitive information

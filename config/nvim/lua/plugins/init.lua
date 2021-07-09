@@ -26,8 +26,6 @@ local plugins = {
     "norcalli/nvim-colorizer.lua",
     config = function() require("colorizer").setup() end,
   },
-  "nvim-lua/plenary.nvim",
-  "nvim-lua/popup.nvim",
   {
     "sunjon/shade.nvim",
     config = function() require("shade").setup() end,
@@ -54,6 +52,16 @@ local plugins = {
     "nvim-telescope/telescope.nvim",
     requires = {"nvim-lua/plenary.nvim", "nvim-lua/popup.nvim"},
   },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        ensure_installed = "maintained",
+        highlight = {enable = true},
+      }
+    end,
+  },
   "tjdevries/astronauta.nvim",
 }
 
@@ -66,5 +74,12 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd("packadd packer.nvim")
 end
 
-require("packer").startup({plugins})
+require("packer").startup({
+  plugins,
+  config = {
+    display = {
+      open_fn = require("packer.util").float,
+    }
+  }
+})
 require("packer").install()

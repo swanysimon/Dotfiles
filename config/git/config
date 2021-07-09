@@ -1,6 +1,5 @@
 [alias]
   # general aliasing
-  d = difftool
   recursive-update = submodule update --init --recursive --remote --merge
 
   # commit-level aliases
@@ -29,26 +28,21 @@
 [core]
   editor = nvim
   ignorecase = true
-  pager = less -+F -+X
+  pager = delta
+[delta]
+  line-numbers = true
+  side-by-side = true
 [diff]
-  prompt = false
-  tool = vimdiff
-[difftool]
-  prompt = false
-[difftool "vimdiff"]
-  path = nvim
+  colorMoved = true
 [fetch]
   parallel = 0
   recurseSubmodules = true
 [init]
   defaultBranch = main
+[interactive]
+  diffFilter = delta --color-only
 [merge]
   conflictstyle = diff3
-  tool = vimdiff
-[mergetool]
-  prompt = false
-[mergetool "vimdiff"]
-  path = nvim
 [pager]
   branch = false
 [submodule]

@@ -74,6 +74,9 @@ export EDITOR="nvim"
 export HISTCONTROL="ignoredups"
 export HISTFILESIZE=100000
 export HISTSIZE=100000
+export LESS="-FR -+X"
+export PAGER="less"
+
 export VISUAL="$EDITOR"
 
 

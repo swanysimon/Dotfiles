@@ -32,6 +32,7 @@
 [delta]
   line-numbers = true
   side-by-side = true
+  syntax-theme = gruvbox
 [diff]
   colorMoved = true
 [fetch]

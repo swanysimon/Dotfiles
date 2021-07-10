@@ -38,17 +38,18 @@ map("n", "coh", ":set hlsearch! hlsearch?<CR>")
 
 -- general editor behavior
 opt.hidden = true
-opt.history = 10000
 opt.include = ""
 opt.lazyredraw = true
-opt.shortmess = "filnxtToOFc"
 opt.timeoutlen = 200
+
+if not vim.tbl_contains(opt.shortmess, "c") then
+  opt.shortmess = vim.list_extend(opt.shortmess, {"c"})
+end
 
 
 -- search and completion behavior
 opt.completeopt = {"menuone", "noinsert", "noselect"}
 opt.ignorecase = true
-opt.incsearch = true
 opt.wildignorecase = true
 opt.wildmode = {"list", "longest"}
 
@@ -64,15 +65,12 @@ opt.breakindent = true
 
 
 -- appearance
-opt.background = "dark"
-opt.laststatus = 2
 opt.showtabline = 2
 opt.termguicolors = true
 opt.title = true
 opt.colorcolumn = "+1"
 opt.cursorline = true
 opt.list = true
-opt.listchars = "trail:»,tab:»-"
 opt.number = true
 opt.relativenumber = true
 opt.signcolumn = "auto"

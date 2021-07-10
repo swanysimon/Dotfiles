@@ -6,6 +6,8 @@ local map = require("utils").set_keymap
 
 
 -- load plugins
+opt.sessionoptions = {"buffers", "curdir", "folds", "tabpages"}
+opt.termguicolors = true
 require("plugins")
 
 
@@ -66,7 +68,6 @@ opt.breakindent = true
 
 -- appearance
 opt.showtabline = 2
-opt.termguicolors = true
 opt.title = true
 opt.colorcolumn = "+1"
 opt.cursorline = true
@@ -82,7 +83,6 @@ opt.wrap = true
 -- system interactions
 opt.clipboard = {"unnamed", "unnamedplus"}
 opt.mouse = "a"
-opt.sessionoptions = {"buffers", "curdir", "folds", "tabpages"}
 
 
 -- load autocommands

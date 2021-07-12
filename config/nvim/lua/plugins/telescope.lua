@@ -16,7 +16,8 @@ function M.setup()
     defaults = {
       mappings = {
         i = {
-          ["<esc>"] = actions.close
+          ["<esc>"] = actions.close,
+          ["<c-t>"] = require("trouble.providers.telescope").open_with_trouble,
         },
       },
     }

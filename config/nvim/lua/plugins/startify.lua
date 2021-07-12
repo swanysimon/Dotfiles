@@ -1,8 +1,9 @@
 local let = vim.g
 
 let.startify_lists = {
-  { type = "sessions" },
-  { type = "dir" },
+  {type = "sessions"},
+  {type = "dir", header = {"   Recents " .. require("os").getenv("PWD")}},
+  {type = "files", header = {"   Recents"}},
 }
 let.startify_session_autoload = true
 let.startify_session_persistence = true

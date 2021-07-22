@@ -13,6 +13,7 @@
 !/config/ripgrep
 /config/emacs/*/**/*
 /config/nvim/.netrwhist
+/config/nvim/plugin/**/*
 /config/nvim/spell
 
 # shell/hidden is where system-specific sourcing is placed and often contains

@@ -100,11 +100,7 @@ local plugins = {
   },
 
   -- consistent completion even without language server
-  {
-    "nvim-lua/completion-nvim",
-    config = function() require("completion").on_attach() end,
-    event = "BufEnter",
-  },
+  "nvim-lua/completion-nvim",
 }
 
 

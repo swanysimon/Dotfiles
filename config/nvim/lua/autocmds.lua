@@ -17,6 +17,13 @@ local autocommands = {
     events = "Colorscheme,VimEnter",
     patterns = "*",
   },
+
+  -- completion plugin should always load
+  {
+    cmd = "lua require('completion').on_attach()",
+    events = "BufEnter",
+    patterns = "*",
+  },
 }
 
 

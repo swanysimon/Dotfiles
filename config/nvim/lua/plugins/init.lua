@@ -35,12 +35,6 @@ local plugins = {
     requires = {"nvim-lua/plenary.nvim"},
   },
 
-  -- dim inactive windows
-  {
-    "sunjon/shade.nvim",
-    config = function() require("shade").setup() end,
-  },
-
   -- editorconfig support
   "editorconfig/editorconfig-vim",
 

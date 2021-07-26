@@ -95,6 +95,7 @@ let.completion_matching_strategy_list = {"exact", "substring", "fuzzy"}
 
 -- load modules dependent on plugins
 cmd("colorscheme gruvbox")
+require("plugins.fterm")
 require("plugins.lsp")
 require("plugins.startify")
 require("plugins.telescope").setup()

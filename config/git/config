@@ -30,9 +30,11 @@
   ignorecase = true
   pager = delta
 [delta]
+  decorations = true
   line-numbers = true
   side-by-side = true
   syntax-theme = gruvbox
+  whitespace-error-style = 22 reverse
 [diff]
   colorMoved = true
 [fetch]

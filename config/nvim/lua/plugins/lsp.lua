@@ -36,6 +36,8 @@ local function default_attach(client, bufnr)
   bufmap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
   bufmap('n', '<localleader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
   bufmap("n", "<localleader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+
+  require("lsp_signature").on_attach()
 end
 
 

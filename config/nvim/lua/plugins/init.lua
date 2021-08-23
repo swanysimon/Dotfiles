@@ -65,6 +65,9 @@ local plugins = {
   -- language server configurations
   "neovim/nvim-lspconfig",
 
+  -- show function signatures while typing with LSP
+  "ray-x/lsp_signature.nvim",
+
   -- visual plugins
   {
     "folke/trouble.nvim",
@@ -75,14 +78,19 @@ local plugins = {
     end,
   },
 
+  -- navigate syntax blocks
+  "andymass/vim-matchup",
+
   -- treesitter
   {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
+    after = "andymass/vim-matchup",
     config = function()
       require("nvim-treesitter.configs").setup {
         ensure_installed = "maintained",
         highlight = {enable = true},
+        matchup = {enable = true},
       }
     end,
   },
@@ -93,7 +101,7 @@ local plugins = {
     config = function() require("spellsitter").setup() end,
   },
 
-  -- consistent completion even without language server
+  -- consistent completion (even without language server)
   "nvim-lua/completion-nvim",
 }
 

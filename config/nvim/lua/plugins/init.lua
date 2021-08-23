@@ -78,19 +78,18 @@ local plugins = {
     end,
   },
 
-  -- navigate syntax blocks
-  "andymass/vim-matchup",
-
   -- treesitter
   {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-    after = "andymass/vim-matchup",
+    requires = "andymass/vim-matchup",
     config = function()
       require("nvim-treesitter.configs").setup {
         ensure_installed = "maintained",
-        highlight = {enable = true},
-        matchup = {enable = true},
+        highlight = {
+          enable = true,
+          use_languagetree = true,
+        },
       }
     end,
   },

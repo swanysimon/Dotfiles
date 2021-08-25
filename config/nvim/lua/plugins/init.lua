@@ -59,7 +59,7 @@ local plugins = {
   -- telescope
   {
     "nvim-telescope/telescope.nvim",
-    requires = {"nvim-lua/plenary.nvim", "nvim-lua/popup.nvim"},
+    requires = {"nvim-lua/plenary.nvim"},
   },
 
   -- language server configurations

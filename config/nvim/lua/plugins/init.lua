@@ -3,7 +3,10 @@ local plugins = {
   "wbthomason/packer.nvim",
 
   -- gruvbox as my colorscheme
-  "gruvbox-community/gruvbox",
+  {
+    "npxbr/gruvbox.nvim",
+    requires = {"rktjmp/lush.nvim"},
+  },
 
   -- statusline/tabline
   {

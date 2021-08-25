@@ -3,11 +3,11 @@
   recursive-update = submodule update --init --recursive --remote --merge
 
   # commit-level aliases
-  addit = !git add -A && git commit
-  addmend = !git add -A && git commit --amend
-  addmendnoedit = !git add -A && git commit --amend --no-edit
-  amend = commit --amend
-  co = commit
+  co = commit --verbose
+  amend = co --amend
+  addit = !git add -A && git co
+  addmend = !git add -A && git amend
+  addmendnoedit = !git add -A && git amend --no-edit
 
   # rebase aliases
   rabort = rebase --abort

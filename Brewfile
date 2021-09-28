@@ -28,14 +28,12 @@ brew "wget"
 brew "yarn"
 
 # casks
-cask "alacritty"
-cask "blackhole-2ch"
+cask "alacritty", args: { quarantine: false }
 cask "chrysalis"
 cask "discord"
-cask "docker"
 cask "firefox"
+cask "intellij-idea-ce"
 cask "obsidian"
-cask "openemu"
 cask "protonvpn"
 cask "rectangle"
 cask "skype"

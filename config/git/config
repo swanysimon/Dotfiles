@@ -1,0 +1,55 @@
+[alias]
+  # general aliasing
+  recursive-update = submodule update --init --recursive --remote --merge
+
+  # commit-level aliases
+  co = commit --verbose
+  amend = co --amend
+  addit = !git add -A && git co
+  addmend = !git add -A && git amend
+  addmendnoedit = !git add -A && git amend --no-edit
+
+  # rebase aliases
+  rabort = rebase --abort
+  rcontinue = rebase --continue
+  rinteractive = rebase --interactive
+  rskip = rebase --skip
+
+  # log aliases
+  lg = log --color --graph --pretty=format:'%C(red)%h%Creset - %C(cyan)%d%Creset %s %C(green)(%cr)%Creset <%an>'
+  verboselog = log --color --stat --graph --pretty=fuller
+
+[branch]
+  autosetupmerge = always
+  autosetuprebase = always
+  rebase = true
+[color]
+  ui = true
+[core]
+  editor = nvim
+  ignorecase = true
+  pager = delta
+[delta]
+  decorations = true
+  line-numbers = true
+  side-by-side = true
+  syntax-theme = gruvbox
+  whitespace-error-style = 22 reverse
+[diff]
+  colorMoved = true
+[fetch]
+  parallel = 0
+  recurseSubmodules = true
+[init]
+  defaultBranch = main
+[interactive]
+  diffFilter = delta --color-only
+[merge]
+  conflictstyle = diff3
+[pager]
+  branch = false
+[submodule]
+  fetchJobs = 0
+[user]
+  email = git@simonswanson.xyz
+  name = Simon Swanson

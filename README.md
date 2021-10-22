@@ -1,3 +1,9 @@
+_Deprecated_. Moving to a fresh start [here](https://gitlab.com/swanysimon/dotfiles)
+
+Leaving this repository public for reference.
+
+---
+
 All my system configuration files that I like to take with me everywhere I go.
 
 **HERE BE DRAGONS!** I do things that I'm willing to live with. Read my code

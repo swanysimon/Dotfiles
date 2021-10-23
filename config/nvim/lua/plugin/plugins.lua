@@ -39,10 +39,16 @@ return {
   },
 
   -- language server configurations
-  "neovim/nvim-lspconfig",
-
-  -- show function signatures while typing with LSP
-  "ray-x/lsp_signature.nvim",
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require("plugin.config.lspconfig")
+    end,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    after = "neovim/nvim-lspconfig",
+  },
 
   -- visual plugins
   {

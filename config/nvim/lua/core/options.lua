@@ -14,6 +14,7 @@ opt.updatetime = 250  -- time to write to swap file
 -- system interactions
 opt.clipboard = {"unnamed", "unnamedplus"}
 opt.mouse = "a"
+opt.swapfile = false
 opt.title = true
 opt.undofile = true
 

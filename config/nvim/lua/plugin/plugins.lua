@@ -1,0 +1,81 @@
+return {
+  -- packer managing packer
+  "wbthomason/packer.nvim",
+
+  -- gruvbox as my colorscheme
+  {
+    "npxbr/gruvbox.nvim",
+    requires = {"rktjmp/lush.nvim"},
+  },
+
+  -- start page and session management
+  "mhinz/vim-startify",
+
+  -- highlight color codes
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function() require("colorizer").setup() end,
+  },
+
+  -- easy commenting
+  "tpope/vim-commentary",
+
+  -- work with "surroundings"
+  "tpope/vim-surround",
+  --
+  -- better buffer deletion
+  "ojroques/nvim-bufdel",
+
+  -- enable lua ftplugins
+  "tjdevries/astronauta.nvim",
+
+  -- floating terminal
+  "numtostr/FTerm.nvim",
+
+  -- telescope
+  {
+    "nvim-telescope/telescope.nvim",
+    requires = {"nvim-lua/plenary.nvim"},
+  },
+
+  -- language server configurations
+  "neovim/nvim-lspconfig",
+
+  -- show function signatures while typing with LSP
+  "ray-x/lsp_signature.nvim",
+
+  -- visual plugins
+  {
+    "folke/trouble.nvim",
+    config = function()
+      require("trouble").setup {
+        fold_open = "v"
+      }
+    end,
+  },
+
+  -- treesitter
+  {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    requires = "andymass/vim-matchup",
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        ensure_installed = "maintained",
+        highlight = {
+          enable = true,
+          use_languagetree = true,
+        },
+      }
+    end,
+  },
+
+  -- spellcheck plugin for treesitter
+  {
+    "lewis6991/spellsitter.nvim",
+    config = function() require("spellsitter").setup() end,
+  },
+
+  -- consistent completion (even without language server)
+  "nvim-lua/completion-nvim",
+}

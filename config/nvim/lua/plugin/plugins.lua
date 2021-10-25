@@ -36,6 +36,9 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     requires = {"nvim-lua/plenary.nvim"},
+    config = function()
+      require("plugin.config.telescope")
+    end,
   },
 
   -- language server configurations
@@ -47,7 +50,7 @@ return {
   },
   {
     "ray-x/lsp_signature.nvim",
-    after = "neovim/nvim-lspconfig",
+    after = {"nvim-lspconfig"},
   },
 
   -- visual plugins

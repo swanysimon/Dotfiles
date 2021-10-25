@@ -7,8 +7,8 @@ return {
     "ellisonleao/gruvbox.nvim",
     requires = {"rktjmp/lush.nvim"},
     config = function()
-      vim.opt.background = "dark"
-      vim.g.colors_name = "gruvbox"
+      vim.api.nvim_set_option("background", "dark")
+      vim.cmd("colorscheme gruvbox")
     end,
   },
 
@@ -37,8 +37,9 @@ return {
     "numtostr/FTerm.nvim",
     config = function()
       local map = require("core.utils").map
-      map("n", "cot", "<cmd>lua require('FTerm').toggle()<cr>")
-      map("n", "<leader>cot", "<cmd>lua require('FTerm').toggle()<cr>")
+      local toggle_cmd = "<cmd>lua require('FTerm').toggle()<cr>"
+      map("n", "cot", toggle_cmd)
+      map("t", "<leader>cot", toggle_cmd)
     end,
   },
 
@@ -76,7 +77,6 @@ return {
   -- treesitter
   {
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
     requires = "andymass/vim-matchup",
     config = function()
       require("nvim-treesitter.configs").setup {
@@ -85,8 +85,12 @@ return {
           enable = true,
           use_languagetree = true,
         },
+        matchup = {
+          enable = true,
+        },
       }
     end,
+    run = ':TSUpdate',
   },
 
   -- spellcheck plugin for treesitter

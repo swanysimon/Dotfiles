@@ -28,9 +28,6 @@ return {
   -- better buffer deletion
   "ojroques/nvim-bufdel",
 
-  -- enable lua ftplugins
-  "tjdevries/astronauta.nvim",
-
   -- floating terminal
   "numtostr/FTerm.nvim",
 

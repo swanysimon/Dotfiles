@@ -8,7 +8,7 @@ return {
     requires = {"rktjmp/lush.nvim"},
     config = function()
       vim.opt.background = "dark"
-      vim.cmd("colorscheme gruvbox")
+      vim.g.colors_name = "gruvbox"
     end,
   },
 
@@ -33,7 +33,14 @@ return {
   "ojroques/nvim-bufdel",
 
   -- floating terminal
-  "numtostr/FTerm.nvim",
+  {
+    "numtostr/FTerm.nvim",
+    config = function()
+      local map = require("core.utils").map
+      map("n", "cot", "<cmd>lua require('FTerm').toggle()<cr>")
+      map("n", "<leader>cot", "<cmd>lua require('FTerm').toggle()<cr>")
+    end,
+  },
 
   -- telescope
   {

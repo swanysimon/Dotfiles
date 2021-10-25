@@ -4,8 +4,12 @@ return {
 
   -- gruvbox as my colorscheme
   {
-    "npxbr/gruvbox.nvim",
+    "ellisonleao/gruvbox.nvim",
     requires = {"rktjmp/lush.nvim"},
+    config = function()
+      vim.opt.background = "dark"
+      vim.cmd("colorscheme gruvbox")
+    end,
   },
 
   -- start page and session management

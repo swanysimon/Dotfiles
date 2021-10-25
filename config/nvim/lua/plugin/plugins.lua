@@ -14,7 +14,9 @@ return {
   -- highlight color codes
   {
     "norcalli/nvim-colorizer.lua",
-    config = function() require("colorizer").setup() end,
+    config = function()
+      require("colorizer").setup()
+    end,
   },
 
   -- easy commenting

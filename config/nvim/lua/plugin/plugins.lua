@@ -88,4 +88,34 @@ return {
     end,
     run = ":TSUpdate",
   },
+
+  -- better completion engine
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    config = function()
+      require("plugin.config.cmp")
+    end,
+  },
+  {
+    "hrsh7th/cmp-buffer",
+    after = "nvim-cmp",
+  },
+  {
+    "hrsh7th/cmp-cmdline",
+    after = "nvim-cmp",
+  },
+  {
+    "hrsh7th/cmp-nvim-lsp",
+    requires = "nvim-lspconfig",
+    after = "nvim-cmp",
+  },
+  {
+    "hrsh7th/cmp-nvim-lua",
+    after = "nvim-cmp",
+  },
+  {
+    "hrsh7th/cmp-path",
+    after = "nvim-cmp",
+  },
 }

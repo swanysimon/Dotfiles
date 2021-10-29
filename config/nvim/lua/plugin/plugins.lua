@@ -76,27 +76,15 @@ return {
 
   -- treesitter
   {
-    'nvim-treesitter/nvim-treesitter',
-    requires = "andymass/vim-matchup",
+    "nvim-treesitter/nvim-treesitter",
+    requires = {
+      "andymass/vim-matchup",
+      "lewis6991/spellsitter.nvim",
+    },
     config = function()
-      require("nvim-treesitter.configs").setup {
-        ensure_installed = "maintained",
-        highlight = {
-          enable = true,
-          use_languagetree = true,
-        },
-        matchup = {
-          enable = true,
-        },
-      }
+      require("plugin.config.treesitter")
     end,
-    run = ':TSUpdate',
-  },
-
-  -- spellcheck plugin for treesitter
-  {
-    "lewis6991/spellsitter.nvim",
-    config = function() require("spellsitter").setup() end,
+    run = ":TSUpdate",
   },
 
   -- consistent completion (even without language server)

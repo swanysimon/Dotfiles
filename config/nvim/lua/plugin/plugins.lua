@@ -2,20 +2,30 @@ return {
   -- packer managing packer
   "wbthomason/packer.nvim",
 
-  -- gruvbox as my colorscheme
+  -- basic editing improvements
+  "tpope/vim-commentary",
+  "tpope/vim-repeat",
+  "tpope/vim-surround",
+
+  -- colorscheme
   {
     "ellisonleao/gruvbox.nvim",
-    requires = {"rktjmp/lush.nvim"},
+    requires = "rktjmp/lush.nvim",
     config = function()
-      vim.api.nvim_set_option("background", "dark")
+      vim.opt.background = "dark"
       vim.cmd("colorscheme gruvbox")
     end,
   },
 
-  -- start page and session management
-  "mhinz/vim-startify",
+  -- session manager (and start page)
+  {
+    "mhinz/vim-startify",
+    config = function()
+      require("plugin.config.startify")
+    end,
+  },
 
-  -- highlight color codes
+  -- highlight color codes with their actual color
   {
     "norcalli/nvim-colorizer.lua",
     config = function()
@@ -23,30 +33,30 @@ return {
     end,
   },
 
-  -- easy commenting
-  "tpope/vim-commentary",
-
-  -- work with "surroundings"
-  "tpope/vim-surround",
-  --
   -- better buffer deletion
   "ojroques/nvim-bufdel",
 
-  -- floating terminal
+  -- quick terminal access
   {
     "numtostr/FTerm.nvim",
     config = function()
-      local map = require("core.utils").map
-      local toggle_cmd = "<cmd>lua require('FTerm').toggle()<cr>"
-      map("n", "cot", toggle_cmd)
-      map("t", "<leader>cot", toggle_cmd)
+      require("plugin.config.fterm")
     end,
   },
 
   -- telescope
   {
+    "folke/trouble.nvim",
+    config = function()
+      require("trouble").setup()
+    end,
+  },
+  {
     "nvim-telescope/telescope.nvim",
-    requires = {"nvim-lua/plenary.nvim"},
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "folke/trouble.nvim",
+    },
     config = function()
       require("plugin.config.telescope")
     end,
@@ -61,17 +71,7 @@ return {
   },
   {
     "ray-x/lsp_signature.nvim",
-    after = {"nvim-lspconfig"},
-  },
-
-  -- visual plugins
-  {
-    "folke/trouble.nvim",
-    config = function()
-      require("trouble").setup {
-        fold_open = "v"
-      }
-    end,
+    requires = "nvim-lspconfig",
   },
 
   -- treesitter

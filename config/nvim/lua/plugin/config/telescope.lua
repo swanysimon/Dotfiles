@@ -1,6 +1,7 @@
 local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 local map = require("core.utils").map
+local trouble = require("trouble.providers.telescope")
 
 
 require("telescope").setup {
@@ -8,6 +9,10 @@ require("telescope").setup {
     mappings = {
       i = {
         ["<esc>"] = actions.close,
+        ["<c-t>"] = trouble.open_with_trouble,
+      },
+      n = {
+        ["<c-t>"] = trouble.open_with_trouble,
       },
     },
   },

@@ -44,24 +44,6 @@ return {
     end,
   },
 
-  -- telescope
-  {
-    "folke/trouble.nvim",
-    config = function()
-      require("trouble").setup()
-    end,
-  },
-  {
-    "nvim-telescope/telescope.nvim",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "folke/trouble.nvim",
-    },
-    config = function()
-      require("plugin.config.telescope")
-    end,
-  },
-
   -- language server configurations
   {
     "neovim/nvim-lspconfig",
@@ -71,7 +53,27 @@ return {
   },
   {
     "ray-x/lsp_signature.nvim",
-    requires = "nvim-lspconfig",
+    after = "nvim-lspconfig",
+  },
+
+  -- language diagnostics
+  {
+    "folke/trouble.nvim",
+    config = function()
+      require("trouble").setup()
+    end,
+  },
+
+  -- telescope
+  {
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "folke/trouble.nvim",
+    },
+    config = function()
+      require("plugin.config.telescope")
+    end,
   },
 
   -- treesitter
@@ -86,7 +88,4 @@ return {
     end,
     run = ":TSUpdate",
   },
-
-  -- consistent completion (even without language server)
-  "nvim-lua/completion-nvim",
 }

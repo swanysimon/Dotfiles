@@ -1,3 +1,4 @@
+local cmp = require("cmp_nvim_lsp")
 local coreutils = require("core.utils")
 local fn = vim.fn
 local lsp = vim.lsp
@@ -58,15 +59,25 @@ end
 
 
 -- load servers from the list of known servers if they are currently installed
+local capabilities = cmp.update_capabilities(lsp.protocol.make_client_capabilities())
 for server, executable in pairs(servers) do
   local exit_code = os.execute("command -v " .. executable .. " >/dev/null 2>/dev/null")
   if exit_code == 0 then
-    lspconfig[server].setup({on_attach = on_attach})
+    lspconfig[server].setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+    }
   end
 end
 
 
 -- override default symbols in signcolumn
 for _, symbol_type in ipairs(symbol_types) do
-  fn.sign_define("LspDiagnosticsSign" .. symbol_type, {text = " ", numhl = "LspDiagnosticsDefault" .. symbol_type})
+  fn.sign_define(
+    "LspDiagnosticsSign" .. symbol_type,
+    {
+      numhl = "LspDiagnosticsDefault" .. symbol_type,
+      text = " ",
+    }
+  )
 end

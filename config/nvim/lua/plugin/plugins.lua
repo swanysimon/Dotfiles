@@ -44,18 +44,6 @@ return {
     end,
   },
 
-  -- language server configurations
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require("plugin.config.lspconfig")
-    end,
-  },
-  {
-    "ray-x/lsp_signature.nvim",
-    after = "nvim-lspconfig",
-  },
-
   -- language diagnostics
   {
     "folke/trouble.nvim",
@@ -92,30 +80,25 @@ return {
   -- better completion engine
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
     config = function()
       require("plugin.config.cmp")
     end,
   },
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-cmdline",
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-nvim-lua",
+  "hrsh7th/cmp-path",
+
+  -- language server configurations
   {
-    "hrsh7th/cmp-buffer",
-    after = "nvim-cmp",
+    "neovim/nvim-lspconfig",
+    config = function()
+      require("plugin.config.lspconfig")
+    end,
   },
   {
-    "hrsh7th/cmp-cmdline",
-    after = "nvim-cmp",
-  },
-  {
-    "hrsh7th/cmp-nvim-lsp",
-    requires = "nvim-lspconfig",
-    after = "nvim-cmp",
-  },
-  {
-    "hrsh7th/cmp-nvim-lua",
-    after = "nvim-cmp",
-  },
-  {
-    "hrsh7th/cmp-path",
-    after = "nvim-cmp",
+    "ray-x/lsp_signature.nvim",
+    after = "nvim-lspconfig",
   },
 }

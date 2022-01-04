@@ -2,8 +2,8 @@ local opt = vim.opt
 local g = vim.g
 
 -- leader
-g.mapleader = " "
-g.mapleaderlocal = ","
+g.mapleader = ","
+g.mapleaderlocal = "'"
 
 -- general editing behavior
 opt.hidden = true

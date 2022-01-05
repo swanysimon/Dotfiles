@@ -17,10 +17,7 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
     signs = true,
     underline = true,
     update_in_insert = true,
-    virtual_text = {
-      prefix = " ",
-      spacing = 0,
-    },
+    virtual_text = true,
   }
 )
 

@@ -31,7 +31,7 @@ opt.termguicolors = true
 
 -- editing
 opt.breakindent = true
-opt.completeopt = "menuone,noselect"  -- necessary for completion engine
+opt.completeopt = {"menu", "menuone", "noselect"}  -- necessary for completion engine
 opt.expandtab = true
 opt.shiftround = true
 opt.shiftwidth = 2

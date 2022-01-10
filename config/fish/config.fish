@@ -1,4 +1,4 @@
-fish_add_path ~/.local/bin
+fish_add_path ~/.local/bin /opt/homebrew/bin
 
 
 set_if_absent XDG_CACHE_HOME ~/.cache
@@ -9,12 +9,12 @@ set_if_absent XDG_DATA_HOME ~/.local/share
 
 
 if not set -q JAVA_HOME; and /usr/libexec/java_home >/dev/null 2>/dev/null
-│   set -gx JAVA_HOME (/usr/libexec/java_home)
+    set -gx JAVA_HOME (/usr/libexec/java_home)
 end
 
 
 if not set -q GROOVY_HOME; and test -d /usr/local/opt/groovy/libexec
-│   set -gx GROOVY_HOME /usr/local/opt/groovy/libexec
+    set -gx GROOVY_HOME /usr/local/opt/groovy/libexec
 end
 
 

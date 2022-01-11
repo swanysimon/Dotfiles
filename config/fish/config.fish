@@ -8,6 +8,9 @@ set_if_absent XDG_DATA_DIRS /usr/local/share:/usr/share
 set_if_absent XDG_DATA_HOME ~/.local/share
 
 
+set -gx fish_function_path $fish_function_path $XDG_DATA_HOME/fish/hidden_functions.d
+
+
 if not set -q JAVA_HOME; and /usr/libexec/java_home >/dev/null 2>/dev/null
     set -gx JAVA_HOME (/usr/libexec/java_home)
 end

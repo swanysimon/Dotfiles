@@ -1,3 +1,4 @@
 Brewfile.lock.json
 /config/nvim/plugin/packer_compiled.lua
 /config/gh/*
+/config/jgit/*

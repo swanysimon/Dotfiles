@@ -10,7 +10,6 @@ return {
   -- colorscheme
   {
     "ellisonleao/gruvbox.nvim",
-    requires = "rktjmp/lush.nvim",
     config = function()
       vim.opt.background = "dark"
       vim.cmd("colorscheme gruvbox")

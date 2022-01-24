@@ -1,7 +1,21 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3100
-SETUVAR _fish_abbr_finagle:edit\x20\x7e/\x2efinagle
+SETUVAR _fish_abbr_cp:cp\x20\x2dvi
+SETUVAR _fish_abbr_edit:nvim
+SETUVAR _fish_abbr_finagle:edit\x20/Users/simon/\x2efinagle
+SETUVAR _fish_abbr_g:git
+SETUVAR _fish_abbr_gw:\x2e/gradlew
+SETUVAR _fish_abbr_la:ls\x20\x2dA
+SETUVAR _fish_abbr_less:less\x20\x2dr
+SETUVAR _fish_abbr_ll:ls\x20\x2dl
+SETUVAR _fish_abbr_lla:ll\x20\x2dA
+SETUVAR _fish_abbr_ls:ls\x20\x2dhF
+SETUVAR _fish_abbr_mkdir:mkdir\x20\x2dpv
+SETUVAR _fish_abbr_mv:mv\x20\x2dvi
+SETUVAR _fish_abbr_rm:rm\x20\x2dvi
+SETUVAR _fish_abbr_vi:nvim
+SETUVAR _fish_abbr_vim:nvim
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:005fd7

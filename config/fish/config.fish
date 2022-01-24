@@ -49,25 +49,25 @@ if status is-interactive
     set_if_absent EDITOR nvim
     set_if_absent LESS -FR -+X
 
-    alias edit "\$EDITOR"
-    alias vi "nvim"
-    alias vim "nvim"
+    abbr edit $EDITOR
+    abbr vi nvim
+    abbr vim nvim
 
-    abbr finagle "edit ~/.finagle"
+    abbr finagle edit ~/.finagle
 
-    alias less "less -r"
+    abbr less less -r
 
-    alias ls "ls -hF"
-    alias la "ls -A"
-    alias ll "ls -l"
-    alias lla "ll -A"
+    abbr ls ls -hF
+    abbr la ls -A
+    abbr ll ls -l
+    abbr lla ll -A
 
-    alias cp "cp -vi"
-    alias mv "mv -vi"
-    alias rm "rm -vi"
-    alias mkdir "mkdir -pv"
+    abbr cp cp -vi
+    abbr mv mv -vi
+    abbr rm rm -vi
+    abbr mkdir mkdir -pv
 
-    alias g "git"
+    abbr g git
 
-    alias gw "./gradlew"
+    abbr gw ./gradlew
 end

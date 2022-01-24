@@ -2,10 +2,13 @@ fish_add_path ~/.local/bin /opt/homebrew/bin
 
 
 set_if_absent XDG_CACHE_HOME ~/.cache
-set_if_absent XDG_CONFIG_DIRS /etc/xdg
 set_if_absent XDG_CONFIG_HOME ~/.config
-set_if_absent XDG_DATA_DIRS /usr/local/share:/usr/share
 set_if_absent XDG_DATA_HOME ~/.local/share
+
+
+if test -r $XDG_DATA_HOME/fish/config.(hostname -s).fish
+    source $XDG_DATA_HOME/fish/config.(hostname -s).fish
+end
 
 
 if not set -q JAVA_HOME; and /usr/libexec/java_home >/dev/null 2>/dev/null

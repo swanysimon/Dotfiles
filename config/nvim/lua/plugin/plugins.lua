@@ -88,10 +88,15 @@ return {
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-nvim-lua",
   "hrsh7th/cmp-path",
+  {
+    "saadparwaiz1/cmp_luasnip",
+    requires = "L3MON4D3/LuaSnip",
+  },
 
   -- language server configurations
   {
     "neovim/nvim-lspconfig",
+    requires = "nvim-cmp",
     config = function()
       require("plugin.config.lspconfig")
     end,

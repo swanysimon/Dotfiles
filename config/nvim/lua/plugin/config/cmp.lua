@@ -17,7 +17,13 @@ cmp_core.setup {
     ["<c-d>"] = cmp.scroll_docs(-4),
     ["<c-f>"] = cmp.scroll_docs(4),
   },
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
   sources = {
+    {name = "luasnip"},
     {name = "nvim_lsp"},
     {name = "nvim_lua"},
     {name = "cmdline"},

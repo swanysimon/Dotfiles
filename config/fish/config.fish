@@ -11,6 +11,34 @@ if test -r $XDG_DATA_HOME/fish/config.(hostname -s).fish
 end
 
 
+if status is-interactive
+    set_if_absent EDITOR nvim
+    set_if_absent LESS -FR -+X
+
+    abbr edit $EDITOR
+    abbr vi nvim
+    abbr vim nvim
+
+    abbr finagle edit ~/.finagle
+
+    abbr less less -r
+
+    abbr ls ls -hF
+    abbr la ls -A
+    abbr ll ls -l
+    abbr lla ll -A
+
+    abbr cp cp -vi
+    abbr mv mv -vi
+    abbr rm rm -vi
+    abbr mkdir mkdir -pv
+
+    abbr g git
+
+    abbr gw ./gradlew
+end
+
+
 if not set -q JAVA_HOME; and /usr/libexec/java_home >/dev/null 2>/dev/null
     set -gx JAVA_HOME (/usr/libexec/java_home)
 end
@@ -42,32 +70,4 @@ end
 
 if test -d ~/.cargo
     fish_add_path ~/.cargo/bin
-end
-
-
-if status is-interactive
-    set_if_absent EDITOR nvim
-    set_if_absent LESS -FR -+X
-
-    abbr edit $EDITOR
-    abbr vi nvim
-    abbr vim nvim
-
-    abbr finagle edit ~/.finagle
-
-    abbr less less -r
-
-    abbr ls ls -hF
-    abbr la ls -A
-    abbr ll ls -l
-    abbr lla ll -A
-
-    abbr cp cp -vi
-    abbr mv mv -vi
-    abbr rm rm -vi
-    abbr mkdir mkdir -pv
-
-    abbr g git
-
-    abbr gw ./gradlew
 end

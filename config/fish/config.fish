@@ -44,8 +44,12 @@ if not set -q JAVA_HOME; and /usr/libexec/java_home >/dev/null 2>/dev/null
 end
 
 
-if not set -q GROOVY_HOME; and test -d /usr/local/opt/groovy/libexec
-    set -gx GROOVY_HOME /usr/local/opt/groovy/libexec
+if not set -q GROOVY_HOME
+    if test -d /usr/local/opt/groovy/libexec
+        set_if_absent GROOVY_HOME /usr/local/opt/groovy/libexec
+    else if test -d /opt/homebrew/opt/groovy/libexec
+        set_if_absent GROOVY_HOME /opt/homebrew/opt/groovy/libexec
+    end
 end
 
 

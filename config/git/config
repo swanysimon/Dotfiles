@@ -33,7 +33,7 @@
   decorations = true
   line-numbers = true
   side-by-side = true
-  syntax-theme = gruvbox
+  syntax-theme = gruvbox-dark
   whitespace-error-style = 22 reverse
 [diff]
   colorMoved = true

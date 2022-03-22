@@ -1,13 +1,14 @@
 [alias]
   # general aliasing
   recursive-update = submodule update --init --recursive --remote --merge
+  gh-push = !bash -c 'git push origin +$(git branch --show-current)'
 
   # commit-level aliases
   co = commit --verbose
   amend = co --amend
-  addit = !git add -A && git co
-  addmend = !git add -A && git amend
-  addmendnoedit = !git add -A && git amend --no-edit
+  addit = !bash -c 'git add -A && git co'
+  addmend = !bash -c '!git add -A && git amend'
+  addmendnoedit = !bash -c 'git add -A && git amend --no-edit'
 
   # rebase aliases
   rabort = rebase --abort
@@ -16,8 +17,8 @@
   rskip = rebase --skip
 
   # log aliases
-  lg = log --color --graph --pretty=format:'%C(red)%h%Creset - %C(cyan)%d%Creset %s %C(green)(%cr)%Creset <%an>'
-  verboselog = log --color --stat --graph --pretty=fuller
+  lg = log --color --pretty=format:'%C(red)%h%Creset - %C(cyan)%d%Creset %s %C(green)(%cr)%Creset <%an>'
+  verboselog = log --color --stat --pretty=fuller
 
 [branch]
   autosetupmerge = always
@@ -39,6 +40,7 @@
   colorMoved = true
 [fetch]
   parallel = 0
+  prune = true
   recurseSubmodules = true
 [init]
   defaultBranch = main

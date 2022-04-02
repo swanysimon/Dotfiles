@@ -33,7 +33,8 @@ function git_fish_prompt
         return
     end
 
-    if not git diff-index --quiet HEAD -- >/dev/null
+    set -l num_untracked_files (git ls-files --exclude-standard --others | wc -l | tr -d " ")
+    if [ $num_untracked_files -gt 0 ]; or not git diff-index --quiet HEAD -- >/dev/null
         echo -n -s "◦"
     end
 

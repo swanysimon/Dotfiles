@@ -19,7 +19,7 @@ if status is-interactive
     abbr vi nvim
     abbr vim nvim
 
-    abbr finagle edit ~/.finagle
+    abbr finagle $EDITOR ~/.finagle
 
     abbr less less -r
 

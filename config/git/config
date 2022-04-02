@@ -1,14 +1,14 @@
 [alias]
   # general aliasing
   recursive-update = submodule update --init --recursive --remote --merge
-  gh-push = !bash -c 'git push origin +$(git branch --show-current)'
+  gh-push = !git push origin "+$(git branch --show-current)"
 
   # commit-level aliases
   co = commit --verbose
   amend = co --amend
-  addit = !bash -c 'git add -A && git co'
-  addmend = !bash -c '!git add -A && git amend'
-  addmendnoedit = !bash -c 'git add -A && git amend --no-edit'
+  addit = !git add -A && git co
+  addmend = !git add -A && git amend
+  addmendnoedit = addmend --no-edit
 
   # rebase aliases
   rabort = rebase --abort

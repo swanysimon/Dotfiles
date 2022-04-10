@@ -25,6 +25,7 @@ brew "tree"
 brew "watch"
 brew "wget"
 brew "yarn"
+brew "zellij"
 cask "alacritty", args: {"no-quarantine": true}
 cask "chrysalis"
 cask "discord"

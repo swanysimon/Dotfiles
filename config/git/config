@@ -4,12 +4,12 @@
   gh-push = !git push origin "+$(git branch --show-current)"
 
   # commit-level aliases
-  checkpoint = addit -m checkpoint
   co = commit --verbose
   amend = co --amend
   addit = !git add -A && git co
-  addmend = !git add -A && git amend
+  addmend = addit --amend
   addmendnoedit = addmend --no-edit
+  checkpoint = addit -m checkpoint
 
   # rebase aliases
   rabort = rebase --abort

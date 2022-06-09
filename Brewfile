@@ -37,6 +37,7 @@ cask "qmk-toolbox", args: {"no-quarantine": true}
 cask "rectangle"
 cask "skype"
 cask "slack"
+cask "slippi-dolphin"
 cask "transmission"
 cask "xld"
 cask "zoom"

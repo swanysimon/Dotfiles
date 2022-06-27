@@ -49,6 +49,14 @@
   diffFilter = delta --color-only
 [merge]
   conflictstyle = diff3
+  tool = vimdiff
+[mergetool]
+  keepBackup = false
+  path = nvim
+  prompt = false
+[mergetool "vimdiff"]
+  # roughly equivalent to vimdiff3
+  cmd = nvim -dc '$wincmd w | wincmd J' "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
 [pager]
   branch = false
 [submodule]

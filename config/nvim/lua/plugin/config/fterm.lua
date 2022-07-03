@@ -1,6 +1,5 @@
-local map = require("core.utils").map
+local map = vim.keymap.set
 
 
-local toggle_cmd = "<cmd>lua require('FTerm').toggle()<cr>"
-map("n", "cot", toggle_cmd)
-map("t", "<leader>cot", toggle_cmd)
+map("n", "cot", require("FTerm").toggle)
+map("t", "<leader>cot", require("FTerm").toggle)

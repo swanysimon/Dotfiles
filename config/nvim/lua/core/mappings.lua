@@ -1,4 +1,4 @@
-local map = require("core.utils").map
+local map = vim.keymap.set
 
 
 -- shortcuts for window navigation

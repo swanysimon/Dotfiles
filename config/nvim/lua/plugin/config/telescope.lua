@@ -1,6 +1,6 @@
 local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
-local map = require("core.utils").map
+local map = vim.keymap.set
 local trouble = require("trouble.providers.telescope")
 
 
@@ -16,16 +16,13 @@ require("telescope").setup {
       },
     },
   },
+  extensions = {
+  },
 }
 
 
-local function telescope_cmd(fn_str)
-  return "<cmd>lua require('telescope.builtin')." .. fn_str .. "<cr>"
-end
-
-
-map("n", "<leader>b", telescope_cmd("buffers()"))
-map("n", "<leader>f", telescope_cmd("find_files({hidden = true})"))
-map("n", "<leader>g", telescope_cmd("live_grep()"))
-map("n", "<leader>pl", telescope_cmd("git_commits()"))
-map("n", "<leader>ps", telescope_cmd("git_status()"))
+map("n", "<leader>b", builtin.buffers)
+map("n", "<leader>f", function() builtin.find_files({hidden = true}) end)
+map("n", "<leader>g", builtin.live_grep)
+map("n", "<leader>pl", builtin.git_commits)
+map("n", "<leader>ps", builtin.git_status)

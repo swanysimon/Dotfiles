@@ -19,6 +19,7 @@ return {
   -- session manager (and start page)
   {
     "mhinz/vim-startify",
+    after = "gruvbox.nvim",
     config = function()
       require("plugin.config.startify")
     end,
@@ -27,6 +28,7 @@ return {
   -- highlight color codes with their actual color
   {
     "norcalli/nvim-colorizer.lua",
+    after = "gruvbox.nvim",
     config = function()
       require("colorizer").setup()
     end,
@@ -55,8 +57,10 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     requires = {
-      "nvim-lua/plenary.nvim",
       "folke/trouble.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
     },
     config = function()
       require("plugin.config.telescope")

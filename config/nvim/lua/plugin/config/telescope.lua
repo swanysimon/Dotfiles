@@ -34,7 +34,7 @@ end
 
 map("n", "<leader>b", builtin.buffers)
 map("n", "<leader>f", function() builtin.find_files({hidden = true}) end)
-map("n", "<leader>fb", require("telescope").extensions.file_browser.file_browser)
+map("n", "<leader>pf", require("telescope").extensions.file_browser.file_browser)
 map("n", "<leader>g", builtin.live_grep)
 map("n", "<leader>pl", builtin.git_commits)
 map("n", "<leader>ps", builtin.git_status)

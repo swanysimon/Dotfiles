@@ -2,7 +2,9 @@ local cmp = require("cmp_nvim_lsp")
 local fn = vim.fn
 local lsp = vim.lsp
 local lspconfig = require("lspconfig")
+local map = vim.keymap.set
 local os = require("os")
+local setlocal = vim.api.nvim_buf_set_option
 local servers = require("plugin.langservers")
 local symbol_types = {"Error", "Hint", "Information", "Warning"}
 
@@ -23,34 +25,25 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
 
 local function on_attach(_, bufnr)
 
-  local function bufmap(...)
-    vim.keymap.set(..., {buffer = true})
-  end
+  setlocal(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  local function setlocal(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
-
-
-  setlocal("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  bufmap("n", "gD", vim.lsp.buf.declaration)
-  bufmap("n", "gd", vim.lsp.buf.definition)
-  bufmap("n", "K", vim.lsp.buf.hover)
-  bufmap("n", "gi", vim.lsp.buf.implementation)
-  bufmap("n", "<C-k>", vim.lsp.buf.signature_help)
-  bufmap("n", "<localleader>wa", vim.lsp.buf.add_workspace_folder)
-  bufmap("n", "<localleader>wr", vim.lsp.buf.remove_workspace_folder)
-  bufmap("n", "<localleader>wl", print)
-  bufmap("n", "<localleader>D", vim.lsp.buf.type_definition)
-  bufmap("n", "<localleader>rn", vim.lsp.buf.rename)
-  bufmap("n", "<localleader>ca", vim.lsp.buf.code_action)
-  bufmap("n", "gr", vim.lsp.buf.references)
-  bufmap("n", "<localleader>e", vim.lsp.diagnostic.show_line_diagnostics)
-  bufmap("n", "[d", vim.lsp.diagnostic.goto_prev)
-  bufmap("n", "]d", vim.lsp.diagnostic.goto_next)
-  bufmap("n", "<localleader>q", vim.lsp.diagnostic.set_loclist)
-  bufmap("n", "<localleader>f", vim.lsp.buf.formatting)
+  map("n", "gD", vim.lsp.buf.declaration, {buffer = true})
+  map("n", "gd", vim.lsp.buf.definition, {buffer = true})
+  map("n", "K", vim.lsp.buf.hover, {buffer = true})
+  map("n", "gi", vim.lsp.buf.implementation, {buffer = true})
+  map("n", "<C-k>", vim.lsp.buf.signature_help, {buffer = true})
+  map("n", "<localleader>wa", vim.lsp.buf.add_workspace_folder, {buffer = true})
+  map("n", "<localleader>wr", vim.lsp.buf.remove_workspace_folder, {buffer = true})
+  map("n", "<localleader>wl", print, {buffer = true})
+  map("n", "<localleader>D", vim.lsp.buf.type_definition, {buffer = true})
+  map("n", "<localleader>rn", vim.lsp.buf.rename, {buffer = true})
+  map("n", "<localleader>ca", vim.lsp.buf.code_action, {buffer = true})
+  map("n", "gr", vim.lsp.buf.references, {buffer = true})
+  map("n", "<localleader>e", vim.lsp.diagnostic.show_line_diagnostics, {buffer = true})
+  map("n", "[d", vim.lsp.diagnostic.goto_prev, {buffer = true})
+  map("n", "]d", vim.lsp.diagnostic.goto_next, {buffer = true})
+  map("n", "<localleader>q", vim.lsp.diagnostic.set_loclist, {buffer = true})
+  map("n", "<localleader>f", vim.lsp.buf.formatting, {buffer = true})
 end
 
 

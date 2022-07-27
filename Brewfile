@@ -24,6 +24,7 @@ brew "watch"
 brew "wget"
 cask "alacritty", args: {"no-quarantine": true}
 cask "chrysalis"
+cask "docker"
 cask "intellij-idea-ce"
 cask "protonvpn"
 cask "qmk-toolbox", args: {"no-quarantine": true}

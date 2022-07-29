@@ -39,14 +39,22 @@ function git_fish_prompt
     end
 
     set -l git_branch (
-        git rebase --show-current-patch >/dev/null 2>&1;
-            and echo "rebasing";
-            or git branch --show-current
+        if git rebase --show-current-patch >/dev/null 2>&1
+            echo "rebasing"
+        else if [ -z (git branch --show-current) ]
+            echo "detached"
+        else
+            git branch --show-current
+        end
     )
     set -l git_upstream_branch (
-        [ $git_branch = "rebasing" ];
-            and git branch --list | grep "^*" | sed -e 's/.*(no branch, rebasing \(.*\))/\1/';
-            or git rev-parse --abbrev-ref "@{upstream}" 2>/dev/null
+        if [ $git_branch = "rebasing" ]
+            git branch --list | grep "^*" | sed -e 's:.*(no branch, rebasing \(.*\)):\1:'
+        else if [ $git_branch = "detached" ]
+            git branch --list | grep "^*" | sed -e 's:.*(HEAD detached from refs/heads/\(.*\)):\1:'
+        else
+            git rev-parse --abbrev-ref "@{upstream}" 2>/dev/null
+        end
     )
 
     set -l git_commit_count (git rev-list --count --left-right "HEAD...$git_upstream_branch" 2>/dev/null)

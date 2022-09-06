@@ -1,7 +1,8 @@
 [alias]
   # general aliasing
-  recursive-update = submodule update --init --recursive --remote --merge
   gh-push = !git push origin "+$(git branch --show-current)"
+  recursive-update = submodule update --init --recursive --remote --merge
+  sw = switch
 
   # commit-level aliases
   co = commit --verbose

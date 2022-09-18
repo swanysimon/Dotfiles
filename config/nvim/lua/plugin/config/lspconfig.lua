@@ -43,7 +43,7 @@ local function on_attach(_, bufnr)
   map("n", "[d", vim.lsp.diagnostic.goto_prev, {buffer = true})
   map("n", "]d", vim.lsp.diagnostic.goto_next, {buffer = true})
   map("n", "<localleader>q", vim.lsp.diagnostic.set_loclist, {buffer = true})
-  map("n", "<localleader>f", vim.lsp.buf.formatting, {buffer = true})
+  map("n", "<localleader>f", vim.lsp.buf.formatting_sync, {buffer = true})
 end
 
 

@@ -36,6 +36,10 @@ if status is-interactive
     abbr g git
 
     abbr gw ./gradlew
+
+    if not command -v docker; and command -v podman
+        abbr docker podman
+    end
 end
 
 

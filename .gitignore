@@ -1,6 +1,7 @@
-Brewfile.lock.json
-/config/nvim/plugin/packer_compiled.lua
+/config/AWSVPNClient
+/config/containers
 /config/gh
 /config/jgit
+/config/nvim/plugin/packer_compiled.lua
 /config/pgcli
-/config/AWSVPNClient
+Brewfile.lock.json

@@ -2,7 +2,6 @@
 # VERSION: 3.0
 SETUVAR __fish_initialized:3400
 SETUVAR _fish_abbr_cp:cp\x20\x2dvi
-SETUVAR _fish_abbr_docker:podman
 SETUVAR _fish_abbr_edit:nvim
 SETUVAR _fish_abbr_finagle:nvim\x20/Users/simon/\x2efinagle
 SETUVAR _fish_abbr_g:git

@@ -1,4 +1,4 @@
-fish_add_path ~/.local/bin /opt/homebrew/bin
+fish_add_path ~/.local/bin /opt/homebrew/bin /usr/local/sbin
 
 
 set_if_absent XDG_CACHE_HOME ~/.cache

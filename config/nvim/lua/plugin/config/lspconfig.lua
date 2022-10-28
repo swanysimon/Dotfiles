@@ -48,7 +48,7 @@ end
 
 
 -- load servers from the list of known servers if they are currently installed
-local capabilities = cmp.update_capabilities(lsp.protocol.make_client_capabilities())
+local capabilities = cmp.default_capabilities()
 for server, executable in pairs(servers) do
   local exit_code = os.execute("command -v " .. executable .. " >/dev/null 2>/dev/null")
   if exit_code == 0 then

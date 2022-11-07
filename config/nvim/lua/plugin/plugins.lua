@@ -25,6 +25,14 @@ return {
     end,
   },
 
+  -- statusline
+  {
+    "b0o/incline.nvim",
+    config = function()
+      require("incline").setup()
+    end,
+  },
+
   -- highlight color codes with their actual color
   {
     "norcalli/nvim-colorizer.lua",

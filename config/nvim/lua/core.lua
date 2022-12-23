@@ -1,5 +1,8 @@
-local opt = vim.opt
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
 local g = vim.g
+local map = vim.keymap.set
+local opt = vim.opt
 
 -- leader
 g.mapleader = ","
@@ -23,6 +26,7 @@ opt.cmdheight = 1
 opt.colorcolumn = "+1"
 opt.cursorline = true
 opt.fillchars = {eob = " "}  -- disable tildes below last line in buffer
+opt.laststatus = 3
 opt.list = true
 opt.number = true
 opt.ruler = false
@@ -39,3 +43,26 @@ opt.smartindent = true
 opt.splitbelow = true
 opt.splitright = true
 opt.whichwrap:append "<>[]hl"  -- navigate lines with left/right arrows or h/l
+
+-- shortcuts for window navigation
+map("n", "<C-h>", "<C-w>h")
+map("n", "<C-j>", "<C-w>j")
+map("n", "<C-k>", "<C-w>k")
+map("n", "<C-l>", "<C-w>l")
+
+-- don't copy when pasting over visual selection
+map("v", "p", '"_dP')
+
+-- toggle highlighting
+map("n", "coh", ":set hlsearch! hlsearch?<cr>")
+
+-- disable line numbers in terminal and set floating terminal to correct filetype
+autocmd("TermOpen", {
+  group = augroup("Terminal", {clear = true}),
+  pattern = "term://*",
+  callback = function()
+    setfiletype = "terminal"
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+  end,
+})

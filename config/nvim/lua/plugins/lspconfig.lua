@@ -5,8 +5,15 @@ local lspconfig = require("lspconfig")
 local map = vim.keymap.set
 local os = require("os")
 local setlocal = vim.api.nvim_buf_set_option
-local servers = require("plugin.langservers")
 local symbol_types = {"Error", "Hint", "Information", "Warning"}
+
+
+local servers = {
+  clojure_lsp = "clojure-lsp",
+  pyright = "pyright",
+  rust_analyzer = "rust-analyzer",
+  tsserver = "typescript-language-server",
+}
 
 
 -- enable diagnostics

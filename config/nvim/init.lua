@@ -1,10 +1,5 @@
--- module loading order matters; these are put in a specific order
-modules = {
-  "core",
-  "plugin",
-}
-
-for _, module in ipairs(modules) do
+-- core options must be loaded before any plugins
+for _, module in ipairs({"core", "plugins"}) do
   local ok, err = pcall(require, module)
 
   if not ok then

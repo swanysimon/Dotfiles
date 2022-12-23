@@ -1,4 +1,4 @@
-return {
+local plugins = {
   -- packer managing packer
   "wbthomason/packer.nvim",
 
@@ -21,7 +21,7 @@ return {
     "mhinz/vim-startify",
     after = "gruvbox.nvim",
     config = function()
-      require("plugin.config.startify")
+      require("plugins.startify")
     end,
   },
 
@@ -49,7 +49,7 @@ return {
   {
     "numtostr/FTerm.nvim",
     config = function()
-      require("plugin.config.fterm")
+      require("plugins.fterm")
     end,
   },
 
@@ -71,7 +71,7 @@ return {
       "nvim-telescope/telescope-ui-select.nvim",
     },
     config = function()
-      require("plugin.config.telescope")
+      require("plugins.telescope")
     end,
   },
 
@@ -83,7 +83,7 @@ return {
       "lewis6991/spellsitter.nvim",
     },
     config = function()
-      require("plugin.config.treesitter")
+      require("plugins.treesitter")
     end,
     run = ":TSUpdate",
   },
@@ -92,7 +92,7 @@ return {
   {
     "hrsh7th/nvim-cmp",
     config = function()
-      require("plugin.config.cmp")
+      require("plugins.cmp")
     end,
   },
   "hrsh7th/cmp-buffer",
@@ -110,7 +110,7 @@ return {
     "neovim/nvim-lspconfig",
     requires = "nvim-cmp",
     config = function()
-      require("plugin.config.lspconfig")
+      require("plugins.lspconfig")
     end,
   },
   {
@@ -118,3 +118,16 @@ return {
     after = "nvim-lspconfig",
   },
 }
+
+require("plugins.bootstrap_packer")
+
+local packer = require("packer")
+packer.startup({
+  plugins,
+  config = {
+    display = {
+      open_fn = require("packer.util").float
+    }
+  }
+})
+packer.install()

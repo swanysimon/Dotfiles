@@ -1,8 +1,7 @@
 local cmd = vim.cmd
 local fn = vim.fn
 
-
-local exists, packer = pcall(require, "packer")
+local exists, _ = pcall(require, "packer")
 
 if not exists then
   local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"

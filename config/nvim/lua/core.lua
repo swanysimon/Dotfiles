@@ -54,7 +54,15 @@ map("n", "<C-l>", "<C-w>l")
 map("v", "p", '"_dP')
 
 -- toggle highlighting
-map("n", "coh", ":set hlsearch! hlsearch?<cr>")
+map("n", "coh", ":set hlsearch! hlsearch?<CR>")
+
+-- move visual blocks around with J and K
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '>-2<CR>gv=gv")
+
+-- keep search terms centered
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
 
 -- disable line numbers in terminal and set floating terminal to correct filetype
 autocmd("TermOpen", {

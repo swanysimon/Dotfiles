@@ -4,6 +4,10 @@ require("nvim-treesitter.configs").setup {
     "comment",
     "dockerfile",
     "fish",
+    "git_rebase",
+    "gitattributes",
+    "gitcommit",
+    "gitignore",
     "help",
     "java",
     "json",
@@ -16,13 +20,9 @@ require("nvim-treesitter.configs").setup {
     "vim",
     "yaml",
   },
-  highlight = {
-    enable = true,
-    use_languagetree = true,
-  },
-  matchup = {
-    enable = true,
-  },
+  highlight = {enable = true},
+  indent = {enable = true},
+  matchup = {enable = true},
 }
 
 require("spellsitter").setup()

@@ -19,7 +19,6 @@ local plugins = {
   -- session manager (and start page)
   {
     "mhinz/vim-startify",
-    after = "gruvbox.nvim",
     config = function()
       require("plugins.startify")
     end,
@@ -36,28 +35,17 @@ local plugins = {
   -- highlight color codes with their actual color
   {
     "norcalli/nvim-colorizer.lua",
-    after = "gruvbox.nvim",
     config = function()
       require("colorizer").setup()
     end,
   },
 
-  -- better buffer deletion
-  "ojroques/nvim-bufdel",
-
   -- quick terminal access
   {
     "numtostr/FTerm.nvim",
     config = function()
-      require("plugins.fterm")
-    end,
-  },
-
-  -- language diagnostics
-  {
-    "folke/trouble.nvim",
-    config = function()
-      require("trouble").setup()
+      vim.keymap.set("n", "cot", require("FTerm").toggle)
+      vim.keymap.set("t", "<leader>cot", require("FTerm").toggle)
     end,
   },
 
@@ -65,13 +53,25 @@ local plugins = {
   {
     "nvim-telescope/telescope.nvim",
     requires = {
-      "folke/trouble.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
     },
     config = function()
       require("plugins.telescope")
+    end,
+  },
+
+  -- better completion engine
+  {
+    "hrsh7th/nvim-cmp",
+    requires = {
+      "L3MON4D3/LuaSnip",
+      "hrsh7th/cmp-nvim-lsp",
+      "saadparwaiz1/cmp_luasnip",
+    },
+    config = function()
+      require("plugins.cmp")
     end,
   },
 
@@ -88,39 +88,41 @@ local plugins = {
     run = ":TSUpdate",
   },
 
-  -- better completion engine
-  {
-    "hrsh7th/nvim-cmp",
-    config = function()
-      require("plugins.cmp")
-    end,
-  },
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/cmp-cmdline",
-  "hrsh7th/cmp-nvim-lsp",
-  "hrsh7th/cmp-nvim-lua",
-  "hrsh7th/cmp-path",
-  {
-    "saadparwaiz1/cmp_luasnip",
-    requires = "L3MON4D3/LuaSnip",
-  },
-
   -- language server configurations
   {
     "neovim/nvim-lspconfig",
-    requires = "nvim-cmp",
+    requires = {
+      "folke/neodev.nvim",
+      "j-hui/fidget.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "williamboman/mason.nvim",
+    },
+    after = {
+      "nvim-cmp",
+      "telescope.nvim"
+    },
     config = function()
       require("plugins.lspconfig")
     end,
   },
-  {
-    "ray-x/lsp_signature.nvim",
-    after = "nvim-lspconfig",
-  },
 }
 
-require("plugins.bootstrap_packer")
+-- install packer if it doesn't exist
+local exists, _ = pcall(require, "packer")
+if not exists then
+  local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+  vim.fn.delete(install_path, "rf")
+  vim.fn.system({"git", "clone", "--depth=1", "https://github.com/wbthomason/packer.nvim", install_path})
 
+  vim.cmd("packadd packer.nvim")
+  local exists, packer = pcall(require, "packer")
+
+  if not exists then
+    error("Failed to clone packer to " .. install_path .. ":\n\n" .. packer)
+  end
+end
+
+-- install plugins
 local packer = require("packer")
 packer.startup({
   plugins,

@@ -1,79 +1,52 @@
-local cmp = require("cmp_nvim_lsp")
-local fn = vim.fn
-local lsp = vim.lsp
-local lspconfig = require("lspconfig")
-local map = vim.keymap.set
-local os = require("os")
-local setlocal = vim.api.nvim_buf_set_option
-local symbol_types = {"Error", "Hint", "Information", "Warning"}
-
-
-local servers = {
-  clojure_lsp = "clojure-lsp",
-  pyright = "pyright",
-  rust_analyzer = "rust-analyzer",
-  tsserver = "typescript-language-server",
+local server_settings = {
+  sumneko_lua = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
 }
-
-
--- enable diagnostics
-lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, {border = "single"})
-lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {border = "single"})
-lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
-  lsp.diagnostic.on_publish_diagnostics,
-  {
-    signs = true,
-    underline = true,
-    update_in_insert = true,
-    virtual_text = true,
-  }
-)
-
 
 local function on_attach(_, bufnr)
 
-  setlocal(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  local function map(keys, func)
+    vim.keymap.set("n", keys, func, { buffer = bufnr })
+  end
 
-  map("n", "gD", vim.lsp.buf.declaration, {buffer = true})
-  map("n", "gd", vim.lsp.buf.definition, {buffer = true})
-  map("n", "K", vim.lsp.buf.hover, {buffer = true})
-  map("n", "gi", vim.lsp.buf.implementation, {buffer = true})
-  map("n", "<C-k>", vim.lsp.buf.signature_help, {buffer = true})
-  map("n", "<localleader>wa", vim.lsp.buf.add_workspace_folder, {buffer = true})
-  map("n", "<localleader>wr", vim.lsp.buf.remove_workspace_folder, {buffer = true})
-  map("n", "<localleader>wl", print, {buffer = true})
-  map("n", "<localleader>D", vim.lsp.buf.type_definition, {buffer = true})
-  map("n", "<localleader>rn", vim.lsp.buf.rename, {buffer = true})
-  map("n", "<localleader>ca", vim.lsp.buf.code_action, {buffer = true})
-  map("n", "gr", vim.lsp.buf.references, {buffer = true})
-  map("n", "<localleader>e", vim.lsp.diagnostic.show_line_diagnostics, {buffer = true})
-  map("n", "[d", vim.lsp.diagnostic.goto_prev, {buffer = true})
-  map("n", "]d", vim.lsp.diagnostic.goto_next, {buffer = true})
-  map("n", "<localleader>q", vim.lsp.diagnostic.set_loclist, {buffer = true})
-  map("n", "<localleader>f", vim.lsp.buf.formatting_sync, {buffer = true})
+  -- navigation
+  map("gD", vim.lsp.buf.declaration)
+  map("gI", vim.lsp.buf.implementation)
+  map("gT", vim.lsp.buf.type_definition)
+  map("gd", vim.lsp.buf.definition)
+  map("gr", vim.lsp.buf.references)
+
+  -- documentation
+  map("<leader>K", vim.lsp.buf.signature_help)
+  map("K", vim.lsp.buf.hover)
+
+  -- actions
+  map("<leader><cr>", vim.lsp.buf.code_action)
+  map("<leader>rn", vim.lsp.buf.rename)
 end
 
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- load servers from the list of known servers if they are currently installed
-local capabilities = cmp.default_capabilities()
-for server, executable in pairs(servers) do
-  local exit_code = os.execute("command -v " .. executable .. " >/dev/null 2>/dev/null")
-  if exit_code == 0 then
-    lspconfig[server].setup {
+-- setup neodev for dotfile work
+require("neodev").setup()
+
+-- use mason to manage language servers
+require("mason").setup()
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup()
+mason_lspconfig.setup_handlers({
+  function(server_name)
+    require("lspconfig")[server_name].setup {
       capabilities = capabilities,
       on_attach = on_attach,
+      settings = server_settings[server_name],
     }
-  end
-end
+  end,
+})
 
-
--- override default symbols in signcolumn
-for _, symbol_type in ipairs(symbol_types) do
-  fn.sign_define(
-    "LspDiagnosticsSign" .. symbol_type,
-    {
-      numhl = "LspDiagnosticsDefault" .. symbol_type,
-      text = " ",
-    }
-  )
-end
+-- enable LSP status information
+require("fidget").setup()

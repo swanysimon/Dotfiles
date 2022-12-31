@@ -1,33 +1,56 @@
-local api = vim.api
-local cmp_core = require("cmp")
-local cmp = require("cmp").mapping
+local cmp = require("cmp")
+local luasnip = require("luasnip")
 
+local function tabSelect(should_select_next, fallback)
+  if should_select_next then
+    if cmp.visible() then
+      cmp.select_next_item()
+    elseif luasnip.expand_or_jumpable() then
+      luasnip.expand_or_jump()
+    else
+      fallback()
+    end
 
-cmp_core.setup {
-  mapping = {
-    ["<c-n>"] = cmp.select_next_item(),
-    ["<c-p>"] = cmp.select_prev_item(),
-    ["<tab>"] = cmp.select_next_item(),
-    ["<s-tab>"] = cmp.select_prev_item(),
-    ["<c-space>"] = cmp.complete(),
-    ["<cr>"] = cmp.confirm {
-      behavior = cmp_core.ConfirmBehavior.Replace,
+  else
+    if cmp.visible() then
+      cmp.select_prev_item()
+    elseif luasnip.jumpable(-1) then
+      luasnip.jump(-1)
+    else
+      fallback()
+    end
+  end
+end
+
+cmp.setup {
+  mapping = cmp.mapping.preset.insert({
+    ["<Tab>"] = cmp.mapping(
+      function(fallback)
+        tabSelect(true, fallback)
+      end,
+      {"i", "s"}),
+    ["<S-Tab>"] = cmp.mapping(
+      function(fallback)
+        tabSelect(false, fallback)
+      end,
+      {"i", "s"}),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<CR>"] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ["<c-d>"] = cmp.scroll_docs(-4),
-    ["<c-f>"] = cmp.scroll_docs(4),
-  },
+
+    -- move through documentation
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+  }),
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
   sources = {
-    {name = "luasnip"},
     {name = "nvim_lsp"},
-    {name = "nvim_lua"},
-    {name = "cmdline"},
-    {name = "buffer"},
-    {name = "path"},
+    {name = "luasnip"},
   },
 }

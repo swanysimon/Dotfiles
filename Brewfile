@@ -32,6 +32,7 @@ brew "rustup-init"
 brew "tree"
 brew "watch"
 brew "wget"
+brew "zellij"
 cask "alacritty", args: {"no-quarantine": true}
 cask "chrysalis"
 cask "intellij-idea-ce"

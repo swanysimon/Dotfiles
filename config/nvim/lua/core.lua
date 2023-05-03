@@ -29,6 +29,7 @@ opt.fillchars = {eob = " "}  -- disable tildes below last line in buffer
 opt.laststatus = 3
 opt.list = true
 opt.number = true
+opt.pumheight = 10
 opt.ruler = false
 opt.signcolumn = "yes"
 opt.termguicolors = true

@@ -25,6 +25,7 @@ brew "wget"
 brew "zellij"
 cask "alacritty", args: {"no-quarantine": true}
 cask "chrysalis"
+cask "docker"
 cask "protonvpn"
 cask "qmk-toolbox", args: {"no-quarantine": true}
 cask "rectangle"

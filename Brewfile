@@ -1,37 +1,53 @@
+# Taps
 tap "homebrew/bundle"
 tap "homebrew/cask"
-tap "homebrew/cask-drivers"
 tap "homebrew/core"
+
+# Special taps
+tap "homebrew/cask-drivers"
+
+# Common tools better managed by Homebrew
 brew "bash"
-brew "bat"
 brew "coreutils"
 brew "fish"
-brew "ffmpeg"
-brew "fontconfig"
 brew "git"
-brew "git-delta"
-brew "gpg"
-brew "jq"
 brew "less"
 brew "neovim"
-brew "pyright"
-brew "python"
-brew "ripgrep"
-brew "rust-analyzer"
-brew "rustup-init"
 brew "tree"
 brew "watch"
 brew "wget"
-brew "zellij"
-cask "alacritty", args: {"no-quarantine": true}
-cask "chrysalis"
+cask "bitwarden"
 cask "docker"
 cask "protonvpn"
-cask "qmk-toolbox", args: {"no-quarantine": true}
 cask "rectangle"
 cask "skype"
 cask "slack"
-cask "transmission"
 cask "vlc"
-cask "xld"
 cask "zoom"
+
+# Shell utilities to make life easier
+brew "bat"
+brew "fontconfig"
+brew "git-delta"
+brew "gpg"
+brew "jq"
+brew "ripgrep"
+brew "zellij"
+cask "alacritty", args: {"no-quarantine": true}
+
+# Programming-specific installs
+brew "pyright"
+brew "python"
+brew "rust-analyzer"
+brew "rustup-init"
+
+# Keyboard configuration
+cask "chrysalis"
+cask "qmk-toolbox", args: {"no-quarantine": true}
+
+# Other
+cask "transmission"
+cask "xld"
+
+# Needed for other accounts on personal machine
+brew "ffmpeg"

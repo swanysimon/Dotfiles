@@ -12,7 +12,10 @@ require("telescope").setup {
     },
   },
   extensions = {
-    file_browser = { hijack_netrw = true },
+    file_browser = {
+      hidden = true,
+      hijack_netrw = true,
+    },
   },
 }
 

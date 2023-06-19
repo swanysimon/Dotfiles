@@ -46,6 +46,7 @@ cask "chrysalis"
 cask "qmk-toolbox", args: {"no-quarantine": true}
 
 # Other
+cask "discord"
 cask "transmission"
 cask "xld"
 

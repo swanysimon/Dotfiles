@@ -80,32 +80,7 @@ local plugins = {
     "nvim-treesitter/nvim-treesitter",
     requires = "andymass/vim-matchup",
     config = function()
-      require("nvim-treesitter.configs").setup {
-        ensure_installed = {
-          "bash",
-          "comment",
-          "dockerfile",
-          "fish",
-          "git_rebase",
-          "gitattributes",
-          "gitcommit",
-          "gitignore",
-          "help",
-          "java",
-          "json",
-          "lua",
-          "make",
-          "python",
-          "rst",
-          "rust",
-          "toml",
-          "vim",
-          "yaml",
-        },
-        highlight = {enable = true},
-        indent = {enable = true},
-        matchup = {enable = true},
-      }
+      require("plugins.treesitter")
     end,
     run = ":TSUpdate",
   },

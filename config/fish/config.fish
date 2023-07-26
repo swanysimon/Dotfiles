@@ -36,6 +36,8 @@ if status is-interactive
     abbr g git
 
     abbr gw ./gradlew
+
+    abbr code cd ~/code
 end
 
 

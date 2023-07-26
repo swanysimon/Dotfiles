@@ -4,13 +4,6 @@ local map = vim.keymap.set
 
 
 require("telescope").setup {
-  defaults = {
-    mappings = {
-      i = {
-        ["<esc>"] = actions.close,
-      },
-    },
-  },
   extensions = {
     file_browser = {
       hidden = true,

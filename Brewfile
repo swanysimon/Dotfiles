@@ -35,9 +35,7 @@ brew "zellij"
 cask "alacritty", args: {"no-quarantine": true}
 
 # Programming-specific installs
-brew "pyright"
 brew "python"
-brew "rust-analyzer"
 brew "rustup-init"
 
 # Keyboard configuration

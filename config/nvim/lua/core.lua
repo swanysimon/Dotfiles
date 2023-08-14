@@ -10,7 +10,6 @@ g.mapleaderlocal = "'"
 
 -- general editing behavior
 opt.hidden = true
-opt.lazyredraw = true
 opt.timeoutlen = 400
 opt.updatetime = 250  -- time to write to swap file
 

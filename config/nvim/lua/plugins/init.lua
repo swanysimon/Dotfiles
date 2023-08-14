@@ -85,6 +85,19 @@ local plugins = {
     run = ":TSUpdate",
   },
 
+  -- noice
+  {
+    "folke/noice.nvim",
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "rcarriga/nvim-notify",
+    },
+    config = function()
+      require("plugins.noice")
+    end,
+  },
+
   -- language server configurations
   {
     "neovim/nvim-lspconfig",

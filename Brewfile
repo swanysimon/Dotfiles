@@ -27,10 +27,11 @@ cask "zoom"
 # Shell utilities to make life easier
 brew "bat"
 brew "fontconfig"
+brew "gh"
 brew "git-delta"
 brew "gpg"
-brew "jq"
 brew "ripgrep"
+brew "yq"
 brew "zellij"
 cask "alacritty", args: {"no-quarantine": true}
 

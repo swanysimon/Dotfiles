@@ -22,7 +22,7 @@ vim.opt.rtp:prepend(lazypath)
 ----
 
 local lazyopts = {
-  install = { colorscheme = { "gruvbox", }, },
+  install = { colorscheme = { "tokyonight-storm", "gruvbox", }, },
   lockfile = lazyroot .. "/lazy-lock.json",
   -- don't rely on nerd fonts
   ui = {

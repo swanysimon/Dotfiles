@@ -49,15 +49,6 @@ return {
   },
 
   {
-    "ellisonleao/gruvbox.nvim",
-    priority = 1000,
-    config = function(_, _)
-      vim.o.background = "dark"
-      vim.cmd([[colorscheme gruvbox]])
-    end,
-  },
-
-  {
     "folke/noice.nvim",
     dependencies = {
       "MunifTanjim/nui.nvim",

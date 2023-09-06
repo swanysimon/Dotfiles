@@ -1,3 +1,11 @@
+local g = vim.g
+
+if g.simonsays_lazy_loaded then
+  return {}
+end
+
+g.simonsays_lazy_loaded = true
+
 ----
 -- Install and activate package manager
 -- (Almost) copy-pasted from https://github.com/folke/lazy.nvim
@@ -44,3 +52,5 @@ local lazyopts = {
 }
 
 require("lazy").setup("plugins", lazyopts)
+
+return {}

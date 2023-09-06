@@ -51,4 +51,4 @@ map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
 -- configure plugins
-require("plugin_config")
+require("plugins.lazy")

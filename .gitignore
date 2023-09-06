@@ -1,8 +1,5 @@
 /config/AWSVPNClient
-/config/AWS VPN Client
-/config/containers
 /config/gh
 /config/jgit
-/config/nvim/plugin/packer_compiled.lua
 /config/pgcli
 Brewfile.lock.json

@@ -41,6 +41,17 @@ if status is-interactive
 end
 
 
+set -Ux fisher_path $XDG_DATA_HOME/fisher
+if command -v fisher
+    set fish_complete_path $fish_complete_path[1] $fisher_path/completions $fish_complete_path[2..]
+    set fish_function_path $fish_function_path[1] $fisher_path/functions $fish_function_path[2..]
+
+    for file in $fisher_path/conf.d/*.fish
+        source $file
+    end
+end
+
+
 if not set -q JAVA_HOME; and /usr/libexec/java_home >/dev/null 2>/dev/null
     set -gx JAVA_HOME (/usr/libexec/java_home)
 end

@@ -2,12 +2,13 @@ import:
   - ~/.config/alacritty/tokyonight_storm.yml
 
 window:
-  dimensions:
-    columns: 200
-    lines: 50
-  padding:
-    x: 3
-    y: 5
+  # let the window manager recommend window sive and positioning
+  # dimensions:
+  #   columns: 200
+  #   lines: 50
+  # padding:
+  #   x: 3
+  #   y: 5
   dynamic_padding: true
   decorations: full
   startup_mode: Windowed

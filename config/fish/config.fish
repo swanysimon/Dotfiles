@@ -42,7 +42,7 @@ end
 
 
 set -Ux fisher_path $XDG_DATA_HOME/fisher
-if command -v fisher
+if type -p fisher
     set fish_complete_path $fish_complete_path[1] $fisher_path/completions $fish_complete_path[2..]
     set fish_function_path $fish_function_path[1] $fisher_path/functions $fish_function_path[2..]
 
@@ -71,7 +71,7 @@ if not set -q RIPGREP_CONFIG_PATH; and test -r $XDG_CONFIG_HOME/ripgrep/ripgrepr
 end
 
 
-if command -v pyenv >/dev/null
+if type -p pyenv >/dev/null
     set -gx PYENV_ROOT $XDG_DATA_HOME/pyenv
     fish_add_path $PYENV_ROOT/bin
 

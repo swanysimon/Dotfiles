@@ -5,6 +5,7 @@ tap "homebrew/core"
 
 # Special taps
 tap "homebrew/cask-drivers"
+tap "sdkman/tap"
 
 # Common tools better managed by Homebrew
 brew "bash"
@@ -39,6 +40,7 @@ cask "alacritty", args: {"no-quarantine": true}
 # Programming-specific installs
 brew "python"
 brew "rustup-init"
+brew "sdkman-cli"
 
 # Keyboard configuration
 cask "chrysalis"

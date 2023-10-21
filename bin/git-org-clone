@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd ~/code
+while read REPO; do
+  [[ -d "$REPO" ]] && (cd "$REPO"; gh repo sync --force) || gh repo clone "$REPO" "$REPO"
+done < <(gh repo list "$1" --limit 10000 --source --json nameWithOwner --jq '.[] | .nameWithOwner')
+

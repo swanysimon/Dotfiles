@@ -22,6 +22,8 @@
   lg = log --color --pretty=format:'%C(red)%h%Creset - %C(cyan)%d%Creset %s %C(green)(%cr)%Creset <%an>'
   verboselog = log --color --stat --pretty=fuller
 
+[advice]
+  skippedCherryPicks = false
 [branch]
   autosetupmerge = always
   autosetuprebase = always

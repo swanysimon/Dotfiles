@@ -1,0 +1,38 @@
+import = [
+    "~/.config/alacritty/tokyonight_storm.yaml",
+]
+
+draw_bold_text_with_bright_colors = true
+live_config_reload = true
+working_directory: "~"
+
+[cursor]
+style = "Beam"
+vi_mode_style = "Block"
+thickness = 0.15
+
+[font]
+bold = { family = "SF Mono" }
+bold_italic = { family = "SF Mono" }
+italic = { family = "SF Mono" }
+normal = { family = "SF Mono" }
+offset = { x = 1, y = 1, }
+size = 13.0
+
+[mouse]
+hide_when_typing = true
+double_click = { threshold = 300 }
+
+[scrolling]
+history = 100000
+multiplier = 1
+
+[selection]
+save_to_clipboard = true
+
+[window]
+decorations = "full"
+dynamic_padding = true
+dynamic_title = true
+startup_mode = "Windowed"
+title = "Alacritty"

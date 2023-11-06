@@ -45,7 +45,6 @@ cursor:
   thickness: 0.15
 
 live_config_reload: true
-working_directory: None
 
 mouse:
   hide_when_typing: false

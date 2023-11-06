@@ -1,3 +1,6 @@
+set -U fish_greeting ""
+
+
 fish_add_path ~/.local/bin /opt/homebrew/bin /usr/local/sbin
 
 
@@ -42,7 +45,7 @@ end
 
 
 set -Ux fisher_path $XDG_DATA_HOME/fisher
-if type -p fisher
+if type -p fisher &>/dev/null
     set fish_complete_path $fish_complete_path[1] $fisher_path/completions $fish_complete_path[2..]
     set fish_function_path $fish_function_path[1] $fisher_path/functions $fish_function_path[2..]
 

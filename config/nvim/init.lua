@@ -52,3 +52,6 @@ map("n", "N", "Nzzzv")
 
 -- configure plugins
 require("plugins.lazy")
+
+-- enable floating terminal
+require("terminal")

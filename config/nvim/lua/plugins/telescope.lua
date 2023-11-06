@@ -24,6 +24,9 @@ return {
     event = "VeryLazy",
     config = function(_, opts) setup(opts) end,
     opts = {
+      defaults = {
+        layout_strategy = "vertical",
+      },
       extensions = {
         file_browser = {
           hidden = true,

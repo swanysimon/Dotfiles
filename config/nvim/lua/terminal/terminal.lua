@@ -59,7 +59,7 @@ function M:open()
     self.terminal = vim.fn.termopen(
       shell,
       {
-        clear_env = true,
+        clear_env = false,
         on_exit = function(_, code, ...)
           if code == 0 then
             self:close(true)

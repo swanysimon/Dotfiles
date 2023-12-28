@@ -19,13 +19,6 @@ brew "neovim"
 brew "tree"
 brew "watch"
 brew "wget"
-cask "docker"
-cask "protonvpn"
-cask "rectangle"
-cask "skype"
-cask "slack"
-cask "vlc"
-cask "zoom"
 
 # Shell utilities to make life easier
 brew "bat"
@@ -42,6 +35,7 @@ cask "alacritty", args: {"no-quarantine": true}
 brew "python"
 brew "rustup-init"
 brew "sdkman-cli"
+cask "docker"
 
 # Keyboard configuration
 cask "chrysalis"
@@ -49,8 +43,15 @@ cask "qmk-toolbox", args: {"no-quarantine": true}
 
 # Other
 cask "discord"
+cask "logseq"
+cask "protonvpn"
+cask "rectangle"
+cask "skype"
+cask "slack"
 cask "transmission"
+cask "vlc"
 cask "xld"
+cask "zoom"
 
 # Needed for other accounts on personal machine
 brew "ffmpeg"

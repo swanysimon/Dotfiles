@@ -4,6 +4,10 @@ set -euo pipefail
 
 cd "$CODEDIR"
 while read REPO; do
-  [[ -d "$REPO" ]] && (cd "$REPO"; gh repo sync --force &) || gh repo clone "$REPO" "$REPO" &
+    echo "Working on $REPO"
+    if [[ -d "$REPO" ]]; then
+        (cd "$REPO" && gh repo sync --force)
+    else
+        gh repo clone "$REPO" "$REPO"
+    fi
 done < <(gh repo list "$1" --limit 10000 --source --json nameWithOwner --jq '.[] | .nameWithOwner')
-

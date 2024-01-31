@@ -1,65 +1,42 @@
-local function setup(options)
-  require("noice").setup({
-    lsp = {
-      override = {
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-        ["vim.lsp.util.stylize_markdown"] = true,
-        ["cmp.entry.get_documentation"] = true,
-      },
-    },
-    presets = {
-      command_palette = true,
-      long_message_to_split = true,
-      inc_rename = false,
-      lsp_doc_border = false,
-    },
-    views = {
-      cmdline_popup = { position = { row = "40%", }, },
-    },
-    -- don't require nerd fonts
-    cmdline = {
-      format = {
-        cmdline = { icon = ">" },
-        search_down = { icon = "🔍⌄" },
-        search_up = { icon = "🔍⌃" },
-        filter = { icon = "$" },
-        lua = { icon = "☾" },
-        help = { icon = "?" },
-      },
-    },
-    format = {
-      level = {
-        icons = {
-          error = "✖",
-          warn = "▼",
-          info = "●",
-        },
-      },
-    },
-    popupmenu = { kind_icons = false, },
-    inc_rename = { cmdline = { format = { IncRename = { icon = "⟳" } }, }, },
-  })
+local function colorscheme(plugin)
+  return {
+    plugin.location,
+    priority = 1000,
+    lazy = not plugin.enabled,
+    config = function()
+      vim.o.background = "dark"
+      vim.cmd("colorscheme " .. plugin.name)
+    end,
+  }
 end
 
+
 return {
+  colorscheme({
+    enabled = false,
+    location = "ellisonleao/gruvbox.nvim",
+    name = "gruvbox",
+  }),
+
+  colorscheme({
+    enabled = true,
+    location = "folke/tokyonight.nvim",
+    name = "tokyonight",
+  }),
+
   {
     "b0o/incline.nvim",
     event = "VeryLazy",
   },
 
   {
-    "folke/noice.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
+    "norcalli/nvim-colorizer.lua",
     event = "VeryLazy",
-    config = function(_, opts) setup(opts) end,
   },
 
   {
-    "norcalli/nvim-colorizer.lua",
-    event = "VeryLazy",
+    "nvim-tree/nvim-web-devicons",
+    build = function() require("nvim-web-devicons").get_icons() end,
   },
 
   {

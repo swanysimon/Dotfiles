@@ -24,6 +24,7 @@ opt.fillchars = { eob = " ", }  -- disable tildes below last line in buffer
 opt.laststatus = 3
 opt.list = true
 opt.number = true
+opt.ruler = true
 opt.termguicolors = true
 
 -- editing
@@ -51,7 +52,7 @@ map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
 -- configure plugins
-require("plugins.lazy")
+require("plugins")
 
 -- enable floating terminal
 require("terminal")

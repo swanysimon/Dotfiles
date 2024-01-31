@@ -10,10 +10,10 @@ vi_mode_style = "Block"
 thickness = 0.15
 
 [font]
-bold = { family = "SF Mono" }
-bold_italic = { family = "SF Mono" }
-italic = { family = "SF Mono" }
-normal = { family = "SF Mono" }
+bold = { family = "SFMono Nerd Font" }
+bold_italic = { family = "SFMono Nerd Font" }
+italic = { family = "SFMono Nerd Font" }
+normal = { family = "SFMono Nerd Font" }
 offset = { x = 1, y = 1 }
 size = 13.0
 

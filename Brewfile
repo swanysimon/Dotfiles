@@ -1,4 +1,5 @@
 # Taps
+tap "epk/epk"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
@@ -19,6 +20,7 @@ brew "neovim"
 brew "tree"
 brew "watch"
 brew "wget"
+cask "font-sf-mono-nerd-font"
 
 # Shell utilities to make life easier
 brew "bat"

@@ -49,7 +49,7 @@ local function confirm()
   return cmp.mapping({
     c = cmp.mapping.confirm({behavior = replace}),
     i = function(fallback)
-      if cmp.visible() and cmp.get_active_entry() then
+      if cmp.visible() then
         cmp.confirm({behavior = replace})
       else
         fallback()

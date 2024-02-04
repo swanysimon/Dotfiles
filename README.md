@@ -1,30 +1,22 @@
 # Simon's Dotfiles
 
-This repository is currently under construction. More documentation is coming.
-Maybe.
+This repository is in constant flux. As I discover new tools and workflows,
+expect entire sections of my configuration to change. Documentation might come,
+or it might stay just like this.
 
-> Do not copy-paste blindly from this codebase! It is not designed for others to
-use, but may be useful to you setting up your system.
+> Do not blindly copy-paste from this repository! It might be useful as a
+> reference, but should not be viewed as a finished or polished product.
 
 ## Installation
 
+ 1. Generate SSH keys and add them to GitLab
+
+    ```shell
+    ssh-keygen -t ed25519
+    echo "IdentityFile ~/.ssh/id_ed25519" >> ~/.ssh/config
+    ```
+
  1. Clone this repository.
-
-    TODO: instructions for creating SSH keys and configuring them.
-
-    ```shell
-    git clone git@gitlab.com:swanysimon/dotfiles.git
-    cd dotfiles
-    ```
-
- 1. Symlink the `config` directory to the place you want `XDG_CONFIG_HOME` to
-    be. This is normally `$HOME/.config`:
-
-    ```shell
-    cd
-    rm -r .config
-    ln -si <dotfiles repository>/config .config
-    ```
 
  1. Install [Homebrew] and related utilities. Homebrew is my MacOS package
     manager of choice. Once installed, install all the utilities I use
@@ -39,10 +31,19 @@ use, but may be useful to you setting up your system.
     For non-personal machines, set up a private dotfiles repository with its own
     Brewfile setup instead. The utilities installed here are often very
     unrelated to anything remotely associated with a job. No employer needs to
-    run a security scan on Slippi.
+    run a security scan on Slippi, for example.
 
- 1. Configure [fish] as the default shell. You can then close your shell and
-    open [Alacritty] (my terminal of choice for now) whenever you like:
+ 1. Symlink the `config` directory to the place you want `XDG_CONFIG_HOME` to
+    be. This is normally `$HOME/.config`:
+
+    ```shell
+    cd
+    rm -r .config
+    ln -si <dotfiles repository>/config .config
+    ```
+
+ 1. Configure [fish] as the default shell. You should probably restart your
+    shell after running this.
 
     ```shell
     chsh -s "$(brew --prefix)/bin/fish"
@@ -51,7 +52,7 @@ use, but may be useful to you setting up your system.
  1. Initialize [Neovim] and all its plugins:
 
     ```shell
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    nvim '+lua require("lazy").sync()'
     ```
 
 [Alacritty]: https://alacritty.org

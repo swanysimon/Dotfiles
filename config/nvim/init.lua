@@ -21,6 +21,7 @@ opt.title = true
 opt.colorcolumn = "+1"
 opt.cursorline = true
 opt.fillchars = { eob = " ", }  -- disable tildes below last line in buffer
+opt.ignorecase = true
 opt.laststatus = 3
 opt.list = true
 opt.number = true
@@ -43,9 +44,11 @@ map("n", "<C-j>", "<C-w>j")
 map("n", "<C-k>", "<C-w>k")
 map("n", "<C-l>", "<C-w>l")
 
--- move visual blocks around with J and K
+-- move visual blocks around with J/K/up/down
+map("v", "<Down>", ":m '>+1<CR>gv=gv")
+map("v", "<Up>", ":m '<-2<CR>gv=gv")
 map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '>-2<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
 
 -- keep search terms centered
 map("n", "n", "nzzzv")

@@ -46,6 +46,7 @@ cask "qmk-toolbox", args: {"no-quarantine": true}
 # Other
 cask "discord"
 cask "logseq"
+cask "protonmail-bridge"
 cask "protonvpn"
 cask "rectangle"
 cask "skype"

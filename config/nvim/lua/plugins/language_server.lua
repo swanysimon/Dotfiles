@@ -23,6 +23,7 @@ end
 
 
 local function setup(_)
+  require("diagflow").setup({})
   require("fidget").setup({})
   require("mason").setup()
   require("neodev").setup()
@@ -41,6 +42,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
+      "dgagn/diagflow.nvim",
       "folke/neodev.nvim",
       "hrsh7th/cmp-nvim-lsp",
       "j-hui/fidget.nvim",

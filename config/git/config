@@ -1,7 +1,8 @@
 [alias]
   # general aliasing
-  gh-push = !git push origin "+$(git branch --show-current)"
+  gh-push = !git push origin --force-with-lease "$(git branch --show-current)"
   recursive-update = submodule update --init --recursive --remote --merge
+  sync = !git pull && git push
   w = switch
 
   # commit-level aliases

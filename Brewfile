@@ -1,10 +1,10 @@
 # Taps
-tap "epk/epk"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
 
 # Special taps
+tap "epk/epk"
 tap "homebrew/cask-drivers"
 tap "sdkman/tap"
 
@@ -37,14 +37,12 @@ cask "alacritty", args: {"no-quarantine": true}
 brew "python"
 brew "rustup-init"
 brew "sdkman-cli"
-cask "docker"
 
 # Keyboard configuration
 cask "chrysalis"
 cask "qmk-toolbox", args: {"no-quarantine": true}
 
 # Other
-cask "discord"
 cask "logseq"
 cask "protonmail-bridge"
 cask "protonvpn"
@@ -54,7 +52,6 @@ cask "slack"
 cask "transmission"
 cask "vlc"
 cask "xld"
-cask "zoom"
 
 # Needed for other accounts on personal machine
 brew "ffmpeg"

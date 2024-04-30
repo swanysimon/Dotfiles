@@ -2,6 +2,7 @@ local function is_window(window)
   return window and vim.api.nvim_win_is_valid(window)
 end
 
+
 local function window_options()
   local lines = vim.o.lines
   local columns = vim.o.columns
@@ -26,6 +27,7 @@ end
 
 local M = {}
 
+
 function M:new()
   return setmetatable(
     {
@@ -37,6 +39,7 @@ function M:new()
     { __index = self }
   )
 end
+
 
 function M:open()
   if is_window(self.window) then
@@ -73,6 +76,7 @@ function M:open()
   return self
 end
 
+
 function M:close(buf_delete)
   if not is_window(self.window) then
     return self
@@ -104,6 +108,7 @@ function M:close(buf_delete)
   return self
 end
 
+
 function M:toggle()
   if is_window(self.window) then
     self:close(false)
@@ -111,5 +116,6 @@ function M:toggle()
     self:open()
   end
 end
+
 
 return M

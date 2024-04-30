@@ -55,7 +55,8 @@ map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
 -- configure plugins
-require("plugins")
+require("plugin_manager").setup()
 
 -- enable floating terminal
-require("terminal")
+local terminal = require("terminal"):new()
+map({"n", "t", "v"}, "<leader>t", function() terminal:toggle() end)

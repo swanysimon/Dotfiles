@@ -16,7 +16,7 @@ local function setup(_, options)
   -- find files
   bind("f", function() builtin.find_files({ hidden = true }) end)
   bind("ff", function() builtin.find_files({ hidden = true }) end)
-  bind("fb", builtin.buffers)
+  bind("fb", function() builtin.buffers({ ignore_current_buffer = true, sort_mru = true }) end)
   bind("fr", builtin.oldfiles)
   bind("fp", browser.file_browser)
   bind("ft", function() browser.file_browser({ path = "%:p:h" }) end)

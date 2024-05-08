@@ -1,3 +1,13 @@
+local function telescope_files(telescope)
+  telescope.find_files({ hidden = true })
+end
+
+
+local function telescope_buffers(telescope)
+  telescope.buffers({ ignore_current_buffer = true, sort_mru = true })
+end
+
+
 local function setup(_, options)
 
   local function bind(key, func)
@@ -14,10 +24,11 @@ local function setup(_, options)
   local browser = telescope.extensions.file_browser
 
   -- find files
-  bind("f", function() builtin.find_files({ hidden = true }) end)
-  bind("ff", function() builtin.find_files({ hidden = true }) end)
-  bind("fb", function() builtin.buffers({ ignore_current_buffer = true, sort_mru = true }) end)
-  bind("fr", builtin.oldfiles)
+  bind("f", function() telescope_files(builtin) end)
+  bind("ff", function() telescope_files(builtin) end)
+  bind("fb", function() telescope_buffers(builtin) end)
+  bind("fbb", function() telescope_buffers(builtin) end)
+  bind("fbr", builtin.oldfiles)
   bind("fp", browser.file_browser)
   bind("ft", function() browser.file_browser({ path = "%:p:h" }) end)
 
@@ -26,7 +37,7 @@ local function setup(_, options)
   bind("gc", builtin.grep_string)
 
   -- project management
-  bind("pl", builtin.git_commits)
+  bind("pq", builtin.quickfix)
   bind("ps", builtin.git_status)
 end
 

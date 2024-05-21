@@ -31,5 +31,6 @@ save_to_clipboard = true
 decorations = "full"
 dynamic_padding = true
 dynamic_title = true
+option_as_alt = "both"
 startup_mode = "Windowed"
 title = "Alacritty"

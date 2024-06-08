@@ -55,6 +55,33 @@ if type -p fisher &>/dev/null
 end
 
 
+if type -p nvm &>/dev/null
+    set -gx nvm_default_version system
+
+    function __nvm_auto --on-variable PWD
+        set -l search_dir (pwd)
+        while true
+          for file in .node-version .nvmrc
+              if test -e $search_dir/$file
+                  nvm install --silent
+                  return
+              end
+          end
+
+          if [ $search_dir = "/" ]; or [ $search_dir = "" ]
+              nvm use default --silent
+              return
+          end
+
+          set search_dir (dirname $search_dir)
+        end
+    end
+
+    __nvm_auto
+end
+
+
+
 if not set -q JAVA_HOME; and /usr/libexec/java_home >/dev/null 2>/dev/null
     set -gx JAVA_HOME (/usr/libexec/java_home)
 end

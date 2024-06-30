@@ -44,13 +44,12 @@ if status is-interactive
 end
 
 
-set -Ux fisher_path $XDG_DATA_HOME/fisher
-if type -p fisher &>/dev/null
-    set fish_complete_path $fish_complete_path[1] $fisher_path/completions $fish_complete_path[2..]
-    set fish_function_path $fish_function_path[1] $fisher_path/functions $fish_function_path[2..]
-
-    for file in $fisher_path/conf.d/*.fish
-        source $file
+if type -p mise &>/dev/null
+    if status is-interactive
+        mise activate fish | source
+        abbr mr mise run
+    else
+        mise activate fish --shims | source
     end
 end
 

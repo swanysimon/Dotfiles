@@ -1,57 +1,54 @@
-# Taps
-tap "homebrew/bundle"
-tap "homebrew/cask"
+# standard taps; unclear if still necessary
 tap "homebrew/core"
+tap "homebrew/cask"
+tap "homebrew/bundle"
 
-# Special taps
+# patched SF mono font
 tap "epk/epk"
-tap "homebrew/cask-drivers"
-tap "sdkman/tap"
-
-# Common tools better managed by Homebrew
-brew "bash"
-brew "coreutils"
-brew "fish"
-brew "fisher"
-brew "gh"
-brew "git"
-brew "less"
-brew "neovim"
-brew "tree"
-brew "watch"
-brew "wget"
+brew "fontconfig"
 cask "font-sf-mono-nerd-font"
 
-# Shell utilities to make life easier
+# core command line utilities
 brew "bat"
-brew "fontconfig"
-brew "gh"
+brew "fish"
 brew "git-delta"
-brew "gpg"
+brew "mise"
+brew "neovim"
 brew "ripgrep"
 brew "yq"
 brew "zellij"
-cask "alacritty", args: {"no-quarantine": true}
-
-# Programming-specific installs
-brew "python"
-brew "rustup-init"
-brew "sdkman-cli"
-
-# Keyboard configuration
-cask "chrysalis"
-cask "qmk-toolbox", args: {"no-quarantine": true}
-
-# Other
+cask "alacritty"
 cask "logseq"
+cask "rectangle"
+
+# core applications
+cask "discord"
 cask "protonmail-bridge"
 cask "protonvpn"
-cask "rectangle"
 cask "skype"
 cask "slack"
 cask "transmission"
 cask "vlc"
 cask "xld"
 
-# Needed for other accounts on personal machine
+# specific programming languages
+brew "rustup-init"
+
+# nice-to-have command line utilities
+brew "bash"
+brew "coreutils"
+brew "gh"
+brew "git"
+brew "gpg"
+brew "less"
+brew "tree"
+brew "watch"
+brew "wget"
+
+# keyboard configuration
+tap "homebrew/cask-drivers"
+cask "chrysalis"
+cask "qmk-toolbox"
+
+# needed for other accounts on personal machine
 brew "ffmpeg"

@@ -7,6 +7,9 @@ fish_add_path ~/.local/bin /opt/homebrew/bin /usr/local/sbin
 set_if_absent XDG_CACHE_HOME ~/.cache
 set_if_absent XDG_CONFIG_HOME ~/.config
 set_if_absent XDG_DATA_HOME ~/.local/share
+set_if_absent CODEDIR ~/code
+
+mkdir -p $CODEDIR
 
 
 if test -r $XDG_DATA_HOME/fish/config.(hostname -s).fish

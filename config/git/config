@@ -36,13 +36,15 @@
   ignorecase = true
   pager = delta
 [delta]
+  dark = true
   decorations = true
   line-numbers = true
+  navigate = true
   side-by-side = true
   syntax-theme = gruvbox-dark
   whitespace-error-style = 22 reverse
 [diff]
-  colorMoved = true
+  colorMoved = default
 [fetch]
   parallel = 0
   prune = true
@@ -63,13 +65,6 @@
   cmd = nvim -dc '$wincmd w | wincmd J' "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
 [pager]
   branch = false
-[submodule]
-  fetchJobs = 0
 [user]
   email = git@simonswanson.xyz
   name = Simon Swanson
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true

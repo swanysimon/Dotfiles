@@ -23,7 +23,6 @@ cask "rectangle"
 
 # core applications
 cask "discord"
-cask "logi-options-plus"
 cask "protonmail-bridge"
 cask "protonvpn"
 cask "skype"

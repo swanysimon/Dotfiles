@@ -6,7 +6,7 @@ cd "$CODEDIR"
 while read REPO; do
     echo "Working on $REPO"
     if [[ -d "$REPO" ]]; then
-        (cd "$REPO" && gh repo sync --force || true)
+        git -C "$REPO" fetch --all
     else
         gh repo clone "$REPO" "$REPO"
     fi

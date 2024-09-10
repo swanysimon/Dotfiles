@@ -1,3 +1,9 @@
+[user]
+  email = git@simonswanson.xyz
+  name = Simon Swanson
+[include]
+  path = ~/.gitconfig.work
+
 [alias]
   # general aliasing
   gh-push = !git push origin --force-with-lease "$(git branch --show-current)"
@@ -65,6 +71,3 @@
   cmd = nvim -dc '$wincmd w | wincmd J' "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
 [pager]
   branch = false
-[user]
-  email = git@simonswanson.xyz
-  name = Simon Swanson

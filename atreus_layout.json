@@ -212,9 +212,11 @@
         "categories": ["consumer"]
       },
       {
-        "code": 65535,
-        "label": {"base": {"full": "Transparent", "1u": " "}},
-        "categories": ["blanks"]
+        "code": 17492,
+        "label": {"hint": "MoveTo", "base": "#0"},
+        "target": 0,
+        "rangeStart": 17492,
+        "categories": ["layer", "movetolayer"]
       },
       {
         "code": 65535,
@@ -227,9 +229,11 @@
         "categories": ["blanks"]
       },
       {
-        "code": 65535,
-        "label": {"base": {"full": "Transparent", "1u": " "}},
-        "categories": ["blanks"]
+        "code": 17492,
+        "label": {"hint": "MoveTo", "base": "#0"},
+        "target": 0,
+        "rangeStart": 17492,
+        "categories": ["layer", "movetolayer"]
       },
       {"code": 36, "label": {"base": "7", "shifted": "&"}},
       {"code": 37, "label": {"base": "8", "shifted": "*"}},
@@ -333,9 +337,11 @@
         "categories": ["blanks"]
       },
       {
-        "code": 65535,
-        "label": {"base": {"full": "Transparent", "1u": " "}},
-        "categories": ["blanks"]
+        "code": 17493,
+        "label": {"hint": "MoveTo", "base": "#1"},
+        "target": 1,
+        "rangeStart": 17492,
+        "categories": ["layer", "movetolayer"]
       },
       {
         "code": 65535,
@@ -358,9 +364,11 @@
         "categories": ["blanks"]
       },
       {
-        "code": 65535,
-        "label": {"base": {"full": "Transparent", "1u": " "}},
-        "categories": ["blanks"]
+        "code": 17493,
+        "label": {"hint": "MoveTo", "base": "#1"},
+        "target": 1,
+        "rangeStart": 17492,
+        "categories": ["layer", "movetolayer"]
       },
       {
         "code": 65535,
@@ -384,9 +392,11 @@
       {"code": 68, "label": {"base": "F11"}},
       {"code": 69, "label": {"base": "F12"}},
       {
-        "code": 65535,
-        "label": {"base": {"full": "Transparent", "1u": " "}},
-        "categories": ["blanks"]
+        "code": 17450,
+        "label": {"hint": "ShiftTo", "base": "#0"},
+        "target": 0,
+        "rangeStart": 17450,
+        "categories": ["layer", "shifttolayer"]
       },
       {
         "code": 65535,
@@ -399,9 +409,11 @@
         "categories": ["blanks"]
       },
       {
-        "code": 65535,
-        "label": {"base": {"full": "Transparent", "1u": " "}},
-        "categories": ["blanks"]
+        "code": 17450,
+        "label": {"hint": "ShiftTo", "base": "#0"},
+        "target": 0,
+        "rangeStart": 17450,
+        "categories": ["layer", "shifttolayer"]
       },
       {"code": 64, "label": {"base": "F7"}},
       {"code": 65, "label": {"base": "F8"}},
@@ -479,9 +491,11 @@
         "categories": ["blanks"]
       },
       {
-        "code": 65535,
-        "label": {"base": {"full": "Transparent", "1u": " "}},
-        "categories": ["blanks"]
+        "code": 17451,
+        "label": {"hint": "ShiftTo", "base": "#1"},
+        "target": 1,
+        "rangeStart": 17450,
+        "categories": ["layer", "shifttolayer"]
       },
       {
         "code": 65535,
@@ -504,9 +518,11 @@
         "categories": ["blanks"]
       },
       {
-        "code": 65535,
-        "label": {"base": {"full": "Transparent", "1u": " "}},
-        "categories": ["blanks"]
+        "code": 17451,
+        "label": {"hint": "ShiftTo", "base": "#1"},
+        "target": 1,
+        "rangeStart": 17450,
+        "categories": ["layer", "shifttolayer"]
       },
       {
         "code": 65535,

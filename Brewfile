@@ -32,7 +32,7 @@ cask "vlc"
 cask "xld"
 
 # specific programming languages
-brew "rustup-init"
+brew "rustup"
 
 # nice-to-have command line utilities
 brew "bash"

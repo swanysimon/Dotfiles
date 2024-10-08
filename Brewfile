@@ -26,9 +26,11 @@ cask "discord"
 cask "protonmail-bridge"
 cask "protonvpn"
 cask "skype"
+cask "signal"
 cask "slack"
 cask "transmission"
 cask "vlc"
+cask "whatsapp"
 cask "xld"
 
 # specific programming languages

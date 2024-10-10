@@ -32,6 +32,7 @@ cask "transmission"
 cask "vlc"
 cask "whatsapp"
 cask "xld"
+cask "zed"
 
 # specific programming languages
 brew "rustup"

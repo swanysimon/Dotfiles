@@ -12,6 +12,7 @@ end
 
 
 return {
+
   colorscheme({
     enabled = false,
     location = "ellisonleao/gruvbox.nvim",
@@ -20,6 +21,12 @@ return {
 
   colorscheme({
     enabled = true,
+    location = "navarasu/onedark.nvim",
+    name = "onedark",
+  }),
+
+  colorscheme({
+    enabled = false,
     location = "folke/tokyonight.nvim",
     name = "tokyonight",
   }),

@@ -38,6 +38,7 @@ function M.setup()
     install = {
       colorscheme = {
         "gruvbox",
+        "onedark",
         "tokyonight-storm",
       },
     },

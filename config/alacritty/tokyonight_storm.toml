@@ -6,8 +6,8 @@ background = "0x24283b"
 foreground = "0xc0caf5"
 
 [colors.normal]
-black = "0x1d202f"
-red = "0xf7768e"
+black =   "0x1d202f"
+red =     "0xf7768e"
 green =   "0x9ece6a"
 yellow =  "0xe0af68"
 blue =    "0x7aa2f7"

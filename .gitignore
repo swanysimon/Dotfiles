@@ -7,4 +7,6 @@
 /config/gh-dash
 /config/jgit
 /config/pgcli
+/config/zed/embeddings
+/config/zed/prompts
 Brewfile.lock.json

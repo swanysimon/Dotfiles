@@ -50,7 +50,13 @@ return {
     "saghen/blink.cmp",
     dependencies = "rafamadriz/friendly-snippets",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      keymap = {
+        accept = "<cr>",
+        select_next = { "<Up>", "<C-p>", "<S-Tab>", },
+        select_prev = { "<Down>", "<C-n>", "<Tab>", },
+      },
+    },
     version = "*",
   },
 

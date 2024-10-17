@@ -1,4 +1,19 @@
-local function lsp_settings(_, buffer)
+local augroup = vim.api.nvim_create_augroup("LspFormat", {})
+
+local function lsp_settings(client, buffer)
+
+  vim.api.nvim_clear_autocmds({ group = augroup, buffer = buffer, })
+  vim.api.nvim_create_autocmd(
+    "BufWritePre",
+    {
+      group = augroup,
+      buffer = buffer,
+      callback = function()
+        if client.supports_method("textDocument/formatting") then
+          vim.lsp.buf.format()
+        end
+      end,
+    })
 
   local function map(keys, func)
     vim.keymap.set("n", keys, func, { buffer = buffer })

@@ -42,6 +42,13 @@ return {
   },
 
   {
+    "folke/trouble.nvim",
+    cmd = "Trouble",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    opts = {},
+  },
+
+  {
     "j-hui/fidget.nvim",
     lazy = true,
     opts = {},
@@ -52,6 +59,7 @@ return {
     config = setup,
     dependencies = {
       "dgagn/diagflow.nvim",
+      "folke/trouble.nvim",
       "j-hui/fidget.nvim",
       "stevearc/dressing.nvim",
       "williamboman/mason-lspconfig.nvim",

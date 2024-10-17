@@ -17,9 +17,14 @@ return {
 
   {
     "b0o/incline.nvim",
-    build = function() require("nvim-web-devicons").get_icons() end,
-    dependencies = { "nvim-tree/nvim-web-devicons", },
+    dependencies = "nvim-tree/nvim-web-devicons",
     event = "VeryLazy",
+    opts = {},
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     opts = {},
   },
 
@@ -33,6 +38,11 @@ return {
   {
     "norcalli/nvim-colorizer.lua",
     event = "VeryLazy",
+  },
+
+  {
+    "nvim-tree/nvim-web-devicons",
+    build = function() require("nvim-web-devicons").get_icons() end,
   },
 
   {

@@ -6,27 +6,18 @@ local opt = vim.opt
 g.mapleader = ","
 g.mapleaderlocal = "'"
 
--- general editing behavior
-opt.hidden = true
-opt.timeoutlen = 400
-opt.updatetime = 250  -- time to write to swap file, if that ever is enabled
-
 -- system interactions
 opt.clipboard = { "unnamed", "unnamedplus", }
-opt.mouse = "a"
 opt.swapfile = false
-opt.title = true
+opt.timeoutlen = 400
 
 -- appearance
-opt.background = "dark"
 opt.colorcolumn = "+1"
 opt.cursorline = true
 opt.fillchars = { eob = " ", }  -- disable tildes below last line in buffer
 opt.ignorecase = true
-opt.laststatus = 3
 opt.list = true
 opt.number = true
-opt.ruler = true
 opt.termguicolors = true
 
 -- editing

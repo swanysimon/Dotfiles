@@ -19,6 +19,7 @@ return {
     "b0o/incline.nvim",
     dependencies = "nvim-tree/nvim-web-devicons",
     event = "VeryLazy",
+    init = function() vim.opt.laststatus = 3 end,
     opts = {},
   },
 

@@ -51,7 +51,7 @@ return {
     dependencies = "rafamadriz/friendly-snippets",
     event = "VeryLazy",
     opts = {},
-    version = "v0.3.1",
+    version = "*",
   },
 
 }

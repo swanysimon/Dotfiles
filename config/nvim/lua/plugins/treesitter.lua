@@ -1,39 +1,68 @@
-local function setup(options)
+local function setup(_, options)
   require("nvim-treesitter.configs").setup(options)
 
-  vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-  vim.opt.foldmethod = "expr"
-
-  require("ibl").setup()
-  require("nvim-surround").setup()
-  require("treesj").setup()
-  require("ts_context_commentstring").setup()
+  vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+  vim.wo.foldmethod = "expr"
 end
 
 return {
+
   {
-    "nvim-treesitter/nvim-treesitter",
+    "andymass/vim-matchup",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy",
+  },
+
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
     dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      "Wansmer/treesj",
-      "andymass/vim-matchup",
-      "kylechui/nvim-surround",
-      "lukas-reineke/indent-blankline.nvim",
-      "nvim-treesitter/nvim-treesitter-context",
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      "nvim-treesitter/nvim-treesitter",
       "tpope/vim-commentary",
     },
-    build = ":TSUpdateSync",
     event = "VeryLazy",
-    config = function(_, opts) setup(opts) end,
+    opts = {},
+  },
+
+  {
+    "kylechui/nvim-surround",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
+    event = "VeryLazy",
+    opts = {},
+  },
+
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdateSync",
+    config = setup,
+    event = "VeryLazy",
     opts = {
       ensure_installed = "all",
-      highlight = {
-        enable = true,
-      },
-      matchup = {
-        enable = true,
-      },
+      highlight = { enable = true },
+      indent = { enable = true },
+      matchup = { enable = true },
     },
   },
+
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy",
+  },
+
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy",
+  },
+
+  {
+    "Wansmer/treesj",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy",
+    opts = {},
+  },
+
 }

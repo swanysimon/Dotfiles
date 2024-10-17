@@ -31,19 +31,20 @@ function M.setup()
   ----
 
   require("lazy").setup(
-  "plugins",
-  {
-    change_detection = { notify = false, },
-    checker = { notify = false, },
-    install = {
-      colorscheme = {
-        "gruvbox",
-        "onedark",
-        "tokyonight-storm",
+    "plugins",
+    {
+      change_detection = { notify = false, },
+      checker = { notify = false, },
+      install = {
+        colorscheme = {
+          "gruvbox",
+          "onedark",
+          "tokyonight-storm",
+        },
       },
-    },
-    lockfile = lazyroot .. "/lazy-lock.json",
-  })
+      lockfile = lazyroot .. "/lazy-lock.json",
+    }
+  )
 end
 
 

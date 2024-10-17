@@ -18,6 +18,7 @@ opt.swapfile = false
 opt.title = true
 
 -- appearance
+opt.background = "dark"
 opt.colorcolumn = "+1"
 opt.cursorline = true
 opt.fillchars = { eob = " ", }  -- disable tildes below last line in buffer

@@ -48,18 +48,11 @@ local function setup(_, options)
   })
 end
 
-local event = {
-  "BufNewFile",
-  "BufReadPre",
-  "InsertEnter",
-}
-
-
 return {
 
   {
     "dgagn/diagflow.nvim",
-    event = event,
+    event = "VeryLazy",
     opts = {},
   },
 
@@ -67,13 +60,13 @@ return {
     "folke/trouble.nvim",
     cmd = "Trouble",
     dependencies = "nvim-tree/nvim-web-devicons",
-    event = event,
+    event = "VeryLazy",
     opts = {},
   },
 
   {
     "j-hui/fidget.nvim",
-    event = event,
+    event = "VeryLazy",
     opts = {},
   },
 
@@ -88,24 +81,24 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "williamboman/mason.nvim",
     },
-    event = event,
+    event = "VeryLazy",
   },
 
   {
     "stevearc/dressing.nvim",
-    event = event,
+    event = "VeryLazy",
     opts = {},
   },
 
   {
     "williamboman/mason-lspconfig.nvim",
-    event = event,
+    event = "VeryLazy",
     opts = {},
   },
 
   {
     "williamboman/mason.nvim",
-    event = event,
+    event = "VeryLazy",
     opts = {},
   },
 

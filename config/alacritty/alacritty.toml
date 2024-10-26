@@ -1,8 +1,8 @@
+[general]
 import = [
     "~/.config/alacritty/tokyonight_storm.toml",
     "~/.config/alacritty/onedark.toml",
 ]
-
 live_config_reload = true
 
 [cursor]

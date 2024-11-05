@@ -53,8 +53,8 @@ return {
     opts = {
       keymap = {
         accept = "<cr>",
-        select_next = { "<Up>", "<C-p>", "<S-Tab>", },
-        select_prev = { "<Down>", "<C-n>", "<Tab>", },
+        select_next = { "<Down>", "<C-n>", "<Tab>", },
+        select_prev = { "<Up>", "<C-p>", "<S-Tab>", },
       },
     },
     version = "*",

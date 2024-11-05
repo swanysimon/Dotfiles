@@ -1,44 +1,42 @@
 function fish_prompt
     set -l last_command_status $status
-    echo -n -s (cwd_fish_prompt) (set_color normal)
-    echo (git_fish_prompt) (set_color normal)
-    echo -n -s (status_fish_prompt $last_command_status) (set_color normal) " "
-end
 
+    # First line: current directory and git branch information
+    echo -s (set_color yellow) (pwd) (set_color normal) (git_fish_prompt)
 
-function cwd_fish_prompt
-    printf "%s%s" (set_color yellow) (pwd)
-end
-
-
-function status_fish_prompt
-    if [ $argv[1] -eq 0 ]
-        printf "%s✓" (set_color green)
+    # Second line: result of previous command and prompt
+    if [ $last_command_status -eq 0 ]
+        echo -ns (set_color green) "✓"
     else
-        printf "%s(%s) ✗" (set_color red) $argv[1]
+        echo -ns (set_color red) $last_command_status " ✗"
     end
+    echo -ns (set_color normal) " "
 end
 
 
 function git_fish_prompt
+    # When not in a git repository, don't change anything
     if not git rev-parse >/dev/null 2>&1
         return
     end
 
-    echo -n -s " " (set_color magenta)
-
-    git update-index -q --really-refresh >/dev/null 2>&1
+    # The inital git commit state breaks many of the other git commands run; handle this early
     if not git rev-parse --verify HEAD >/dev/null 2>&1
-        echo -s (set_color blue) "<initial git commit>" (set_color normal)
+        echo -ns " " (set_color blue) "<initial git commit>" (set_color normal)
         return
     end
 
-    set -l num_untracked_files (git ls-files --exclude-standard --others | wc -l | tr -d " ")
-    if [ $num_untracked_files -gt 0 ]; or not git diff-index --quiet HEAD -- >/dev/null
-        echo -n -s "◦"
+    git update-index -q --really-refresh
+
+    echo -ns " " (set_color magenta)
+
+    # Show repository dirty state
+    if not git diff-index --quiet HEAD; or string length -q -- (git ls-files -om --exclude-standard)
+        echo -ns "◦"
     end
 
-    set -l git_branch (
+    # Get display name for current branch
+    set -l git_current_branch (
         if git rebase --show-current-patch >/dev/null 2>&1
             echo "rebasing"
         else if [ -z (git branch --show-current) ]
@@ -47,30 +45,52 @@ function git_fish_prompt
             git branch --show-current
         end
     )
+
+    # Attempt to identify upstream branch
     set -l git_upstream_branch (
-        if [ $git_branch = "rebasing" ]
+        if [ $git_current_branch = "rebasing" ]
             git branch --list | grep "^*" | sed -e 's:.*(no branch, rebasing \(.*\)):\1:'
-        else if [ $git_branch = "detached" ]
+        else if [ $git_current_branch = "detached" ]
             git branch --list | grep "^*" | sed -e 's:.*(HEAD detached from refs/heads/\(.*\)):\1:'
         else
             git rev-parse --abbrev-ref "@{upstream}" 2>/dev/null
         end
     )
 
-    set -l git_commit_count (git rev-list --count --left-right "HEAD...$git_upstream_branch" 2>/dev/null)
-    set -l git_commits_ahead (echo $git_commit_count | cut -f 1)
-    set -l git_commits_behind (echo $git_commit_count | cut -f 2)
+    # Find deviation from upstream branch
+    set -l git_commit_count (
+        git rev-list --count --left-right --cherry-mark HEAD...$git_upstream_branch 2>/dev/null
+    )
 
-    switch $git_commit_count
-        case ""
-            echo -s $git_branch "|<unknown upstream>"
-        case "0"\t"0"
-            echo -s $git_branch "|" $git_upstream_branch
-        case "*"\t"0"
-            echo -s $git_branch "↑" $git_commits_ahead "|" $git_upstream_branch
-        case "0"\t"*"
-            echo -s $git_branch "↓" $git_commits_behind "|" $git_upstream_branch
-        case "*"
-            echo -s $git_branch "↑" $git_commits_ahead "|" $git_commits_behind "↑" $git_upstream_branch
+    # Special case: no tracking branch breaks next git commands; handle early
+    if [ -z $git_commit_count ]
+        echo -s $git_current_branch "|<unknown upstream>" (set_color normal)
     end
+
+
+    set -l git_display_branch (
+        set -l git_commits_ahead (echo $git_commit_count | cut -f 1)
+        [  $git_commits_ahead -gt 0 ]; and set -l git_display_commits_ahead (
+            echo -s "↑" $git_commits_ahead
+        )
+
+        if [ $git_current_branch = "rebasing" ]; or [ $git_current_branch = "detached" ]
+            echo -s $git_current_branch $git_display_commits_ahead
+        end
+
+        set -l git_remote_name (git config branch.$git_current_branch.remote)
+        if [ $git_upstream_branch = (echo -s $git_remote_name "/" $git_current_branch) ]
+            echo -s $git_current_branch $git_display_commits_ahead "{" $git_remote_name "}"
+        else
+            echo -s $git_current_branch $git_display_commits_ahead
+        end
+    )
+
+    set -l git_display_upstream (
+        [ $git_current_branch = $git_display_branch ]; and echo -s "|" $git_upstream_branch
+        set -l git_commits_behind (echo $git_commit_count | cut -f 2)
+        [ $git_commits_behind -gt 0 ]; and echo -s "↓" $git_commits_behind
+    )
+
+    echo -s $git_display_branch $git_display_upstream (set_color normal)
 end

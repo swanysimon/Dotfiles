@@ -67,27 +67,24 @@ function git_fish_prompt
         echo -s $git_current_branch "|<unknown upstream>" (set_color normal)
     end
 
+    set -l git_commits_ahead (echo $git_commit_count | cut -f 1)
+    [ $git_commits_ahead -gt 0 ]; and set -l git_display_commits_ahead (echo -s "↑" $git_commits_ahead)
 
     set -l git_display_branch (
+        echo -n $git_current_branch
         set -l git_commits_ahead (echo $git_commit_count | cut -f 1)
-        [  $git_commits_ahead -gt 0 ]; and set -l git_display_commits_ahead (
-            echo -s "↑" $git_commits_ahead
-        )
-
-        if [ $git_current_branch = "rebasing" ]; or [ $git_current_branch = "detached" ]
-            echo -s $git_current_branch $git_display_commits_ahead
-        end
-
+        [ $git_commits_ahead -gt 0 ]; and echo -s "↑" $git_commits_ahead
+    )
+    if [ $git_current_branch != "rebasing" ]; and [ $git_current_branch != "detached" ]
         set -l git_remote_name (git config branch.$git_current_branch.remote)
         if [ $git_upstream_branch = (echo -s $git_remote_name "/" $git_current_branch) ]
-            echo -s $git_current_branch $git_display_commits_ahead "{" $git_remote_name "}"
-        else
-            echo -s $git_current_branch $git_display_commits_ahead
+            set -l git_is_tracking_same_named_branch true
+            set -l git_display_branch (echo -s $git_display_branch "{" $git_remote_name "}")
         end
-    )
+    end
 
     set -l git_display_upstream (
-        [ $git_current_branch = $git_display_branch ]; and echo -s "|" $git_upstream_branch
+        not set -q git_is_tracking_same_named_branch; and echo -ns "|" $git_upstream_branch
         set -l git_commits_behind (echo $git_commit_count | cut -f 2)
         [ $git_commits_behind -gt 0 ]; and echo -s "↓" $git_commits_behind
     )

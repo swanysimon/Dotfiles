@@ -52,9 +52,9 @@ return {
     event = "VeryLazy",
     opts = {
       keymap = {
-        accept = "<cr>",
-        select_next = { "<Down>", "<C-n>", "<Tab>", },
-        select_prev = { "<Up>", "<C-p>", "<S-Tab>", },
+        ["<cr>"] = { "accept", },
+        ["<Down>"] = { "select_next", },
+        ["<Up>"] = { "select_prev", },
       },
     },
     version = "*",

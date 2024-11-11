@@ -10,18 +10,24 @@ cask "font-sf-mono-nerd-font"
 
 # core command line utilities
 brew "bat"
+brew "coreutils"
 brew "fish"
+brew "gh"
+brew "git"
 brew "git-delta"
+brew "gpg"
+brew "less"  # default MacOS pager missing some flags I want in my git pager
 brew "mise"
 brew "neovim"
 brew "ripgrep"
+brew "rustup"  # Mise recommends not using it to manage Rust versions
+brew "watch"
 brew "yq"
 brew "zellij"
 cask "alacritty"
-cask "logseq"
 
 # core applications
-cask "discord"
+cask "logseq"
 cask "protonmail-bridge"
 cask "protonvpn"
 cask "skype"
@@ -31,21 +37,6 @@ cask "transmission"
 cask "vlc"
 cask "whatsapp"
 cask "xld"
-cask "zed"
-
-# specific programming languages
-brew "rustup"
-
-# nice-to-have command line utilities
-brew "bash"
-brew "coreutils"
-brew "gh"
-brew "git"
-brew "gpg"
-brew "less"
-brew "tree"
-brew "watch"
-brew "wget"
 
 # keyboard configuration
 tap "homebrew/cask-drivers"

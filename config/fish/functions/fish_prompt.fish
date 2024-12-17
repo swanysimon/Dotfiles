@@ -65,6 +65,7 @@ function git_fish_prompt
     # Special case: no tracking branch breaks next git commands; handle early
     if [ -z $git_commit_count ]
         echo -s $git_current_branch "|<unknown upstream>" (set_color normal)
+        return
     end
 
     set -f git_display_branch (

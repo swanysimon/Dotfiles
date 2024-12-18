@@ -43,6 +43,7 @@ local function setup(_, options)
     function(server_name)
       require("lspconfig")[server_name].setup({
         on_attach = lsp_settings,
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
       })
     end,
   })
@@ -77,6 +78,7 @@ return {
       "dgagn/diagflow.nvim",
       "folke/trouble.nvim",
       "j-hui/fidget.nvim",
+      "saghen/blink.cmp",
       "stevearc/dressing.nvim",
       "williamboman/mason-lspconfig.nvim",
       "williamboman/mason.nvim",

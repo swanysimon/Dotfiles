@@ -51,10 +51,11 @@ return {
     dependencies = "rafamadriz/friendly-snippets",
     event = "VeryLazy",
     opts = {
+      documentation = {
+        auto_show = true,
+      },
       keymap = {
-        ["<cr>"] = { "accept", },
-        ["<Down>"] = { "select_next", },
-        ["<Up>"] = { "select_prev", },
+        preset = "enter",
       },
     },
     version = "*",

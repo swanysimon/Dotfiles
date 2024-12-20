@@ -20,7 +20,7 @@ brew "less"  # default MacOS pager missing some flags I want in my git pager
 brew "mise"
 brew "neovim"
 brew "ripgrep"
-brew "rustup"  # Mise recommends not using it to manage Rust versions
+brew "rustup"  # Mise recommends using this to manage Rust versions
 brew "watch"
 brew "yq"
 brew "zellij"
@@ -30,6 +30,7 @@ cask "alacritty"
 cask "logseq"
 cask "protonmail-bridge"
 cask "protonvpn"
+cask "rectangle"
 cask "skype"
 cask "signal"
 cask "slack"

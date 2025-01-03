@@ -41,16 +41,16 @@ if status is-interactive
 
     abbr g git
 
-    abbr gw ./gradlew
-
-    abbr code cd ~/code
+    abbr code cd $CODEDIR
 end
 
 
 if type -p mise &>/dev/null
     if status is-interactive
         mise activate fish | source
-        abbr mr mise run
+        if not test -r $XDG_CONFIG_HOME/fish/completions/mise.fish
+            mise completion fish > $XDG_CONFIG_HOME/fish/completions/mise.fish
+        end
     else
         mise activate fish --shims | source
     end
@@ -62,8 +62,8 @@ if not set -q JAVA_HOME; and /usr/libexec/java_home >/dev/null 2>/dev/null
 end
 
 
-if not set -q RIPGREP_CONFIG_PATH; and test -r $XDG_CONFIG_HOME/ripgrep/ripgreprc
-    set -gx RIPGREP_CONFIG_PATH $XDG_CONFIG_HOME/ripgrep/ripgreprc
+if test -r $XDG_CONFIG_HOME/ripgrep/ripgreprc
+    set_if_absent RIPGREP_CONFIG_PATH $XDG_CONFIG_HOME/ripgrep/ripgreprc
 end
 
 

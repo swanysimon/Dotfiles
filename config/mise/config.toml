@@ -1,9 +1,5 @@
 [tools]
-java = "zulu-17"
-node = "latest"
-python = "latest"
 usage = "latest"
-yarn = "1"
 
 [settings]
 experimental = true

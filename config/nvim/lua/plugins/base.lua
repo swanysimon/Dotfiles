@@ -51,11 +51,18 @@ return {
     dependencies = "rafamadriz/friendly-snippets",
     event = "VeryLazy",
     opts = {
-      documentation = {
-        auto_show = true,
+      completion = {
+        list = {
+          selection = "auto_insert",
+        },
       },
       keymap = {
         preset = "enter",
+        ["<Tab>"] = { "snippet_forward", "select_next", "fallback", },
+        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback", },
+      },
+      signature = {
+        enabled = true,
       },
     },
     version = "*",

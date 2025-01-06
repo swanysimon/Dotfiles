@@ -83,7 +83,7 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "williamboman/mason.nvim",
     },
-    event = "VeryLazy",
+    event = {"BufEnter", "BufRead", "BufWinEnter",},
   },
 
   {

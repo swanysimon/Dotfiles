@@ -27,6 +27,7 @@ brew "zellij"
 cask "alacritty"
 
 # core applications
+cask "intellij-idea-ce"
 cask "logseq"
 cask "protonmail-bridge"
 cask "protonvpn"

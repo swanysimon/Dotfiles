@@ -7,14 +7,13 @@ fish_add_path ~/.local/bin /opt/homebrew/bin /usr/local/sbin
 set_if_absent XDG_CACHE_HOME ~/.cache
 set_if_absent XDG_CONFIG_HOME ~/.config
 set_if_absent XDG_DATA_HOME ~/.local/share
-set_if_absent CODEDIR ~/code
-
-mkdir -p $CODEDIR
-
 
 if test -r $XDG_DATA_HOME/fish/config.(hostname -s).fish
     source $XDG_DATA_HOME/fish/config.(hostname -s).fish
 end
+
+set_if_absent CODEDIR ~/code
+mkdir -p $CODEDIR
 
 
 if status is-interactive
@@ -54,11 +53,6 @@ if type -p mise &>/dev/null
     else
         mise activate fish --shims | source
     end
-end
-
-
-if not set -q JAVA_HOME; and /usr/libexec/java_home >/dev/null 2>/dev/null
-    set -gx JAVA_HOME (/usr/libexec/java_home)
 end
 
 

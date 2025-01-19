@@ -17,6 +17,7 @@ local function setup(_, options)
   -- find files
   bind("f", builtin.find_files)
   bind("ff", builtin.find_files)
+  bind("fg", builtin.git_files)
   bind("fb", builtin.buffers)
   bind("fbb", builtin.buffers)
   bind("fbr", builtin.oldfiles)

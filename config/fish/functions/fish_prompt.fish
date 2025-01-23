@@ -16,17 +16,17 @@ end
 
 function git_fish_prompt
     # When not in a git repository, don't change anything
-    if not git rev-parse >/dev/null 2>&1
+    if not git rev-parse &>/dev/null
         return
     end
 
     # The inital git commit state breaks many of the other git commands run; handle this early
-    if not git rev-parse --verify HEAD >/dev/null 2>&1
+    if not git rev-parse --verify HEAD &>/dev/null
         echo -ns " " (set_color blue) "<initial git commit>" (set_color normal)
         return
     end
 
-    git update-index -q --really-refresh
+    git update-index -q --really-refresh &>/dev/null
 
     echo -ns " " (set_color magenta)
 
@@ -37,12 +37,15 @@ function git_fish_prompt
 
     # Get display name for current branch
     set -f git_current_branch (
-        if git rebase --show-current-patch >/dev/null 2>&1
+        if git rebase --show-current-patch &>/dev/null
             echo "rebasing"
-        else if [ -z (git branch --show-current) ]
-            echo "detached"
         else
-            git branch --show-current
+            set -l current_branch (git branch --show-current 2>/dev/null)
+            if [ -z $current_branch ]
+                echo detached
+            else
+                echo $current_branch
+            end
         end
     )
 

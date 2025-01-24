@@ -3,6 +3,7 @@
 # Simon's Dotfiles
 
 [GitLab](https://gitlab.com/swanysimon/dotfiles)
+
 [GitHub mirror](https://github.com/swanysimon/dotfiles)
 
 ## Extensions

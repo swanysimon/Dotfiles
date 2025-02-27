@@ -35,8 +35,9 @@
   autosetupmerge = always
   autosetuprebase = always
   rebase = true
-[color]
-  ui = true
+  sort = -committerdate
+[column]
+  ui = auto
 [core]
   editor = nvim
   ignorecase = true
@@ -45,17 +46,24 @@
   line-numbers = true
   side-by-side = true
 [diff]
-  colorMoved = default
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
 [fetch]
+  all = true
   parallel = 0
   prune = true
+  pruneTags = true
   recurseSubmodules = true
+[help]
+  autocorrect = prompt
 [init]
   defaultBranch = main
 [interactive]
   diffFilter = delta --color-only
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
   tool = vimdiff
 [mergetool]
   keepBackup = false
@@ -66,3 +74,11 @@
   cmd = nvim -dc '$wincmd w | wincmd J' "$LOCAL" "$BASE" "$REMOTE" "$MERGED"
 [pager]
   branch = false
+[push]
+  autoSetupRemote = true
+  followTags = true
+[rerere]
+  autoupdate = true
+  enabled = true
+[tag]
+  sort = version:refname

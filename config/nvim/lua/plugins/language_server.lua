@@ -87,6 +87,11 @@ return {
   },
 
   {
+    "Olical/conjure",
+    event = "VeryLazy",
+  },
+
+  {
     "stevearc/dressing.nvim",
     event = "VeryLazy",
     opts = {},

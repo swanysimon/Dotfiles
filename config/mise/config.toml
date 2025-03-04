@@ -3,3 +3,6 @@ usage = "latest"
 
 [settings]
 experimental = true
+
+[settings.python]
+uv_venv_auto = true

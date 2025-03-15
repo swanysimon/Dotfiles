@@ -21,10 +21,10 @@ brew "mise"
 brew "neovim"
 brew "ripgrep"
 brew "rustup"  # Mise recommends using this to manage Rust versions
+brew "uv"  # Mise integrates well and uv is more all in one for Python work
 brew "watch"
 brew "yq"
 brew "zellij"
-cask "alacritty"
 cask "ghostty"
 
 # core applications

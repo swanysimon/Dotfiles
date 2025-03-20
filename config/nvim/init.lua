@@ -52,3 +52,24 @@ require("plugin_manager").setup()
 -- enable floating terminal
 local terminal = require("terminal"):new()
 map({"n", "t", "v"}, "<leader>t", function() terminal:toggle() end)
+
+-- basic filetype configurations
+vim.api.nvim_create_augroup("indent2", { clear = false })
+vim.api.nvim_create_autocmd(
+  { "FileType", },
+  {
+    group="indent2",
+    pattern={
+      "clojure",
+      "javascript",
+      "json",
+      "lua",
+      "typescript",
+      "yaml",
+    },
+    callback = function()
+      vim.bo.shiftwidth = 2
+      vim.bo.tabstop = 2
+    end,
+  }
+)

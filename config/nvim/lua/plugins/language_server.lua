@@ -1,8 +1,8 @@
 local augroup = vim.api.nvim_create_augroup("LspFormat", {})
 
 local function lsp_settings(client, buffer)
-
   vim.api.nvim_clear_autocmds({ group = augroup, buffer = buffer, })
+  -- automatically format on save
   vim.api.nvim_create_autocmd(
     "BufWritePre",
     {
@@ -14,6 +14,18 @@ local function lsp_settings(client, buffer)
         end
       end,
     })
+  vim.api.nvim_create_autocmd(
+    "LspAttach",
+    {
+      group = augroup,
+      callback = function(args)
+        local lspClient = vim.lsp.get_client_by_id(args.data.client_id)
+        if client:supports_method("textDocument/foldingRange") then
+          vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+        end
+      end,
+    }
+  )
 
   local function map(keys, func)
     vim.keymap.set("n", keys, func, { buffer = buffer })

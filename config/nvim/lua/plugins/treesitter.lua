@@ -1,10 +1,3 @@
-local function setup(_, options)
-  require("nvim-treesitter.configs").setup(options)
-
-  vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-  vim.wo.foldmethod = "expr"
-end
-
 return {
 
   {

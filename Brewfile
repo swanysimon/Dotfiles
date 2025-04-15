@@ -10,7 +10,13 @@ cask "font-sf-mono-nerd-font"
 
 # core command line utilities
 brew "bat"
+brew "colima"
 brew "coreutils"
+brew "docker"
+brew "docker-buildx"
+brew "docker-clean"
+brew "docker-compose"
+brew "docker-credential-helper"
 brew "fish"
 brew "gh"
 brew "git"
@@ -20,6 +26,7 @@ brew "less"  # default MacOS pager missing some flags I want in my git pager
 brew "mise"
 brew "neovim"
 brew "ripgrep"
+brew "rlwrap"
 brew "rustup"  # Mise recommends using this to manage Rust versions
 brew "uv"  # Mise integrates well and uv is more all in one for Python work
 brew "watch"

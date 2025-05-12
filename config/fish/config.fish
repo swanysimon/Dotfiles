@@ -41,11 +41,8 @@ if status is-interactive
     abbr g git
 
     abbr code cd $CODEDIR
-end
 
-
-if type -p mise &>/dev/null
-    if status is-interactive
+    if type -p mise &>/dev/null
         mise activate fish | source
         if not test -r $XDG_CONFIG_HOME/fish/completions/mise.fish
             mise completion fish > $XDG_CONFIG_HOME/fish/completions/mise.fish

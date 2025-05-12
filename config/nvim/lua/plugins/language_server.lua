@@ -1,31 +1,37 @@
-local augroup = vim.api.nvim_create_augroup("LspFormat", {})
+local augroup = vim.api.nvim_create_augroup("LspActions", {})
+vim.api.nvim_clear_autocmds({ group = augroup, })
 
-local function lsp_settings(client, buffer)
-  vim.api.nvim_clear_autocmds({ group = augroup, buffer = buffer, })
-  -- automatically format on save
-  vim.api.nvim_create_autocmd(
-    "BufWritePre",
-    {
-      group = augroup,
-      buffer = buffer,
-      callback = function()
-        if client.supports_method("textDocument/formatting") then
-          vim.lsp.buf.format()
-        end
-      end,
-    })
-  vim.api.nvim_create_autocmd(
-    "LspAttach",
-    {
-      group = augroup,
-      callback = function(args)
-        local lspClient = vim.lsp.get_client_by_id(args.data.client_id)
-        if client:supports_method("textDocument/foldingRange") then
-          vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
-        end
-      end,
-    }
-  )
+-- use language server for folding
+vim.api.nvim_create_autocmd(
+  "LspAttach",
+  {
+    group = augroup,
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+      if client:supports_method("textDocument/foldingRange") then
+        vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+      end
+
+      if client:supports_method("textDocument/formatting") then
+        vim.api.nvim_create_autocmd(
+          "BufWritePre",
+          {
+            group = augroup,
+            buffer = args.buf,
+            callback = function()
+              if vim.bo.modified then
+                vim.lsp.buf.format({ client_id = args.data.client_id, })
+              end
+            end,
+          }
+        )
+      end
+    end,
+  }
+)
+
+local function set_keymap(client, buffer)
 
   local function map(keys, func)
     vim.keymap.set("n", keys, func, { buffer = buffer })
@@ -50,17 +56,6 @@ local function lsp_settings(client, buffer)
 end
 
 
-local function setup(_, options)
-  require("mason-lspconfig").setup_handlers({
-    function(server_name)
-      require("lspconfig")[server_name].setup({
-        on_attach = lsp_settings,
-        capabilities = require("blink.cmp").get_lsp_capabilities(),
-      })
-    end,
-  })
-end
-
 return {
 
   {
@@ -84,18 +79,35 @@ return {
   },
 
   {
+    "mason-org/mason-lspconfig.nvim",
+    opts = {},
+    dependencies = {
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+  },
+
+  {
+    "mason-org/mason.nvim",
+    opts = {},
+  },
+
+  {
     "neovim/nvim-lspconfig",
-    config = setup,
+    config = function()
+      vim.lsp.config("*", {
+        on_attach = set_keymap,
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
+      })
+    end,
     dependencies = {
       "dgagn/diagflow.nvim",
       "folke/trouble.nvim",
       "j-hui/fidget.nvim",
+      "mason-org/mason.nvim",
       "saghen/blink.cmp",
       "stevearc/dressing.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "williamboman/mason.nvim",
     },
-    event = {"BufEnter", "BufRead", "BufWinEnter",},
   },
 
   {
@@ -105,18 +117,6 @@ return {
 
   {
     "stevearc/dressing.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
-
-  {
-    "williamboman/mason-lspconfig.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
-
-  {
-    "williamboman/mason.nvim",
     event = "VeryLazy",
     opts = {},
   },

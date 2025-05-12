@@ -59,24 +59,4 @@ require("plugin_manager").setup()
 local terminal = require("terminal"):new()
 map({"n", "t", "v"}, "<leader>t", function() terminal:toggle() end)
 
--- basic filetype configurations
-vim.api.nvim_create_augroup("base", { clear = false })
-vim.api.nvim_create_autocmd(
-  { "FileType", },
-  {
-    group="base",
-    pattern={
-      "clojure",
-      "javascript",
-      "json",
-      "lua",
-      "typescript",
-      "typescriptreact",
-      "yaml",
-    },
-    callback = function()
-      vim.bo.shiftwidth = 2
-      vim.bo.tabstop = 2
-    end,
-  }
-)
+require("autocmds")

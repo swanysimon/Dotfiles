@@ -55,6 +55,7 @@ return {
     event = "VeryLazy",
     opts = {
       completion = {
+        documentation = { auto_show = true, },
         list = {
           selection = {
             auto_insert = true,
@@ -67,9 +68,7 @@ return {
         ["<Tab>"] = { "snippet_forward", "select_next", "fallback", },
         ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback", },
       },
-      signature = {
-        enabled = true,
-      },
+      signature = { enabled = true, },
     },
     version = "*",
   },

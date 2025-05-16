@@ -52,11 +52,24 @@ map("v", "K", ":m '<-2<CR>gv=gv")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
--- configure plugins
+
+-- display diagnostics
+vim.diagnostic.config({
+  virtual_lines = { severity = { min = "ERROR", }, },
+  virtual_text = {
+    severity = {
+      current_line = true,
+      min = "INFO",
+      max = "WARN",
+    },
+  },
+  severity_sort = true,
+})
+
+-- configure plugins and autocmds
 require("plugin_manager").setup()
+require("autocmds").setup()
 
 -- enable floating terminal
 local terminal = require("terminal"):new()
 map({"n", "t", "v"}, "<leader>t", function() terminal:toggle() end)
-
-require("autocmds")

@@ -67,7 +67,7 @@ vim.diagnostic.config({
 })
 
 -- configure plugins and autocmds
-require("plugin_manager").setup()
+require("plugin_manager")
 require("autocmds").setup()
 
 -- enable floating terminal

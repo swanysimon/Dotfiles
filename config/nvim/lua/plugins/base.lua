@@ -49,28 +49,4 @@ return {
     build = function() require("nvim-web-devicons").get_icons() end,
   },
 
-  {
-    "saghen/blink.cmp",
-    dependencies = "rafamadriz/friendly-snippets",
-    event = "VeryLazy",
-    opts = {
-      completion = {
-        documentation = { auto_show = true, },
-        list = {
-          selection = {
-            auto_insert = true,
-            preselect = false,
-          },
-        },
-      },
-      keymap = {
-        preset = "enter",
-        ["<Tab>"] = { "snippet_forward", "select_next", "fallback", },
-        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback", },
-      },
-      signature = { enabled = true, },
-    },
-    version = "*",
-  },
-
 }

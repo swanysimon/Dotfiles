@@ -1,14 +1,6 @@
 return {
 
   {
-    "folke/trouble.nvim",
-    cmd = "Trouble",
-    dependencies = "nvim-tree/nvim-web-devicons",
-    event = "VeryLazy",
-    opts = {},
-  },
-
-  {
     "j-hui/fidget.nvim",
     event = "VeryLazy",
     opts = {},

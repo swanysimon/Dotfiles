@@ -27,19 +27,6 @@ return {
   },
 
   {
-    "folke/todo-comments.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
-    opts = {},
-  },
-
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "VeryLazy",
-    main = "ibl",
-    opts = {},
-  },
-
-  {
     "norcalli/nvim-colorizer.lua",
     event = "VeryLazy",
   },

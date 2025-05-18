@@ -29,7 +29,6 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdateSync",
-    config = setup,
     event = "VeryLazy",
     opts = {
       ensure_installed = "all",

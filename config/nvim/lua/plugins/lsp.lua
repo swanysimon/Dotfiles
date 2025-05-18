@@ -21,10 +21,11 @@ local function set_lsp_keymaps(client, bufnr)
   map("<leader>rn", lsp.rename)
 end
 
+lsp_group = vim.api.nvim_create_augroup("lsp_attach_and_detach", { clear = true, })
 vim.api.nvim_create_autocmd(
   { "LspAttach", },
   {
-    group = augroup("lsp_attach"),
+    group = lsp_group,
     callback = function(args)
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       if not client then
@@ -44,3 +45,32 @@ vim.api.nvim_create_autocmd(
     end,
   }
 )
+
+return {
+
+  {
+    "j-hui/fidget.nvim",
+    opts = {},
+  },
+
+  {
+    "mason-org/mason-lspconfig.nvim",
+    dependencies = {
+      "j-hui/fidget.nvim",
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    opts = {},
+  },
+
+  {
+    "mason-org/mason.nvim",
+    opts = {},
+  },
+
+  {
+    "Olical/conjure",
+    ft = "clojure",
+  },
+
+}

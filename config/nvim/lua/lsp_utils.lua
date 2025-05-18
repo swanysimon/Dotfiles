@@ -1,6 +1,4 @@
-local M = {}
-
-function M.set_default_keymaps(client, bufnr)
+local function set_lsp_keymaps(client, bufnr)
   local function map(keys, func)
     vim.keymap.set("n", keys, func, { buffer = bufnr })
   end
@@ -23,8 +21,26 @@ function M.set_default_keymaps(client, bufnr)
   map("<leader>rn", lsp.rename)
 end
 
-function M.on_attach(client, bufnr)
-  M.set_default_keymaps(client, bufnr)
-end
+vim.api.nvim_create_autocmd(
+  { "LspAttach", },
+  {
+    group = augroup("lsp_attach"),
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if not client then
+        return
+      end
 
-return M
+      local bufnr = args.buf
+      set_lsp_keymaps(client, bufnr)
+
+      if client:supports_method("textDocument/foldingRange") then
+        vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+      end
+
+      if client.server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr, })
+      end
+    end,
+  }
+)

@@ -96,24 +96,3 @@ vim.api.nvim_create_autocmd(
     end,
   }
 )
-
-vim.api.nvim_create_autocmd(
-  { "LspAttach", },
-  {
-    group = augroup("lsp_attach"),
-    callback = function(args)
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      if not client then
-        return
-      end
-
-      if client:supports_method("textDocument/foldingRange") then
-        vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
-      end
-
-      if client:supports_method("textDocument/inlayHints") then
-        vim.lsp.inlay_hints(true, { bufnr = args.buf })
-      end
-    end,
-  }
-)

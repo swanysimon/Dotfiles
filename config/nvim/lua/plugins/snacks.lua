@@ -19,11 +19,17 @@ local function snack_opts()
     notifier = { enabled = true, },
     picker = {
       enabled = true,
-      explorer = {
-        auto_close = true,
-        layout = { preview = true, },
-      },
+      hidden = true,
+      ignored = true,
       sources = {
+        explorer = {
+          auto_close = true,
+          hidden = true,
+          layout = {
+            preset = "default",
+            preview = true,
+          },
+        },
         files = {
           hidden = true,
           follow = true,

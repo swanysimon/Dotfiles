@@ -29,7 +29,6 @@ return {
       })
     end,
     dependencies = {
-      "folke/trouble.nvim",
       "j-hui/fidget.nvim",
       "mason-org/mason.nvim",
       "saghen/blink.cmp",

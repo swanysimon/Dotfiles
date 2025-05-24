@@ -1,11 +1,11 @@
 local function snack_keys()
   return {
-    { "<leader>f", function() Snacks.picker.files() end, },
+    { "<leader>f",  function() Snacks.picker.files() end, },
     { "<leader>ff", function() Snacks.picker.files() end, },
     { "<leader>fg", function() Snacks.picker.git_files() end, },
     { "<leader>fb", function() Snacks.picker.buffers() end, },
     { "<leader>fp", function() Snacks.picker.explorer() end, },
-    { "<leader>ft", function() Snacks.picker.explorer({ cwd = vim.fn.expand("%:p:h")}) end, },
+    { "<leader>ft", function() Snacks.picker.explorer({ cwd = vim.fn.expand("%:p:h") }) end, },
     { "<leader>st", function() Snacks.picker.todo_comments() end, },
   }
 end

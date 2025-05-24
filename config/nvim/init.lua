@@ -14,7 +14,7 @@ opt.timeoutlen = 400
 -- appearance
 opt.colorcolumn = "+1"
 opt.cursorline = true
-opt.fillchars = { eob = " " }  -- disable tildes below last line in buffer
+opt.fillchars = { eob = " " } -- disable tildes below last line in buffer
 opt.ignorecase = true
 opt.list = true
 opt.number = true
@@ -56,7 +56,7 @@ map("n", "N", "Nzzzv")
 -- display diagnostics
 vim.diagnostic.config({
   virtual_lines = { severity = { min = "ERROR", }, },
-  virtual_text = {
+  virtual_text  = {
     severity = {
       current_line = true,
       min = "INFO",
@@ -72,4 +72,4 @@ require("autocmds")
 
 -- enable floating terminal
 local terminal = require("terminal"):new()
-map({"n", "t", "v"}, "<leader>t", function() terminal:toggle() end)
+map({ "n", "t", "v" }, "<leader>t", function() terminal:toggle() end)

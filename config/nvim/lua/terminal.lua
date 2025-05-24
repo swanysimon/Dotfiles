@@ -40,7 +40,6 @@ function M:new()
   )
 end
 
-
 function M:open()
   if is_window(self.window) then
     return vim.api.nvim_set_current_win(self.window)
@@ -76,7 +75,6 @@ function M:open()
   return self
 end
 
-
 function M:close(buf_delete)
   if not is_window(self.window) then
     return self
@@ -108,7 +106,6 @@ function M:close(buf_delete)
   return self
 end
 
-
 function M:toggle()
   if is_window(self.window) then
     self:close(false)
@@ -116,6 +113,5 @@ function M:toggle()
     self:open()
   end
 end
-
 
 return M

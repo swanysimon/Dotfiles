@@ -21,7 +21,7 @@ local function set_lsp_keymaps(client, bufnr)
   map("<leader>rn", lsp.rename)
 end
 
-lsp_group = vim.api.nvim_create_augroup("lsp_attach_and_detach", { clear = true, })
+local lsp_group = vim.api.nvim_create_augroup("lsp_attach_and_detach", { clear = true, })
 vim.api.nvim_create_autocmd(
   { "LspAttach", },
   {
@@ -47,6 +47,11 @@ vim.api.nvim_create_autocmd(
 )
 
 return {
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {},
+  },
 
   {
     "j-hui/fidget.nvim",

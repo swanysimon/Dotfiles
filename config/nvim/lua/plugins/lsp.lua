@@ -21,11 +21,25 @@ local function set_lsp_keymaps(client, bufnr)
   map("<leader>rn", lsp.rename)
 end
 
-local lsp_group = vim.api.nvim_create_augroup("lsp_attach_and_detach", { clear = true, })
+local lsp_autoformat_augroup = vim.api.nvim_create_augroup("lsp_autoformat", {})
+local function enable_format_on_save(client, bufnr)
+  if client:supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = lsp_autoformat_augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd(
+      { "BufWritePre", },
+      {
+        group = lsp_autoformat_augroup,
+        buffer = bufnr,
+        callback = function() vim.lsp.buf.format({ bufnr = bufnr, }) end,
+      })
+  end
+end
+
+local lsp_augroup = vim.api.nvim_create_augroup("lsp_attach_and_detach", { clear = true, })
 vim.api.nvim_create_autocmd(
   { "LspAttach", },
   {
-    group = lsp_group,
+    group = lsp_augroup,
     callback = function(args)
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       if not client then
@@ -34,6 +48,7 @@ vim.api.nvim_create_autocmd(
 
       local bufnr = args.buf
       set_lsp_keymaps(client, bufnr)
+      enable_format_on_save(client, bufnr)
 
       if client:supports_method("textDocument/foldingRange") then
         vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"

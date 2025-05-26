@@ -59,40 +59,41 @@ vim.api.nvim_create_autocmd(
   }
 )
 
-vim.api.nvim_create_autocmd(
-  { "BufReadPost", },
-  {
-    group = augroup("goto_last_position_on_buffer_on"),
-    callback = function(args)
-      local bufnr = args.buf
+-- TODO: fix interactions with go to definition and similar
+-- vim.api.nvim_create_autocmd(
+--   { "BufReadPost", },
+--   {
+--     group = augroup("goto_last_position_on_buffer_on"),
+--     callback = function(args)
+--       local bufnr = args.buf
 
-      local exclude = { "help", "gitcommit", }
-      if vim.tbl_contains(exclude, vim.bo[bufnr].filetype) then
-        -- don't mess with entrypoint for documentation or commit messages
-        return
-      end
+--       local exclude = { "help", "gitcommit", }
+--       if vim.list_contains(exclude, vim.bo[bufnr].filetype) then
+--         -- don't mess with entrypoint for documentation or commit messages
+--         return
+--       end
 
-      local winnr = vim.iter(vim.api.nvim_list_wins()):find(
-        function(win) return vim.api.nvim_win_get_buf(win) end
-      )
-      if not winnr then
-        -- buffer isn't in a window; don't ask questions but don't continue
-        return
-      end
+--       local winnr = vim.iter(vim.api.nvim_list_wins()):find(
+--         function(win) return vim.api.nvim_win_get_buf(win) end
+--       )
+--       if not winnr then
+--         -- buffer isn't in a window; don't ask questions but don't continue
+--         return
+--       end
 
-      local mark = vim.api.nvim_buf_get_mark(bufnr, "\"")
-      if mark[1] <= 0 then
-        -- no previous position known for the file
-        return
-      end
+--       local mark = vim.api.nvim_buf_get_mark(bufnr, "\"")
+--       if mark[1] <= 0 then
+--         -- no previous position known for the file
+--         return
+--       end
 
-      local numlines = vim.api.nvim_buf_line_count(bufnr)
-      if mark[1] <= numlines then
-        vim.api.nvim_win_set_cursor(winnr, mark)
-      else
-        -- previous edit was beyond the current last line; go to the bottom
-        vim.api.nvim_win_set_cursor(winnr, { 0, numlines, })
-      end
-    end,
-  }
-)
+--       local numlines = vim.api.nvim_buf_line_count(bufnr)
+--       if mark[1] <= numlines then
+--         vim.api.nvim_win_set_cursor(winnr, mark)
+--       else
+--         -- previous edit was beyond the current last line; go to the bottom
+--         vim.api.nvim_win_set_cursor(winnr, { 0, numlines, })
+--       end
+--     end,
+--   }
+-- )

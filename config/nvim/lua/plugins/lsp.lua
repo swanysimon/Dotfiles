@@ -13,7 +13,7 @@ local function set_lsp_keymaps(client, bufnr)
   map("gt", lsp.type_definition)
 
   -- documentation
-  map("<leader>K", lsp.signature_help)
+  map("<leader>k", lsp.signature_help)
   map("K", lsp.hover)
 
   -- actions
@@ -62,6 +62,7 @@ vim.api.nvim_create_autocmd(
 )
 
 return {
+
   {
     "folke/lazydev.nvim",
     ft = "lua",
@@ -76,6 +77,7 @@ return {
   {
     "mason-org/mason-lspconfig.nvim",
     dependencies = {
+      "folke/snacks.nvim",
       "j-hui/fidget.nvim",
       "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",

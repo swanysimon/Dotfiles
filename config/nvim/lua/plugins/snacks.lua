@@ -1,6 +1,6 @@
 local function snack_keys()
   return {
-    { "<leader>f",  function() Snacks.picker.files() end, },
+    { "<leader>f",  function() Snacks.picker.smart() end, },
     { "<leader>ff", function() Snacks.picker.files() end, },
     { "<leader>fg", function() Snacks.picker.git_files() end, },
     { "<leader>fb", function() Snacks.picker.buffers() end, },
@@ -21,6 +21,10 @@ local function snack_opts()
       enabled = true,
       hidden = true,
       ignored = true,
+      matcher = {
+        cmd_bonus = true,
+        frecency = true,
+      },
       sources = {
         explorer = {
           auto_close = true,
@@ -29,11 +33,15 @@ local function snack_opts()
             preset = "default",
             preview = true,
           },
+          replace_netrw = true,
         },
         files = {
           hidden = true,
           follow = true,
-        }
+        },
+        smart = {
+          multi = { "buffers", "files", "git_files", },
+        },
       },
       win = {
         input = {
@@ -44,9 +52,6 @@ local function snack_opts()
       },
     },
     statuscolumn = { enabled = true, },
-    terminal = {
-      win = { position = "float", },
-    },
   }
 end
 
@@ -66,7 +71,6 @@ return {
   {
     "folke/todo-comments.nvim",
     dependencies = "nvim-lua/plenary.nvim",
-    event = "VeryLazy",
     opts = {},
   },
 

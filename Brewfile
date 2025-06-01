@@ -34,7 +34,7 @@ brew "docker-compose"
 brew "docker-credential-helper"
 
 # core applications
-cask "intellij-idea-ce"
+cask "intellij-idea"
 cask "proton-mail-bridge"
 cask "protonvpn"
 cask "rectangle"
@@ -46,7 +46,6 @@ cask "whatsapp"
 cask "xld"
 
 # keyboard configuration
-tap "homebrew/cask-drivers"
 cask "chrysalis"
 cask "qmk-toolbox"
 

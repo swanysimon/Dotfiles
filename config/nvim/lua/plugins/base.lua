@@ -18,4 +18,19 @@ return {
     build = function() require("nvim-web-devicons").get_icons() end,
   },
 
+  {
+    "nvzone/floaterm",
+    dependencies = "nvzone/volt",
+    opts = {
+      size = { h = 75, w = 85, },
+    },
+    keys = {
+      {
+        "<leader>t",
+        mode = { "n", "t", "v" },
+        function() require("floaterm").toggle() end,
+      },
+    },
+  },
+
 }

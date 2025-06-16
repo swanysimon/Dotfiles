@@ -69,7 +69,3 @@ vim.diagnostic.config({
 -- configure plugins and autocmds
 require("plugin_manager")
 require("autocmds")
-
--- enable floating terminal
-local terminal = require("terminal"):new()
-map({ "n", "t", "v" }, "<leader>t", function() terminal:toggle() end)

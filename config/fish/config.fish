@@ -7,12 +7,12 @@ fish_add_path ~/.local/bin /opt/homebrew/bin /usr/local/sbin
 set_if_absent XDG_CACHE_HOME ~/.cache
 set_if_absent XDG_CONFIG_HOME ~/.config
 set_if_absent XDG_DATA_HOME ~/.local/share
+set_if_absent CODEDIR ~/code
 
 if test -r $XDG_DATA_HOME/fish/config.(hostname -s).fish
     source $XDG_DATA_HOME/fish/config.(hostname -s).fish
 end
 
-set_if_absent CODEDIR ~/code
 mkdir -p $CODEDIR
 
 
@@ -41,15 +41,16 @@ if status is-interactive
     abbr g git
 
     abbr code cd $CODEDIR
+end
 
-    if type -p mise &>/dev/null
-        mise activate fish | source
-        if not test -r $XDG_CONFIG_HOME/fish/completions/mise.fish
-            mise completion fish > $XDG_CONFIG_HOME/fish/completions/mise.fish
-        end
-    else
-        mise activate fish --shims | source
+
+if type -p mise &>/dev/null
+    mise activate fish | source
+    if not test -r $XDG_CONFIG_HOME/fish/completions/mise.fish
+        mise completion fish > $XDG_CONFIG_HOME/fish/completions/mise.fish
     end
+else
+    mise activate fish --shims | source
 end
 
 

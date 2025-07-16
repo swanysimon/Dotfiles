@@ -56,13 +56,7 @@ map("n", "N", "Nzzzv")
 -- display diagnostics
 vim.diagnostic.config({
   virtual_lines = { severity = { min = "ERROR", }, },
-  virtual_text  = {
-    severity = {
-      current_line = true,
-      min = "INFO",
-      max = "WARN",
-    },
-  },
+  virtual_text  = { severity = { min = "INFO", max = "WARN", }, },
   severity_sort = true,
 })
 

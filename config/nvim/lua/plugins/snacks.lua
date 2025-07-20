@@ -27,12 +27,7 @@ local function snack_opts()
       },
       sources = {
         explorer = {
-          auto_close = true,
           hidden = true,
-          layout = {
-            preset = "default",
-            preview = true,
-          },
           replace_netrw = true,
         },
         files = {

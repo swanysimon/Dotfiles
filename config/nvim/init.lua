@@ -55,9 +55,10 @@ map("n", "N", "Nzzzv")
 
 -- display diagnostics
 vim.diagnostic.config({
-  virtual_lines = { severity = { min = "ERROR", }, },
-  virtual_text  = { severity = { min = "INFO", max = "WARN", }, },
-  severity_sort = true,
+  virtual_lines    = { severity = { min = "ERROR", }, },
+  virtual_text     = { severity = { min = "INFO", max = "WARN", }, },
+  severity_sort    = true,
+  update_in_insert = false,
 })
 
 -- configure plugins and autocmds

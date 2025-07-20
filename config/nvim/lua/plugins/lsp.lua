@@ -18,7 +18,16 @@ local function set_lsp_keymaps(client, bufnr)
 
   -- actions
   map("<leader><cr>", lsp.code_action)
+  map("<leader>ca", lsp.code_action)
   map("<leader>rn", lsp.rename)
+
+  -- workspace management
+  map("<leader>wa", lsp.add_workspace_folder)
+  map("<leader>wr", lsp.remove_workspace_folder)
+
+  -- diagnostics
+  map("<leader>e", vim.diagnostic.open_float)
+  map("<leader>q", vim.diagnostic.setloclist)
 end
 
 local lsp_autoformat_augroup = vim.api.nvim_create_augroup("lsp_autoformat", {})
@@ -62,6 +71,11 @@ vim.api.nvim_create_autocmd(
 )
 
 return {
+
+  {
+    "b0o/schemastore.nvim",
+    lazy = true,
+  },
 
   {
     "folke/lazydev.nvim",

@@ -60,6 +60,14 @@ local plugins = {
   },
 
   {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
+    cmd = "Trouble",
+    keys = require("plugins.trouble").trouble_keys(),
+  },
+
+  {
     "j-hui/fidget.nvim",
     opts = {},
   },
@@ -244,4 +252,5 @@ require("lazy").setup({
   checker = { notify = false, },
   install = { colorscheme = { active_colorscheme, }, },
   lockfile = lazyroot .. "/lazy-lock.json",
-  spec = { colorscheme_specs, plugins, }})
+  spec = { colorscheme_specs, plugins, }
+})

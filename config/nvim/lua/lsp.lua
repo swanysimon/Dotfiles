@@ -1,29 +1,86 @@
+local function is_cursor_at_definition(definitions, bufnr)
+  local current_pos = vim.api.nvim_win_get_cursor(0)
+  local current_uri = vim.uri_from_bufnr(bufnr)
+
+  for _, def in ipairs(definitions) do
+    local def_uri = def.uri or def.targetUri
+    local def_range = def.range or def.targetRange or def.targetSelectionRange
+
+    if def_uri == current_uri and def_range then
+      local def_start = def_range.start
+      local def_end = def_range["end"]
+
+      -- Check if cursor is within definition range (0-indexed to 1-indexed conversion)
+      if current_pos[1] - 1 >= def_start.line and current_pos[1] - 1 <= def_end.line then
+        if current_pos[1] - 1 == def_start.line and current_pos[2] < def_start.character then
+          -- Before definition on same line
+        elseif current_pos[1] - 1 == def_end.line and current_pos[2] > def_end.character then
+          -- After definition on same line
+        else
+          return true
+        end
+      end
+    end
+  end
+
+  return false
+end
+
+local function definition_or_usages(bufnr)
+  local params = vim.lsp.util.make_position_params()
+  local snacks = require("plugins.snacks")
+
+  vim.lsp.buf_request(
+    bufnr,
+    "textDocument/definition",
+    params,
+    function(err, definitions)
+      if err
+          or not definitions
+          or vim.tbl_isempty(definitions)
+          or is_cursor_at_definition(definitions, bufnr) then
+        -- no definitions found or on definition: show references
+        snacks.snacks_or_lsp("lsp_references", vim.lsp.buf.references)()
+        return
+      else
+        -- at usage: go to definition
+        snacks.snacks_or_lsp("lsp_definitions", vim.lsp.buf.definition)()
+      end
+    end)
+end
+
 local function set_lsp_keymaps(client, bufnr)
   local function map(keys, func)
     vim.keymap.set("n", keys, func, { buffer = bufnr })
   end
 
-  local lsp = vim.lsp.buf
+  local snacks = require("plugins.snacks")
 
-  -- navigation
-  map("gD", lsp.declaration)
-  map("gd", lsp.definition)
-  map("gi", lsp.implementation)
-  map("gr", lsp.references)
-  map("gt", lsp.type_definition)
+  -- navigation with dynamic snacks picker checking
+  map("gD", snacks.snacks_or_lsp("lsp_declarations", vim.lsp.buf.declaration))
+  map("gd", snacks.snacks_or_lsp("lsp_definitions", vim.lsp.buf.definition))
+  map("gi", snacks.snacks_or_lsp("lsp_implementations", vim.lsp.buf.implementation))
+  map("gr", snacks.snacks_or_lsp("lsp_references", vim.lsp.buf.references))
+  map("gt", snacks.snacks_or_lsp("lsp_type_definitions", vim.lsp.buf.type_definition))
+
+  map("<leader>ds", snacks.snacks_or_lsp("diagnostics", vim.diagnostic.setloclist))
+  map("<leader>dw", snacks.snacks_or_lsp("diagnostics", vim.diagnostic.setqflist))
+
+  -- IntelliJ CMD-B style: context-aware definition/usage navigation
+  map("gb", function() definition_or_usages(bufnr) end)
 
   -- documentation
-  map("<leader>k", lsp.signature_help)
-  map("K", lsp.hover)
+  map("<leader>k", vim.lsp.buf.signature_help)
+  map("K", vim.lsp.buf.hover)
 
   -- actions
-  map("<leader><cr>", lsp.code_action)
-  map("<leader>ca", lsp.code_action)
-  map("<leader>rn", lsp.rename)
+  map("<leader><cr>", vim.lsp.buf.code_action)
+  map("<leader>ca", vim.lsp.buf.code_action)
+  map("<leader>rn", vim.lsp.buf.rename)
 
   -- workspace management
-  map("<leader>wa", lsp.add_workspace_folder)
-  map("<leader>wr", lsp.remove_workspace_folder)
+  map("<leader>wa", vim.lsp.buf.add_workspace_folder)
+  map("<leader>wr", vim.lsp.buf.remove_workspace_folder)
 
   -- diagnostics
   map("<leader>e", vim.diagnostic.open_float)

@@ -60,6 +60,31 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 - Visual block movement: `J/K` or arrow keys
 - Plugin-specific keys defined in respective plugin files
 
+### IDE-like Features & Keybindings
+
+#### Project Search (IntelliJ-inspired)
+- `<leader>ss` - Search project for any string (like Ctrl+Shift+F)
+- `<leader>sw` - Search for word under cursor
+- `<leader>r` - Restart last picker used
+
+#### LSP Navigation (uses Snacks pickers when available)
+- `gd` - Go to definition(s)
+- `gr` - Go to references/usages
+- `gi` - Go to implementation(s)
+- `gt` - Go to type definition(s)
+- `gD` - Go to declaration(s)
+- `gb` - Toggle between definitions and usages (like IntelliJ CMD-B)
+- `<leader>ds` - Show diagnostics for current buffer
+- `<leader>dw` - Show diagnostics for workspace
+
+#### File Navigation
+- `<leader>f` - Smart picker (files/buffers/git files)
+- `<leader>ff` - Find files
+- `<leader>fg` - Find git files
+- `<leader>fb` - Find buffers
+- `<leader>fp` - Project explorer
+- `<leader>ft` - Explorer in current file's directory
+
 ## Common Tasks
 
 ### Installing New Language Server

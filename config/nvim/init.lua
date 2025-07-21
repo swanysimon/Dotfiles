@@ -61,6 +61,7 @@ vim.diagnostic.config({
   update_in_insert = false,
 })
 
--- configure plugins and autocmds
-require("plugin_manager")
+-- load plugins et al
+require("plugins")
 require("autocmds")
+require("lsp")

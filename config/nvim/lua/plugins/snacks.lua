@@ -1,4 +1,6 @@
-local function snack_keys()
+local M = {}
+
+function M.snack_keys()
   return {
     { "<leader>f",  function() Snacks.picker.smart() end, },
     { "<leader>ff", function() Snacks.picker.files() end, },
@@ -10,7 +12,7 @@ local function snack_keys()
   }
 end
 
-local function snack_opts()
+function M.snack_opts()
   return {
     bigfile = { enabled = true, },
     explorer = { enabled = true, },
@@ -50,23 +52,4 @@ local function snack_opts()
   }
 end
 
-return {
-
-  {
-    "folke/snacks.nvim",
-    dependencies = {
-      "folke/todo-comments.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-    keys = snack_keys(),
-    lazy = false,
-    opts = snack_opts(),
-  },
-
-  {
-    "folke/todo-comments.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
-    opts = {},
-  },
-
-}
+return M

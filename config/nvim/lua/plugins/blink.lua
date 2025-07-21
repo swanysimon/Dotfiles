@@ -1,27 +1,7 @@
-return {
+local M = {}
 
-  {
-    "L3MON4D3/LuaSnip",
-    build = "make install_jsregexp",
-    version = "v2.*",
-    lazy = true,
-  },
-
-  {
-    "rafamadriz/friendly-snippets",
-    config = function() require("luasnip.loaders.from_vscode").lazy_load() end,
-    dependencies = "L3MON4D3/LuaSnip",
-    lazy = true,
-  },
-
-  {
-    "saghen/blink.cmp",
-    dependencies = {
-      "L3MON4D3/LuaSnip",
-      "rafamadriz/friendly-snippets",
-    },
-    event = "InsertEnter",
-    opts = {
+function M.blink_opts()
+  return {
       completion = {
         documentation = { auto_show = true, },
         list = {
@@ -41,8 +21,7 @@ return {
       sources = {
         default = { "lsp", "path", "snippets", "buffer", },
       },
-    },
-    version = "*",
-  },
+    }
+end
 
-}
+return M

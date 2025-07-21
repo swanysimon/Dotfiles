@@ -31,6 +31,9 @@ local function set_lsp_keymaps(client, bufnr)
 end
 
 local lsp_autoformat_augroup = vim.api.nvim_create_augroup("lsp_autoformat", {})
+local lsp_augroup = vim.api.nvim_create_augroup("lsp_attach", { clear = true, })
+local highlight_augroup = vim.api.nvim_create_augroup("lsp_document_highlight", {})
+
 local function enable_format_on_save(client, bufnr)
   if client:supports_method("textDocument/formatting") then
     vim.api.nvim_clear_autocmds({ group = lsp_autoformat_augroup, buffer = bufnr })
@@ -39,12 +42,13 @@ local function enable_format_on_save(client, bufnr)
       {
         group = lsp_autoformat_augroup,
         buffer = bufnr,
-        callback = function() vim.lsp.buf.format({ bufnr = bufnr, }) end,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr, timeout_ms = 3000, })
+        end,
       })
   end
 end
 
-local lsp_augroup = vim.api.nvim_create_augroup("lsp_attach_and_detach", { clear = true, })
 vim.api.nvim_create_autocmd(
   { "LspAttach", },
   {
@@ -66,6 +70,46 @@ vim.api.nvim_create_autocmd(
       if client.server_capabilities.inlayHintProvider then
         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr, })
       end
+
+      if client:supports_method("textDocument/documentHighlight") then
+        vim.api.nvim_clear_autocmds({ buffer = bufnr, group = highlight_augroup })
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+          buffer = bufnr,
+          group = highlight_augroup,
+          callback = vim.lsp.buf.document_highlight,
+        })
+        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+          buffer = bufnr,
+          group = highlight_augroup,
+          callback = vim.lsp.buf.clear_references,
+        })
+      end
+    end,
+  }
+)
+
+vim.api.nvim_create_autocmd(
+  { "LspDetach", },
+  {
+    group = lsp_augroup,
+    callback = function(args)
+      local bufnr = args.buf
+      local clients = vim.lsp.get_clients({ bufnr = bufnr })
+
+      if not vim.iter(clients):find(
+            function(client) return client:supports_method("textDocument/formatting") end
+          ) then
+        vim.api.nvim_clear_autocmds({ group = lsp_autoformat_augroup, buffer = bufnr })
+      end
+
+      if not vim.iter(clients):find(
+            function(client) return client.server_capabilities.inlayHintProvider ~= nil end
+          ) then
+        vim.lsp.inlay_hint.enable(false, { bufnr = bufnr, })
+      end
+
+      vim.api.nvim_clear_autocmds({ buffer = bufnr, group = highlight_augroup })
+      vim.lsp.buf.clear_references()
     end,
   }
 )

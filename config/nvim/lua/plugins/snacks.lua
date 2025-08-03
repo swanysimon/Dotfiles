@@ -4,7 +4,7 @@ function M.is_snacks_active()
   return package.loaded.snacks and Snacks.picker
 end
 
-function M.snacks_or_lsp(snack_picker, lsp_fn)
+function M.snack_picker_or_else(snack_picker, fallback)
   return function()
     if M.is_snacks_active() then
       if type(snack_picker) == "string" then
@@ -12,12 +12,10 @@ function M.snacks_or_lsp(snack_picker, lsp_fn)
       else
         snack_picker()
       end
+    elseif type(fallback) == "function" then
+      fallback()
     else
-      if type(lsp_fn) == "string" then
-        vim.lsp.buf[lsp_fn]()
-      else
-        lsp_fn()
-      end
+      vim.notify("Snacks not available and no fallback provided", vim.log.levels.WARN)
     end
   end
 end

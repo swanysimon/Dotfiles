@@ -59,6 +59,7 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 - Window navigation: `<C-hjkl>`
 - Visual block movement: `J/K` or arrow keys
 - Plugin-specific keys defined in respective plugin files
+- Do not add `desc` parameters or comments to keybindings - user will add these manually
 
 ### IDE-like Features & Keybindings
 

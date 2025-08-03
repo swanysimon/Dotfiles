@@ -27,6 +27,8 @@ brew "mise"
 brew "rlwrap"  # for clj; Mise handling transitive dependencies is too annoying
 brew "rustup"  # Mise recommends using this to manage Rust versions
 brew "uv"  # Mise integrates well and uv is more all in one for Python work
+cask "claude-code"
+cask "intellij-idea"
 
 # containerization
 brew "colima"
@@ -37,8 +39,6 @@ brew "docker-compose"
 brew "docker-credential-helper"
 
 # core applications
-cask "claude-code"
-cask "intellij-idea"
 cask "proton-mail-bridge"
 cask "protonvpn"
 cask "rectangle"

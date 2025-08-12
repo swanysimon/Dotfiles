@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+while read PR; do
+    gh pr close \
+        "$(echo "$PR" | jq '.number')" \
+        --repo "$(echo "$PR" | jq -r '.repository.nameWithOwner')" \
+    || echo "Failed to close $(echo "$PR" | jq '.number') in $(echo "$PR" | jq -r '.repository.nameWithOwner')"
+done < <( \
+    gh search prs \
+    --archived=false \
+    --state open \
+    --owner "$1" \
+    --sort updated \
+    --limit 1000 \
+    --json updatedAt,number,repository \
+    --updated "<$(date -v-1m +"%Y-%m-%d")" \
+    --jq '.[]' \
+)

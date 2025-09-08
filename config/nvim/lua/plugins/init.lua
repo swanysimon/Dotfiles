@@ -107,7 +107,13 @@ local plugins = {
       "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
-    opts = {},
+    opts = {
+      ensure_installed = {
+        "jsonls",
+        "tombi",
+        "yamlls",
+      },
+    },
   },
 
   {

@@ -15,6 +15,6 @@ done < <( \
     --sort updated \
     --limit 1000 \
     --json updatedAt,number,repository \
-    --updated "<$(date -v-1m +"%Y-%m-%d")" \
+    --updated "<$(date -v-3w +"%Y-%m-%d")" \
     --jq '.[]' \
 )

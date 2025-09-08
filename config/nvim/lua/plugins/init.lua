@@ -102,6 +102,7 @@ local plugins = {
   {
     "mason-org/mason-lspconfig.nvim",
     dependencies = {
+      "b0o/schemastore.nvim",
       "folke/snacks.nvim",
       "j-hui/fidget.nvim",
       "mason-org/mason.nvim",
@@ -109,9 +110,10 @@ local plugins = {
     },
     opts = {
       ensure_installed = {
-        "jsonls",
-        "tombi",
-        "yamlls",
+        -- configuration file formats
+        "jsonls", "tombi", "yamlls",
+        -- common languages
+        "basedpyright", "bashls", "lua_ls",
       },
     },
   },

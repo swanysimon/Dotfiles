@@ -64,4 +64,3 @@ vim.diagnostic.config({
 -- load plugins et al
 require("plugins")
 require("autocmds")
-require("lsp")

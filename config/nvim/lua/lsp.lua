@@ -1,3 +1,6 @@
+local M = {}
+
+
 local function is_cursor_at_definition(definitions, bufnr)
   local current_pos = vim.api.nvim_win_get_cursor(0)
   local current_uri = vim.uri_from_bufnr(bufnr)
@@ -199,3 +202,66 @@ vim.api.nvim_create_autocmd(
     end,
   }
 )
+
+
+function M.setup_local_lsps()
+  local mason_mappings = require("mason-lspconfig.mappings").get_mason_map().package_to_lspconfig
+  local mason_servers = vim.iter(require("mason-registry").get_installed_packages())
+      :filter(function(package)
+        return package.spec.categories
+            and vim.tbl_contains(package.spec.categories, "lsp")
+            and mason_mappings[package.name] ~= nil
+      end)
+      :map(function(package) return mason_mappings[package.name] end)
+
+  local function get_executable(path) return vim.fn.executable(path) == 1 and path or nil end
+  local function find_executable(executable_name)
+    local node_bin_path = vim.fn.findfile(
+      "node_modules/.bin/" .. executable_name,
+      vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h") .. ";" .. vim.fn.expand("~")
+    )
+    return get_executable(node_bin_path) or get_executable(executable_name)
+  end
+
+  vim.iter(vim.tbl_values(require("mason-lspconfig.mappings").get_filetype_map()))
+      :flatten()
+      :filter(function(server_name) return not vim.tbl_contains(mason_servers, server_name) end)
+      :each(function(server_name)
+        local config = vim.lsp.config[server_name]
+        if not (config and config.cmd and (vim.is_callable(config.cmd) or config.cmd[1])) then
+          return
+        end
+
+        if vim.is_callable(config.cmd) then
+          -- some LSPs have functions that start the server as their command, making it pretty much
+          -- impossible to know what the server's actual command is. Thankfully, most servers that I
+          -- care about in this bucket have the same executable name as their server name, so we put
+          -- the filter on that
+          if find_executable(server_name) then
+            vim.lsp.enable(server_name)
+          end
+          return
+        end
+
+        if #vim.lsp.get_clients({ name = server_name }) > 0 then
+          -- already a running instance of the server
+          return
+        end
+
+        local executable_name = config.cmd[1]
+        local local_executable = find_executable(executable_name)
+        if not local_executable then
+          return
+        end
+
+        if local_executable ~= executable_name then
+          local local_cmd = vim.tbl_extend("force", {}, config.cmd)
+          local_cmd[1] = local_executable
+          vim.lsp.config(server_name, { cmd = local_cmd })
+        end
+
+        vim.lsp.enable(server_name)
+      end)
+end
+
+return M

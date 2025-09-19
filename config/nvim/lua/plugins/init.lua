@@ -108,6 +108,10 @@ local plugins = {
       "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
+    config = function(opts)
+      require("mason-lspconfig").setup(opts)
+      require("lsp").setup_local_lsps()
+    end,
     opts = {
       ensure_installed = {
         -- configuration file formats

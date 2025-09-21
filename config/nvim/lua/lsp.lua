@@ -232,6 +232,11 @@ function M.setup_local_lsps()
           return
         end
 
+        if #vim.lsp.get_clients({ name = server_name }) > 0 then
+          -- already a running instance of the server
+          return
+        end
+
         if vim.is_callable(config.cmd) then
           -- some LSPs have functions that start the server as their command, making it pretty much
           -- impossible to know what the server's actual command is. Thankfully, most servers that I
@@ -240,11 +245,6 @@ function M.setup_local_lsps()
           if find_executable(server_name) then
             vim.lsp.enable(server_name)
           end
-          return
-        end
-
-        if #vim.lsp.get_clients({ name = server_name }) > 0 then
-          -- already a running instance of the server
           return
         end
 

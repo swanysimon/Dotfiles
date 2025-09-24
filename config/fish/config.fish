@@ -54,6 +54,11 @@ else
 end
 
 
+if type -p colima &>/dev/null
+    set_if_absent DOCKER_HOST unix://$XDG_CONFIG_HOME/colima/docker.sock
+end
+
+
 if test -r $XDG_CONFIG_HOME/ripgrep/ripgreprc
     set_if_absent RIPGREP_CONFIG_PATH $XDG_CONFIG_HOME/ripgrep/ripgreprc
 end

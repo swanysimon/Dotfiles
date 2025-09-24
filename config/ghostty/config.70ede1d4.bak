@@ -12,4 +12,3 @@ window-padding-y = 5
 
 macos-option-as-alt = true
 window-inherit-working-directory = false
-keybind = shift+enter=text:\x1b\r

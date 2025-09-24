@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+echo "🧹 Starting git force clean..."
+
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "❌ Error: Not in a git repository"
+    exit 1
+fi
+
+echo "🔍 Finding main worktree..."
+main_worktree=$(git worktree list --porcelain | grep "^worktree " | head -n1 | cut -d' ' -f2)
+current_dir=$(pwd)
+
+if [ "$current_dir" != "$main_worktree" ]; then
+    echo "📁 Switching to main worktree: $main_worktree"
+    cd "$main_worktree"
+fi
+
+echo "📂 Removing all worktrees..."
+git worktree list --porcelain | grep "^worktree " | cut -d' ' -f2 | while read -r worktree; do
+    if [ "$worktree" != "$(git rev-parse --show-toplevel)" ]; then
+        echo "  Removing worktree: $worktree"
+        git worktree remove --force "$worktree" 2>/dev/null || true
+    fi
+done
+
+echo "🔍 Getting remote default branch..."
+remote_name=$(git remote | head -n1)
+if [ -z "$remote_name" ]; then
+    echo "❌ Error: No remote found"
+    exit 1
+fi
+
+default_branch=$(git symbolic-ref "refs/remotes/$remote_name/HEAD" 2>/dev/null | sed "s|refs/remotes/$remote_name/||" || echo "main")
+
+if ! git show-ref --quiet "refs/remotes/$remote_name/$default_branch"; then
+    echo "⚠️  Default branch '$default_branch' not found, trying 'main'..."
+    default_branch="main"
+    if ! git show-ref --quiet "refs/remotes/$remote_name/$default_branch"; then
+        echo "⚠️  'main' not found, trying 'master'..."
+        default_branch="master"
+        if ! git show-ref --quiet "refs/remotes/$remote_name/$default_branch"; then
+            echo "❌ Error: Cannot determine default branch"
+            exit 1
+        fi
+    fi
+fi
+
+echo "🎯 Default branch: $default_branch"
+
+echo "🌿 Switching to default branch..."
+git checkout "$default_branch" 2>/dev/null || git checkout -b "$default_branch" "refs/remotes/$remote_name/$default_branch"
+
+echo "🗑️  Deleting all local branches except $default_branch..."
+git branch | grep -v "^\*" | grep -v "^  $default_branch$" | xargs -r git branch -D 2>/dev/null || true
+
+echo "🧹 Running git gc..."
+git gc --aggressive --prune=now
+
+echo "📥 Pulling latest from remote..."
+git pull "$remote_name" "$default_branch"
+
+echo "✅ Git force clean completed!"

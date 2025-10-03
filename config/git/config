@@ -6,6 +6,7 @@
 
 [alias]
   # general aliasing
+  mergein = !git fetch && git merge --no-edit "$(git symbolic-ref refs/remotes/origin/HEAD)"
   pushup = !git push origin -u "$(git branch --show-current)"
   pushupforce = pushup --force-with-lease
   recursive-update = submodule update --init --recursive --remote --merge

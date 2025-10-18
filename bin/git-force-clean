@@ -50,8 +50,10 @@ fi
 
 echo "🎯 Default branch: $default_branch"
 
-echo "🌿 Switching to default branch..."
+echo "🌿 Switching to and cleaning up default branch..."
 git checkout "$default_branch" 2>/dev/null || git checkout -b "$default_branch" "refs/remotes/$remote_name/$default_branch"
+git clean -ffdx
+git reset --hard HEAD
 
 echo "🗑️  Deleting all local branches except $default_branch..."
 git branch | grep -v "^\*" | grep -v "^  $default_branch$" | xargs -r git branch -D 2>/dev/null || true

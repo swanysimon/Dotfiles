@@ -1,4 +1,4 @@
-theme = GruvboxDark
+theme = Gruvbox Dark Hard
 
 cursor-style = bar
 
@@ -14,4 +14,4 @@ macos-option-as-alt = true
 window-inherit-working-directory = false
 keybind = shift+enter=text:\x1b\r
 
-auto-update = off
+auto-update = "off"

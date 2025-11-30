@@ -27,8 +27,10 @@ brew "mise"
 brew "rlwrap"  # for clj; Mise handling transitive dependencies is too annoying
 brew "rustup"  # Mise recommends using this to manage Rust versions
 brew "uv"  # Mise integrates well and uv is more all in one for Python work
+cask "claude"
 cask "claude-code"
 cask "intellij-idea"
+cask "rustrover"
 
 # containerization
 brew "colima"

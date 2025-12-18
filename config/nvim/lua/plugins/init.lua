@@ -19,8 +19,8 @@ local plugins = {
 
   {
     "andymass/vim-matchup",
-    dependencies = "nvim-treesitter/nvim-treesitter",
     event = "VeryLazy",
+    opts = { treesitter = { stopline = 1000, }, },
   },
 
   {
@@ -74,20 +74,13 @@ local plugins = {
 
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "tpope/vim-commentary",
-    },
+    dependencies = { "tpope/vim-commentary", },
     event = "VeryLazy",
     opts = {},
   },
 
   {
     "kylechui/nvim-surround",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
     event = "VeryLazy",
     opts = {},
   },
@@ -139,22 +132,21 @@ local plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdateSync",
-    event = "VeryLazy",
-    opts = require("plugins.treesitter").treesitter_opts(),
+    branch = "main",
+    dependencies = {
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      "nvim-treesitter/nvim-treesitter-context",
+    },
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter").install(require("plugins.treesitter").parsers)
+    end,
   },
 
   {
     "nvim-treesitter/nvim-treesitter-context",
-    dependencies = "nvim-treesitter/nvim-treesitter",
     event = "VeryLazy",
     opts = { max_lines = 3, },
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    event = "VeryLazy",
   },
 
   {
@@ -178,13 +170,6 @@ local plugins = {
     event = "InsertEnter",
     opts = require("plugins.blink").blink_opts(),
     version = "*",
-  },
-
-  {
-    "Wansmer/treesj",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    event = "VeryLazy",
-    opts = {},
   },
 
 }

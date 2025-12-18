@@ -17,6 +17,7 @@ brew "less"  # default MacOS pager missing some flags I want in my git pager
 brew "neovim"
 brew "ripgrep"
 brew "tree"
+brew "tree-sitter-cli"
 brew "watch"
 brew "yq"
 brew "zellij"

@@ -61,7 +61,7 @@ local plugins = {
 
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = "nvim-tree/nvim-web-devicons",
     opts = {},
     cmd = "Trouble",
     keys = require("plugins.trouble").trouble_keys(),
@@ -74,7 +74,7 @@ local plugins = {
 
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    dependencies = { "tpope/vim-commentary", },
+    dependencies = "tpope/vim-commentary",
     event = "VeryLazy",
     opts = {},
   },
@@ -93,30 +93,16 @@ local plugins = {
   },
 
   {
-    "mason-org/mason-lspconfig.nvim",
+    "mason-org/mason.nvim",
     dependencies = {
       "b0o/schemastore.nvim",
-      "folke/snacks.nvim",
       "j-hui/fidget.nvim",
-      "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
     config = function(opts)
-      require("mason-lspconfig").setup(opts)
+      require("mason").setup()
       require("lsp").setup_local_lsps()
     end,
-    opts = {
-      ensure_installed = {
-        -- configuration file formats
-        "jsonls", "tombi", "yamlls",
-        -- common languages
-        "basedpyright", "bashls", "lua_ls",
-      },
-    },
-  },
-
-  {
-    "mason-org/mason.nvim",
     opts = {},
   },
 
@@ -139,7 +125,10 @@ local plugins = {
     },
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter").install(require("plugins.treesitter").parsers)
+      require("nvim-treesitter").install(
+        require("plugins.treesitter").parsers,
+        { force = false }
+      )
     end,
   },
 

@@ -18,7 +18,7 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 - Currently using OneDark colorscheme (warmer variant)
 
 ### Core Plugins
-- **LSP**: Mason + mason-lspconfig + nvim-lspconfig for language servers
+- **LSP**: Mason + nvim-lspconfig for language servers
 - **Completion**: Blink.cmp with LuaSnip snippets
 - **Syntax**: Treesitter with context and textobjects
 - **UI**: Snacks.nvim, Trouble, Incline, Fidget
@@ -50,8 +50,10 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 ```
 
 ### LSP Configuration
-- LSP servers managed through Mason
-- Custom configurations in `lua/lsp.lua`
+- LSP servers auto-discovered from Mason registry and local installations
+- `lua/lsp.lua` automatically enables all Mason-managed servers
+- Also detects and enables locally-installed LSP servers (e.g., in node_modules)
+- Custom server configurations can be added via `vim.lsp.config()`
 - Diagnostic configuration in `init.lua:57-62`
 
 ### Keybinding Conventions
@@ -89,8 +91,9 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 ## Common Tasks
 
 ### Installing New Language Server
-1. Add server to Mason configuration
-2. Configure server in `lua/lsp.lua` if custom setup needed
+1. Install via Mason UI (`:Mason`) or command (`:MasonInstall <server>`)
+2. Server will be auto-discovered and enabled on next restart
+3. For custom configurations, use `vim.lsp.config(server_name, {...})` before setup
 
 ### Adding Colorscheme
 1. Add entry to `colorschemes` table in `lua/plugins/init.lua`

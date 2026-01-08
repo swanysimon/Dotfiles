@@ -44,6 +44,7 @@ brew "watch"
 brew "yq"
 brew "zellij"
 cask "ghostty"
+cask "logi-options+"
 
 # programming language management
 brew "rustup"  # Mise recommends using this to manage Rust versions
@@ -61,6 +62,15 @@ brew "docker-buildx"
 brew "docker-clean"
 brew "docker-compose"
 brew "docker-credential-helper"
+
+# things better managed by the App Store, potentially for historical reasons
+mas "AdGuard for Safari", id: 1440147259
+mas "Bitwarden", id: 1352778147
+mas "Instapaper Save", id: 1481302432
+mas "Instapaper", id: 288545208
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
 
 # only for personal machine
 if ENV["BREW_MACHINE"] != "work" then

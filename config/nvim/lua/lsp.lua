@@ -271,7 +271,7 @@ function M.setup_local_lsps()
   local mason_servers = registry.get_installed_package_names()
   for _, mason_spec in ipairs(registry.get_all_package_specs()) do
     local server_name = vim.tbl_get(mason_spec, "neovim", "lspconfig")
-    if server_name then
+    if server_name ~= nil and server_name ~= "systemd_ls" then
       enable_lsp(server_name, vim.tbl_contains(mason_servers, mason_spec.name))
     end
   end

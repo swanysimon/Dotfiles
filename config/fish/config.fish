@@ -44,16 +44,6 @@ if status is-interactive
 end
 
 
-if type -p mise &>/dev/null
-    mise activate fish | source
-    if not test -r $XDG_CONFIG_HOME/fish/completions/mise.fish
-        mise completion fish > $XDG_CONFIG_HOME/fish/completions/mise.fish
-    end
-else
-    mise activate fish --shims | source
-end
-
-
 if type -p colima &>/dev/null
     set_if_absent DOCKER_HOST unix://$XDG_CONFIG_HOME/colima/docker.sock
 end

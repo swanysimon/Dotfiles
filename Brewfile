@@ -8,8 +8,10 @@
 # file. Unfortunately $CODEDIR does not propagate to whatever shell homebrew
 # executes with
 #
+# ```ruby
 # ENV["BREW_MACHINE"] = "work"
 # instance_eval File.read(ENV["HOME"] + "/code/dotfiles/Brewfile")
+# ```
 ####
 
 # patched SF mono font
@@ -18,6 +20,8 @@ brew "fontconfig"
 cask "font-sf-mono-nerd-font"
 
 # core applications
+cask "adguard"
+cask "bitwarden"
 cask "claude"
 cask "rectangle"
 cask "slack"
@@ -64,8 +68,6 @@ brew "docker-compose"
 brew "docker-credential-helper"
 
 # things better managed by the App Store, potentially for historical reasons
-mas "AdGuard for Safari", id: 1440147259
-mas "Bitwarden", id: 1352778147
 mas "Instapaper", id: 288545208
 mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825

@@ -78,6 +78,7 @@ if ENV["BREW_MACHINE"] != "work" then
   brew "rlwrap"  # for clj; Mise handling transitive dependencies is too annoying
 
   cask "proton-mail-bridge"
+  cask "proton-pass"
   cask "protonvpn"
   cask "signal"
   cask "transmission"

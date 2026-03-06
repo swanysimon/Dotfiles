@@ -69,9 +69,6 @@ brew "docker-credential-helper"
 
 # things better managed by the App Store, potentially for historical reasons
 mas "Instapaper", id: 288545208
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
 
 # only for personal machine
 if ENV["BREW_MACHINE"] != "work" then

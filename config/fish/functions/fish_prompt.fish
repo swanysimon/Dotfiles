@@ -1,8 +1,8 @@
 function fish_prompt
     set -f last_command_status $status
 
-    # First line: current directory and git branch information
-    echo -s (set_color yellow) (pwd) (set_color normal) (git_fish_prompt)
+    # First line: current directory and vcs branch information
+    echo -s (set_color yellow) (pwd) (set_color normal) (jj_fish_prompt) (git_fish_prompt)
 
     # Second line: result of previous command and prompt
     if [ $last_command_status -eq 0 ]
@@ -14,9 +14,48 @@ function fish_prompt
 end
 
 
+function jj_fish_prompt
+    # When not in a jj repository, don't output anything
+    if not jj root &>/dev/null
+        return
+    end
+
+    # Core: state indicator, short change ID, any local bookmarks
+    set -f jj_out (jj log -r @ --no-graph --color=never -T '
+        if(conflict, "⚠", if(empty, "○", "◦")) ++
+        change_id.shortest() ++
+        if(local_bookmarks,
+            " " ++ separate("|", local_bookmarks),
+            "")
+    ' 2>/dev/null | string trim)
+
+    test -z "$jj_out"; and return
+
+    # Optional: ahead/behind counts for any tracked bookmarks on @.
+    # Kept separate so a template error here doesn't suppress the core output.
+    # Note: only reflects tracking status of the bookmark itself; if @ sits above
+    # the bookmark (common in jj workflow), those extra changes are not counted.
+    set -f jj_tracking (jj log -r @ --no-graph --color=never -T '
+        separate("", local_bookmarks.map(|b|
+            if(b.is_tracked(),
+                if(b.tracking_ahead_count() > 0, "↑" ++ b.tracking_ahead_count(), "") ++
+                if(b.tracking_behind_count() > 0, "↓" ++ b.tracking_behind_count(), ""),
+                "")))
+    ' 2>/dev/null | string trim)
+    test -n "$jj_tracking"; and set jj_out "$jj_out$jj_tracking"
+
+    echo -ns " " (set_color magenta) $jj_out (set_color normal)
+end
+
+
 function git_fish_prompt
     # When not in a git repository, don't change anything
     if not git rev-parse &>/dev/null
+        return
+    end
+
+    # jj colocated repos leave git in detached HEAD; let jj_fish_prompt handle those
+    if jj root &>/dev/null
         return
     end
 

@@ -20,7 +20,6 @@ brew "fontconfig"
 cask "font-sf-mono-nerd-font"
 
 # core applications
-cask "adguard"
 cask "bitwarden"
 cask "claude"
 cask "rectangle"
@@ -68,6 +67,7 @@ brew "docker-compose"
 brew "docker-credential-helper"
 
 # things better managed by the App Store, potentially for historical reasons
+mas "AdGuard for Safari", id: 1440147259
 mas "Instapaper", id: 288545208
 
 # only for personal machine

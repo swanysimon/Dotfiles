@@ -1,0 +1,20 @@
+{
+  "hooks": {
+    "PreCompact": [],
+    "SessionStart": []
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {},
+  "alwaysThinkingEnabled": true,
+  "permissions": {
+    "allow": [
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr status:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr diff:*)"
+    ]
+  }
+}

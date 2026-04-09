@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPT="$(realpath "$0")"
+DOTFILES_CLAUDE="$(cd "$(dirname "$SCRIPT")/../claude" && pwd)"
+CLAUDE_DIR="$HOME/.claude"
+
+mkdir -p "$CLAUDE_DIR"
+
+link() {
+    local src="${DOTFILES_CLAUDE}/${1}"
+    local dst="${CLAUDE_DIR}/${1}"
+    if [[ -L "$dst" && "$dst" -ef "$src" ]]; then
+        echo "No update to $1"
+        return
+    fi
+
+    ln -svi "$src" "$dst"
+}
+
+link CLAUDE.md
+link settings.json
+link skills

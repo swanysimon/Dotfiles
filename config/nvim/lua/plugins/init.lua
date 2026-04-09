@@ -117,6 +117,20 @@ local plugins = {
   },
 
   {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "theHamsta/nvim-dap-virtual-text",
+      "mfussenegger/nvim-dap-python",
+      "nvim-neotest/nvim-nio",
+    },
+    keys = require("plugins.dap").dap_keys(),
+    config = function()
+      require("plugins.dap").dap_config()
+    end,
+  },
+
+  {
     "mrcjkb/rustaceanvim",
     ft = "rust",
     version = "^9",

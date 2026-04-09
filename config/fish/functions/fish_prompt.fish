@@ -2,7 +2,7 @@ function fish_prompt
     set -f last_command_status $status
 
     # First line: current directory and vcs branch information
-    echo -s (set_color yellow) (pwd) (set_color normal) (jj_fish_prompt) (git_fish_prompt)
+    echo -s (set_color yellow) (pwd) (set_color normal) (jj_fish_prompt) (aws_sso_fish_prompt) (git_fish_prompt)
 
     # Second line: result of previous command and prompt
     if [ $last_command_status -eq 0 ]

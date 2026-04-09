@@ -1,6 +1,6 @@
 set -U fish_greeting ""
 
-
+fish_add_path ~/.bin  # intended for these dotfiles bin/ directory
 fish_add_path ~/.local/bin /opt/homebrew/bin /usr/local/sbin
 
 
@@ -56,4 +56,8 @@ end
 
 if test -d ~/.cargo
     fish_add_path ~/.cargo/bin
+end
+
+if type -p pspg &>/dev/null
+    set_if_absent PSQL_PAGER pspg
 end

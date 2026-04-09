@@ -1,5 +1,38 @@
 local M = {}
 
+local function affected_uris(edit)
+  local uris = {}
+  if edit.changes then
+    for uri in pairs(edit.changes) do
+      uris[uri] = true
+    end
+  end
+  if edit.documentChanges then
+    for _, change in ipairs(edit.documentChanges) do
+      if change.textDocument then
+        uris[change.textDocument.uri] = true
+      elseif change.kind == "rename" then
+        uris[change.newUri] = true
+      elseif change.uri then
+        uris[change.uri] = true
+      end
+    end
+  end
+  return uris
+end
+
+local orig_apply_edit = vim.lsp.handlers["workspace/applyEdit"]
+vim.lsp.handlers["workspace/applyEdit"] = function(err, result, ctx, config)
+  local uris = result and result.edit and affected_uris(result.edit) or {}
+  orig_apply_edit(err, result, ctx, config)
+  for uri in pairs(uris) do
+    local bufnr = vim.uri_to_bufnr(uri)
+    if vim.api.nvim_buf_is_loaded(bufnr) and vim.bo[bufnr].modified then
+      vim.api.nvim_buf_call(bufnr, function() vim.cmd("write") end)
+    end
+  end
+end
+
 
 local function is_cursor_at_definition(definitions, bufnr)
   local current_pos = vim.api.nvim_win_get_cursor(0)

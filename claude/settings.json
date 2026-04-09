@@ -16,6 +16,5 @@
     "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {},
-  "alwaysThinkingEnabled": true,
-  "model": "us.anthropic.claude-sonnet-4-6"
+  "alwaysThinkingEnabled": true
 }

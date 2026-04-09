@@ -8,12 +8,12 @@ function M.snack_keys()
     { "<leader>fb", function() Snacks.picker.buffers() end, },
     { "<leader>fp", function() Snacks.picker.explorer() end, },
     { "<leader>ft", function() Snacks.picker.explorer({ cwd = vim.fn.expand("%:p:h") }) end, },
-    { "<leader>st", function() Snacks.picker.todo_comments() end, },
+    { "<leader>fr", function() Snacks.picker.recent() end, },
     { "<leader>ss", function() Snacks.picker.grep() end, },
     { "<leader>sw", function() Snacks.picker.grep_word() end, },
-    { "<leader>r",  function() Snacks.picker.recent() end, },
+    { "<leader>st", function() Snacks.picker.todo_comments() end, },
     { "<leader>t",  function() Snacks.terminal.toggle() end, mode = { "n", "t", "v", }, },
-    { "<leader>ai", function() Snacks.terminal.toggle("claude", { win = { position = "float" } }) end, mode = { "n", "t", }, },
+    { "<leader>c",  function() Snacks.terminal.toggle("claude", { win = { position = "float" } }) end, mode = { "n", "t", }, },
   }
 end
 

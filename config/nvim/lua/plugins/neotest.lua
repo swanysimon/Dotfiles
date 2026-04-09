@@ -2,13 +2,13 @@ local M = {}
 
 function M.neotest_keys()
   return {
-    { "<leader>tt", function() require("neotest").run.run() end },
-    { "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end },
-    { "<leader>ts", function() require("neotest").summary.toggle() end },
-    { "<leader>to", function() require("neotest").output_panel.toggle() end },
-    { "<leader>tl", function() require("neotest").run.run_last() end },
-    { "]t",         function() require("neotest").jump.next({ status = "failed" }) end },
-    { "[t",         function() require("neotest").jump.prev({ status = "failed" }) end },
+    { "<leader>nn", function() require("neotest").run.run() end },
+    { "<leader>nf", function() require("neotest").run.run(vim.fn.expand("%")) end },
+    { "<leader>ns", function() require("neotest").summary.toggle() end },
+    { "<leader>no", function() require("neotest").output_panel.toggle() end },
+    { "<leader>nl", function() require("neotest").run.run_last() end },
+    { "]n",         function() require("neotest").jump.next({ status = "failed" }) end },
+    { "[n",         function() require("neotest").jump.prev({ status = "failed" }) end },
   }
 end
 

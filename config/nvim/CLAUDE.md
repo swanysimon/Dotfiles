@@ -114,6 +114,13 @@ end,
 - `<C-hjkl>` - Window navigation
 - `J/K`, `<Up>/<Down>` (visual) - Move visual block
 
+#### High-priority actions
+- `<leader>a` - Code action
+- `<leader>r` - Rename symbol
+- `<leader>t` - Toggle terminal (normal, terminal, visual modes)
+- `<leader>c` - Toggle Claude Code terminal (persistent named session)
+- `<leader>o` - Toggle aerial structure panel
+
 #### File & Project Navigation (Snacks)
 - `<leader>f` - Smart picker (buffers + files)
 - `<leader>ff` - Find files
@@ -121,16 +128,15 @@ end,
 - `<leader>fb` - Find buffers
 - `<leader>fp` - Project explorer
 - `<leader>ft` - Explorer in current file's directory
-- `<leader>r` - Recent files
+- `<leader>fr` - Recent files
 
-#### Search (Snacks)
+#### Search & Symbols
 - `<leader>ss` - Grep project (like IntelliJ Ctrl+Shift+F)
 - `<leader>sw` - Grep word under cursor
 - `<leader>st` - Search TODO comments
-
-#### Structure & Symbols (Aerial)
-- `<leader>o` - Toggle aerial structure panel
-- `<leader>so` - Fuzzy search symbols in current file (Snacks aerial picker)
+- `<leader>so` - Fuzzy search symbols in current file (aerial)
+- `<leader>sy` - Search types/classes/interfaces/structs/enums in workspace
+- `<leader>sf` - Search functions/methods/constructors/variables in workspace
 
 #### LSP Navigation
 - `gd` - Go to definition(s)
@@ -139,53 +145,40 @@ end,
 - `gt` - Go to type definition(s)
 - `gD` - Go to declaration(s)
 - `gb` - Toggle between definition and usages (IntelliJ CMD-B style)
-
-#### LSP Symbol Search
-- `<leader>sy` - Search types/classes/interfaces/structs/enums in workspace
-- `<leader>sf` - Search functions/methods/constructors/variables in workspace
-
-#### LSP Actions & Docs
 - `K` - Hover documentation
 - `<leader>k` - Signature help
-- `<leader><cr>` / `<leader>ca` - Code action
-- `<leader>rn` - Rename symbol
 - `<leader>wa` / `<leader>wr` - Add/remove workspace folder
 
 #### Diagnostics
-- `<leader>e` - Open float for current line diagnostics
-- `<leader>q` - Send diagnostics to loclist
-- `<leader>ds` - Show diagnostics for current buffer (Snacks picker)
-- `<leader>dw` - Show diagnostics for workspace (Snacks picker)
+- `<leader>d` - Open float for current line diagnostics
+- `<leader>ds` - Buffer diagnostics (Snacks picker)
+- `<leader>dw` - Workspace diagnostics (Snacks picker)
+- `<leader>dd` - Toggle Trouble diagnostics (all)
+- `<leader>dD` - Toggle Trouble diagnostics (current buffer)
 
-#### Trouble
-- `<leader>xx` - Toggle diagnostics (all)
-- `<leader>xX` - Toggle diagnostics (current buffer)
-- `<leader>cs` - Toggle symbols panel
-- `<leader>cl` - Toggle LSP panel (right side)
+#### Trouble Panels
+- `<leader>xs` - Toggle symbols panel
+- `<leader>xl` - Toggle LSP panel (right side)
 - `<leader>xL` - Toggle loclist
 - `<leader>xQ` - Toggle quickfix
 
-#### Terminal
-- `<leader>t` - Toggle floating terminal (normal, terminal, visual modes)
-- `<leader>ai` - Toggle Claude Code terminal (persistent named session)
-
 #### Testing (Neotest)
-- `<leader>tt` - Run nearest test
-- `<leader>tf` - Run test file
-- `<leader>ts` - Toggle test summary panel
-- `<leader>to` - Toggle test output panel
-- `<leader>tl` - Re-run last test
-- `]t` / `[t` - Jump to next/previous failed test
+- `<leader>nn` - Run nearest test
+- `<leader>nf` - Run test file
+- `<leader>ns` - Toggle test summary panel
+- `<leader>no` - Toggle test output panel
+- `<leader>nl` - Re-run last test
+- `]n` / `[n` - Jump to next/previous failed test
 
 #### Debugging (DAP)
 - `<F5>` - Continue / start debug session
 - `<F10>` - Step over
 - `<F11>` - Step into
 - `<F12>` - Step out
-- `<leader>db` - Toggle breakpoint
-- `<leader>dB` - Conditional breakpoint
-- `<leader>du` - Toggle DAP UI
-- `<leader>dr` - Toggle REPL
+- `<leader>bb` - Toggle breakpoint
+- `<leader>bB` - Conditional breakpoint
+- `<leader>bu` - Toggle DAP UI
+- `<leader>br` - Toggle REPL
 
 ## Common Tasks
 

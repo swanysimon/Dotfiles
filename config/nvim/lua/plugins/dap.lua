@@ -6,10 +6,10 @@ function M.dap_keys()
     { "<F10>",      function() require("dap").step_over() end },
     { "<F11>",      function() require("dap").step_into() end },
     { "<F12>",      function() require("dap").step_out() end },
-    { "<leader>db", function() require("dap").toggle_breakpoint() end },
-    { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end },
-    { "<leader>du", function() require("dapui").toggle() end },
-    { "<leader>dr", function() require("dap").repl.toggle() end },
+    { "<leader>bb", function() require("dap").toggle_breakpoint() end },
+    { "<leader>bB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end },
+    { "<leader>bu", function() require("dapui").toggle() end },
+    { "<leader>br", function() require("dap").repl.toggle() end },
   }
 end
 

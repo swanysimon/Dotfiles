@@ -61,28 +61,25 @@ local function set_lsp_keymaps(client, bufnr)
   map("gr", function() Snacks.picker.lsp_references() end)
   map("gt", function() Snacks.picker.lsp_type_definitions() end)
 
-  map("<leader>ds", function() Snacks.picker.diagnostics({ buf = 0 }) end)
-  map("<leader>dw", function() Snacks.picker.diagnostics() end)
-
   -- IntelliJ CMD-B style: context-aware definition/usage navigation
   map("gb", function() definition_or_usages(bufnr) end)
 
   -- documentation
-  map("<leader>k", vim.lsp.buf.signature_help)
   map("K", vim.lsp.buf.hover)
+  map("<leader>k", vim.lsp.buf.signature_help)
 
   -- actions
-  map("<leader><cr>", vim.lsp.buf.code_action)
-  map("<leader>ca", vim.lsp.buf.code_action)
-  map("<leader>rn", vim.lsp.buf.rename)
+  map("<leader>a", vim.lsp.buf.code_action)
+  map("<leader>r", vim.lsp.buf.rename)
 
   -- workspace management
   map("<leader>wa", vim.lsp.buf.add_workspace_folder)
   map("<leader>wr", vim.lsp.buf.remove_workspace_folder)
 
   -- diagnostics
-  map("<leader>e", vim.diagnostic.open_float)
-  map("<leader>q", vim.diagnostic.setloclist)
+  map("<leader>d", vim.diagnostic.open_float)
+  map("<leader>ds", function() Snacks.picker.diagnostics({ buf = 0 }) end)
+  map("<leader>dw", function() Snacks.picker.diagnostics() end)
 
   -- LSP SymbolKind enum: Class=5, Interface=11, Struct=23, Enum=10
   map("<leader>sy", function() Snacks.picker.lsp_workspace_symbols({ kinds = { 5, 10, 11, 23 } }) end)

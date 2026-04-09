@@ -1,4 +1,13 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr status:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr diff:*)"
+    ]
+  },
   "hooks": {
     "PreCompact": [],
     "SessionStart": []
@@ -8,13 +17,5 @@
   },
   "extraKnownMarketplaces": {},
   "alwaysThinkingEnabled": true,
-  "permissions": {
-    "allow": [
-      "Bash(gh pr list:*)",
-      "Bash(gh pr view:*)",
-      "Bash(gh pr status:*)",
-      "Bash(gh pr checks:*)",
-      "Bash(gh pr diff:*)"
-    ]
-  }
+  "model": "us.anthropic.claude-sonnet-4-6"
 }

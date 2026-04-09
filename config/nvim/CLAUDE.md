@@ -4,38 +4,45 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 
 ## Project Structure
 
-- `init.lua` - Main configuration file with core settings and keybindings
-- `lua/plugins/init.lua` - Plugin specifications and Lazy.nvim setup
-- `lua/plugins/*.lua` - Individual plugin configurations
-- `lua/lsp.lua` - LSP configuration
-- `lua/autocmds.lua` - Auto commands
+- `init.lua` - Core settings, keybindings, diagnostic config, bootstraps plugins
+- `lua/plugins/init.lua` - Plugin specs, colorscheme table, Lazy.nvim setup
+- `lua/plugins/*.lua` - Individual plugin configurations (opts, keys)
+- `lua/lsp.lua` - LSP attach logic, keymaps, auto-format, inlay hints, folding
+- `lua/autocmds.lua` - Auto commands (indentation, prose mode, treesitter, yank highlight)
+- `lsp/*.lua` - Per-server LSP config files (loaded via Neovim 0.11 `vim.lsp.config`)
 
 ## Key Components
 
 ### Plugin Manager
 - **Lazy.nvim** - Modern plugin manager with lazy loading
-- Colorschemes managed separately with priority loading
+- Colorschemes managed separately with priority loading in `lua/plugins/init.lua`
 - Currently using OneDark colorscheme (warmer variant)
 
 ### Core Plugins
-- **LSP**: Mason + nvim-lspconfig for language servers
-- **Completion**: Blink.cmp with LuaSnip snippets
-- **Syntax**: Treesitter with context and textobjects
-- **UI**: Snacks.nvim, Trouble, Incline, Fidget
-- **Editing**: nvim-surround, treesj, vim-matchup
+- **LSP**: `mason-org/mason.nvim` + `neovim/nvim-lspconfig` (as dep) for language servers
+- **Completion**: `saghen/blink.cmp` with LuaSnip snippets
+- **Syntax**: `nvim-treesitter/nvim-treesitter` (branch=main) with context
+- **UI**: `folke/snacks.nvim`, `folke/trouble.nvim`, `b0o/incline.nvim`, `j-hui/fidget.nvim`
+- **Editing**: `kylechui/nvim-surround`, `andymass/vim-matchup`, `tpope/vim-commentary`
+- **Commenting**: `JoosepAlviste/nvim-ts-context-commentstring` (context-aware)
+- **Terminal**: `nvzone/floaterm`
+- **Clojure**: `Olical/conjure` (loaded on ft=clojure)
+- **Lua dev**: `folke/lazydev.nvim` (loaded on ft=lua)
+- **TODO comments**: `folke/todo-comments.nvim`
+- **Colors**: `norcalli/nvim-colorizer.lua`
 
 ### Key Settings
 - Leader key: `,` (comma)
 - Local leader: `'` (apostrophe)
-- 4-space indentation with smart indent
-- Treesitter-based folding
-- Clipboard integration with system
+- 4-space indentation globally; 2-space override for lua, javascript, typescript, typescriptreact, json, yaml, clojure (via autocmd)
+- LSP-based folding when server supports it, otherwise Treesitter-based folding
+- Clipboard integration with system (`unnamed` + `unnamedplus`)
 
 ## Development Guidelines
 
 ### Adding Plugins
 1. Add plugin spec to `lua/plugins/init.lua` in the `plugins` table
-2. For complex plugins, create separate config file in `lua/plugins/`
+2. For complex plugins, create a separate config file in `lua/plugins/`
 3. Use lazy loading when appropriate (`event`, `ft`, `keys`, `cmd`)
 4. Include necessary dependencies
 
@@ -44,31 +51,47 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 {
   "author/plugin-name",
   dependencies = { "required/dependency" },
-  event = "VeryLazy", -- or appropriate lazy loading trigger
-  opts = {}, -- or opts = require("plugins.plugin-name").plugin_opts()
+  event = "VeryLazy",
+  opts = require("plugins.plugin-name").plugin_opts(),
 }
 ```
 
 ### LSP Configuration
-- LSP servers auto-discovered from Mason registry and local installations
-- `lua/lsp.lua` automatically enables all Mason-managed servers
-- Also detects and enables locally-installed LSP servers (e.g., in node_modules)
-- Custom server configurations can be added via `vim.lsp.config()`
-- Diagnostic configuration in `init.lua:57-62`
+- Uses Neovim 0.11 built-in `vim.lsp.config()` / `vim.lsp.enable()` APIs (not lspconfig `setup()`)
+- `lua/lsp.lua` auto-discovers and enables all Mason-managed servers and locally-installed servers
+- Local servers are found by searching up from the current buffer's directory (e.g. `node_modules/.bin/`)
+- Per-server config files live in `lsp/<server_name>.lua` and are loaded automatically by Neovim 0.11
+- Custom server settings: create `lsp/<server_name>.lua` returning a config table
+- Diagnostic configuration in `init.lua:57-62` (errors as virtual lines, info/warn as virtual text)
+- On LSP attach: keymaps set, format-on-save enabled, inlay hints enabled, document highlights enabled
+- LSP folding (`vim.lsp.foldexpr()`) activated per-window when server supports `textDocument/foldingRange`
 
 ### Keybinding Conventions
-- Use `vim.keymap.set()` (aliased as `map`)
+- Use `vim.keymap.set()` (aliased as `map` in `init.lua`)
 - Window navigation: `<C-hjkl>`
 - Visual block movement: `J/K` or arrow keys
-- Plugin-specific keys defined in respective plugin files
-- Do not add `desc` parameters or comments to keybindings - user will add these manually
+- Plugin-specific keys defined in respective plugin files via `keys = require("plugins.X").X_keys()`
+- Do not add `desc` parameters or comments to keybindings
 
-### IDE-like Features & Keybindings
+### Keybindings Reference
 
-#### Project Search (IntelliJ-inspired)
-- `<leader>ss` - Search project for any string (like Ctrl+Shift+F)
-- `<leader>sw` - Search for word under cursor
-- `<leader>r` - Restart last picker used
+#### Navigation
+- `<C-hjkl>` - Window navigation
+- `J/K`, `<Up>/<Down>` (visual) - Move visual block
+
+#### File & Project Navigation (Snacks)
+- `<leader>f` - Smart picker (buffers + files + git files)
+- `<leader>ff` - Find files
+- `<leader>fg` - Find git files
+- `<leader>fb` - Find buffers
+- `<leader>fp` - Project explorer
+- `<leader>ft` - Explorer in current file's directory
+- `<leader>r` - Recent files
+
+#### Search (Snacks)
+- `<leader>ss` - Grep project (like IntelliJ Ctrl+Shift+F)
+- `<leader>sw` - Grep word under cursor
+- `<leader>st` - Search TODO comments
 
 #### LSP Navigation (uses Snacks pickers when available)
 - `gd` - Go to definition(s)
@@ -76,24 +99,53 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 - `gi` - Go to implementation(s)
 - `gt` - Go to type definition(s)
 - `gD` - Go to declaration(s)
-- `gb` - Toggle between definitions and usages (like IntelliJ CMD-B)
-- `<leader>ds` - Show diagnostics for current buffer
-- `<leader>dw` - Show diagnostics for workspace
+- `gb` - Toggle between definition and usages (IntelliJ CMD-B style)
 
-#### File Navigation
-- `<leader>f` - Smart picker (files/buffers/git files)
-- `<leader>ff` - Find files
-- `<leader>fg` - Find git files
-- `<leader>fb` - Find buffers
-- `<leader>fp` - Project explorer
-- `<leader>ft` - Explorer in current file's directory
+#### LSP Symbol Search
+- `<leader>sy` - Search types/classes/interfaces/structs/enums in workspace
+- `<leader>sf` - Search functions/methods/constructors/variables in workspace
+
+#### LSP Actions & Docs
+- `K` - Hover documentation
+- `<leader>k` - Signature help
+- `<leader><cr>` / `<leader>ca` - Code action
+- `<leader>rn` - Rename symbol
+- `<leader>wa` / `<leader>wr` - Add/remove workspace folder
+
+#### Diagnostics
+- `<leader>e` - Open float for current line diagnostics
+- `<leader>q` - Send diagnostics to loclist
+- `<leader>ds` - Show diagnostics for current buffer (Snacks picker)
+- `<leader>dw` - Show diagnostics for workspace (Snacks picker)
+
+#### Trouble
+- `<leader>xx` - Toggle diagnostics (all)
+- `<leader>xX` - Toggle diagnostics (current buffer)
+- `<leader>cs` - Toggle symbols panel
+- `<leader>cl` - Toggle LSP panel (right side)
+- `<leader>xL` - Toggle loclist
+- `<leader>xQ` - Toggle quickfix
+
+#### Terminal
+- `<leader>t` - Toggle floating terminal (normal, terminal, visual modes)
 
 ## Common Tasks
 
 ### Installing New Language Server
 1. Install via Mason UI (`:Mason`) or command (`:MasonInstall <server>`)
-2. Server will be auto-discovered and enabled on next restart
-3. For custom configurations, use `vim.lsp.config(server_name, {...})` before setup
+2. Server is auto-discovered and enabled on next restart
+3. For custom settings, create `lsp/<server_name>.lua` returning a config table
+
+### Adding Per-Server LSP Config
+Create `lsp/<server_name>.lua`:
+```lua
+return {
+  settings = {
+    -- server-specific settings
+  },
+}
+```
+Neovim 0.11 loads these automatically via the `lsp/` directory on `runtimepath`.
 
 ### Adding Colorscheme
 1. Add entry to `colorschemes` table in `lua/plugins/init.lua`
@@ -106,7 +158,15 @@ Run `:Lazy update` in Neovim
 - Plugin data: `~/.local/share/nvim/lazy/`
 - Lock file: `~/.local/share/nvim/lazy/lazy-lock.json`
 
-## Notes
-- Configuration uses modern Neovim features (>= 0.11)
-- Diagnostic display configured for minimal noise (errors as virtual lines, info/warn as virtual text)
-- Folding enabled by default with high fold levels for better UX
+## Neovim Version Notes
+
+### 0.11 Features in Use
+- `vim.lsp.config(name, opts)` - configure LSP servers without lspconfig's `setup()`
+- `vim.lsp.enable(name)` - enable a configured LSP server
+- `lsp/` directory on runtimepath auto-loaded for per-server config
+- `client:supports_method()` colon syntax (replaces dot syntax from 0.10)
+- `vim.lsp.foldexpr()` - LSP-based folding expression
+- `opt.foldtext = ""` - empty foldtext renders fold line with normal syntax highlighting
+
+### 0.12 Features in Use
+- None yet; config targets >= 0.11

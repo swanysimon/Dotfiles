@@ -10,6 +10,8 @@ g.mapleaderlocal = "'"
 opt.clipboard = { "unnamed", "unnamedplus", }
 opt.swapfile = false
 opt.timeoutlen = 400
+opt.undofile = true
+opt.updatetime = 300
 
 -- appearance
 opt.colorcolumn = "+1"
@@ -32,6 +34,7 @@ opt.foldmethod = "expr"
 opt.foldtext = ""
 opt.shiftround = true
 opt.shiftwidth = 4
+opt.tabstop = 4
 opt.smartindent = true
 opt.splitbelow = true
 opt.splitright = true

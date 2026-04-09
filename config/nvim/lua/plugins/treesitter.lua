@@ -22,6 +22,7 @@ M.parsers = {
 }
 
 M.ignored_filetypes = {
+  "aerial",
   "checkhealth",
   "lazy",
   "mason",

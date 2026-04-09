@@ -13,6 +13,7 @@ function M.snack_keys()
     { "<leader>sw", function() Snacks.picker.grep_word() end, },
     { "<leader>r",  function() Snacks.picker.recent() end, },
     { "<leader>t",  function() Snacks.terminal.toggle() end, mode = { "n", "t", "v", }, },
+    { "<leader>ai", function() Snacks.terminal.toggle("claude", { win = { position = "float" } }) end, mode = { "n", "t", }, },
   }
 end
 

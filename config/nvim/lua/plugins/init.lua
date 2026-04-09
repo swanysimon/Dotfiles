@@ -24,6 +24,16 @@ local plugins = {
   },
 
   {
+    "stevearc/aerial.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    keys = require("plugins.aerial").aerial_keys(),
+    opts = require("plugins.aerial").aerial_opts(),
+  },
+
+  {
     "b0o/incline.nvim",
     dependencies = "nvim-tree/nvim-web-devicons",
     event = "VeryLazy",
@@ -107,9 +117,30 @@ local plugins = {
   },
 
   {
+    "mrcjkb/rustaceanvim",
+    ft = "rust",
+    version = "^9",
+  },
+
+  {
     "norcalli/nvim-colorizer.lua",
     event = "VeryLazy",
     config = function() require("colorizer").setup() end,
+  },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "nvim-neotest/neotest-python",
+      "haydenmeade/neotest-jest",
+      "mrcjkb/rustaceanvim",
+    },
+    keys = require("plugins.neotest").neotest_keys(),
+    config = function()
+      require("neotest").setup(require("plugins.neotest").neotest_opts())
+    end,
   },
 
   {

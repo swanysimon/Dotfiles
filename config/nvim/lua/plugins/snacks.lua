@@ -1,25 +1,5 @@
 local M = {}
 
-function M.is_snacks_active()
-  return package.loaded.snacks and Snacks.picker
-end
-
-function M.snack_picker_or_else(snack_picker, fallback)
-  return function()
-    if M.is_snacks_active() then
-      if type(snack_picker) == "string" then
-        Snacks.picker[snack_picker]()
-      else
-        snack_picker()
-      end
-    elseif type(fallback) == "function" then
-      fallback()
-    else
-      vim.notify("Snacks not available and no fallback provided", vim.log.levels.WARN)
-    end
-  end
-end
-
 function M.snack_keys()
   return {
     { "<leader>f",  function() Snacks.picker.smart() end, },
@@ -32,6 +12,7 @@ function M.snack_keys()
     { "<leader>ss", function() Snacks.picker.grep() end, },
     { "<leader>sw", function() Snacks.picker.grep_word() end, },
     { "<leader>r",  function() Snacks.picker.recent() end, },
+    { "<leader>t",  function() Snacks.terminal.toggle() end, mode = { "n", "t", "v", }, },
   }
 end
 

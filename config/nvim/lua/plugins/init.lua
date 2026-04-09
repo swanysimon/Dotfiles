@@ -140,13 +140,6 @@ local plugins = {
   },
 
   {
-    "nvzone/floaterm",
-    dependencies = "nvzone/volt",
-    keys = require("plugins.floaterm").floaterm_keys(),
-    opts = require("plugins.floaterm").floaterm_opts(),
-  },
-
-  {
     "Olical/conjure",
     ft = "clojure",
   },

@@ -31,7 +31,6 @@ end
 
 local function definition_or_usages(bufnr)
   local params = vim.lsp.util.make_position_params()
-  local snacks = require("plugins.snacks")
 
   vim.lsp.buf_request(
     bufnr,
@@ -42,12 +41,10 @@ local function definition_or_usages(bufnr)
           or not definitions
           or vim.tbl_isempty(definitions)
           or is_cursor_at_definition(definitions, bufnr) then
-        -- no definitions found or on definition: show references
-        snacks.snack_picker_or_else("lsp_references", vim.lsp.buf.references)()
+        Snacks.picker.lsp_references()
         return
       else
-        -- at usage: go to definition
-        snacks.snack_picker_or_else("lsp_definitions", vim.lsp.buf.definition)()
+        Snacks.picker.lsp_definitions()
       end
     end)
 end
@@ -57,17 +54,15 @@ local function set_lsp_keymaps(client, bufnr)
     vim.keymap.set("n", keys, func, { buffer = bufnr })
   end
 
-  local snacks = require("plugins.snacks")
+  -- navigation
+  map("gD", function() Snacks.picker.lsp_declarations() end)
+  map("gd", function() Snacks.picker.lsp_definitions() end)
+  map("gi", function() Snacks.picker.lsp_implementations() end)
+  map("gr", function() Snacks.picker.lsp_references() end)
+  map("gt", function() Snacks.picker.lsp_type_definitions() end)
 
-  -- navigation with dynamic snacks picker checking
-  map("gD", snacks.snack_picker_or_else("lsp_declarations", vim.lsp.buf.declaration))
-  map("gd", snacks.snack_picker_or_else("lsp_definitions", vim.lsp.buf.definition))
-  map("gi", snacks.snack_picker_or_else("lsp_implementations", vim.lsp.buf.implementation))
-  map("gr", snacks.snack_picker_or_else("lsp_references", vim.lsp.buf.references))
-  map("gt", snacks.snack_picker_or_else("lsp_type_definitions", vim.lsp.buf.type_definition))
-
-  map("<leader>ds", snacks.snack_picker_or_else("diagnostics", vim.diagnostic.setloclist))
-  map("<leader>dw", snacks.snack_picker_or_else("diagnostics", vim.diagnostic.setqflist))
+  map("<leader>ds", function() Snacks.picker.diagnostics({ buf = 0 }) end)
+  map("<leader>dw", function() Snacks.picker.diagnostics() end)
 
   -- IntelliJ CMD-B style: context-aware definition/usage navigation
   map("gb", function() definition_or_usages(bufnr) end)
@@ -89,34 +84,11 @@ local function set_lsp_keymaps(client, bufnr)
   map("<leader>e", vim.diagnostic.open_float)
   map("<leader>q", vim.diagnostic.setloclist)
 
-  -- workspace symbol search (IntelliJ CMD-O/CMD-N style)
   -- LSP SymbolKind enum: Class=5, Interface=11, Struct=23, Enum=10
-  map("<leader>sy", snacks.snack_picker_or_else(
-    function()
-      Snacks.picker.lsp_workspace_symbols({ kinds = { 5, 10, 11, 23 } })
-    end,
-    function()
-      vim.ui.input({ prompt = "Search types: " }, function(query)
-        if query and query ~= "" then
-          vim.lsp.buf.workspace_symbol(query)
-        end
-      end)
-    end
-  ))
+  map("<leader>sy", function() Snacks.picker.lsp_workspace_symbols({ kinds = { 5, 10, 11, 23 } }) end)
 
   -- LSP SymbolKind enum: Function=12, Method=6, Constructor=9, Variable=13, Constant=14
-  map("<leader>sf", snacks.snack_picker_or_else(
-    function()
-      Snacks.picker.lsp_workspace_symbols({ kinds = { 12, 6, 9, 13, 14 } })
-    end,
-    function()
-      vim.ui.input({ prompt = "Search functions: " }, function(query)
-        if query and query ~= "" then
-          vim.lsp.buf.workspace_symbol(query)
-        end
-      end)
-    end
-  ))
+  map("<leader>sf", function() Snacks.picker.lsp_workspace_symbols({ kinds = { 12, 6, 9, 13, 14 } }) end)
 end
 
 local lsp_autoformat_augroup = vim.api.nvim_create_augroup("lsp_autoformat", {})

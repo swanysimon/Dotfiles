@@ -38,21 +38,20 @@ function aws_sso_fish_prompt
     set -f now_epoch (date +%s)
     set -f diff (math $expires_epoch - $now_epoch)
 
-    if test $diff -lt 0
+    if test $diff -gt 3600  # More than an hour - no issues
+        return
+    else if test $diff -lt 0
         echo -ns " " (set_color red) "(⚠ sso:expired)" (set_color normal)
-    else if test $diff -lt 60  # Less than 1 minute
+    end
+
+    set -f minutes (math "round($diff / 60)")
+    if test $minutes -lt 1  # Less than 1 minute
         echo -ns " " (set_color red) "(⚠ sso:<1m)" (set_color normal)
-    else if test $diff -lt 3600  # Less than 1 hour
-        set -f minutes (math "round($diff / 60)")
-        if test $minutes -lt 5
-            echo -ns " " (set_color red) "(⚠ sso:"$minutes"m)" (set_color normal)
-        else if test $minutes -lt 30
-            echo -ns " " (set_color yellow) "sso:"$minutes"m" (set_color normal)
-        else
-            echo -ns " " (set_color green) "sso:"$minutes"m" (set_color normal)
-        end
+    else if test $minutes -lt 5
+        echo -ns " " (set_color red) "(⚠ sso:"$minutes"m)" (set_color normal)
+    else if test $minutes -lt 30
+        echo -ns " " (set_color yellow) "sso:"$minutes"m" (set_color normal)
     else
-        set -f hours (math "round($diff / 3600)")
-        echo -ns " " (set_color green) "sso:"$hours"h" (set_color normal)
+        echo -ns " " (set_color green) "sso:"$minutes"m" (set_color normal)
     end
 end

@@ -1,11 +1,19 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gh pr list:*)",
-      "Bash(gh pr view:*)",
-      "Bash(gh pr status:*)",
+      "Bash(find:*)",
       "Bash(gh pr checks:*)",
-      "Bash(gh pr diff:*)"
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr status:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git ls-files:*)",
+      "Bash(rg:*)",
+      "Bash(uv run mypy:*)",
+      "Bash(uv run ruff:*)",
+      "Bash(uv run ty:*)"
     ]
   },
   "hooks": {
@@ -16,5 +24,9 @@
     "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {},
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  }
 }

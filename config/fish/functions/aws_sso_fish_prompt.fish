@@ -42,6 +42,7 @@ function aws_sso_fish_prompt
         return
     else if test $diff -lt 0
         echo -ns " " (set_color red) "(⚠ sso:expired)" (set_color normal)
+        return
     end
 
     set -f minutes (math "round($diff / 60)")

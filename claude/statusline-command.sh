@@ -34,18 +34,35 @@ fi
 aws_sso_info=""
 if [ -n "$SHOW_AWS_SSO_PROMPT" ]; then
     cache_dir="$HOME/.aws/sso/cache"
-    if [ -d "$cache_dir" ]; then
+    if [ ! -d "$cache_dir" ]; then
+        aws_sso_info="AWS SSO: no-cache"
+    else
         cache_file=$(ls -t "$cache_dir"/*.json 2>/dev/null | head -n 1)
-        if [ -n "$cache_file" ]; then
+        if [ -z "$cache_file" ]; then
+            aws_sso_info="AWS SSO: expired"
+        else
             expires_at=$(jq -r '.expiresAt // empty' "$cache_file" 2>/dev/null)
-            if [ -n "$expires_at" ]; then
+            if [ -z "$expires_at" ] || [ "$expires_at" = "null" ]; then
+                aws_sso_info="AWS SSO: no-session"
+            else
                 expires_epoch=$(date -j -u -f "%Y-%m-%dT%H:%M:%SZ" "$expires_at" "+%s" 2>/dev/null)
+                if [ -z "$expires_epoch" ]; then
+                    expires_epoch=$(date -j -u -f "%Y-%m-%dT%H:%M:%S" "${expires_at%Z*}" "+%s" 2>/dev/null)
+                fi
                 if [ -n "$expires_epoch" ]; then
                     now=$(date +%s)
                     diff=$((expires_epoch - now))
-                    if [ $diff -lt 3600 ] && [ $diff -ge 0 ]; then
+                    if [ $diff -gt 3600 ]; then
+                        aws_sso_info=""
+                    elif [ $diff -lt 0 ]; then
+                        aws_sso_info="AWS SSO: expired"
+                    else
                         mins=$((diff / 60))
-                        aws_sso_info="AWS SSO: ${mins}m remaining"
+                        if [ $mins -lt 1 ]; then
+                            aws_sso_info="AWS SSO: <1m"
+                        elif [ $mins -lt 60 ]; then
+                            aws_sso_info="AWS SSO: ${mins}m"
+                        fi
                     fi
                 fi
             fi

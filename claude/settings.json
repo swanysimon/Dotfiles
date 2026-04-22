@@ -24,7 +24,16 @@
   },
   "hooks": {
     "PreCompact": [],
-    "SessionStart": []
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "nvim -c 'CodePreviewInstallClaudeCodeHooks' -c 'qa' 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
   },
   "statusLine": {
     "type": "command",

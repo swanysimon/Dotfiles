@@ -51,7 +51,7 @@ function aws_sso_fish_prompt
     else if test $minutes -lt 5
         echo -ns " " (set_color red) "(⚠ sso:"$minutes"m)" (set_color normal)
     else if test $minutes -lt 30
-        echo -ns " " (set_color yellow) "sso:"$minutes"m" (set_color normal)
+        echo -ns " " (set_color red) "sso:"$minutes"m" (set_color normal)
     else
         echo -ns " " (set_color green) "sso:"$minutes"m" (set_color normal)
     end

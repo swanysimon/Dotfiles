@@ -47,6 +47,13 @@ local plugins = {
   },
 
   {
+    "Cannon07/code-preview.nvim",
+    config = function()
+      require("code-preview").setup()
+    end,
+  },
+
+  {
     "folke/lazydev.nvim",
     ft = "lua",
     opts = {},

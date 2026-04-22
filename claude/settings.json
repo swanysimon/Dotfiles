@@ -1,32 +1,38 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find:*)",
-      "Bash(gh pr checks:*)",
-      "Bash(gh pr diff:*)",
-      "Bash(gh pr list:*)",
-      "Bash(gh pr status:*)",
-      "Bash(gh pr view:*)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)",
-      "Bash(git ls-files:*)",
-      "Bash(rg:*)",
-      "Bash(uv run mypy:*)",
-      "Bash(uv run ruff:*)",
-      "Bash(uv run ty:*)"
+      "Bash(* --help)",
+      "Bash(* --version)",
+      "Bash(find *)",
+      "Bash(gh pr checks *)",
+      "Bash(gh pr diff *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr status *)",
+      "Bash(gh pr view *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git ls-files *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(uv run mypy *)",
+      "Bash(uv run pre-commit *)",
+      "Bash(uv run prek *)",
+      "Bash(uv run pytest *)",
+      "Bash(uv run ruff *)",
+      "Bash(uv run ty *)"
     ]
   },
   "hooks": {
     "PreCompact": [],
     "SessionStart": []
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {},
-  "alwaysThinkingEnabled": true,
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  }
+  "alwaysThinkingEnabled": true
 }

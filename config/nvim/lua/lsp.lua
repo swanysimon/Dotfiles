@@ -158,6 +158,10 @@ vim.api.nvim_create_autocmd(
         vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
       end
 
+      if client.server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr, })
+      end
+
       if client:supports_method("textDocument/documentHighlight") then
         vim.api.nvim_clear_autocmds({ buffer = bufnr, group = highlight_augroup })
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
@@ -171,26 +175,22 @@ vim.api.nvim_create_autocmd(
           callback = vim.lsp.buf.clear_references,
         })
       end
-
-      if client.server_capabilities.inlayHintProvider then
-        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr, })
-      end
-
-      -- Suppress the noisy inlay hint col-out-of-range error
-      local orig_handler = vim.lsp.handlers["textDocument/inlayHint"]
-      vim.lsp.handlers["textDocument/inlayHint"] = function(err, result, ctx, config)
-        if err then
-          return
-        end
-
-        local ok, _ = pcall(orig_handler, err, result, ctx, config)
-        if not ok then
-          return
-        end
-      end
     end,
   }
 )
+
+-- Suppress the noisy inlay hint col-out-of-range error: https://github.com/neovim/neovim/issues/36318
+local orig_handler = vim.lsp.handlers["textDocument/inlayHint"]
+vim.lsp.handlers["textDocument/inlayHint"] = function(err, result, ctx, config)
+  if err then
+    return
+  end
+
+  local ok, _ = pcall(orig_handler, err, result, ctx, config)
+  if not ok then
+    return
+  end
+end
 
 vim.api.nvim_create_autocmd(
   { "LspDetach", },

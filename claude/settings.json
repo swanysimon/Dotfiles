@@ -22,19 +22,6 @@
       "Bash(uv run ty *)"
     ]
   },
-  "hooks": {
-    "PreCompact": [],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "nvim -c 'CodePreviewInstallClaudeCodeHooks' -c 'qa' 2>/dev/null || true"
-          }
-        ]
-      }
-    ]
-  },
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
@@ -43,5 +30,6 @@
     "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {},
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high"
 }

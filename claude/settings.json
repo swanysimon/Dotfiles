@@ -26,10 +26,8 @@
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
-  "enabledPlugins": {
-    "superpowers@claude-plugins-official": true
-  },
   "extraKnownMarketplaces": {},
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "editorMode": "vim"
 }

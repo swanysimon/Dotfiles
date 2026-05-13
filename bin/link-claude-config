@@ -19,7 +19,48 @@ link() {
     ln -svi "$src" "$dst"
 }
 
+merge_settings() {
+    local src="${DOTFILES_CLAUDE}/settings.json"
+    local dst="${CLAUDE_DIR}/settings.json"
+
+    # Convert existing symlink to a standalone file so machine-local edits don't affect dotfiles
+    if [[ -L "$dst" ]]; then
+        local content
+        content=$(jq '.permissions.allow = (.permissions.allow // [] | unique) | .permissions.deny = (.permissions.deny // [] | unique)' "$dst")
+        rm "$dst"
+        printf '%s\n' "$content" > "$dst"
+        echo "Converted settings.json symlink to standalone file"
+        return
+    fi
+
+    if [[ ! -f "$dst" ]]; then
+        jq '.permissions.allow = (.permissions.allow // [] | unique) | .permissions.deny = (.permissions.deny // [] | unique)' "$src" > "$dst"
+        echo "Created settings.json from dotfiles defaults"
+        return
+    fi
+
+    # Deep merge: dotfiles is base, machine-local wins for scalar/object conflicts.
+    # permissions.allow and permissions.deny are unioned so dotfiles entries are always present.
+    local merged existing
+    merged=$(jq -s '
+        .[0] as $base | .[1] as $override |
+        (($base.permissions.allow // []) + ($override.permissions.allow // []) | unique) as $allow |
+        (($base.permissions.deny // []) + ($override.permissions.deny // []) | unique) as $deny |
+        $base * $override |
+        .permissions.allow = $allow |
+        .permissions.deny = $deny
+    ' "$src" "$dst")
+    existing=$(jq '.' "$dst")
+
+    if [[ "$merged" == "$existing" ]]; then
+        echo "No update to settings.json"
+    else
+        printf '%s\n' "$merged" > "$dst"
+        echo "Merged settings.json"
+    fi
+}
+
 link CLAUDE.md
-link settings.json
+merge_settings
 link skills
-link statusline-command.sh
+link statusline-command.fish

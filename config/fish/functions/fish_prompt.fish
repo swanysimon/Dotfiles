@@ -20,31 +20,57 @@ function jj_fish_prompt
         return
     end
 
-    # Core: state indicator, short change ID, any local bookmarks
-    set -f jj_out (jj log -r @ --no-graph --color=never -T '
-        if(conflict, "⚠", if(empty, "○", "◦")) ++
-        change_id.shortest() ++
-        if(local_bookmarks,
-            " " ++ separate("|", local_bookmarks),
-            "")
+    # Determine @ state and effective head.
+    # When @ is an empty working-copy commit, the real last commit is @-.
+    set -f at_state (jj log -r @ --no-graph --color=never -T '
+        if(conflict, "conflict", if(empty, "empty", "dirty"))
     ' 2>/dev/null | string trim)
 
-    test -z "$jj_out"; and return
+    switch $at_state
+        case conflict
+            set -f jj_state "⚠"
+            set -f effective_head "@"
+        case empty
+            set -f jj_state ""
+            set -f effective_head "@-"
+        case dirty
+            set -f jj_state "◦"
+            set -f effective_head "@"
+        case '*'
+            return
+    end
 
-    # Optional: ahead/behind counts for any tracked bookmarks on @.
-    # Kept separate so a template error here doesn't suppress the core output.
-    # Note: only reflects tracking status of the bookmark itself; if @ sits above
-    # the bookmark (common in jj workflow), those extra changes are not counted.
-    set -f jj_tracking (jj log -r @ --no-graph --color=never -T '
-        separate("", local_bookmarks.map(|b|
-            if(b.is_tracked(),
-                if(b.tracking_ahead_count() > 0, "↑" ++ b.tracking_ahead_count(), "") ++
-                if(b.tracking_behind_count() > 0, "↓" ++ b.tracking_behind_count(), ""),
-                "")))
-    ' 2>/dev/null | string trim)
-    test -n "$jj_tracking"; and set jj_out "$jj_out$jj_tracking"
+    # Nearest local bookmark name in the ancestry of effective_head.
+    # In jj workflow this may be on @- or further back, not @ itself.
+    set -f jj_bookmark_name (jj log \
+        -r "latest(bookmarks() & ::$effective_head)" \
+        --no-graph --color=never \
+        -T 'separate("|", local_bookmarks.map(|b| b.name()))' \
+        2>/dev/null | string trim)
 
-    echo -ns " " (set_color magenta) $jj_out (set_color normal)
+    if test -z "$jj_bookmark_name"
+        # Fallback when no ancestor bookmark exists: show @ state + short change ID
+        set -f jj_fallback (jj log -r @ --no-graph --color=never -T '
+            if(conflict, "⚠", if(empty, "○", "◦")) ++ change_id.shortest()
+        ' 2>/dev/null | string trim)
+        test -n "$jj_fallback"; or return
+        echo -ns " " (set_color magenta) $jj_fallback (set_color normal)
+        return
+    end
+
+    # Ahead count: commits from the nearest remote ancestor to effective_head.
+    # This correctly reflects all local commits not yet at the remote, regardless
+    # of whether the local bookmark has been moved to follow them.
+    set -f ahead_raw (jj log \
+        -r "latest(remote_bookmarks() & ::$effective_head)..$effective_head" \
+        --no-graph -T '"x"' \
+        2>/dev/null | string trim)
+    set -f ahead_count (string length "$ahead_raw")
+
+    set -f display $jj_bookmark_name
+    test "$ahead_count" -gt 0; and set display "$display↑$ahead_count"
+
+    echo -ns " " (set_color magenta) $jj_state $display (set_color normal)
 end
 
 

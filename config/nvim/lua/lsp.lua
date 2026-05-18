@@ -179,17 +179,25 @@ vim.api.nvim_create_autocmd(
   }
 )
 
--- Suppress the noisy inlay hint col-out-of-range error: https://github.com/neovim/neovim/issues/36318
+-- Filter out hints with out-of-range positions before passing to the original handler.
+-- Avoids the col-out-of-range error (https://github.com/neovim/neovim/issues/36318) while
+-- still calling orig_handler so stale hints are properly cleared on each update.
 local orig_handler = vim.lsp.handlers["textDocument/inlayHint"]
 vim.lsp.handlers["textDocument/inlayHint"] = function(err, result, ctx, config)
   if err then
     return
   end
-
-  local ok, _ = pcall(orig_handler, err, result, ctx, config)
-  if not ok then
-    return
+  if result then
+    local bufnr = vim.uri_to_bufnr(ctx.params.textDocument.uri)
+    local line_count = vim.api.nvim_buf_line_count(bufnr)
+    result = vim.tbl_filter(function(hint)
+      local line = hint.position.line
+      if line >= line_count then return false end
+      local text = vim.api.nvim_buf_get_lines(bufnr, line, line + 1, false)[1] or ""
+      return hint.position.character <= #text
+    end, result)
   end
+  orig_handler(err, result, ctx, config)
 end
 
 vim.api.nvim_create_autocmd(

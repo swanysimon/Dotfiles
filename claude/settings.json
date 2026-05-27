@@ -9,6 +9,7 @@
       "Bash(gh pr list *)",
       "Bash(gh pr status *)",
       "Bash(gh pr view *)",
+      "Bash(gh run view *)",
       "Bash(git diff *)",
       "Bash(git log *)",
       "Bash(git ls-files *)",

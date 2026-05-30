@@ -4,10 +4,28 @@ set -euo pipefail
 
 cd "$CODEDIR"
 while read REPO; do
-    echo "Working on $REPO"
-    if [[ -d "$REPO" ]]; then
-        git -C "$REPO" fetch --all
-    else
-        gh repo clone "$REPO" "$REPO"
+    if [[ ! -d "$REPO" ]]; then
+        echo "Cloning $REPO"
+        gh repo clone "$REPO" "$REPO" -- --quiet
+        continue
     fi
-done < <(gh repo list "$1" --limit 10000 --source --json nameWithOwner --jq '.[] | .nameWithOwner')
+
+    echo "Fetching $REPO"
+    fetch_output=$(git -C "$REPO" fetch --all 2>&1)
+    fetch_exit=$?
+
+    if [[ $fetch_exit -ne 0 ]]; then
+        echo "Fetch failed: $REPO"
+        continue
+    elif [[ -z "$fetch_output" ]]; then
+        echo "No updates to ${REPO}, stopping"
+        break
+    elif git -C "$REPO" rev-parse --abbrev-ref --symbolic-full-name '@{u}' &>/dev/null; then
+        if ! git -C "$REPO" rebase --quiet; then
+            git -C "$REPO" rebase --abort 2>/dev/null
+            echo "Rebase failed for $REPO"
+        fi
+    else
+        echo "No upstream found for $REPO"
+    fi
+done < <(gh api --paginate "orgs/$1/repos?sort=pushed&direction=desc&per_page=100&type=source" --jq '.[].full_name')

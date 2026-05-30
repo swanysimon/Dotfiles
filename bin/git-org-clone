@@ -1,31 +1,27 @@
-#!/usr/bin/env bash
+#!/usr/bin/env fish
 
-set -euo pipefail
+for repo in (gh api --paginate "orgs/$argv[1]/repos?sort=pushed&direction=desc&per_page=100&type=source" --jq '.[].full_name')
+    set repo_dir $CODEDIR/$repo
 
-cd "$CODEDIR"
-while read REPO; do
-    if [[ ! -d "$REPO" ]]; then
-        echo "Cloning $REPO"
-        gh repo clone "$REPO" "$REPO" -- --quiet
+    if not test -d $repo_dir
+        echo "Cloning $repo"
+        gh repo clone $repo $repo_dir -- --quiet
         continue
-    fi
+    end
 
-    echo "Fetching $REPO"
-    fetch_output=$(git -C "$REPO" fetch --all 2>&1)
-    fetch_exit=$?
+    echo "Fetching $repo"
+    set fetch_output (git -C $repo_dir fetch --all 2>&1)
+    set fetch_exit $status
 
-    if [[ $fetch_exit -ne 0 ]]; then
-        echo "Fetch failed: $REPO"
-        continue
-    elif [[ -z "$fetch_output" ]]; then
-        echo "No updates to ${REPO}, stopping"
+    if test $fetch_exit -ne 0
+        echo "Fetch failed: $repo"
+    else if test -z "$fetch_output"
+        echo "No updates to $repo, stopping"
         break
-    elif git -C "$REPO" rev-parse --abbrev-ref --symbolic-full-name '@{u}' &>/dev/null; then
-        if ! git -C "$REPO" rebase --quiet; then
-            git -C "$REPO" rebase --abort 2>/dev/null
-            echo "Rebase failed for $REPO"
-        fi
-    else
-        echo "No upstream found for $REPO"
-    fi
-done < <(gh api --paginate "orgs/$1/repos?sort=pushed&direction=desc&per_page=100&type=source" --jq '.[].full_name')
+    else if not git -C $repo_dir rev-parse --abbrev-ref --symbolic-full-name '@{u}' &>/dev/null
+        echo "No upstream found for $repo"
+    else if not git -C $repo_dir rebase --quiet
+        git -C $repo_dir rebase --abort 2>/dev/null
+        echo "Rebase failed for $repo"
+    end
+end

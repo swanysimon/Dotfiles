@@ -51,6 +51,8 @@ cask "logi-options+"
 
 # programming language management
 brew "uv"  # Mise integrates well and uv is more all in one for Python work
+brew "vscode-langservers-extracted"
+brew "yaml-language-server"
 cask "claude-code"
 
 # containerization
@@ -78,7 +80,7 @@ if ENV["BREW_MACHINE"] != "work" then
 
   # programming specific to personal machines
   brew "rlwrap"  # for clj; Mise handling transitive dependencies is too annoying
-  brew "rust-analyser"
+  brew "rust-analyzer"
   brew "rustup"  # Mise recommends using this to manage Rust versions
   cask "rustrover"
   cask "webstorm"

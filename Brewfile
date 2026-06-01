@@ -50,13 +50,8 @@ cask "ghostty"
 cask "logi-options+"
 
 # programming language management
-brew "rustup"  # Mise recommends using this to manage Rust versions
 brew "uv"  # Mise integrates well and uv is more all in one for Python work
 cask "claude-code"
-cask "intellij-idea"
-cask "pycharm"
-cask "rustrover"
-cask "webstorm"
 
 # containerization
 brew "colima"
@@ -72,8 +67,6 @@ mas "Instapaper", id: 288545208
 
 # only for personal machine
 if ENV["BREW_MACHINE"] != "work" then
-  brew "rlwrap"  # for clj; Mise handling transitive dependencies is too annoying
-
   cask "proton-mail-bridge"
   cask "proton-pass"
   cask "protonvpn"
@@ -82,6 +75,12 @@ if ENV["BREW_MACHINE"] != "work" then
   cask "vlc"
   cask "whatsapp"
   cask "xld"
+
+  # programming specific to personal machines
+  brew "rlwrap"  # for clj; Mise handling transitive dependencies is too annoying
+  brew "rustup"  # Mise recommends using this to manage Rust versions
+  cask "rustrover"
+  cask "webstorm"
 
   # keyboard configuration
   cask "chrysalis"

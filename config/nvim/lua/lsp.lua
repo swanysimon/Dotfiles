@@ -1,5 +1,10 @@
 local M = {}
 
+local callable_cmd_executables = {
+  jsonls = "vscode-json-language-server",
+  yamlls = "yaml-language-server",
+}
+
 local function affected_uris(edit)
   local uris = {}
   if edit.changes then
@@ -261,14 +266,10 @@ local function enable_lsp(server_name, is_mason_managed)
   end
 
   if vim.is_callable(lsp_config.cmd) then
-    -- some LSPs have functions that start the server as their command, making it pretty much
-    -- impossible to know what the server's actual command is. Thankfully, most servers that I care
-    -- about in this bucket have the same executable name as their server name, so we use the server
-    -- name to search for its presence
-    if find_lsp_executable(server_name) then
+    local exe_name = callable_cmd_executables[server_name] or server_name
+    if find_lsp_executable(exe_name) then
       vim.lsp.enable(server_name)
     end
-
     return
   end
 

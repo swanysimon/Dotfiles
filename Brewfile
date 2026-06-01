@@ -78,6 +78,7 @@ if ENV["BREW_MACHINE"] != "work" then
 
   # programming specific to personal machines
   brew "rlwrap"  # for clj; Mise handling transitive dependencies is too annoying
+  brew "rust-analyser"
   brew "rustup"  # Mise recommends using this to manage Rust versions
   cask "rustrover"
   cask "webstorm"

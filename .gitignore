@@ -1,6 +1,8 @@
 # blanket ignores
+/config/arelle
 /config/colima
 /config/gh-dash
+/config/homebrew
 /config/jj/repos/
 /config/pgcli
 /Brewfile.lock.json

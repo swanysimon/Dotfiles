@@ -55,14 +55,6 @@ brew "vscode-langservers-extracted"
 brew "yaml-language-server"
 cask "claude-code"
 
-# containerization
-brew "colima"
-brew "docker"
-brew "docker-buildx"
-brew "docker-clean"
-brew "docker-compose"
-brew "docker-credential-helper"
-
 # things better managed by the App Store, potentially for historical reasons
 mas "AdGuard for Safari", id: 1440147259
 mas "Instapaper", id: 288545208

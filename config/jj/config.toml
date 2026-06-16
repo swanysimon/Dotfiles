@@ -1,3 +1,11 @@
 [user]
 name = "Simon Swanson"
 email = "gitlab@simonswanson.xyz"
+
+[ui]
+diff-formatter = ":git"
+editor = "nvim"
+pager = "delta"
+
+[merge-tools.delta]
+diff-expected-exit-codes = [0, 1]

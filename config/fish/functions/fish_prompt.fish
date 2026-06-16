@@ -149,11 +149,12 @@ function git_fish_prompt
         end
     end
 
-    set -f git_display_upstream (
-        not set -q git_is_tracking_same_named_branch; and echo -ns "|" $git_upstream_branch
-        set -l git_commits_behind (echo $git_commit_count | cut -f 2)
-        [ $git_commits_behind -gt 0 ]; and echo -s "↓" $git_commits_behind
-    )
+    set -f git_display_upstream ""
+    if not set -q git_is_tracking_same_named_branch
+        set git_display_upstream "|"$git_upstream_branch
+    end
+    set -l git_commits_behind (echo $git_commit_count | cut -f 2)
+    [ $git_commits_behind -gt 0 ]; and set git_display_upstream $git_display_upstream"↓"$git_commits_behind
 
     echo -s $git_display_branch $git_display_upstream (set_color normal)
 end

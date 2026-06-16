@@ -15,13 +15,28 @@ for repo in (gh api --paginate "orgs/$argv[1]/repos?sort=pushed&direction=desc&p
 
     if test $fetch_exit -ne 0
         echo "Fetch failed: $repo"
-    else if test -z "$fetch_output"
-        echo "No updates to $repo, stopping"
-        break
-    else if not git -C $repo_dir rev-parse --abbrev-ref --symbolic-full-name '@{u}' &>/dev/null
+        continue
+    end
+
+    if not git -C $repo_dir rev-parse --abbrev-ref --symbolic-full-name '@{u}' &>/dev/null
+        if test -z "$fetch_output"
+            echo "No updates to $repo, stopping"
+            break
+        end
         echo "No upstream found for $repo"
-    else if not git -C $repo_dir rebase --quiet
+        continue
+    end
+
+    set head_before (git -C $repo_dir rev-parse HEAD)
+    if not git -C $repo_dir rebase --quiet
         git -C $repo_dir rebase --abort 2>/dev/null
         echo "Rebase failed for $repo"
+        continue
+    end
+    set head_after (git -C $repo_dir rev-parse HEAD)
+
+    if test -z "$fetch_output" && test "$head_before" = "$head_after"
+        echo "No updates to $repo, stopping"
+        break
     end
 end

@@ -67,6 +67,14 @@ local function is_cursor_at_definition(definitions, bufnr)
   return false
 end
 
+local dedup = {
+  transform = function(item, ctx)
+    local key = (item.file or "") .. ":" .. (item.pos and item.pos[1] or "")
+    if ctx.meta[key] then return false end
+    ctx.meta[key] = true
+  end,
+}
+
 local function definition_or_usages(bufnr)
   local params = vim.lsp.util.make_position_params()
 
@@ -79,10 +87,10 @@ local function definition_or_usages(bufnr)
           or not definitions
           or vim.tbl_isempty(definitions)
           or is_cursor_at_definition(definitions, bufnr) then
-        Snacks.picker.lsp_references()
+        Snacks.picker.lsp_references(dedup)
         return
       else
-        Snacks.picker.lsp_definitions()
+        Snacks.picker.lsp_definitions(dedup)
       end
     end)
 end
@@ -93,11 +101,11 @@ local function set_lsp_keymaps(client, bufnr)
   end
 
   -- navigation
-  map("gD", function() Snacks.picker.lsp_declarations() end)
-  map("gd", function() Snacks.picker.lsp_definitions() end)
-  map("gi", function() Snacks.picker.lsp_implementations() end)
-  map("gr", function() Snacks.picker.lsp_references() end)
-  map("gt", function() Snacks.picker.lsp_type_definitions() end)
+  map("gD", function() Snacks.picker.lsp_declarations(dedup) end)
+  map("gd", function() Snacks.picker.lsp_definitions(dedup) end)
+  map("gi", function() Snacks.picker.lsp_implementations(dedup) end)
+  map("gr", function() Snacks.picker.lsp_references(dedup) end)
+  map("gt", function() Snacks.picker.lsp_type_definitions(dedup) end)
 
   -- IntelliJ CMD-B style: context-aware definition/usage navigation
   map("gb", function() definition_or_usages(bufnr) end)

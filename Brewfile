@@ -59,6 +59,11 @@ cask "claude-code"
 mas "AdGuard for Safari", id: 1440147259
 mas "Instapaper", id: 288545208
 
+# Apple office suite
+mas "Numbers", id: 361304891
+mas "Pages", id: 361309726
+mas "Keynote", id: 361285480
+
 # only for personal machine
 if ENV["BREW_MACHINE"] != "work" then
   cask "proton-mail-bridge"

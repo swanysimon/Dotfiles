@@ -17,7 +17,7 @@ function aws_sso_session_state
         return
     end
 
-    set -f expires_at (jq -r '.expiresAt // empty' $cache_file 2>/dev/null)
+    set -f expires_at (jq -r '.registrationExpiresAt // .expiresAt // empty' $cache_file 2>/dev/null)
     if test -z "$expires_at"; or test "$expires_at" = null
         echo no-session
         return

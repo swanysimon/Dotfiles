@@ -45,6 +45,7 @@
   pager = delta
 [delta]
   line-numbers = true
+  side-by-side = true
 [diff]
   algorithm = histogram
   colorMoved = plain

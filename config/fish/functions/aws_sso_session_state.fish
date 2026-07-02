@@ -11,13 +11,9 @@ function aws_sso_session_state
         return
     end
 
-    set -f cache_file (ls -t $cache_dir/*.json 2>/dev/null | head -n 1)
-    if test -z "$cache_file"
-        echo expired
-        return
-    end
-
-    set -f expires_at (jq -r '.registrationExpiresAt // .expiresAt // empty' $cache_file 2>/dev/null)
+    # expiresAt is the 1-hour OAuth access token. After it expires, botocore attempts a refresh;
+    # the statusline showing "expired" for a moment is fine — clopto login will auto-recover.
+    set -f expires_at (jq -rs '[.[] | select(.accessToken != null) | .expiresAt] | sort | last // empty' $cache_dir/*.json 2>/dev/null)
     if test -z "$expires_at"; or test "$expires_at" = null
         echo no-session
         return

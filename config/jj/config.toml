@@ -6,6 +6,7 @@ email = "gitlab@simonswanson.xyz"
 diff-formatter = ":git"
 editor = "nvim"
 pager = "delta"
+default-command = "status"
 
 [merge-tools.delta]
 diff-expected-exit-codes = [0, 1]

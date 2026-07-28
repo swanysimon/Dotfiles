@@ -20,7 +20,6 @@ brew "fontconfig"
 cask "font-sf-mono-nerd-font"
 
 # core applications
-cask "bitwarden"
 cask "claude"
 cask "rectangle"
 cask "slack"
@@ -64,10 +63,14 @@ mas "Numbers", id: 361304891
 mas "Pages", id: 361309726
 mas "Keynote", id: 361285480
 
+# password manager
+cask "bitwarden"
+cask "proton-pass"
+mas "Proton Pass for Safari", id: 6502835663
+
 # only for personal machine
 if ENV["BREW_MACHINE"] != "work" then
   cask "proton-mail-bridge"
-  cask "proton-pass"
   cask "protonvpn"
   cask "signal"
   cask "transmission"

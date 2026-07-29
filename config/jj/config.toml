@@ -10,3 +10,23 @@ default-command = "status"
 
 [merge-tools.delta]
 diff-expected-exit-codes = [0, 1]
+
+[experimental-advance-branches]
+enabled-branches = ["glob:*"]
+
+[revset-aliases]
+# Closest revision that is mutable, described and either non-empty or a merge
+'closest_pushable(to)' = '''
+  heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))
+'''
+
+[revsets]
+bookmark-advance-to = 'closest_pushable(@)'
+
+[aliases]
+pushup = ["util", "exec", "--", "bash", "-c", "jj bookmark advance && jj git push", ""]
+fetch = ["git", "fetch"]
+mergein = ["rebase", "-d", "trunk()"]
+w = ["new"]
+checkpoint = ["commit", "-m", "checkpoint"]
+verboselog = ["log", "-T", "builtin_log_detailed"]

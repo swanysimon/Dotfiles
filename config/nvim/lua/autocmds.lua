@@ -8,9 +8,11 @@ vim.api.nvim_create_autocmd(
     group = augroup("ft_indentation"),
     pattern = {
       "clojure",
+      "hcl",
       "javascript",
       "json",
       "lua",
+      "terraform",
       "typescript",
       "typescriptreact",
       "yaml",

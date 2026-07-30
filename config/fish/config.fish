@@ -1,7 +1,7 @@
 set -U fish_greeting ""
 
 fish_add_path ~/.bin  # intended for these dotfiles bin/ directory
-fish_add_path ~/.local/bin /opt/homebrew/bin /usr/local/sbin
+fish_add_path ~/.local/bin /opt/homebrew/bin /usr/local/sbin /opt/homebrew/sbin
 
 
 set_if_absent XDG_CACHE_HOME ~/.cache

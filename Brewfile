@@ -15,9 +15,8 @@
 ####
 
 # patched SF mono font
-tap "epk/epk"
 brew "fontconfig"
-cask "font-sf-mono-nerd-font"
+cask "epk/epk/font-sf-mono-nerd-font"
 
 # core applications
 cask "claude"

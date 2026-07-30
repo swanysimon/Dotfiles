@@ -15,10 +15,12 @@
       "Bash(cargo clippy *)",
       "Bash(cargo fmt *)",
       "Bash(cargo test *)",
+      "Bash(command -v *)",
       "Bash(date *)",
       "Bash(find *)",
       "Bash(gh issue list *)",
       "Bash(gh issue view *)",
+      "Bash(gh auth status *)",
       "Bash(gh pr checks *)",
       "Bash(gh pr diff *)",
       "Bash(gh pr list *)",
@@ -36,6 +38,7 @@
       "Bash(jj diff *)",
       "Bash(jj log *)",
       "Bash(jj show *)",
+      "Bash(jj st *)",
       "Bash(jj status *)",
       "Bash(mise tasks)",
       "Bash(mypy *)",
@@ -49,7 +52,8 @@
       "Bash(ruff *)",
       "Bash(shellcheck *)",
       "Bash(tombi *)",
-      "Bash(ty *)"
+      "Bash(ty *)",
+      "Bash(type -p *)"
     ]
   },
   "statusLine": {

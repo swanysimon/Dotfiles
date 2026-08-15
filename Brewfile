@@ -64,6 +64,7 @@ mas "Pages", id: 361309726
 mas "Keynote", id: 361285480
 
 # password manager
+brew "proton-pass-cli"
 cask "bitwarden"
 cask "proton-pass"
 mas "Proton Pass for Safari", id: 6502835663

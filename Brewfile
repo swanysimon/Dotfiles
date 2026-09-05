@@ -32,6 +32,7 @@ brew "gh"
 brew "git"
 brew "git-delta"
 brew "gpg"
+brew "imagemagick"
 brew "jq"
 brew "jujutsu"
 brew "less"  # default MacOS pager missing some flags I want in my git pager

@@ -23,13 +23,13 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 - **Completion**: `saghen/blink.cmp` with LuaSnip snippets
 - **Syntax**: `nvim-treesitter/nvim-treesitter` (branch=main) with context
 - **UI**: `folke/snacks.nvim`, `folke/trouble.nvim`, `b0o/incline.nvim`, `j-hui/fidget.nvim`
-- **Editing**: `kylechui/nvim-surround`, `andymass/vim-matchup`, `tpope/vim-commentary`
-- **Commenting**: `JoosepAlviste/nvim-ts-context-commentstring` (context-aware)
+- **Editing**: `kylechui/nvim-surround`, `andymass/vim-matchup`
+- **Commenting**: native `gc`/`gcc` (Neovim 0.10+, treesitter-injection-aware `commentstring`)
 - **Terminal**: `folke/snacks.nvim` terminal module (replaces nvzone/floaterm)
 - **Clojure**: `Olical/conjure` (loaded on ft=clojure)
 - **Lua dev**: `folke/lazydev.nvim` (loaded on ft=lua)
 - **TODO comments**: `folke/todo-comments.nvim`
-- **Colors**: `norcalli/nvim-colorizer.lua`
+- **Colors**: `catgoose/nvim-colorizer.lua`
 - **Structure view**: `stevearc/aerial.nvim` (LSP + Treesitter backends)
 - **Testing**: `nvim-neotest/neotest` with adapters for Python, Jest, Rust
 - **Rust**: `mrcjkb/rustaceanvim` (v^9, ft=rust) — manages rust-analyzer and DAP

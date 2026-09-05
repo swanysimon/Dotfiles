@@ -29,7 +29,7 @@ function M.snack_opts()
       hidden = true,
       ignored = true,
       matcher = {
-        cmd_bonus = true,
+        cwd_bonus = true,
         frecency = true,
       },
       sources = {
@@ -42,7 +42,7 @@ function M.snack_opts()
           follow = true,
         },
         smart = {
-          multi = { "buffers", "files", "git_files", },
+          multi = { "buffers", "recent", "files", "git_files", },
         },
       },
       win = {

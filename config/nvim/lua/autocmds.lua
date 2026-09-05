@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd(
   {
     group = augroup("highlight_on_yank"),
     callback = function()
-      vim.highlight.on_yank()
+      vim.hl.on_yank()
     end,
   }
 )

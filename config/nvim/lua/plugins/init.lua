@@ -86,14 +86,15 @@ local plugins = {
 
   {
     "j-hui/fidget.nvim",
-    opts = {},
-  },
-
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    dependencies = "tpope/vim-commentary",
-    event = "VeryLazy",
-    opts = {},
+    opts = {
+      progress = {
+        poll_rate = 2,
+        ignore_done_already = true,
+        display = {
+          done_ttl = 0.5,
+        },
+      },
+    },
   },
 
   {
@@ -144,7 +145,7 @@ local plugins = {
   },
 
   {
-    "norcalli/nvim-colorizer.lua",
+    "catgoose/nvim-colorizer.lua",
     event = "VeryLazy",
     config = function() require("colorizer").setup() end,
   },
@@ -172,10 +173,7 @@ local plugins = {
   {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
-    dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      "nvim-treesitter/nvim-treesitter-context",
-    },
+    lazy = false,
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter").install(
@@ -187,6 +185,7 @@ local plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter-context",
+    dependencies = { "nvim-treesitter/nvim-treesitter", },
     event = "VeryLazy",
     opts = { max_lines = 3, },
   },

@@ -1,5 +1,7 @@
 local M = {}
 
+vim.lsp.config("*", { flags = { debounce_text_changes = 250 }, })
+
 local callable_cmd_executables = {
   jsonls = "vscode-json-language-server",
   yamlls = "yaml-language-server",
@@ -301,11 +303,24 @@ end
 function M.setup_local_lsps()
   local registry = require("mason-registry")
   local mason_servers = registry.get_installed_package_names()
+  local server_names = {}
+
   for _, mason_spec in ipairs(registry.get_all_package_specs()) do
     local server_name = vim.tbl_get(mason_spec, "neovim", "lspconfig")
     if server_name ~= nil and server_name ~= "systemd_ls" and server_name ~= "rust_analyzer" then
-      enable_lsp(server_name, vim.tbl_contains(mason_servers, mason_spec.name))
+      server_names[server_name] = vim.tbl_contains(mason_servers, mason_spec.name)
     end
+  end
+
+  for _, path in ipairs(vim.api.nvim_get_runtime_file("lsp/*.lua", true)) do
+    local server_name = vim.fn.fnamemodify(path, ":t:r")
+    if server_names[server_name] == nil then
+      server_names[server_name] = false
+    end
+  end
+
+  for server_name, is_mason_managed in pairs(server_names) do
+    enable_lsp(server_name, is_mason_managed)
   end
 end
 

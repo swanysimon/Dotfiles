@@ -88,7 +88,6 @@ if ENV["BREW_MACHINE"] != "work" then
 
   # keyboard configuration
   cask "chrysalis"
-  cask "qmk-toolbox"
 
   # needed for other accounts on personal machine
   brew "ffmpeg"

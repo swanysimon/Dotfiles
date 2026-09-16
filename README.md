@@ -2,9 +2,9 @@
 
 # Simon's Dotfiles
 
-[GitLab](https://gitlab.com/swanysimon/dotfiles)
+* [GitLab](https://gitlab.com/swanysimon/dotfiles)
 
-[GitHub mirror](https://github.com/swanysimon/dotfiles)
+* [GitHub mirror](https://github.com/swanysimon/dotfiles)
 
 ## Extensions
 
@@ -32,13 +32,15 @@ echo "IdentityFile ~/.ssh/id_ed25519" >> ~/.ssh/config
 #### Link Dotfiles
 
 ```shell
-cd
-rm -r .config .local/bin
-ln -si code/dotfiles/config .config
-ln -si code/dotfiles/bin ./local/bin
+code/dotfiles/bin/link-dotfiles
 ```
 
+Prompts before replacing or deleting anything already in place. `~/.claude/settings.json`
+is merged rather than linked, so machine-local edits stay out of the repo.
+
 #### Set Default Shell
+
+Add `"$(brew --prefix)/bin/fish"` to `/etc/shells`.
 
 ```shell
 chsh -s "$(brew --prefix)/bin/fish"

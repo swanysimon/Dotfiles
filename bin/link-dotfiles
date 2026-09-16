@@ -2,26 +2,42 @@
 
 set -euo pipefail
 
-SCRIPT="$(realpath "$0")"
-DOTFILES_CLAUDE="$(cd "$(dirname "$SCRIPT")/../claude" && pwd)"
-CLAUDE_DIR="$HOME/.claude"
+REPO="$(cd "$(dirname "$(realpath "$0")")/../" && pwd)"
 
-mkdir -p "$CLAUDE_DIR"
+symlink() {
+    local filename="$1"
+    local dst="$2"
 
-link() {
-    local src="${DOTFILES_CLAUDE}/${1}"
-    local dst="${CLAUDE_DIR}/${1}"
+    local src="${REPO}/${filename}"
+
     if [[ -L "$dst" && "$dst" -ef "$src" ]]; then
-        echo "No update to $1"
+        echo "No update to $filename"
         return
     fi
 
-    ln -svi "$src" "$dst"
+    if [[ ! -d "$(dirname "$dst")" ]]; then
+        mkdir -pv "$(dirname "$dst")"
+    fi
+
+    # ln cannot unlink a real directory, and without -h it links inside the directory instead
+    if [[ -d "$dst" && ! -L "$dst" ]]; then
+        rm -ri "$dst"
+        # rm -ri exits 0 even when declined, so confirm the directory is actually gone
+        if [[ -e "$dst" ]]; then
+            echo "Skipping $filename"
+            return
+        fi
+    fi
+
+    # A declined prompt exits non-zero; skip that link rather than aborting the run
+    if ! ln -shvi "$src" "$dst"; then
+        echo "Skipping $filename"
+    fi
 }
 
 merge_settings() {
-    local src="${DOTFILES_CLAUDE}/settings.json"
-    local dst="${CLAUDE_DIR}/settings.json"
+    local src="$1"
+    local dst="$2"
 
     # Convert existing symlink to a standalone file so machine-local edits don't affect dotfiles
     if [[ -L "$dst" ]]; then
@@ -60,7 +76,10 @@ merge_settings() {
     fi
 }
 
-link CLAUDE.md
-merge_settings
-link skills
-link statusline-command.fish
+symlink bin "${HOME}/.bin"
+symlink config "${HOME}/.config"
+symlink claude/CLAUDE.md "${HOME}/.claude/CLAUDE.md"
+symlink claude/skills "${HOME}/.claude/skills"
+symlink claude/statusline-command.fish "${HOME}/.claude/statusline-command.fish"
+
+merge_settings "${REPO}/claude/settings.json" "${HOME}/.claude/settings.json"

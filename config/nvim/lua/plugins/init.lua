@@ -221,7 +221,7 @@ end
 local lazyroot = vim.fn.stdpath("data") .. "/lazy"
 local lazypath = lazyroot .. "/lazy.nvim"
 
-if not vim.fn.isdirectory(lazypath) then
+if vim.fn.isdirectory(lazypath) == 0 then
   local out = vim.fn.system({
     "git",
     "clone",

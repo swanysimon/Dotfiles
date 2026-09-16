@@ -2,6 +2,7 @@
 usage = "latest"
 
 [settings]
+activate_shims = false
 experimental = true
 idiomatic_version_file_enable_tools = ["node", "python"]
 

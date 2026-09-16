@@ -31,22 +31,11 @@ defaults write com.apple.screencapture type -string png
 # Control Center
 ####
 
-
-defaults write com.apple.control_center "NSStatusItem Visible AccessibilityShortcuts" -bool false
-defaults write com.apple.control_center "NSStatusItem Visible AudioVideoModule" -bool false
-defaults write com.apple.control_center "NSStatusItem Visible Battery" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible BentoBox" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible Bluetooth" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible Clock" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible Display" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible DoNotDisturb" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible FaceTime" -bool false
-defaults write com.apple.control_center "NSStatusItem Visible FocusModes" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible NowPlaying" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible ScreenMirroring" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible Sound" -bool true
-defaults write com.apple.control_center "NSStatusItem Visible StageManager" -bool false
-defaults write com.apple.control_center "NSStatusItem Visible WiFi" -bool true
+# AIDEV: macOS moved most Control Center items into a serialized config blob;
+# only these still expose plain "VisibleCC" booleans on the real domain (no underscore).
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC Battery" -bool true
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC Clock" -bool true
+defaults write com.apple.controlcenter "NSStatusItem VisibleCC WiFi" -bool true
 
 ####
 # Dock
@@ -104,6 +93,32 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticTextCompletionCollapsed -bool true
 defaults write NSGlobalDomain NSAutomaticTextCompletionEnabled -bool true
 defaults write NSGlobalDomain WebAutomaticSpellingCorrectionEnabled -bool true
+
+# remap Caps Lock to Right Control on the built-in keyboard only. Looks up its
+# vendor/product id rather than hardcoding one: this reports "0-0-0" on Apple
+# Silicon, but Touch Bar MacBooks expose the built-in keyboard as a real USB
+# device with nonzero ids. External keyboards always have their own nonzero
+# ids, so this key never matches them.
+remap_builtin_capslock_to_control() {
+    local builtin_keyboard keyboard_vendor keyboard_product caps_lock right_control
+
+    builtin_keyboard="$(hidutil list --ndjson --matching '{"PrimaryUsagePage":1,"PrimaryUsage":6,"IOPropertyMatch":{"Built-In":true}}' | head -1)"
+    keyboard_vendor="$(echo "$builtin_keyboard" | jq -r '.VendorID // 0')"
+    keyboard_product="$(echo "$builtin_keyboard" | jq -r '.ProductID // 0')"
+    # HID Usage Page 0x07 (Keyboard/Keypad); Usage 0x39 Caps Lock, 0xE4 Right Control
+    caps_lock=$(( (0x07 << 32) | 0x39 ))
+    right_control=$(( (0x07 << 32) | 0xE4 ))
+
+    # AIDEV: trailing "-0" is the legacy ADB keyboard-type component; every
+    # built-in keyboard checked so far reports 0 here, unverified on Touch Bar hardware
+    defaults -currentHost write NSGlobalDomain "com.apple.keyboard.modifiermapping.${keyboard_vendor}-${keyboard_product}-0" "(
+        {
+            HIDKeyboardModifierMappingSrc = ${caps_lock};
+            HIDKeyboardModifierMappingDst = ${right_control};
+        }
+    )"
+}
+remap_builtin_capslock_to_control
 
 ####
 # Mouse

@@ -17,6 +17,7 @@ defaults write NSGlobalDomain AppleAquaColorVariant -int 1
 defaults write NSGlobalDomain AppleFontSmoothing -bool true
 defaults write NSGlobalDomain AppleHighlightColor -string "1.000000 0.937255 0.690196" # yellow
 defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
 defaults write NSGlobalDomain NSGlassDiffusionSetting -int 1 # tinted liquid glass
 
 

@@ -123,32 +123,6 @@ defaults write NSGlobalDomain NSAutomaticTextCompletionCollapsed -bool true
 defaults write NSGlobalDomain NSAutomaticTextCompletionEnabled -bool true
 defaults write NSGlobalDomain WebAutomaticSpellingCorrectionEnabled -bool true
 
-# remap Caps Lock to Right Control on the built-in keyboard only. Looks up its
-# vendor/product id rather than hardcoding one: this reports "0-0-0" on Apple
-# Silicon, but Touch Bar MacBooks expose the built-in keyboard as a real USB
-# device with nonzero ids. External keyboards always have their own nonzero
-# ids, so this key never matches them.
-remap_builtin_capslock_to_control() {
-    local builtin_keyboard keyboard_vendor keyboard_product caps_lock right_control
-
-    builtin_keyboard="$(hidutil list --ndjson --matching '{"PrimaryUsagePage":1,"PrimaryUsage":6,"IOPropertyMatch":{"Built-In":true}}' | head -1)"
-    keyboard_vendor="$(echo "$builtin_keyboard" | jq -r '.VendorID // 0')"
-    keyboard_product="$(echo "$builtin_keyboard" | jq -r '.ProductID // 0')"
-    # HID Usage Page 0x07 (Keyboard/Keypad); Usage 0x39 Caps Lock, 0xE4 Right Control
-    caps_lock=$(( (0x07 << 32) | 0x39 ))
-    right_control=$(( (0x07 << 32) | 0xE4 ))
-
-    # AIDEV: trailing "-0" is the legacy ADB keyboard-type component; every
-    # built-in keyboard checked so far reports 0 here, unverified on Touch Bar hardware
-    defaults -currentHost write NSGlobalDomain "com.apple.keyboard.modifiermapping.${keyboard_vendor}-${keyboard_product}-0" "(
-        {
-            HIDKeyboardModifierMappingSrc = ${caps_lock};
-            HIDKeyboardModifierMappingDst = ${right_control};
-        }
-    )"
-}
-remap_builtin_capslock_to_control
-
 ####
 # Mouse
 ####

@@ -6,6 +6,7 @@ local DEFAULT_LAYOUT = "Dvorak"
 -- add a { vendorID, productID, layout } entry here for each other keyboard
 local KEYBOARD_LAYOUTS = {
 	{ vendorID = 4617, productID = 8963, layout = "U.S." }, -- Atreus
+	{ vendorID = 10730, productID = 258, layout = "U.S." }, -- Kinesis Advantage2
 }
 
 local function deviceKey(vendorID, productID)

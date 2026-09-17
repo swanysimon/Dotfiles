@@ -21,22 +21,6 @@ function M.centerWindow()
 	win:setFrame(winFrame)
 end
 
--- almost-maximize: large centered window, not edge-to-edge
-function M.almostMaximize()
-	local win = hs.window.focusedWindow()
-	if not win then
-		return
-	end
-	local margin = 0.05
-	local screenFrame = win:screen():frame()
-	win:setFrame({
-		x = screenFrame.x + screenFrame.w * margin,
-		y = screenFrame.y + screenFrame.h * margin,
-		w = screenFrame.w * (1 - 2 * margin),
-		h = screenFrame.h * (1 - 2 * margin),
-	})
-end
-
 -- cycles through unit rects on repeated presses (Rectangle-style); jumps to the
 -- first rect whenever the window isn't already at one of the listed positions
 function M.cycleUnit(rects)

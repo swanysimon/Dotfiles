@@ -34,6 +34,10 @@ hs.hotkey.bind(mash, "T", windowManagement.moveToUnit({ 1 / 3, 0, 2 / 3, 1 }))
 -- maximize / center
 hs.hotkey.bind(mash, "Return", windowManagement.moveToUnit({ 0, 0, 1, 1 }))
 hs.hotkey.bind(mash, "C", windowManagement.centerWindow)
-hs.hotkey.bind({ "cmd", "alt", "shift" }, "C", windowManagement.almostMaximize)
+hs.hotkey.bind(
+	{ "cmd", "alt", "shift" },
+	"C",
+	windowManagement.cycleUnit({ { 0.05, 0.05, 0.9, 0.9 }, { 0, 0, 1, 1 } })
+)
 
 keyboardWatcher = require("keyboardLayout").start()

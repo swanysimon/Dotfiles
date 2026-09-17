@@ -17,6 +17,7 @@ defaults write NSGlobalDomain AppleAquaColorVariant -int 1
 defaults write NSGlobalDomain AppleFontSmoothing -bool true
 defaults write NSGlobalDomain AppleHighlightColor -string "1.000000 0.937255 0.690196" # yellow
 defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+defaults write NSGlobalDomain NSGlassDiffusionSetting -int 1 # tinted liquid glass
 
 
 ####
@@ -56,6 +57,33 @@ defaults write com.apple.dock show-recents -bool false
 defaults write com.apple.dock showhidden -bool true
 defaults write com.apple.dock tilesize -int 50
 defaults write com.apple.dock trash-full -bool true
+
+# disable all hot corners
+defaults write com.apple.dock wvous-tl-corner -int 0
+defaults write com.apple.dock wvous-tl-modifier -int 0
+defaults write com.apple.dock wvous-tr-corner -int 0
+defaults write com.apple.dock wvous-tr-modifier -int 0
+defaults write com.apple.dock wvous-bl-corner -int 0
+defaults write com.apple.dock wvous-bl-modifier -int 0
+defaults write com.apple.dock wvous-br-corner -int 0
+defaults write com.apple.dock wvous-br-modifier -int 0
+
+
+####
+# Window Manager
+####
+
+# disable window snapping when dragging to screen edges
+defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false
+
+
+####
+# Spotlight
+####
+
+# disable "Show Related Content" and "Help Apple Improve Search"
+defaults write com.apple.Spotlight EnabledPreferenceRules -array "Custom.relatedContents"
+defaults write com.apple.assistant.support "Search Queries Data Sharing Status" -int 2
 
 
 ####

@@ -78,6 +78,7 @@ merge_settings() {
 
 symlink bin "${HOME}/.bin"
 symlink config "${HOME}/.config"
+symlink config/hammerspoon "${HOME}/.hammerspoon"
 symlink claude/CLAUDE.md "${HOME}/.claude/CLAUDE.md"
 symlink claude/skills "${HOME}/.claude/skills"
 symlink claude/statusline-command.fish "${HOME}/.claude/statusline-command.fish"

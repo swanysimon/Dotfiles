@@ -20,7 +20,7 @@ cask "epk/epk/font-sf-mono-nerd-font"
 
 # core applications
 cask "claude"
-cask "rectangle"
+cask "hammerspoon"
 cask "slack"
 
 # core command line utilities

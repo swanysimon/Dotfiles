@@ -5,8 +5,11 @@
 /config/colima/
 /config/gh-dash/
 /config/homebrew/
-/config/jj/repos/
 /config/pgcli/
+
+# jujutsu configuration
+/config/jj/conf.d/work.toml
+/config/jj/repos/
 
 # shell secrets/per-device settings
 /config/fish/completions

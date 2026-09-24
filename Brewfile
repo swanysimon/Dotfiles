@@ -19,7 +19,6 @@ brew "fontconfig"
 cask "epk/epk/font-sf-mono-nerd-font"
 
 # core applications
-cask "claude"
 cask "hammerspoon"
 cask "slack"
 
@@ -49,9 +48,11 @@ cask "ghostty"
 cask "logi-options+"
 
 # programming language management
+brew "pi-coding-agent"
 brew "uv"  # Mise integrates well and uv is more all in one for Python work
 brew "vscode-langservers-extracted"
 brew "yaml-language-server"
+cask "claude"
 cask "claude-code"
 
 # things better managed by the App Store, potentially for historical reasons

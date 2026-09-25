@@ -24,6 +24,7 @@ enabled-branches = ["glob:*"]
 bookmark-advance-to = 'closest_pushable(@)'
 
 [aliases]
+pull = ["util", "exec", "--", "bash", "-c", "jj fetch && jj mergein", ""]
 pushup = ["util", "exec", "--", "bash", "-c", "jj bookmark advance && jj git push", ""]
 fetch = ["git", "fetch"]
 mergein = ["rebase", "-d", "trunk()"]

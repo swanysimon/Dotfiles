@@ -15,3 +15,6 @@
 /config/fish/completions
 /config/fish/fish_plugins
 /config/fish/fish_variables
+
+# claude
+claude/skills/synced

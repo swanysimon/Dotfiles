@@ -49,7 +49,7 @@ cask "logi-options+"
 
 # programming language management
 brew "pi-coding-agent"
-brew "uv"  # Mise integrates well and uv is more all in one for Python work
+brew "uv"
 brew "vscode-langservers-extracted"
 brew "yaml-language-server"
 cask "claude"
@@ -58,11 +58,10 @@ cask "claude-code"
 # things better managed by the App Store, potentially for historical reasons
 mas "AdGuard for Safari", id: 1440147259
 mas "Instapaper", id: 288545208
-
-# Apple office suite
+mas "Keynote", id: 361285480
 mas "Numbers", id: 361304891
 mas "Pages", id: 361309726
-mas "Keynote", id: 361285480
+mas "SocialFocus: Hide Distractions", id: 1661093205
 
 # password manager
 brew "proton-pass-cli"
@@ -81,9 +80,8 @@ if ENV["BREW_MACHINE"] != "work" then
   cask "xld"
 
   # programming specific to personal machines
-  brew "rlwrap"  # for clj; Mise handling transitive dependencies is too annoying
   brew "rust-analyzer"
-  brew "rustup"  # Mise recommends using this to manage Rust versions
+  brew "rustup"
   cask "rustrover"
   cask "webstorm"
 

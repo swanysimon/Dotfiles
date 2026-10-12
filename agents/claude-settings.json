@@ -28,6 +28,7 @@
       "Bash(git ls-files *)",
       "Bash(git show *)",
       "Bash(git status *)",
+      "Bash(gofmt *)",
       "Bash(grep *)",
       "Bash(hadolint *)",
       "Bash(jj diff *)",

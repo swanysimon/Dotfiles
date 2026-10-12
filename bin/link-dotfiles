@@ -35,52 +35,67 @@ symlink() {
     fi
 }
 
-merge_settings() {
+# Merge dotfiles defaults into a live settings file.
+# Usage: merge_json_settings SRC DST NORMALIZE_FILTER MERGE_FILTER
+#   NORMALIZE_FILTER: jq program applied when converting a symlink or seeding a new file
+#   MERGE_FILTER: jq -s program where .[0] is dotfiles (base) and .[1] is the live file (override)
+merge_json_settings() {
     local src="$1"
     local dst="$2"
+    local normalize="$3"
+    local merge="$4"
 
     # Convert existing symlink to a standalone file so machine-local edits don't affect dotfiles
     if [[ -L "$dst" ]]; then
         local content
-        content=$(jq '.permissions.allow = (.permissions.allow // [] | unique) | .permissions.deny = (.permissions.deny // [] | unique)' "$dst")
+        content=$(jq "$normalize" "$dst")
         rm "$dst"
         printf '%s\n' "$content" > "$dst"
-        echo "Converted settings.json symlink to standalone file"
+        echo "Converted $dst symlink to standalone file"
         return
     fi
 
     if [[ ! -f "$dst" ]]; then
-        jq '.permissions.allow = (.permissions.allow // [] | unique) | .permissions.deny = (.permissions.deny // [] | unique)' "$src" > "$dst"
-        echo "Created settings.json from dotfiles defaults"
+        jq "$normalize" "$src" > "$dst"
+        echo "Created $dst from dotfiles defaults"
         return
     fi
 
-    # Deep merge: dotfiles is base, machine-local wins for scalar/object conflicts.
-    # permissions.allow and permissions.deny are unioned so dotfiles entries are always present.
     local merged existing
-    merged=$(jq -s '
-        .[0] as $base | .[1] as $override |
-        (($base.permissions.allow // []) + ($override.permissions.allow // []) | unique) as $allow |
-        (($base.permissions.deny // []) + ($override.permissions.deny // []) | unique) as $deny |
-        $base * $override |
-        .permissions.allow = $allow |
-        .permissions.deny = $deny
-    ' "$src" "$dst")
+    merged=$(jq -s "$merge" "$src" "$dst")
     existing=$(jq '.' "$dst")
 
     if [[ "$merged" == "$existing" ]]; then
-        echo "No update to settings.json"
+        echo "No update to $dst"
     else
         printf '%s\n' "$merged" > "$dst"
-        echo "Merged settings.json"
+        echo "Merged $dst"
     fi
 }
+
+# Claude: dedupe permission lists when seeding/converting
+claude_normalize='.permissions.allow = (.permissions.allow // [] | unique) | .permissions.deny = (.permissions.deny // [] | unique)'
+
+# Claude: deep merge with machine-local winning, except permissions.allow/deny which are
+# unioned so dotfiles entries are always present
+claude_merge='
+    .[0] as $base | .[1] as $override |
+    (($base.permissions.allow // []) + ($override.permissions.allow // []) | unique) as $allow |
+    (($base.permissions.deny // []) + ($override.permissions.deny // []) | unique) as $deny |
+    $base * $override |
+    .permissions.allow = $allow |
+    .permissions.deny = $deny
+'
+
+# Pi: plain deep merge, machine-local wins (pi-managed keys like lastChangelogVersion survive)
+pi_merge='.[0] * .[1]'
 
 symlink bin "${HOME}/.bin"
 symlink config "${HOME}/.config"
 symlink config/hammerspoon "${HOME}/.hammerspoon"
-symlink claude/CLAUDE.md "${HOME}/.claude/CLAUDE.md"
-symlink claude/skills "${HOME}/.claude/skills"
-symlink claude/statusline-command.fish "${HOME}/.claude/statusline-command.fish"
+symlink agents/CLAUDE.md "${HOME}/.claude/CLAUDE.md"
+symlink agents/skills "${HOME}/.claude/skills"
+symlink agents/claude-statusline-command.fish "${HOME}/.claude/statusline-command.fish"
 
-merge_settings "${REPO}/claude/settings.json" "${HOME}/.claude/settings.json"
+merge_json_settings "${REPO}/agents/claude-settings.json" "${HOME}/.claude/settings.json" "$claude_normalize" "$claude_merge"
+merge_json_settings "${REPO}/agents/pi-settings.json" "${HOME}/.pi/agent/settings.json" '.' "$pi_merge"

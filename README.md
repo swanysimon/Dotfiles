@@ -36,7 +36,8 @@ code/dotfiles/bin/link-dotfiles
 ```
 
 Prompts before replacing or deleting anything already in place. `~/.claude/settings.json`
-is merged rather than linked, so machine-local edits stay out of the repo.
+and `~/.pi/agent/settings.json` are merged rather than linked, so machine-local edits
+stay out of the repo.
 
 #### Set Default Shell
 

@@ -1,8 +1,13 @@
 set -U fish_greeting ""
 
-fish_add_path ~/.bin  # intended for these dotfiles bin/ directory
-fish_add_path ~/.local/bin /opt/homebrew/bin /usr/local/sbin /opt/homebrew/sbin
-
+fish_add_path \
+    # intended for these dotfiles bin/ directory
+    ~/.bin  \
+    ~/.local/bin \
+    /opt/homebrew/bin \
+    /opt/homebrew/sbin \
+    /usr/local/bin \
+    /usr/local/sbin
 
 set_if_absent XDG_CACHE_HOME ~/.cache
 set_if_absent XDG_CONFIG_HOME ~/.config
@@ -43,6 +48,10 @@ if status is-interactive
     abbr code cd $CODEDIR
 end
 
+if type -p rustup &>/dev/null
+    fish_add_path --append ~/.cargo/bin /opt/homebrew/opt/rustup/bin
+end
+
 
 if type -p colima &>/dev/null
     set_if_absent DOCKER_HOST unix://$XDG_CONFIG_HOME/colima/docker.sock
@@ -53,10 +62,6 @@ if test -r $XDG_CONFIG_HOME/ripgrep/ripgreprc
     set_if_absent RIPGREP_CONFIG_PATH $XDG_CONFIG_HOME/ripgrep/ripgreprc
 end
 
-
-if test -d ~/.cargo
-    fish_add_path ~/.cargo/bin
-end
 
 if type -p pspg &>/dev/null
     set_if_absent PSQL_PAGER pspg

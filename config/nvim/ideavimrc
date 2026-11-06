@@ -1,0 +1,3 @@
+# vimrc specifically for JetBrains products
+
+set clipboard+=unnamed,unnamedplus

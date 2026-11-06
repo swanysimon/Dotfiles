@@ -96,6 +96,7 @@ symlink config/hammerspoon "${HOME}/.hammerspoon"
 symlink agents/CLAUDE.md "${HOME}/.claude/CLAUDE.md"
 symlink agents/skills "${HOME}/.claude/skills"
 symlink agents/claude-statusline-command.fish "${HOME}/.claude/statusline-command.fish"
+symlink config/nvim/ideavimrc "${HOME}/.ideavimrc"
 
 merge_json_settings "${REPO}/agents/claude-settings.json" "${HOME}/.claude/settings.json" "$claude_normalize" "$claude_merge"
 merge_json_settings "${REPO}/agents/pi-settings.json" "${HOME}/.pi/agent/settings.json" '.' "$pi_merge"

@@ -47,6 +47,10 @@ brew "zellij"
 cask "ghostty"
 cask "logi-options+"
 
+# my stuff
+tap "swanysimon/tap", trusted: true
+brew "mdlint", trusted: true
+
 # programming language management
 brew "pi-coding-agent"
 brew "uv"

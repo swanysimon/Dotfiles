@@ -208,6 +208,12 @@ local plugins = {
 
 }
 
+-- fzf's vim plugin comes with the system install (e.g. Homebrew); add it only if present
+local fzf_spec = require("plugins.fzf").fzf_spec()
+if fzf_spec then
+  table.insert(plugins, fzf_spec)
+end
+
 
 ----
 -- Install and activate package manager

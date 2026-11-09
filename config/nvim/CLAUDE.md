@@ -23,6 +23,7 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 - **Completion**: `saghen/blink.cmp` with LuaSnip snippets
 - **Syntax**: `nvim-treesitter/nvim-treesitter` (branch=main) with context
 - **UI**: `folke/snacks.nvim`, `folke/trouble.nvim`, `b0o/incline.nvim`, `j-hui/fidget.nvim`
+- **Fuzzy finder**: system `fzf` vim plugin, added via `dir` only when `fzf` is installed (`lua/plugins/fzf.lua`)
 - **Editing**: `kylechui/nvim-surround`, `andymass/vim-matchup`
 - **Commenting**: native `gc`/`gcc` (Neovim 0.10+, treesitter-injection-aware `commentstring`)
 - **Terminal**: `folke/snacks.nvim` terminal module (replaces nvzone/floaterm)

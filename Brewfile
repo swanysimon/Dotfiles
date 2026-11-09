@@ -16,7 +16,7 @@
 
 # patched SF mono font
 brew "fontconfig"
-cask "epk/epk/font-sf-mono-nerd-font"
+cask "epk/epk/font-sf-mono-nerd-font", trusted: true
 
 # core applications
 cask "hammerspoon"

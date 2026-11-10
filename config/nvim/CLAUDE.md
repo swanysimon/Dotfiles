@@ -14,11 +14,13 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 ## Key Components
 
 ### Plugin Manager
+
 - **Lazy.nvim** - Modern plugin manager with lazy loading
 - Colorschemes managed separately with priority loading in `lua/plugins/init.lua`
 - Currently using OneDark colorscheme (warmer variant)
 
 ### Core Plugins
+
 - **LSP**: `mason-org/mason.nvim` + `neovim/nvim-lspconfig` (as dep) for language servers
 - **Completion**: `saghen/blink.cmp` with LuaSnip snippets
 - **Syntax**: `nvim-treesitter/nvim-treesitter` (branch=main) with context
@@ -37,9 +39,11 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 - **Debugging**: `mfussenegger/nvim-dap` + `rcarriga/nvim-dap-ui` + `theHamsta/nvim-dap-virtual-text`
 
 ### Key Settings
+
 - Leader key: `,` (comma)
 - Local leader: `'` (apostrophe)
-- 4-space indentation globally (`shiftwidth` and `tabstop`); 2-space override for lua, javascript, typescript, typescriptreact, json, yaml, clojure (via autocmd, sets both)
+- 4-space indentation globally (`shiftwidth` and `tabstop`); 2-space override for lua, javascript, typescript,
+  typescriptreact, json, yaml, clojure (via autocmd, sets both)
 - LSP-based folding when server supports it, otherwise Treesitter-based folding
 - Clipboard integration with system (`unnamed` + `unnamedplus`)
 - Persistent undo (`undofile = true`); files stored in `~/.local/state/nvim/undo/`
@@ -48,12 +52,14 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 ## Development Guidelines
 
 ### Adding Plugins
+
 1. Add plugin spec to `lua/plugins/init.lua` in the `plugins` table (kept in alphabetical order by repo)
 2. For complex plugins, create a separate config file in `lua/plugins/`
 3. Use lazy loading when appropriate (`event`, `ft`, `keys`, `cmd`)
 4. Include necessary dependencies
 
 ### Plugin Configuration Pattern
+
 ```lua
 {
   "author/plugin-name",
@@ -63,7 +69,9 @@ This is Simon's personal Neovim configuration using Lua and the Lazy.nvim plugin
 }
 ```
 
-When `opts` would call `require()` on other plugins (e.g. neotest adapters), use `config` instead to defer evaluation until the plugin actually loads:
+When `opts` would call `require()` on other plugins (e.g. neotest adapters), use `config` instead to defer evaluation
+until the plugin actually loads:
+
 ```lua
 config = function()
   require("plugin").setup(require("plugins.plugin-name").plugin_opts())
@@ -71,6 +79,7 @@ end,
 ```
 
 ### LSP Configuration
+
 - Uses Neovim 0.11 built-in `vim.lsp.config()` / `vim.lsp.enable()` APIs (not lspconfig `setup()`)
 - `lua/lsp.lua` auto-discovers and enables all Mason-managed servers and locally-installed servers
 - Local servers are found by searching up from the current buffer's directory (e.g. `node_modules/.bin/`)
@@ -84,12 +93,14 @@ end,
 - Java LSP debug support is deferred; Clojure debugging goes through Conjure/nREPL
 
 ### Rust Configuration
+
 - `mrcjkb/rustaceanvim` (v^9) replaces standalone rust-analyzer setup
 - Provides LSP, DAP (via codelldb), and neotest adapter (`rustaceanvim.neotest`)
 - Install `codelldb` via Mason for Rust debugging
 - Do not create `lsp/rust_analyzer.lua` — configure rust-analyzer through rustaceanvim instead
 
 ### Debugging (nvim-dap)
+
 - Currently configured for Python only; other languages can be added incrementally
 - Python uses `debugpy` installed via Mason (`MasonInstall debugpy`)
 - DAP UI opens/closes automatically when a session starts/ends
@@ -97,12 +108,14 @@ end,
 - To add a new language: install the adapter via Mason, add adapter config in `lua/plugins/dap.lua`
 
 ### Testing (neotest)
+
 - Adapters: `neotest-python` (pytest), `neotest-jest` (Jest), `rustaceanvim.neotest` (cargo test)
 - Java: use jdtls code lenses — no neotest adapter configured
 - Clojure: use Conjure's built-in test commands (`\tr` run namespace, `\t!` run all)
 - neotest loads on keybindings; adapters are required inside `config` (not `opts`) to avoid startup errors
 
 ### Keybinding Conventions
+
 - Use `vim.keymap.set()` (aliased as `map` in `init.lua`)
 - Window navigation: `<C-hjkl>`
 - Visual block movement: `J/K` or arrow keys
@@ -112,10 +125,12 @@ end,
 ### Keybindings Reference
 
 #### Navigation
+
 - `<C-hjkl>` - Window navigation
 - `J/K`, `<Up>/<Down>` (visual) - Move visual block
 
 #### High-priority actions
+
 - `<leader>a` - Code action
 - `<leader>r` - Rename symbol
 - `<leader>t` - Toggle terminal (normal, terminal, visual modes)
@@ -123,6 +138,7 @@ end,
 - `<leader>o` - Toggle aerial structure panel
 
 #### File & Project Navigation (Snacks)
+
 - `<leader>f` - Smart picker (buffers + files)
 - `<leader>ff` - Find files
 - `<leader>fg` - Find git files
@@ -132,6 +148,7 @@ end,
 - `<leader>fr` - Recent files
 
 #### Search & Symbols
+
 - `<leader>ss` - Grep project (like IntelliJ Ctrl+Shift+F)
 - `<leader>sw` - Grep word under cursor
 - `<leader>st` - Search TODO comments
@@ -140,6 +157,7 @@ end,
 - `<leader>sf` - Search functions/methods/constructors/variables in workspace
 
 #### LSP Navigation
+
 - `gd` - Go to definition(s)
 - `gr` - Go to references/usages
 - `gi` - Go to implementation(s)
@@ -151,6 +169,7 @@ end,
 - `<leader>wa` / `<leader>wr` - Add/remove workspace folder
 
 #### Diagnostics
+
 - `<leader>d` - Open float for current line diagnostics
 - `<leader>ds` - Buffer diagnostics (Snacks picker)
 - `<leader>dw` - Workspace diagnostics (Snacks picker)
@@ -158,12 +177,14 @@ end,
 - `<leader>dD` - Toggle Trouble diagnostics (current buffer)
 
 #### Trouble Panels
+
 - `<leader>xs` - Toggle symbols panel
 - `<leader>xl` - Toggle LSP panel (right side)
 - `<leader>xL` - Toggle loclist
 - `<leader>xQ` - Toggle quickfix
 
 #### Testing (Neotest)
+
 - `<leader>nn` - Run nearest test
 - `<leader>nf` - Run test file
 - `<leader>ns` - Toggle test summary panel
@@ -172,6 +193,7 @@ end,
 - `]n` / `[n` - Jump to next/previous failed test
 
 #### Debugging (DAP)
+
 - `<F5>` - Continue / start debug session
 - `<F10>` - Step over
 - `<F11>` - Step into
@@ -184,17 +206,21 @@ end,
 ## Common Tasks
 
 ### Installing New Language Server
+
 1. Install via Mason UI (`:Mason`) or command (`:MasonInstall <server>`)
 2. Server is auto-discovered and enabled on next restart
 3. For custom settings, create `lsp/<server_name>.lua` returning a config table
 4. Exception: rust-analyzer is managed by rustaceanvim, not Mason auto-enable
 
 ### Adding Python Debug Support
+
 1. `:MasonInstall debugpy`
 2. DAP is pre-configured to use Mason's debugpy path
 
 ### Adding Per-Server LSP Config
+
 Create `lsp/<server_name>.lua`:
+
 ```lua
 return {
   settings = {
@@ -202,16 +228,20 @@ return {
   },
 }
 ```
+
 Neovim 0.11 loads these automatically via the `lsp/` directory on `runtimepath`.
 
 ### Adding Colorscheme
+
 1. Add entry to `colorschemes` table in `lua/plugins/init.lua`
 2. Set `active = true` for new scheme, `active = false` for others
 
 ### Updating Plugins
+
 Run `:Lazy update` in Neovim
 
 ## File Locations
+
 - Plugin data: `~/.local/share/nvim/lazy/`
 - Lock file: `~/.local/share/nvim/lazy/lazy-lock.json`
 - Undo history: `~/.local/state/nvim/undo/`
@@ -219,6 +249,7 @@ Run `:Lazy update` in Neovim
 ## Neovim Version Notes
 
 ### 0.11 Features in Use
+
 - `vim.lsp.config(name, opts)` - configure LSP servers without lspconfig's `setup()`
 - `vim.lsp.enable(name)` - enable a configured LSP server
 - `lsp/` directory on runtimepath auto-loaded for per-server config
@@ -227,4 +258,5 @@ Run `:Lazy update` in Neovim
 - `opt.foldtext = ""` - empty foldtext renders fold line with normal syntax highlighting
 
 ### 0.12 Features in Use
+
 - None yet; config targets >= 0.11

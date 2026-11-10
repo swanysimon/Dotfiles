@@ -1,0 +1,17 @@
+{
+  "opus": [
+    "openrouter/anthropic/claude-opus-5.5",
+    "openrouter/openai/gpt-6.2-sol",
+    "openrouter/google/gemini-4-carbon"
+  ],
+  "sonnet": [
+    "openrouter/anthropic/claude-sonnet-5.5",
+    "openrouter/moonshotai/kimi-k3.1-pro",
+    "openrouter/google/gemini-4-hydrogen"
+  ],
+  "haiku": [
+    "openrouter/anthropic/claude-haiku-5.5",
+    "openrouter/deepseek/deepseek-v4.1-flash-1017",
+    "openrouter/z-ai/glm-5.3-flash"
+  ]
+}

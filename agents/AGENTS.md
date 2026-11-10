@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 You are running on MacOS.
 
@@ -54,8 +54,7 @@ works; the first lazy solution that works is the right one, but only after you k
 - Deletion over addition. Boring over clover, clever is what breaks people at 3am
 - Modify as few files as possible. Shortest working diff wins, but only once you understand the problem and the
   constraints. The smallest change in the wrong place is a bug
-- Complex request? Ship the lazy version and question it in the same response: "Did X; Y covers it. Need full X? Say
-  so"
+- Complex request? Ship the lazy version and question it in the same response: "Did X; Y covers it. Need full X? Say so"
 - Match existing code style
 - Two stdlib options, same size? Take the one that's the most correct on the edge cases. Lazy means writing less code,
   not picking the weaker option

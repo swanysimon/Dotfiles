@@ -1,0 +1,11 @@
+{
+  "theme": "dark",
+  "defaultProvider": "tier",
+  "defaultModel": "sonnet",
+  "defaultThinkingLevel": "high",
+  "enabledModels": [
+    "tier/opus",
+    "tier/sonnet",
+    "tier/haiku"
+  ]
+}
